@@ -1,13 +1,10 @@
 - id: docs/catalog/modules
   title: API Documentation Catalog Sources
   description: |
-    Imports runnable notebooks and examples into the generated YAML API catalog.
+    Imports the runnable example catalog into the generated YAML API reference.
   tags: [documentation, modules]
   modules:
-    - examples/deploy.yaml
-    - notebooks/git-current-workspace.yaml
-    - notebooks/gitignore-template.yaml
-    - notebooks/obsidian-template.yaml
+    - examples/examples.yaml
 
 - id: docs/api/reference
   title: YAML API Reference Build

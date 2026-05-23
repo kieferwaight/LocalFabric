@@ -54,7 +54,13 @@ def test_catalog_tracks_sources_relationships_and_effective_origins() -> None:
     entries = {item["id"]: item for item in runtime.globals["catalog"]["definitions"]}
 
     assert entries["builtin/files/write-text"]["source_path"] == "stdlib/stdlib.files.yaml"
-    assert entries["notebook/obsidian-template"]["parent"]["id"] == "builtin/files/write-text"
+    assert entries["example/obsidian-template"]["parent"]["id"] == "builtin/files/write-text"
+    assert entries["examples/catalog/modules"]["modules"] == [
+        "deploy.yaml",
+        "git-current-workspace.yaml",
+        "gitignore-template.yaml",
+        "obsidian-template.yaml",
+    ]
     cloud = entries["cloud/deployer"]
     assert {item["id"] for item in cloud["mixin_links"]} == {"mixin/git-info", "mixin/timestamp"}
     assert any(item["origin"] == "cloud/deployer" for item in cloud["resolved"]["inputs"])

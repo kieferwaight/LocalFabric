@@ -18,15 +18,15 @@ Writes a Python-oriented `.gitignore` into the current workspace.
 | --- | --- |
 | Extends | [Write Text File](../files/write-text.md) |
 | Mixins | - |
-| Children | [Gitignore Template Notebook](../../notebook/git/gitignore.md) |
-| Mixin consumers | [Initialize Git Notebook](../../notebook/git/init.md), [GitHub Repository Notebook](../../notebook/git/github.md) |
+| Children | [Gitignore Template Example](../../example/git/gitignore.md) |
+| Mixin consumers | [Initialize Git Example](../../example/git/init.md), [GitHub Repository Example](../../example/git/github.md) |
 | Modules | - |
 
 ```mermaid
 flowchart TD
   def_builtin_git_gitignore_python["Write Python Gitignore"]
 def_builtin_git_gitignore_python --> def_builtin_files_write_text["Write Text File"]
-def_notebook_git_gitignore["Gitignore Template Notebook"] --> def_builtin_git_gitignore_python
+def_example_git_gitignore["Gitignore Template Example"] --> def_builtin_git_gitignore_python
 ```
 
 ## Declared API

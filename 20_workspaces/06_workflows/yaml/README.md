@@ -50,9 +50,9 @@ runtime/
   runtime.py            # VM: import / assemble / execute
 examples/
   deploy.yaml           # extends + mixins + multi-language run
-notebooks/
-  README.md             # Runnable routine index
-  *.yaml                # Obsidian and Git routine definitions
+  examples.yaml         # Example module manifest
+  README.md             # Runnable composition index
+  *.yaml                # Obsidian and Git example definitions
 templates/docs/
   *.md.j2               # Authored Markdown layouts for generated API docs
 docs/                   # Generated and committed YAML API reference
@@ -74,8 +74,10 @@ default import while built-ins remain grouped by namespace:
 ```
 
 `builtin/files/write-text` expands `[[OPEN_TEMPLATE]]` and
-`[[CLOSE_TEMPLATE]]` while writing, so YAML notebooks can safely emit literal
-Obsidian template tokens through the multi-pass Jinja renderer.
+`[[CLOSE_TEMPLATE]]` while writing, so YAML examples can safely emit literal
+Obsidian template tokens through the multi-pass Jinja renderer. Runnable
+compositions belong in `examples/`, while `stdlib/` is reserved for
+auto-loaded reusable primitives.
 
 ## API Documentation
 

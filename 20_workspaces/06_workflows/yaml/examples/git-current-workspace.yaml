@@ -1,17 +1,17 @@
-- id: notebook/git/init
-  title: Initialize Git Notebook
+- id: example/git/init
+  title: Initialize Git Example
   description: |
     Composes local repository initialization with a reusable Python gitignore.
-  tags: [notebook, git]
+  tags: [example, git]
   mixins:
     - builtin/git/init-current-workspace
     - builtin/git/gitignore-python
 
-- id: notebook/git/github
-  title: GitHub Repository Notebook
+- id: example/git/github
+  title: GitHub Repository Example
   description: |
     Initializes local Git files and creates a matching remote GitHub repository.
-  tags: [notebook, git, github]
+  tags: [example, git, github]
   mixins:
     - builtin/git/init-current-workspace
     - builtin/git/gitignore-python

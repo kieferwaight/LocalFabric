@@ -18,7 +18,7 @@ Writes rendered UTF-8 text and restores escaped template markers.
 | --- | --- |
 | Extends | [Abstract Base](../../abstract/base.md) |
 | Mixins | - |
-| Children | [Write Python Gitignore](../git/gitignore-python.md), [Obsidian Daily Note Template](../../notebook/obsidian-template.md) |
+| Children | [Write Python Gitignore](../git/gitignore-python.md), [Obsidian Daily Note Template](../../example/obsidian-template.md) |
 | Mixin consumers | - |
 | Modules | - |
 
@@ -27,7 +27,7 @@ flowchart TD
   def_builtin_files_write_text["Write Text File"]
 def_builtin_files_write_text --> def_abstract_base["Abstract Base"]
 def_builtin_git_gitignore_python["Write Python Gitignore"] --> def_builtin_files_write_text
-def_notebook_obsidian_template["Obsidian Daily Note Template"] --> def_builtin_files_write_text
+def_example_obsidian_template["Obsidian Daily Note Template"] --> def_builtin_files_write_text
 ```
 
 ## Declared API

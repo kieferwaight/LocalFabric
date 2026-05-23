@@ -5,9 +5,9 @@
 
 | Field | Value |
 | --- | --- |
-| ID | `notebook/obsidian-template` |
-| Source | `notebooks/obsidian-template.yaml` |
-| Tags | notebook, obsidian, templates |
+| ID | `example/obsidian-template` |
+| Source | `examples/obsidian-template.yaml` |
+| Tags | example, obsidian, templates |
 
 Creates a starter daily-note Markdown template beneath an Obsidian folder.
 
@@ -24,8 +24,8 @@ Creates a starter daily-note Markdown template beneath an Obsidian folder.
 
 ```mermaid
 flowchart TD
-  def_notebook_obsidian_template["Obsidian Daily Note Template"]
-def_notebook_obsidian_template --> def_builtin_files_write_text["Write Text File"]
+  def_example_obsidian_template["Obsidian Daily Note Template"]
+def_example_obsidian_template --> def_builtin_files_write_text["Write Text File"]
 ```
 
 ## Declared API

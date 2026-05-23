@@ -19,7 +19,7 @@ Initializes the current working directory as a Git repository when needed.
 | Extends | [Abstract Base](../../abstract/base.md) |
 | Mixins | - |
 | Children | - |
-| Mixin consumers | [Initialize Git Notebook](../../notebook/git/init.md), [GitHub Repository Notebook](../../notebook/git/github.md) |
+| Mixin consumers | [Initialize Git Example](../../example/git/init.md), [GitHub Repository Example](../../example/git/github.md) |
 | Modules | - |
 
 ```mermaid

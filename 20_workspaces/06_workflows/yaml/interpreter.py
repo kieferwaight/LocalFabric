@@ -25,7 +25,7 @@ except ModuleNotFoundError:
     drivers = importlib.util.module_from_spec(spec)
     sys.modules["drivers"] = drivers
     spec.loader.exec_module(drivers)
-    # Direct invocation from this folder is the documented YAML notebook interface.
+    # Direct invocation from this folder is the documented YAML workflow interface.
     from runtime import Runtime, ShellEnvironment
 
 

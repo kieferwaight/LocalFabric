@@ -1,6 +1,6 @@
-- id: notebook/git/gitignore
-  title: Gitignore Template Notebook
+- id: example/git/gitignore
+  title: Gitignore Template Example
   description: |
     Writes the standard Python `.gitignore` template in the active workspace.
-  tags: [notebook, git, templates]
+  tags: [example, git, templates]
   extends: builtin/git/gitignore-python

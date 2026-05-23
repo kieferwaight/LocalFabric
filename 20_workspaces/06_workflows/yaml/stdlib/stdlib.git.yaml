@@ -74,7 +74,7 @@
     description:
       type: "string"
       required: false
-      default: "Created from a LocalFabric YAML notebook."
+      default: "Created from a LocalFabric YAML example."
       description: Description passed to GitHub CLI.
   variables:
     repository_path: "{{ env.cwd }}"

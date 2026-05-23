@@ -19,7 +19,7 @@ Creates an `origin` GitHub repository through an authenticated GitHub CLI.
 | Extends | [Abstract Base](../../abstract/base.md) |
 | Mixins | - |
 | Children | - |
-| Mixin consumers | [GitHub Repository Notebook](../../notebook/git/github.md) |
+| Mixin consumers | [GitHub Repository Example](../../example/git/github.md) |
 | Modules | - |
 
 ```mermaid
@@ -36,7 +36,7 @@ def_builtin_git_create_github_repository --> def_abstract_base["Abstract Base"]
 | --- | --- | --- | --- | --- |
 | `repository_name` | `string` | yes | `-` | GitHub repository name, optionally prefixed with owner/. |
 | `visibility` | `string` | no | `private` | Repository visibility: `public`, `private`, or `internal`. |
-| `description` | `string` | no | `Created from a LocalFabric YAML notebook.` | Description passed to GitHub CLI. |
+| `description` | `string` | no | `Created from a LocalFabric YAML example.` | Description passed to GitHub CLI. |
 
 
 ### Variables
@@ -92,7 +92,7 @@ _No locally declared teardown operations._
 | --- | --- | --- | --- | --- |
 | `repository_name` | `string` | yes | `-` | [Create GitHub Repository](create-github-repository.md) |
 | `visibility` | `string` | no | `private` | [Create GitHub Repository](create-github-repository.md) |
-| `description` | `string` | no | `Created from a LocalFabric YAML notebook.` | [Create GitHub Repository](create-github-repository.md) |
+| `description` | `string` | no | `Created from a LocalFabric YAML example.` | [Create GitHub Repository](create-github-repository.md) |
 
 
 ### Effective Variables
