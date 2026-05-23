@@ -387,7 +387,7 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
             )
         )
 
-    if rel.startswith("05_router/") and "from mcp_layer.tools" in text:
+    if rel.startswith("05_router/") and "from mcp_servers.tools" in text:
         findings.append(
             _finding(
                 path,
@@ -396,7 +396,7 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
                 "router_depends_on_mcp_exposure_layer",
                 "medium",
                 "Router invokes implementations from the MCP exposure bucket rather than core tools or workflows.",
-                _lines_with(text, ["from mcp_layer.tools"]),
+                _lines_with(text, ["from mcp_servers.tools"]),
                 [
                     _target(
                         "05_router",

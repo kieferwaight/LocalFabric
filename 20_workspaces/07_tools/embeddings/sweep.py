@@ -17,22 +17,11 @@ import argparse
 import hashlib
 import json
 import os
-import sys
 import time
 
-# Allow running as a script. The new layout places this file at
-# 20_workspaces/07_tools/embeddings/sweep.py, while the importable packages
-# ``tools`` and ``drivers`` live two levels up under 20_workspaces/. Walk up
-# accordingly so ``python sweep.py`` works without an explicit PYTHONPATH.
-_WORKSPACES_ROOT = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "..")
-)
-if _WORKSPACES_ROOT not in sys.path:
-    sys.path.insert(0, _WORKSPACES_ROOT)
-
+from drivers.vector.lancedb_driver import LanceStore
 from tools.embeddings.chunker import chunk_file
 from tools.embeddings.embedder import Embedder, EmbedderUnavailable
-from drivers.vector.lancedb_driver import LanceStore
 
 # ------------------------------------------------------------------
 # Configuration

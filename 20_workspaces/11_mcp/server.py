@@ -8,26 +8,19 @@ Tools exposed:
     local_router_sweep_index    — re-index the project directory into the vector store
 
 Run directly (stdio transport for Claude Desktop):
-    python -m mcp.servers.server
+    python -m mcp_servers.server
 
-Install dependencies first:
-    pip install mcp ollama requests beautifulsoup4 lancedb numpy
+Install the workspace first so the bucket aliases (mcp_servers, tools,
+workflows, …) resolve:
+    pip install -e .         # from 20_workspaces/
 """
-
-import os
-import sys
-
-# Ensure project root is on the path when run as a module
-_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-if _PROJECT_ROOT not in sys.path:
-    sys.path.insert(0, _PROJECT_ROOT)
 
 from typing import Optional
 
 from mcp.server.fastmcp import FastMCP
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
-from mcp_servers.config import SERVER_NAME, EMBED_MODEL, VECTOR_STORE_PATH
+from mcp_servers.config import EMBED_MODEL, SERVER_NAME, VECTOR_STORE_PATH
 from mcp_servers.tools.local_tools import local_research_scaffold, run_local_tests
 
 # ------------------------------------------------------------------

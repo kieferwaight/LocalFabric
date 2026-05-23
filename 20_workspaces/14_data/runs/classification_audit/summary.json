@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-05-23T15:20:57.708020+00:00",
+  "generated_at": "2026-05-23T15:25:35.012776+00:00",
   "workspace": "/Users/kwaight/scratch/20_workspaces",
   "scan_scope": "20_workspaces source, configuration, documentation, and workflow files",
-  "files_scanned": 234,
+  "files_scanned": 233,
   "findings": 0,
   "findings_by_severity": {},
   "findings_by_rule": {},

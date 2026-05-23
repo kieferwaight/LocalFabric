@@ -5,32 +5,81 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "scratch-workspaces"
 version = "0.1.0"
-description = "Workspace-level pyproject for the new numeric-bucket layout."
+description = "Workspace-level package; maps numeric-prefixed buckets to importable Python names."
 requires-python = ">=3.11"
-dependencies = ["pyyaml>=6.0"]
+
+dependencies = [
+    # core
+    "pydantic>=2.6",
+    "pydantic-settings>=2.2",
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",
+    "rich>=13.0",
+    # adapters / cli
+    "typer>=0.12",
+    # harnesses
+    "requests>=2.31",
+    # drivers / workflows / tools
+    "sqlalchemy>=2.0",
+    "jinja2>=3.1",
+    "numpy>=1.26",
+    "pillow>=10.0",
+    "beautifulsoup4>=4.12",
+    # langgraph workflows
+    "langgraph>=0.2",
+    # mcp servers
+    "mcp>=1.0",
+]
+
+[project.optional-dependencies]
+vision = [
+    "opencv-python>=4.8",
+    "pytesseract>=0.3",
+]
+pdf = [
+    "pymupdf>=1.24",
+    "pdfminer.six>=20221105",
+    "pdf2image>=1.16",
+]
+vector = [
+    "qdrant-client>=1.9",
+    "lancedb>=0.6",
+]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "ruff>=0.4",
+    "mypy>=1.10",
+]
 
 # ─── Import-name strategy ─────────────────────────────────────────────────────
-# Numeric-prefixed directory names (02_core, 04_harnesses, ...) aren't valid
-# Python identifiers. We solve this with symlinks at the workspace root:
+# Numeric-prefixed bucket dirs (02_core, 04_harnesses, ...) aren't valid Python
+# identifiers. We register clean import names via setuptools `package-dir`,
+# and pytest picks the same map up through `conftest.py` (so no-install dev
+# also works).
 #
-#     core       -> 02_core/src/core
-#     adapters   -> 03_adapters
-#     harnesses  -> 04_harnesses
-#     router     -> 05_router
-#     workflows  -> 06_workflows
-#     tools      -> 07_tools
-#     drivers    -> 08_drivers
-#     mcp_layer  -> 11_mcp        # NB: NOT `mcp` — avoids colliding with
-#                                 # the PyPI `mcp` SDK that 11_mcp/servers/
-#                                 # server.py imports as `mcp.server.fastmcp`.
-#
-# With these symlinks plus `20_workspaces/` on PYTHONPATH (handled by the
-# pytest config below, or set manually), every cross-bucket import like
-# `from harnesses.base import Harness` resolves cleanly.
+# Bucket dir         →  import name
+#   02_core/src/core →  core
+#   03_adapters      →  adapters
+#   04_harnesses     →  harnesses
+#   05_router        →  router
+#   06_workflows     →  workflows
+#   07_tools         →  tools
+#   08_drivers       →  drivers
+#   10_service_runtime → service_runtime
+#   11_mcp           →  mcp_servers     (NOT `mcp` — the PyPI MCP SDK owns
+#                                        that namespace and is imported as
+#                                        `mcp.server.fastmcp` in our server.py)
+
+[tool.setuptools]
+package-dir = { "core" = "02_core/src/core", "adapters" = "03_adapters", "harnesses" = "04_harnesses", "router" = "05_router", "workflows" = "06_workflows", "tools" = "07_tools", "drivers" = "08_drivers", "service_runtime" = "10_service_runtime", "mcp_servers" = "11_mcp" }
+
+[tool.setuptools.packages.find]
+where = ["02_core/src", "03_adapters", "04_harnesses", "05_router", "06_workflows", "07_tools", "08_drivers", "10_service_runtime", "11_mcp"]
+namespaces = true
 
 [tool.pytest.ini_options]
 testpaths = ["16_tests"]
-pythonpath = ["."]
 
 [tool.ruff]
 line-length = 100
@@ -38,3 +87,9 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = false
+ignore_missing_imports = true
+explicit_package_bases = true

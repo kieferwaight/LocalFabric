@@ -2,7 +2,8 @@
 
 Numeric-bucket layout per [REPO_STRUCTURE.md](../REPO_STRUCTURE.md),
 [ARCHITECTURE.md](../ARCHITECTURE.md), [DATA_MODEL.md](../DATA_MODEL.md),
-[SERVICES.md](../SERVICES.md). The legacy tree lives at `00_workspaces_backup/`.
+[SERVICES.md](../SERVICES.md). The pre-reclassification tree lives at
+`00_workspaces_backup/` (read-only).
 
 ## Buckets
 
@@ -18,45 +19,32 @@ Numeric-bucket layout per [REPO_STRUCTURE.md](../REPO_STRUCTURE.md),
 | `07_tools/` | Reusable functional units (image, pdf, vision, embeddings, …) | `tools` |
 | `08_drivers/` | Storage/database connectors | `drivers` |
 | `09_services/` | Docker-Compose service catalog by category | — |
-| `10_service_runtime/` | `cmd <service> <path>` runtime | — |
-| `11_mcp/` | MCP servers and tools | `mcp_layer` |
+| `10_service_runtime/` | `cmd <service> <path>` runtime | `service_runtime` |
+| `11_mcp/` | MCP servers and exposure shims | `mcp_servers` |
 | `12_prompts/` | Prompt templates | — |
 | `13_models/` | Model registry, providers, profiles | — |
 | `14_data/` | Persistent data (filesystem-backed) | — |
 | `15_notebooks/` | Exploration notebooks | — |
 | `16_tests/` | Integration and contract tests | — |
-| `17_scripts/` | Utility scripts | — |
-| `18_docs/` | Supporting docs (incl. legacy snapshots) | — |
+| `17_scripts/` | Utility and maintenance scripts | — |
+| `18_docs/` | Supporting docs | — |
 | `19_archive/` | Deprecated components | — |
 
-## Import-name convention
+## Import-name strategy
 
-Numeric-prefixed directory names (`02_core`, `04_harnesses`, …) are not valid
-Python identifiers. Symlinks at this directory's root map clean Python package
-names to their bucket:
+The numeric prefixes are filesystem-only — Python forbids module names that
+start with a digit. The buckets are registered with clean names via:
 
-```
-core       -> 02_core/src/core
-adapters   -> 03_adapters
-harnesses  -> 04_harnesses
-router     -> 05_router
-workflows  -> 06_workflows
-tools      -> 07_tools
-drivers    -> 08_drivers
-mcp_layer  -> 11_mcp
-```
+- **`pyproject.toml`** — `[tool.setuptools.package-dir]` maps each bucket to
+  its import name. `pip install -e .` from this directory writes the
+  aliases into a `.pth` file in site-packages and every `from harnesses.base
+  import Harness` resolves naturally.
+- **`conftest.py`** — registers the same aliases at pytest startup so the
+  test suite runs without an install step.
 
-Note: `11_mcp` is exposed as **`mcp_layer`**, not `mcp`, to avoid colliding
-with the PyPI `mcp` SDK that `11_mcp/servers/server.py` imports as
-`mcp.server.fastmcp`.
-
-Add `20_workspaces/` to `PYTHONPATH` (or run `pip install -e .` from this
-directory) and every `from harnesses.base import Harness`, `from
-drivers.sql.session import init_db`, `from tools.embeddings.query import
-LocalKnowledgeQuery`, etc. resolves cleanly.
-
-Tests pick this up automatically via `[tool.pytest.ini_options].pythonpath`
-in `pyproject.toml`.
+`11_mcp/` is intentionally exposed as **`mcp_servers`**, not `mcp`:
+`11_mcp/server.py` uses `from mcp.server.fastmcp import FastMCP` (the PyPI
+MCP SDK), so we leave that top-level name unshadowed.
 
 ## Running
 
@@ -65,23 +53,25 @@ in `pyproject.toml`.
 cd 20_workspaces
 pip install -e .
 
-# CLI (the migrated ai_utils Typer app)
+# Tests (no install also works — conftest.py registers the aliases)
+pytest
+
+# CLI
 python -m adapters.cli.main --help
 
-# Tests
-pytest 16_tests/
+# MCP server
+python -m mcp_servers.server
 
-# A service (once 10_service_runtime/cmd.py is wired)
-python -m service_runtime.cmd postgres ./14_data/stores/postgres/research
+# A service (Docker lifecycle goes through harnesses.docker_service)
+python -m service_runtime.cmd up postgres ./14_data/stores/postgres/research
 ```
 
-## Migration notes
+## Notes for contributors
 
-This tree was generated from `00_workspaces_backup/` (formerly
-`20_workspaces/`). See `18_docs/ai_utils_legacy.md` for the legacy README
-plus a mapping of legacy paths to the new bucket locations. The backup is
-preserved read-only — do not modify it.
-
-The `core/paths.py` module was synthesized from caller usage during the
-migration (the original `ai_utils.core.paths` module was referenced but
-absent from the source tree). Worth a review pass.
+- Cross-bucket imports use the clean import name (`from drivers.sql.session
+  import init_db`), never the numeric path.
+- `core.paths.WORKSPACES_ROOT` is the canonical anchor for path resolution —
+  no `os.path.join(__file__, "..", "..")` patterns anywhere else.
+- `17_scripts/audit_classifications.py` continuously checks for layer-boundary
+  violations; run it before opening a PR. Findings land at
+  `14_data/runs/classification_audit/`.

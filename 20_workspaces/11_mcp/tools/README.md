@@ -17,7 +17,7 @@ Ollama must be running locally (`ollama serve`). If Ollama is unreachable, `loca
 ## Usage
 
 ```python
-from mcp_layer.tools.local_tools import local_research_scaffold, run_local_tests
+from mcp_servers.tools.local_tools import local_research_scaffold, run_local_tests
 
 print(local_research_scaffold("https://raw.githubusercontent.com/modelcontextprotocol/python-sdk/main/README.md"))
 print(local_research_scaffold("mcp python sdk quickstart"))   # topic - DuckDuckGo lite fallback
