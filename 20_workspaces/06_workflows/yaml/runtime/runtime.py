@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from typing import Any, Dict, List, Optional, Set
 
 from .compiler import Compiler
@@ -54,6 +55,7 @@ class Runtime:
     ) -> None:
         self.env: ShellEnvironment = env or ShellEnvironment()
         self.registry: Dict[str, Definition] = {}
+        self.imported_yaml_files: Set[str] = set()
         self.compiler = Compiler(self.registry)
         self.dispatcher = dispatcher or Dispatcher()
         self.jinja = jinja_engine or JinjaEngine()
@@ -68,7 +70,20 @@ class Runtime:
     # --- YAML import ----------------------------------------------------
 
     def import_yaml(self, file_path: str) -> List[Definition]:
-        loaded = self.compiler.import_file(file_path)
+        normalized_path = os.path.realpath(os.path.abspath(file_path))
+        if normalized_path in self.imported_yaml_files:
+            return []
+
+        self.imported_yaml_files.add(normalized_path)
+        try:
+            loaded = self.compiler.import_file(normalized_path)
+            for definition in list(loaded):
+                for module in definition.modules:
+                    module_path = os.path.join(os.path.dirname(normalized_path), module)
+                    loaded.extend(self.import_yaml(module_path))
+        except Exception:
+            self.imported_yaml_files.discard(normalized_path)
+            raise
         self.globals["registry"] = list(self.registry.keys())
         return loaded
 
@@ -125,6 +140,7 @@ class Runtime:
             id=original.id,
             extends=original.extends,
             mixins=list(original.mixins),
+            modules=list(original.modules),
             run=run,
             variables=variables,
             inputs=inputs,
