@@ -1,17 +1,19 @@
 """YAML-driven polyglot abstract state machine runtime."""
 
-from .shell_environment import ShellEnvironment
-from .scope_frame import ScopeFrame
-from .definition import Definition, InputConstraint
 from .compiler import Compiler
-from .jinja_engine import JinjaEngine
+from .definition import BlockDocumentation, Definition, DefinitionDocumentation, InputConstraint
 from .dispatcher import Dispatcher
+from .jinja_engine import JinjaEngine
 from .runtime import Runtime
+from .scope_frame import ScopeFrame
+from .shell_environment import ShellEnvironment
 
 __all__ = [
     "ShellEnvironment",
     "ScopeFrame",
     "Definition",
+    "DefinitionDocumentation",
+    "BlockDocumentation",
     "InputConstraint",
     "Compiler",
     "JinjaEngine",

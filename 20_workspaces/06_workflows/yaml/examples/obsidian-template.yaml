@@ -1,4 +1,8 @@
-- id: notebook/obsidian-template
+- id: example/obsidian-template
+  title: Obsidian Daily Note Template
+  description: |
+    Creates a starter daily-note Markdown template beneath an Obsidian folder.
+  tags: [example, obsidian, templates]
   extends: builtin/files/write-text
   inputs:
     obsidian_folder:

@@ -3,7 +3,13 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from drivers.file import copy_asset, write_json_artifact, write_text_artifact
+from drivers.file import (
+    copy_asset,
+    create_artifact_directory,
+    remove_artifact,
+    write_json_artifact,
+    write_text_artifact,
+)
 
 
 def test_artifact_driver_copies_and_writes_nested_targets(tmp_path: Path) -> None:
@@ -12,7 +18,12 @@ def test_artifact_driver_copies_and_writes_nested_targets(tmp_path: Path) -> Non
     copied = copy_asset(source, tmp_path / "inputs" / "copy.txt")
     report = write_json_artifact(tmp_path / "reports" / "item.json", {"ok": True})
     text = write_text_artifact(tmp_path / "reports" / "item.md", "# Result\n")
+    folder = create_artifact_directory(tmp_path / "generated" / "pages")
 
     assert copied.read_text(encoding="utf-8") == "payload"
     assert json.loads(report.read_text(encoding="utf-8")) == {"ok": True}
     assert text.read_text(encoding="utf-8") == "# Result\n"
+    assert folder.is_dir()
+
+    remove_artifact(text)
+    assert not text.exists()

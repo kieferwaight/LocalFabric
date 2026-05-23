@@ -5,5 +5,8 @@
             "envManager": "ms-python.python:system",
             "packageManager": "ms-python.python:pip"
         }
+    ],
+    "markdown.styles": [
+        ".vscode/documentation.css"
     ]
 }
