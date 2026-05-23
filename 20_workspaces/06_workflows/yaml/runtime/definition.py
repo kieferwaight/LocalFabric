@@ -32,6 +32,7 @@ class Definition:
     id: str
     extends: Optional[str] = None
     mixins: List[str] = field(default_factory=list)
+    modules: List[str] = field(default_factory=list)
     run: List[Dict[str, str]] = field(default_factory=list)
     variables: Dict[str, Any] = field(default_factory=dict)
     inputs: Dict[str, InputConstraint] = field(default_factory=dict)
@@ -43,10 +44,14 @@ class Definition:
             raise ValueError("Definition is missing required 'id' field.")
         inputs_raw = raw.get("inputs") or {}
         inputs = {k: InputConstraint.from_dict(v or {}) for k, v in inputs_raw.items()}
+        modules = raw.get("modules") or []
+        if not isinstance(modules, list) or not all(isinstance(path, str) for path in modules):
+            raise ValueError("Definition 'modules' must be a list of YAML file paths.")
         return cls(
             id=str(raw["id"]),
             extends=raw.get("extends"),
             mixins=list(raw.get("mixins") or []),
+            modules=list(modules),
             run=list(raw.get("run") or []),
             variables=dict(raw.get("variables") or {}),
             inputs=inputs,

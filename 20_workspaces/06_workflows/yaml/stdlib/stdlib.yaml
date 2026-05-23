@@ -6,6 +6,14 @@
         import sys
         print(f"Booting execution frame cascade...")
 
+- id: builtin/load-modules
+  extends: abstract/base
+  modules:
+    - stdlib.files.yaml
+    - stdlib.git.yaml
+  variables:
+    module_namespace: "builtin"
+
 - id: builtin/run-command
   extends: abstract/base
   inputs:
