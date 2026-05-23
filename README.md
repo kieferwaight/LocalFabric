@@ -46,6 +46,7 @@ flowchart LR
 | [Data Model](DATA_MODEL.md) | Persistent data layout, addressing model, service mappings, and driver responsibilities. |
 | [Repository Structure](REPO_STRUCTURE.md) | Canonical numbered classifications, ownership rules, and migration guidance. |
 | [Services](SERVICES.md) | Service runtime design, service categories, state model, and operational interface. |
+| [Collaboration](COLLABORATION.md) | Agent worktrees, branch naming, pull request requirements, and integration rules. |
 | [Workspace Guide](20_workspaces/README.md) | Implementation buckets, import strategy, commands, and current workspace conventions. |
 | [Classification Audit](20_workspaces/18_docs/classification_audit.md) | Automated checks for cross-classification responsibility leaks. |
 | [Remediation Workflow](20_workspaces/18_docs/classification_remediation_workflow.md) | Agent workflow for resolving findings safely and iteratively. |

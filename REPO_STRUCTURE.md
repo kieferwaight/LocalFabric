@@ -10,12 +10,18 @@ All code and assets must conform to this layout to ensure consistency, discovera
 
 ```text
 .
+|-- .github/
+|   `-- PULL_REQUEST_TEMPLATE.md
 |-- 00_planning/
 |-- 10_todo/
 |-- 20_workspaces/
+|-- README.md
 |-- SECURITY.md
 |-- TESTING.md
 |-- ARCHITECTURE.md
+|-- COLLABORATION.md
+|-- DATA_MODEL.md
+|-- SERVICES.md
 `-- REPO_STRUCTURE.md
 ```
 
