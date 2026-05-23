@@ -1,14 +1,32 @@
 - id: mixin/git-info
+  title: Git Information
+  description: |
+    Adds the current short Git commit SHA to execution state.
+  tags: [mixin, git, deployment]
   variables:
     git_short_sha: "unknown"
+  docs:
+    variables:
+      git_short_sha: Current abbreviated Git revision, or `unknown`.
+    run:
+      - title: Resolve Git revision
   run:
     - bash: |
         sha=$(git -C "{{ env.cwd }}" rev-parse --short HEAD 2>/dev/null || echo "unknown")
         printf '{"git_short_sha": "%s"}' "$sha" > "$STATE_FILE"
 
 - id: mixin/timestamp
+  title: Timestamp
+  description: |
+    Adds a UTC deployment start timestamp to execution state.
+  tags: [mixin, deployment]
   variables:
     deploy_started_at: "pending"
+  docs:
+    variables:
+      deploy_started_at: UTC start timestamp written during execution.
+    run:
+      - title: Record deployment time
   run:
     - python: |
         import json, os, datetime
@@ -16,6 +34,10 @@
             json.dump({"deploy_started_at": datetime.datetime.utcnow().isoformat() + "Z"}, fh)
 
 - id: cloud/deployer
+  title: Cloud Deployer
+  description: |
+    Demonstrates an inherited, mixin-composed deployment workflow.
+  tags: [example, deployment, cloud]
   extends: abstract/base
   mixins:
     - mixin/timestamp
@@ -29,17 +51,29 @@
       type: "number"
       required: false
       default: 3
+      description: Number of application replicas to deploy.
     canary:
       type: "boolean"
       required: false
       default: "false"
+      description: Whether to run a canary deployment.
     regions:
       type: "array"
       required: false
       default: "us-east-1,us-west-2"
+      description: Comma-separated deployment regions.
   variables:
     workspace: "{{ env.cwd }}"
     banner: "[deploy v{{ runtime.version }}] {{ service }} -> {{ regions }}"
+  docs:
+    variables:
+      workspace: Directory from which the deployment workflow executes.
+      banner: Rendered deployment summary header.
+    run:
+      - title: Display deployment plan
+      - title: Write deployment result
+    teardown:
+      - title: Report teardown
   run:
     - bash: |
         echo "=========================================="

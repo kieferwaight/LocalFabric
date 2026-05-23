@@ -6,9 +6,27 @@ from __future__ import annotations
 import json
 import os
 import sys
-from typing import Dict, List, Tuple
 
-from workflows.yaml.runtime import Runtime, ShellEnvironment
+try:
+    from workflows.yaml.runtime import Runtime, ShellEnvironment
+except ModuleNotFoundError:
+    import importlib.util
+    from pathlib import Path
+
+    workspace_root = Path(__file__).resolve().parents[2]
+    drivers_init = workspace_root / "08_drivers" / "__init__.py"
+    spec = importlib.util.spec_from_file_location(
+        "drivers",
+        drivers_init,
+        submodule_search_locations=[str(drivers_init.parent)],
+    )
+    if spec is None or spec.loader is None:
+        raise
+    drivers = importlib.util.module_from_spec(spec)
+    sys.modules["drivers"] = drivers
+    spec.loader.exec_module(drivers)
+    # Direct invocation from this folder is the documented YAML notebook interface.
+    from runtime import Runtime, ShellEnvironment
 
 
 USAGE = (
@@ -17,13 +35,13 @@ USAGE = (
 )
 
 
-def parse_cli(argv: List[str]) -> Tuple[str, str, List[str]]:
+def parse_cli(argv: list[str]) -> tuple[str, str, list[str]]:
     """Split argv into (yaml_file, definition_id, remainder).
 
     The first two positional values are mandatory.
     """
-    positional: List[str] = []
-    rest: List[str] = []
+    positional: list[str] = []
+    rest: list[str] = []
     for tok in argv:
         if tok.startswith("-"):
             rest.append(tok)
@@ -36,7 +54,7 @@ def parse_cli(argv: List[str]) -> Tuple[str, str, List[str]]:
     return positional[0], positional[1], rest
 
 
-def main(argv: List[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
     if not argv or argv[0] in ("-h", "--help"):
         print(USAGE)
@@ -48,14 +66,12 @@ def main(argv: List[str] | None = None) -> int:
 
     runtime = Runtime(env=env, system_debug=debug)
 
-    stdlib_path = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "stdlib", "stdlib.yaml"
-    )
+    stdlib_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "stdlib", "stdlib.yaml")
     if os.path.exists(stdlib_path):
         runtime.import_yaml(stdlib_path)
     runtime.import_yaml(yaml_file)
 
-    arguments: Dict[str, object] = dict(env.options)
+    arguments: dict[str, object] = dict(env.options)
     # Positional args are exposed via env.args; we also pass them as 'args'.
     final_scope = runtime.execute(definition_id, arguments)
 

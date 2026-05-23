@@ -84,7 +84,7 @@ def test_github_notebook_composes_gitignore_init_and_gh_steps():
 
     assembled = runtime.assemble_definition_frame("notebook/git/github")
 
-    assert [next(iter(block)) for block in assembled.run] == ["bash", "python", "bash"]
+    assert [next(iter(block)) for block in assembled.run] == ["bash", "artifact", "bash"]
     assert "repository_name" in assembled.inputs
 
 

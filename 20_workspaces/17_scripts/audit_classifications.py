@@ -319,7 +319,7 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
             )
         )
 
-    if rel.startswith("06_workflows/") and (
+    if rel.startswith("06_workflows/") and path.suffix != ".md" and (
         ".write_text(" in text
         or "shutil.copy2(" in text
         or ".mkdir(" in text

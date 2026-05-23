@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Any
 
 from jinja2 import Environment, StrictUndefined
 
@@ -17,7 +17,7 @@ class JinjaEngine:
             undefined=StrictUndefined,
         )
 
-    def render(self, source: str, context: Dict[str, Any]) -> str:
+    def render(self, source: str, context: dict[str, Any]) -> str:
         if not isinstance(source, str):
             return source
         current = source
@@ -31,7 +31,7 @@ class JinjaEngine:
             current = rendered
         return current
 
-    def render_value(self, value: Any, context: Dict[str, Any]) -> Any:
+    def render_value(self, value: Any, context: dict[str, Any]) -> Any:
         if isinstance(value, str):
             return self.render(value, context)
         if isinstance(value, list):
@@ -39,3 +39,13 @@ class JinjaEngine:
         if isinstance(value, dict):
             return {k: self.render_value(v, context) for k, v in value.items()}
         return value
+
+    def evaluate(self, expression: Any, context: dict[str, Any]) -> Any:
+        """Evaluate a native Jinja expression for structured workflow operations."""
+        if not isinstance(expression, str):
+            return expression
+        return self.env.compile_expression(expression)(**context)
+
+    def render_template(self, source: str, context: dict[str, Any]) -> str:
+        """Render an authored template once, preserving template syntax in data values."""
+        return self.env.from_string(source).render(**context)

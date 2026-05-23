@@ -1,0 +1,79 @@
+- id: builtin/docs/prune-definition-pages
+  title: Prune Generated Definition Pages
+  description: |
+    Removes obsolete generated definition pages in write mode and rejects them in check mode.
+  tags: [documentation, files]
+  extends: abstract/base
+  inputs:
+    output_dir:
+      type: string
+      required: true
+      description: Documentation output directory.
+    mode:
+      type: string
+      required: false
+      default: write
+      description: Either `write` or `check`.
+  run:
+    - generated_pages:
+        directory: "{{ output_dir }}/definitions"
+        expected: runtime.catalog.definitions
+        mode: "{{ mode }}"
+  docs:
+    run:
+      - title: Reconcile generated pages
+
+- id: builtin/docs/render-reference
+  title: Render API Reference
+  description: |
+    Generates the catalog index, YAML schema guide, and one page for every imported definition.
+  tags: [documentation, templates]
+  extends: abstract/base
+  inputs:
+    output_dir:
+      type: string
+      required: false
+      default: docs
+      description: Documentation output directory.
+    mode:
+      type: string
+      required: false
+      default: write
+      description: Either `write` to generate output or `check` to verify it.
+  variables:
+    template_root: "{{ env.cwd }}/templates/docs"
+  docs:
+    variables:
+      template_root: Folder containing authored Markdown templates.
+    run:
+      - title: Render API index
+      - title: Render schema guide
+      - title: Render definition pages
+      - title: Prune stale definition pages
+  run:
+    - invoke:
+        definition: builtin/template/render-markdown
+        arguments:
+          source_template: "{{ template_root }}/index.md.j2"
+          target_path: "{{ output_dir }}/README.md"
+          mode: "{{ mode }}"
+    - invoke:
+        definition: builtin/template/render-markdown
+        arguments:
+          source_template: "{{ template_root }}/schema.md.j2"
+          target_path: "{{ output_dir }}/schema.md"
+          mode: "{{ mode }}"
+    - invoke:
+        definition: builtin/template/render-markdown
+        arguments:
+          source_template: "{{ template_root }}/definition.md.j2"
+          target_path: "{{ output_dir }}/{{ definition.page_path }}"
+          mode: "{{ mode }}"
+      for_each:
+        items: runtime.catalog.definitions
+        as: definition
+    - invoke:
+        definition: builtin/docs/prune-definition-pages
+        arguments:
+          output_dir: "{{ output_dir }}"
+          mode: "{{ mode }}"
