@@ -1,0 +1,29 @@
+- id: notebook/obsidian-template
+  extends: builtin/files/write-text
+  inputs:
+    obsidian_folder:
+      type: "string"
+      required: true
+      description: "Path to an Obsidian vault or notes folder."
+    template_name:
+      type: "string"
+      required: false
+      default: "daily-note.md"
+  variables:
+    target_path: "{{ obsidian_folder }}/Templates/{{ template_name }}"
+    content: |
+      ---
+      created: "[[OPEN_TEMPLATE]]date:YYYY-MM-DD[[CLOSE_TEMPLATE]]"
+      tags:
+        - daily-note
+      ---
+
+      # [[OPEN_TEMPLATE]]date:dddd, MMMM D, YYYY[[CLOSE_TEMPLATE]]
+
+      ## Focus
+
+      -
+
+      ## Notes
+
+      -

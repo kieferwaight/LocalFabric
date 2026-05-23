@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any, Dict, List
 from unittest.mock import patch
 
@@ -10,6 +11,9 @@ import pytest
 from workflows.yaml.runtime import Definition, InputConstraint, Runtime, ScopeFrame, ShellEnvironment
 from workflows.yaml.runtime.dispatcher import DispatchResult, Dispatcher
 from workflows.yaml.runtime.runtime import coerce_type
+
+
+YAML_ROOT = Path(__file__).resolve().parents[2] / "06_workflows" / "yaml"
 
 
 class RecordingDispatcher(Dispatcher):
@@ -35,6 +39,53 @@ class RecordingDispatcher(Dispatcher):
 def make_runtime(dispatcher: Dispatcher | None = None) -> Runtime:
     env = ShellEnvironment(cwd="/tmp/test-cwd")
     return Runtime(env=env, dispatcher=dispatcher or RecordingDispatcher())
+
+
+# ---------- Module library import and notebook examples ----------
+
+
+def test_stdlib_manifest_loads_namespaced_modules():
+    runtime = make_runtime()
+    runtime.import_yaml(str(YAML_ROOT / "stdlib" / "stdlib.yaml"))
+
+    assert "builtin/load-modules" in runtime.registry
+    assert "builtin/files/write-text" in runtime.registry
+    assert "builtin/git/init-current-workspace" in runtime.registry
+
+
+def test_module_paths_are_relative_to_the_declaring_yaml(tmp_path):
+    child = tmp_path / "child.yaml"
+    child.write_text("- id: child\n", encoding="utf-8")
+    manifest = tmp_path / "manifest.yaml"
+    manifest.write_text("- id: loader\n  modules:\n    - child.yaml\n", encoding="utf-8")
+
+    runtime = make_runtime()
+    runtime.import_yaml(str(manifest))
+
+    assert list(runtime.registry) == ["loader", "child"]
+
+
+def test_obsidian_notebook_writes_core_template_markers(tmp_path):
+    runtime = Runtime(env=ShellEnvironment(cwd=str(tmp_path)), dispatcher=Dispatcher())
+    runtime.import_yaml(str(YAML_ROOT / "stdlib" / "stdlib.yaml"))
+    runtime.import_yaml(str(YAML_ROOT / "notebooks" / "obsidian-template.yaml"))
+
+    runtime.execute("notebook/obsidian-template", {"obsidian_folder": str(tmp_path)})
+
+    template = (tmp_path / "Templates" / "daily-note.md").read_text(encoding="utf-8")
+    assert "{{date:YYYY-MM-DD}}" in template
+    assert "{{date:dddd, MMMM D, YYYY}}" in template
+
+
+def test_github_notebook_composes_gitignore_init_and_gh_steps():
+    runtime = make_runtime()
+    runtime.import_yaml(str(YAML_ROOT / "stdlib" / "stdlib.yaml"))
+    runtime.import_yaml(str(YAML_ROOT / "notebooks" / "git-current-workspace.yaml"))
+
+    assembled = runtime.assemble_definition_frame("notebook/git/github")
+
+    assert [next(iter(block)) for block in assembled.run] == ["bash", "python", "bash"]
+    assert "repository_name" in assembled.inputs
 
 
 # ---------- AC-101.1: Child overrides parent variable, inherits the rest ----------

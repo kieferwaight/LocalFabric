@@ -1,0 +1,30 @@
+- id: builtin/files/write-text
+  extends: abstract/base
+  variables:
+    target_path: ""
+    content: ""
+  run:
+    - python: |
+        from pathlib import Path
+
+        target = Path({{ target_path | tojson }})
+        content = {{ content | tojson }}
+        content = content.replace("[[OPEN_TEMPLATE]]", "{" * 2)
+        content = content.replace("[[CLOSE_TEMPLATE]]", "}" * 2)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(content, encoding="utf-8")
+        print(f"Wrote {target}")
+
+- id: builtin/files/create-directory
+  extends: abstract/base
+  inputs:
+    directory_path:
+      type: "string"
+      required: true
+  run:
+    - python: |
+        from pathlib import Path
+
+        directory = Path({{ directory_path | tojson }})
+        directory.mkdir(parents=True, exist_ok=True)
+        print(f"Created {directory}")

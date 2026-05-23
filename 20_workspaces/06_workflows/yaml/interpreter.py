@@ -48,7 +48,9 @@ def main(argv: List[str] | None = None) -> int:
 
     runtime = Runtime(env=env, system_debug=debug)
 
-    stdlib_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "stdlib.yaml")
+    stdlib_path = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "stdlib", "stdlib.yaml"
+    )
     if os.path.exists(stdlib_path):
         runtime.import_yaml(stdlib_path)
     runtime.import_yaml(yaml_file)
