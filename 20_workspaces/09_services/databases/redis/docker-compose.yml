@@ -1,0 +1,12 @@
+# Required env: DATA_PATH
+# Optional env: REDIS_PORT (default 6379)
+services:
+  redis:
+    image: redis:7
+    container_name: contentgraph-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - ${DATA_PATH}:/data

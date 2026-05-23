@@ -1,0 +1,13 @@
+# Required env: DATA_PATH
+# Optional env: OPEN_WEBUI_PORT (default 3001), OLLAMA_BASE_URL (default http://ollama:11434)
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: contentgraph-open-webui
+    restart: unless-stopped
+    environment:
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://ollama:11434}
+    ports:
+      - "${OPEN_WEBUI_PORT:-3001}:8080"
+    volumes:
+      - ${DATA_PATH}:/app/backend/data

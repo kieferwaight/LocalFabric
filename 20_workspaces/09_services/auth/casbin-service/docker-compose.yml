@@ -1,0 +1,9 @@
+# Optional env: CASBIN_PORT (default 8090)
+services:
+  casbin-service:
+    build: .
+    image: contentgraph-casbin-service:local
+    container_name: contentgraph-casbin-service
+    restart: unless-stopped
+    ports:
+      - "${CASBIN_PORT:-8090}:8080"

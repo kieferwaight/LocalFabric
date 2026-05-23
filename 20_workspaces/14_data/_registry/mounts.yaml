@@ -1,0 +1,44 @@
+# mounts.yaml — explicit volume mount mapping for service instances.
+#
+# The service runtime expands this into the ${DATA_PATH}:<container-path>
+# bindings written into per-instance docker-compose overrides.
+
+mounts:
+  postgres:
+    container_path: /var/lib/postgresql/data
+  pgvector:
+    container_path: /var/lib/postgresql/data
+  redis:
+    container_path: /data
+  qdrant:
+    container_path: /qdrant/storage
+  weaviate:
+    container_path: /var/lib/weaviate
+  opensearch:
+    container_path: /usr/share/opensearch/data
+  neo4j:
+    container_paths:
+      - host: data
+        container: /data
+      - host: logs
+        container: /logs
+      - host: import
+        container: /var/lib/neo4j/import
+      - host: plugins
+        container: /plugins
+  ollama:
+    container_path: /root/.ollama
+  open-webui:
+    container_path: /app/backend/data
+  grafana:
+    container_path: /var/lib/grafana
+  prometheus:
+    container_path: /prometheus
+  jaeger:
+    container_path: /badger
+  keycloak:
+    container_path: /opt/keycloak/data
+  minio:
+    container_path: /data
+  gitea:
+    container_path: /data

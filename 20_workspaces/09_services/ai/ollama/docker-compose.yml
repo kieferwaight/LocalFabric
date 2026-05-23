@@ -1,0 +1,11 @@
+# Required env: DATA_PATH
+# Optional env: OLLAMA_PORT (default 11434)
+services:
+  ollama:
+    image: ollama/ollama
+    container_name: contentgraph-ollama
+    restart: unless-stopped
+    ports:
+      - "${OLLAMA_PORT:-11434}:11434"
+    volumes:
+      - ${DATA_PATH}:/root/.ollama

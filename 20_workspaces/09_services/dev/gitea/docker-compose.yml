@@ -1,0 +1,16 @@
+# Required env: DATA_PATH
+# Optional env: GITEA_HTTP_PORT (default 3000), GITEA_SSH_PORT (default 2222), USER_UID (default 1000), USER_GID (default 1000)
+services:
+  gitea:
+    image: gitea/gitea:latest
+    container_name: contentgraph-gitea
+    restart: unless-stopped
+    environment:
+      USER_UID: ${USER_UID:-1000}
+      USER_GID: ${USER_GID:-1000}
+      GITEA__database__DB_TYPE: sqlite3
+    ports:
+      - "${GITEA_HTTP_PORT:-3000}:3000"
+      - "${GITEA_SSH_PORT:-2222}:22"
+    volumes:
+      - ${DATA_PATH}:/data

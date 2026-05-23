@@ -1,0 +1,51 @@
+- id: abstract/base
+  variables:
+    system_log_format: "[{{ entity_id }} | {{ runtime.version }}]"
+  run:
+    - python: |
+        import sys
+        print(f"Booting execution frame cascade...")
+
+- id: builtin/run-command
+  extends: abstract/base
+  inputs:
+    command:
+      type: "string"
+      required: true
+    working_dir:
+      type: "string"
+      required: false
+      default: "{{ env.cwd }}"
+  run:
+    - bash: |
+        cd "{{ working_dir }}"
+        {{ command }}
+
+- id: builtin/clean-workspace
+  extends: abstract/base
+  inputs:
+    target_path:
+      type: "string"
+      required: true
+  run:
+    - bash: |
+        if [ -d "{{ target_path }}" ]; then
+          echo "Safely purging workspace directory: {{ target_path }}"
+          rm -rf "{{ target_path }}"
+        fi
+
+- id: builtin/logger
+  extends: abstract/base
+  inputs:
+    message:
+      type: "string"
+      required: true
+    level:
+      type: "string"
+      required: false
+      default: "INFO"
+  run:
+    - python: |
+        from datetime import datetime
+        ts = datetime.utcnow().isoformat()
+        print(f"[{ts}] [{{ level }}] {{ message }}")

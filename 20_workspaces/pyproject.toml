@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scratch-workspaces"
+version = "0.1.0"
+description = "Workspace-level pyproject for the new numeric-bucket layout."
+requires-python = ">=3.11"
+dependencies = ["pyyaml>=6.0"]
+
+# ─── Import-name strategy ─────────────────────────────────────────────────────
+# Numeric-prefixed directory names (02_core, 04_harnesses, ...) aren't valid
+# Python identifiers. We solve this with symlinks at the workspace root:
+#
+#     core       -> 02_core/src/core
+#     adapters   -> 03_adapters
+#     harnesses  -> 04_harnesses
+#     router     -> 05_router
+#     workflows  -> 06_workflows
+#     tools      -> 07_tools
+#     drivers    -> 08_drivers
+#     mcp_layer  -> 11_mcp        # NB: NOT `mcp` — avoids colliding with
+#                                 # the PyPI `mcp` SDK that 11_mcp/servers/
+#                                 # server.py imports as `mcp.server.fastmcp`.
+#
+# With these symlinks plus `20_workspaces/` on PYTHONPATH (handled by the
+# pytest config below, or set manually), every cross-bucket import like
+# `from harnesses.base import Harness` resolves cleanly.
+
+[tool.pytest.ini_options]
+testpaths = ["16_tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]

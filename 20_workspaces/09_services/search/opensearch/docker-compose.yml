@@ -1,0 +1,21 @@
+# Required env: DATA_PATH, OPENSEARCH_INITIAL_ADMIN_PASSWORD
+# Optional env: OPENSEARCH_PORT (default 9200), OPENSEARCH_PERF_PORT (default 9600)
+services:
+  opensearch:
+    image: opensearchproject/opensearch:2
+    container_name: contentgraph-opensearch
+    restart: unless-stopped
+    environment:
+      discovery.type: single-node
+      plugins.security.disabled: "true"
+      OPENSEARCH_INITIAL_ADMIN_PASSWORD: ${OPENSEARCH_INITIAL_ADMIN_PASSWORD}
+      OPENSEARCH_JAVA_OPTS: -Xms512m -Xmx512m
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "${OPENSEARCH_PORT:-9200}:9200"
+      - "${OPENSEARCH_PERF_PORT:-9600}:9600"
+    volumes:
+      - ${DATA_PATH}:/usr/share/opensearch/data

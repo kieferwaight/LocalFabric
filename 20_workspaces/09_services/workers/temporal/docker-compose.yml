@@ -1,0 +1,18 @@
+# Required env: POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_SEEDS
+# Optional env: TEMPORAL_PORT (default 7233), DB_PORT (default 5432)
+services:
+  temporal:
+    image: temporalio/auto-setup
+    container_name: contentgraph-temporal
+    restart: unless-stopped
+    environment:
+      DB: postgresql
+      DB_PORT: ${DB_PORT:-5432}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PWD: ${POSTGRES_PASSWORD}
+      POSTGRES_SEEDS: ${POSTGRES_SEEDS:-pgvector}
+      DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/development-sql.yaml
+    ports:
+      - "${TEMPORAL_PORT:-7233}:7233"
+    volumes:
+      - ./dynamicconfig:/etc/temporal/config/dynamicconfig

@@ -1,0 +1,127 @@
+# routing_rules.yaml
+#
+# Declarative rule set for the Router. Mirrors the in-code defaults found in
+# classifier.py (intent regexes), scorer.py (ROUTES + _INTENT_ROUTE_MAP), and
+# policy.py (constraints). Edit this file to add or reweight routes without
+# touching Python — a future loader will read it at startup.
+#
+# Tiers: local | hybrid | frontier | agent
+
+version: 1
+
+# ------------------------------------------------------------------
+# Route registry
+# ------------------------------------------------------------------
+routes:
+  # ---- Local routes (free, fast) ----
+  - id: local_research
+    tier: local
+    description: local_research_scaffold via Ollama
+    handler: workflows.research.local:local_research_scaffold
+
+  - id: local_tests
+    tier: local
+    description: run_local_tests via subprocess
+    handler: tools.shell.run_tests:run_local_tests
+
+  - id: local_embed
+    tier: local
+    description: sweep + embed via nomic-embed-text
+    handler: tools.embeddings.sweep:sweep
+
+  - id: local_query
+    tier: local
+    description: query_local_knowledge via LanceDB
+    handler: tools.embeddings.query:LocalKnowledgeQuery
+
+  # ---- Hybrid routes ----
+  - id: hybrid_research
+    tier: hybrid
+    description: local pre-process + frontier summarize
+    handler: workflows.research.local:local_research_scaffold
+    deferred_model: claude-sonnet
+
+  # ---- Frontier routes (paid) ----
+  - id: frontier_claude
+    tier: frontier
+    description: Claude API (claude-sonnet / claude-opus)
+    deferred_model: claude-sonnet-4-6
+
+  - id: frontier_gemini
+    tier: frontier
+    description: Google Gemini API
+    deferred_model: gemini-2.0-flash
+
+  - id: frontier_codex
+    tier: frontier
+    description: OpenAI Codex / GPT-4o
+    deferred_model: gpt-4o
+
+  # ---- Agent routes ----
+  - id: agent_research
+    tier: agent
+    description: multi-step research agent
+
+  - id: agent_code
+    tier: agent
+    description: multi-step code generation + test agent
+
+# ------------------------------------------------------------------
+# Intent → preferred routes (ordered by preference)
+# ------------------------------------------------------------------
+intent_routes:
+  research:  [local_research, hybrid_research, frontier_claude]
+  testing:   [local_tests]
+  code_fix:  [frontier_claude, frontier_codex, hybrid_research]
+  code_gen:  [frontier_claude, frontier_codex, frontier_gemini]
+  embed:     [local_embed]
+  query:     [local_query]
+  summarize: [local_research, hybrid_research, frontier_claude]
+  route:     [frontier_claude]
+  unknown:   [local_research, frontier_claude]
+
+# ------------------------------------------------------------------
+# Scoring weights (used by scorer.py composite formula)
+# ------------------------------------------------------------------
+scoring:
+  intent_affinity_weight: 0.5
+  tier_match_weight:      0.3
+  confidence_boost:       0.1
+  # Tier-distance table: exact, 1-off, 2-off, 3-off
+  tier_distance: [1.0, 0.6, 0.3, 0.1]
+  # Affinity falloff per rank position in the intent route list
+  affinity_falloff: 0.25
+  # Non-preferred routes still receive this minimum affinity
+  affinity_floor: 0.1
+  # Unavailable routes are scaled down rather than excluded
+  unavailable_penalty: 0.05
+
+# ------------------------------------------------------------------
+# Complexity thresholds (used by classifier.py)
+# ------------------------------------------------------------------
+complexity_thresholds:
+  frontier_tokens: 1500
+  agent_tokens:    4000
+
+# ------------------------------------------------------------------
+# Default policy (cost / latency / tier constraints)
+# ------------------------------------------------------------------
+policy:
+  max_cost_usd:    null
+  max_latency_sec: null
+  allowed_tiers:   [local, hybrid, frontier, agent]
+  prefer_local:    true
+  max_fallbacks:   2
+
+# ------------------------------------------------------------------
+# Feedback (historical weights via EMA)
+# ------------------------------------------------------------------
+feedback:
+  path:         "~/.local_router_cache/feedback.json"
+  ema_alpha:    0.2
+  weight_min:   0.1
+  weight_max:   2.0
+  success_signals:
+    success:  1.0
+    deferred: 0.5
+    failure:  0.0

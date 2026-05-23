@@ -1,0 +1,16 @@
+# Required env: DATA_PATH, MINIO_ROOT_USER, MINIO_ROOT_PASSWORD
+# Optional env: MINIO_API_PORT (default 9000), MINIO_CONSOLE_PORT (default 9001)
+services:
+  minio:
+    image: minio/minio
+    container_name: contentgraph-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    ports:
+      - "${MINIO_API_PORT:-9000}:9000"
+      - "${MINIO_CONSOLE_PORT:-9001}:9001"
+    volumes:
+      - ${DATA_PATH}:/data

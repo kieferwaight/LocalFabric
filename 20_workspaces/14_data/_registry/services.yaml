@@ -1,0 +1,157 @@
+# services.yaml — service catalog metadata.
+#
+# Each entry mirrors a directory under 09_services/<category>/<name>/.
+# The service runtime (10_service_runtime/) reads this to resolve
+# `cmd <service> <data-path>` invocations.
+
+services:
+  # ai/
+  ollama:
+    category: ai
+    default_port: 11434
+    data_subpath: apps/ollama
+  open-webui:
+    category: ai
+    default_port: 3000
+    data_subpath: apps/openwebui
+    depends_on: [ollama]
+
+  # databases/
+  postgres:
+    category: databases
+    default_port: 5432
+    data_subpath: stores/postgres
+  pgvector:
+    category: databases
+    default_port: 5433
+    data_subpath: stores/postgres
+  redis:
+    category: databases
+    default_port: 6379
+    data_subpath: stores/redis
+
+  # vector/
+  qdrant:
+    category: vector
+    default_port: 6333
+    data_subpath: stores/qdrant
+  weaviate:
+    category: vector
+    default_port: 8080
+    data_subpath: stores/weaviate
+
+  # search/
+  opensearch:
+    category: search
+    default_port: 9200
+    data_subpath: stores/opensearch
+  opensearch-dashboards:
+    category: search
+    default_port: 5601
+    data_subpath: apps/opensearch-dashboards
+    depends_on: [opensearch]
+
+  # graph/
+  neo4j:
+    category: graph
+    default_port: 7687
+    data_subpath: stores/neo4j
+
+  # auth/
+  keycloak:
+    category: auth
+    default_port: 8081
+    data_subpath: apps/keycloak
+  openfga:
+    category: auth
+    default_port: 8080
+    data_subpath: apps/openfga
+  casbin-service:
+    category: auth
+    default_port: 8082
+    data_subpath: apps/casbin
+
+  # observability/
+  grafana:
+    category: observability
+    default_port: 3001
+    data_subpath: apps/grafana
+  prometheus:
+    category: observability
+    default_port: 9090
+    data_subpath: apps/prometheus
+  jaeger:
+    category: observability
+    default_port: 16686
+    data_subpath: apps/jaeger
+
+  # document/
+  tika:
+    category: document
+    default_port: 9998
+    data_subpath: cache/tika
+  grobid:
+    category: document
+    default_port: 8070
+    data_subpath: cache/grobid
+  unstructured:
+    category: document
+    default_port: 8000
+    data_subpath: cache/unstructured
+  tesseract-ocr:
+    category: document
+    default_port: 8083
+    data_subpath: runs/tesseract-ocr
+  libreoffice:
+    category: document
+    default_port: 8084
+    data_subpath: runs/libreoffice
+  clamav:
+    category: document
+    default_port: 3310
+    data_subpath: apps/clamav
+  playwright-worker:
+    category: document
+    default_port: 8085
+    data_subpath: runs/playwright-worker
+
+  # workers/
+  temporal:
+    category: workers
+    default_port: 7233
+    data_subpath: apps/temporal
+    depends_on: [postgres]
+  temporal-ui:
+    category: workers
+    default_port: 8088
+    data_subpath: apps/temporal-ui
+    depends_on: [temporal]
+  worker:
+    category: workers
+    data_subpath: runs/worker
+  fastapi:
+    category: workers
+    default_port: 8000
+    data_subpath: apps/fastapi
+
+  # dev/
+  jupyter:
+    category: dev
+    default_port: 8888
+    data_subpath: apps/jupyter
+  gitea:
+    category: dev
+    default_port: 3002
+    data_subpath: apps/gitea
+
+  # proxy/
+  traefik:
+    category: proxy
+    default_port: 80
+    data_subpath: apps/traefik
+
+  # storage/
+  minio:
+    category: storage
+    default_port: 9000
+    data_subpath: apps/minio

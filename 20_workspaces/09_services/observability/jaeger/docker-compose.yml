@@ -1,0 +1,15 @@
+# Required env: DATA_PATH
+# Optional env: JAEGER_UI_PORT (default 16686), JAEGER_OTLP_GRPC_PORT (default 4317), JAEGER_OTLP_HTTP_PORT (default 4318)
+services:
+  jaeger:
+    image: jaegertracing/all-in-one
+    container_name: contentgraph-jaeger
+    restart: unless-stopped
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+    ports:
+      - "${JAEGER_UI_PORT:-16686}:16686"
+      - "${JAEGER_OTLP_GRPC_PORT:-4317}:4317"
+      - "${JAEGER_OTLP_HTTP_PORT:-4318}:4318"
+    volumes:
+      - ${DATA_PATH}:/tmp

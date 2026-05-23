@@ -1,0 +1,11 @@
+# Required env: DATA_PATH
+# Optional env: JUPYTER_PORT (default 8888)
+services:
+  jupyter:
+    image: jupyter/base-notebook
+    container_name: contentgraph-jupyter
+    restart: unless-stopped
+    ports:
+      - "${JUPYTER_PORT:-8888}:8888"
+    volumes:
+      - ${DATA_PATH}:/home/jovyan/work

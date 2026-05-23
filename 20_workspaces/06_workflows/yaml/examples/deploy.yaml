@@ -1,0 +1,67 @@
+- id: mixin/git-info
+  variables:
+    git_short_sha: "unknown"
+  run:
+    - bash: |
+        sha=$(git -C "{{ env.cwd }}" rev-parse --short HEAD 2>/dev/null || echo "unknown")
+        printf '{"git_short_sha": "%s"}' "$sha" > "$STATE_FILE"
+
+- id: mixin/timestamp
+  variables:
+    deploy_started_at: "pending"
+  run:
+    - python: |
+        import json, os, datetime
+        with open(os.environ["STATE_FILE"], "w") as fh:
+            json.dump({"deploy_started_at": datetime.datetime.utcnow().isoformat() + "Z"}, fh)
+
+- id: cloud/deployer
+  extends: abstract/base
+  mixins:
+    - mixin/timestamp
+    - mixin/git-info
+  inputs:
+    service:
+      type: "string"
+      required: true
+      description: "Name of the service to deploy."
+    replicas:
+      type: "number"
+      required: false
+      default: 3
+    canary:
+      type: "boolean"
+      required: false
+      default: "false"
+    regions:
+      type: "array"
+      required: false
+      default: "us-east-1,us-west-2"
+  variables:
+    workspace: "{{ env.cwd }}"
+    banner: "[deploy v{{ runtime.version }}] {{ service }} -> {{ regions }}"
+  run:
+    - bash: |
+        echo "=========================================="
+        echo "{{ banner }}"
+        echo "workspace: {{ workspace }}"
+        echo "replicas:  {{ replicas }}"
+        echo "canary:    {{ canary }}"
+        echo "started:   {{ deploy_started_at }}"
+        echo "git sha:   {{ git_short_sha }}"
+        echo "=========================================="
+    - python: |
+        import json, os
+        service = "{{ service }}"
+        replicas = int("{{ replicas }}")
+        plan = {
+            "deployed_service": service,
+            "deployed_replicas": replicas,
+            "status": "ok",
+        }
+        with open(os.environ["STATE_FILE"], "w") as fh:
+            json.dump(plan, fh)
+        print(json.dumps(plan))
+  teardown:
+    - bash: |
+        echo "tearing down deploy frame for {{ service }}"

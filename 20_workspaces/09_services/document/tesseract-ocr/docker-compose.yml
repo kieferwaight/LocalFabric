@@ -1,0 +1,9 @@
+# Required env: DATA_PATH
+services:
+  tesseract-ocr:
+    build: .
+    image: contentgraph-tesseract-ocr:local
+    container_name: contentgraph-tesseract-ocr
+    restart: unless-stopped
+    volumes:
+      - ${DATA_PATH}:/work

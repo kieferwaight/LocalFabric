@@ -1,0 +1,11 @@
+# Required env: DATA_PATH
+# Optional env: UNSTRUCTURED_PORT (default 8001)
+services:
+  unstructured:
+    image: downloads.unstructured.io/unstructured-io/unstructured-api:latest
+    container_name: contentgraph-unstructured
+    restart: unless-stopped
+    ports:
+      - "${UNSTRUCTURED_PORT:-8001}:8000"
+    volumes:
+      - ${DATA_PATH}:/data

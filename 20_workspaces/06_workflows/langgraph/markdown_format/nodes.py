@@ -1,0 +1,27 @@
+from pathlib import Path
+from typing import Any, Dict
+from harnesses.lmstudio.harness import LMStudioHarness
+
+PROMPT_PATH = Path(__file__).parent.parent.parent / "12_prompts" / "tasks" / "format-markdown.md"
+
+
+def load_prompt() -> str:
+    return PROMPT_PATH.read_text(encoding="utf-8")
+
+
+def format_markdown_with_lmstudio(file_path: str, model: str = "qwen/qwen3.6-27b") -> str:
+    # Read file content
+    content = Path(file_path).read_text(encoding="utf-8")
+    prompt_template = load_prompt()
+    prompt = prompt_template.replace("{{markdown_content}}", content)
+
+    harness = LMStudioHarness({
+        "base_url": "http://localhost:1234/v1",
+        "model": model,
+        "api_key": "lm-studio"
+    })
+    response = harness.invoke({
+        "model": model,
+        "messages": [{"role": "user", "content": prompt}]
+    })
+    return response["choices"][0]["message"]["content"]

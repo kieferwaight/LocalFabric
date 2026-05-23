@@ -1,0 +1,23 @@
+# Default profile
+#
+# Sensible defaults for local-first execution. Selects the largest/most capable
+# local chat model and the local embedding model from the registry. Override per
+# task via routing rules or per-call parameters.
+
+name: default
+description: Local-first defaults using Ollama models.
+
+defaults:
+  chat:
+    provider: ollama
+    model: llama3.1
+  embed:
+    provider: ollama
+    model: nomic-embed-text
+
+fallbacks:
+  chat:
+    - provider: ollama
+      model: qwen2.5
+    - provider: ollama
+      model: mistral

@@ -1,0 +1,1 @@
+"""Image signal extraction tasks."""

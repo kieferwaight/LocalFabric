@@ -1,0 +1,9 @@
+# Required env: DATA_PATH
+services:
+  playwright-worker:
+    build: .
+    image: contentgraph-playwright-worker:local
+    container_name: contentgraph-playwright-worker
+    restart: unless-stopped
+    volumes:
+      - ${DATA_PATH}:/work

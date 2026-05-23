@@ -1,0 +1,11 @@
+# Required env: DATA_PATH
+# Optional env: CLAMAV_PORT (default 3310)
+services:
+  clamav:
+    image: clamav/clamav
+    container_name: contentgraph-clamav
+    restart: unless-stopped
+    ports:
+      - "${CLAMAV_PORT:-3310}:3310"
+    volumes:
+      - ${DATA_PATH}:/var/lib/clamav

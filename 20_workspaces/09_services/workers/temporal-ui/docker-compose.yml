@@ -1,0 +1,11 @@
+# Optional env: TEMPORAL_UI_PORT (default 8084), TEMPORAL_ADDRESS (default temporal:7233)
+services:
+  temporal-ui:
+    image: temporalio/ui
+    container_name: contentgraph-temporal-ui
+    restart: unless-stopped
+    environment:
+      TEMPORAL_ADDRESS: ${TEMPORAL_ADDRESS:-temporal:7233}
+      TEMPORAL_CORS_ORIGINS: http://localhost:${TEMPORAL_UI_PORT:-8084}
+    ports:
+      - "${TEMPORAL_UI_PORT:-8084}:8080"

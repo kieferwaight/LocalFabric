@@ -1,0 +1,15 @@
+# Required env: DATA_PATH, KEYCLOAK_ADMIN, KEYCLOAK_ADMIN_PASSWORD
+# Optional env: KEYCLOAK_PORT (default 8082)
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak
+    container_name: contentgraph-keycloak
+    restart: unless-stopped
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+    ports:
+      - "${KEYCLOAK_PORT:-8082}:8080"
+    volumes:
+      - ${DATA_PATH}:/opt/keycloak/data

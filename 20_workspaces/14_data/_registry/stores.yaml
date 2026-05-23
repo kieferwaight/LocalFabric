@@ -1,0 +1,72 @@
+# stores.yaml — logical-name → physical-path registry for structured data stores.
+#
+# Drivers (08_drivers/*) resolve names defined here to filesystem targets.
+# Adding a new store: append an entry; the driver will initialize on first
+# access. See DATA_MODEL.md for the addressing scheme.
+
+stores:
+  # SQLite (file-based; preferred for local workflows)
+  research_sqlite:
+    type: sqlite
+    path: 14_data/stores/sqlite/research.sqlite
+    driver: drivers.sql.session
+
+  # DuckDB (file-based; preferred for analytics)
+  analytics_duckdb:
+    type: duckdb
+    path: 14_data/stores/duckdb/analytics.duckdb
+
+  # Postgres (directory-backed via Docker volume)
+  research_postgres:
+    type: postgres
+    path: 14_data/stores/postgres/research
+    service: postgres
+
+  agents_postgres:
+    type: postgres
+    path: 14_data/stores/postgres/agents
+    service: postgres
+
+  # Vector stores
+  docs_chroma:
+    type: chromadb
+    path: 14_data/stores/chromadb/docs
+    service: chromadb
+
+  codebase_qdrant:
+    type: qdrant
+    path: 14_data/stores/qdrant/codebase
+    service: qdrant
+
+  research_qdrant:
+    type: qdrant
+    path: 14_data/stores/qdrant/research
+    service: qdrant
+
+  local_lancedb:
+    type: lancedb
+    path: 14_data/stores/lancedb/main
+    driver: drivers.vector.lancedb_driver
+
+  local_numpy:
+    type: numpy
+    path: 14_data/stores/numpy/main
+    driver: drivers.vector.numpy_driver
+
+  # Search
+  content_search:
+    type: opensearch
+    path: 14_data/stores/opensearch/content-search
+    service: opensearch
+
+  # Graph
+  content_graph:
+    type: neo4j
+    path: 14_data/stores/neo4j/content-graph
+    service: neo4j
+
+  # Cache
+  cache_main:
+    type: redis
+    path: 14_data/stores/redis/cache-main
+    service: redis

@@ -1,0 +1,19 @@
+# Required env: DATA_PATH, DATABASE_URL
+# Optional env: REDIS_URL, MINIO_ENDPOINT, TEMPORAL_ADDRESS, TIKA_URL, UNSTRUCTURED_URL, QDRANT_URL, OLLAMA_URL
+services:
+  contentgraph-worker:
+    build: .
+    image: contentgraph-worker:local
+    container_name: contentgraph-worker
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
+      MINIO_ENDPOINT: ${MINIO_ENDPOINT:-minio:9000}
+      TEMPORAL_ADDRESS: ${TEMPORAL_ADDRESS:-temporal:7233}
+      TIKA_URL: ${TIKA_URL:-http://tika:9998}
+      UNSTRUCTURED_URL: ${UNSTRUCTURED_URL:-http://unstructured:8000}
+      QDRANT_URL: ${QDRANT_URL:-http://qdrant:6333}
+      OLLAMA_URL: ${OLLAMA_URL:-http://ollama:11434}
+    volumes:
+      - ${DATA_PATH}:/work

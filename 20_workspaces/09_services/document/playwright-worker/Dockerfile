@@ -1,0 +1,5 @@
+FROM mcr.microsoft.com/playwright/python:v1.46.0-jammy
+
+WORKDIR /app
+COPY app /app
+CMD ["python", "worker.py"]

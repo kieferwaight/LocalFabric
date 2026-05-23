@@ -1,0 +1,9 @@
+# Required env: DATA_PATH
+services:
+  libreoffice:
+    build: .
+    image: contentgraph-libreoffice:local
+    container_name: contentgraph-libreoffice
+    restart: unless-stopped
+    volumes:
+      - ${DATA_PATH}:/work

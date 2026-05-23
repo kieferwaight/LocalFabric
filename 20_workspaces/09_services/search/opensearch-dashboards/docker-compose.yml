@@ -1,0 +1,11 @@
+# Optional env: OPENSEARCH_DASHBOARDS_PORT (default 5601), OPENSEARCH_HOSTS (default ["http://opensearch:9200"])
+services:
+  opensearch-dashboards:
+    image: opensearchproject/opensearch-dashboards:2
+    container_name: contentgraph-opensearch-dashboards
+    restart: unless-stopped
+    environment:
+      OPENSEARCH_HOSTS: ${OPENSEARCH_HOSTS:-'["http://opensearch:9200"]'}
+      DISABLE_SECURITY_DASHBOARDS_PLUGIN: "true"
+    ports:
+      - "${OPENSEARCH_DASHBOARDS_PORT:-5601}:5601"

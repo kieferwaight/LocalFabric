@@ -1,0 +1,14 @@
+# Required env: DATA_PATH, GF_SECURITY_ADMIN_USER, GF_SECURITY_ADMIN_PASSWORD
+# Optional env: GRAFANA_PORT (default 3002)
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: contentgraph-grafana
+    restart: unless-stopped
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GF_SECURITY_ADMIN_USER}
+      GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD}
+    ports:
+      - "${GRAFANA_PORT:-3002}:3000"
+    volumes:
+      - ${DATA_PATH}:/var/lib/grafana

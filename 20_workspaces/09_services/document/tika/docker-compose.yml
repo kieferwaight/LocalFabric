@@ -1,0 +1,8 @@
+# Optional env: TIKA_PORT (default 9998)
+services:
+  tika:
+    image: apache/tika:latest-full
+    container_name: contentgraph-tika
+    restart: unless-stopped
+    ports:
+      - "${TIKA_PORT:-9998}:9998"

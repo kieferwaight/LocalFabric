@@ -1,0 +1,11 @@
+# Required env: DATA_PATH
+# Optional env: GROBID_PORT (default 8070)
+services:
+  grobid:
+    image: lfoppiano/grobid:0.8.0
+    container_name: contentgraph-grobid
+    restart: unless-stopped
+    ports:
+      - "${GROBID_PORT:-8070}:8070"
+    volumes:
+      - ${DATA_PATH}:/opt/grobid/grobid-home/tmp
