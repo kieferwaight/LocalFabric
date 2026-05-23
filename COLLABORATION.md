@@ -86,7 +86,16 @@ If another branch is still checked out in that worktree, commit or otherwise pre
 
 ## Commit And Pull Request Workflow
 
-When an agent completes its assignment:
+An agent's task is not complete when local edits or a local commit are ready.
+Unless the assigned prompt explicitly says not to publish, completion requires:
+
+1. Validate the scoped change.
+2. Commit the intended files on the agent branch.
+3. Push that branch to `origin`.
+4. Open a pull request targeting `main`.
+5. Include a work summary and validation results in the pull request.
+
+Use this publishing sequence after implementation and validation:
 
 ```bash
 git status --short
@@ -95,12 +104,17 @@ git commit -m "<concise change summary>"
 git push -u origin <provider>_<type>_<short-description>
 ```
 
-Then open a pull request into `main`. Publishing a branch and pull request requires the LocalFabric repository to have an `origin` remote configured.
+Then open a pull request into `main`. Do not report the assigned task as
+complete until the push and pull request have succeeded, or report the exact
+blocking condition if publishing cannot be completed. Publishing a branch and
+pull request requires the LocalFabric repository to have an `origin` remote
+configured.
 
 Every pull request must clearly include:
 
 - **Purpose:** What outcome the change is intended to accomplish.
 - **Assigned prompt:** The user instruction or task statement that initiated the work, quoted or faithfully summarized.
+- **Work summary:** A concise account of files or areas changed and the delivered behavior or documentation.
 - **Approach:** The implementation decisions and affected architectural classifications.
 - **Validation:** Tests, audits, or inspections run and their outcomes.
 - **Risks or follow-ups:** Known limitations, migration implications, or deferred work.
