@@ -1,6 +1,6 @@
 import pytest
 
-from mcp_layer.tools.local_tools import _pick_ollama_model, local_research_scaffold, run_local_tests
+from mcp_servers.tools.local_tools import _pick_ollama_model, local_research_scaffold, run_local_tests
 
 
 def test_run_local_tests_success():

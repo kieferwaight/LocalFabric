@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     embed_model: str = "nomic-embed-text"
 
     # ── Storage ───────────────────────────────────────────────────────────────
-    db_path: Path = Path("data/ai_utils.db")
+    db_path: Path = Path("data/workspace.db")
     data_root: Path = Path("data")
 
     # ── Qdrant ────────────────────────────────────────────────────────────────

@@ -1,8 +1,9 @@
-"""Repository path constants and predicate helpers.
+"""Workspace path constants and predicate helpers.
 
-This module was referenced by the legacy ``ai_utils`` package but was not
-present in the migrated source tree. It is recreated here from its callers'
-usage to keep ``file_utils`` and ``scripts/classify_files`` functional.
+``WORKSPACES_ROOT`` is the single canonical anchor that every other module
+uses to locate buckets (09_services, 14_data, etc.). Override via the
+``WORKSPACES_ROOT`` env var if you need to point at a different tree
+(e.g. for tests).
 """
 
 from __future__ import annotations
@@ -12,23 +13,45 @@ from pathlib import Path
 
 from core.config import get_settings
 
-_SETTINGS = get_settings()
 
+def _resolve_workspaces_root() -> Path:
+    """Resolve the 20_workspaces directory.
 
-def _resolve_root() -> Path:
-    """Resolve the repository root.
-
-    Honours the ``AI_UTILS_ROOT`` environment variable when set, otherwise
-    falls back to the current working directory.
+    Honours ``WORKSPACES_ROOT`` env var; otherwise derived from this module's
+    file location (``02_core/src/core/paths.py`` → ``20_workspaces``).
     """
-    env_root = os.environ.get("AI_UTILS_ROOT")
+    env_root = os.environ.get("WORKSPACES_ROOT")
     if env_root:
         return Path(env_root).expanduser().resolve()
-    return Path.cwd().resolve()
+    return Path(__file__).resolve().parents[3]
 
 
-ROOT: Path = _resolve_root()
-MANIFESTS_DIR: Path = ROOT / "manifests"
+WORKSPACES_ROOT: Path = _resolve_workspaces_root()
+
+
+def data(*parts: str) -> Path:
+    """Path under ``14_data/``."""
+    return WORKSPACES_ROOT.joinpath("14_data", *parts)
+
+
+def stores(*parts: str) -> Path:
+    """Path under ``14_data/stores/``."""
+    return data("stores", *parts)
+
+
+def services_dir() -> Path:
+    """Path to ``09_services/``."""
+    return WORKSPACES_ROOT / "09_services"
+
+
+def registry_file(name: str) -> Path:
+    """Path to a file under ``14_data/_registry/`` (e.g. ``services.yaml``)."""
+    return data("_registry", name)
+
+
+# ── Legacy predicates kept for callers in tools/classify and scripts ─────────
+
+_SETTINGS = get_settings()
 
 
 def is_excluded_dir_name(name: str) -> bool:
