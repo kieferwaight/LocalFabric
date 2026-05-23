@@ -76,3 +76,7 @@ Each JSONL line includes:
 The audit intentionally favors false negatives over broad guesses. Add a new
 rule only when its ownership boundary can be stated clearly and its evidence can
 be detected without interpreting arbitrary business logic.
+
+Ephemeral workflow-runtime IPC files created with `tempfile.mkstemp` are
+execution plumbing rather than persistent data targets and are excluded from
+the persistent-file-I/O finding rule.

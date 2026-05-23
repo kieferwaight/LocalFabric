@@ -65,3 +65,17 @@ def test_rescan_preserves_review_status(tmp_path: Path) -> None:
     AUDIT.preserve_statuses(findings, previous)
 
     assert findings[0]["status"] == "accepted"
+
+
+def test_workflow_open_write_is_flagged_for_driver_extraction(tmp_path: Path) -> None:
+    workspace = tmp_path / "20_workspaces"
+    workflow = workspace / "06_workflows" / "job.py"
+    workflow.parent.mkdir(parents=True)
+    workflow.write_text(
+        'with open("report.md", "w") as handle:\n    handle.write("report")\n',
+        encoding="utf-8",
+    )
+
+    findings = AUDIT.audit_file(workflow, workspace, "2026-05-23T00:00:00+00:00")
+
+    assert findings[0]["violation"]["code"] == "workflow_owns_persistent_file_io"

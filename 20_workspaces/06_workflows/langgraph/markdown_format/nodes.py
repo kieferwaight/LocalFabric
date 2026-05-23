@@ -1,8 +1,7 @@
 from pathlib import Path
-from typing import Any, Dict
-from harnesses.lmstudio.harness import LMStudioHarness
+from harnesses.lmstudio import harness as lmstudio
 
-PROMPT_PATH = Path(__file__).parent.parent.parent / "12_prompts" / "tasks" / "format-markdown.md"
+PROMPT_PATH = Path(__file__).resolve().parents[3] / "12_prompts" / "tasks" / "format-markdown.md"
 
 
 def load_prompt() -> str:
@@ -15,7 +14,7 @@ def format_markdown_with_lmstudio(file_path: str, model: str = "qwen/qwen3.6-27b
     prompt_template = load_prompt()
     prompt = prompt_template.replace("{{markdown_content}}", content)
 
-    harness = LMStudioHarness({
+    harness = lmstudio.LMStudioHarness({
         "base_url": "http://localhost:1234/v1",
         "model": model,
         "api_key": "lm-studio"

@@ -320,7 +320,10 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
         )
 
     if rel.startswith("06_workflows/") and (
-        ".write_text(" in text or "shutil.copy2(" in text or ".mkdir(" in text
+        ".write_text(" in text
+        or "shutil.copy2(" in text
+        or ".mkdir(" in text
+        or ("open(" in text and ".write(" in text and "tempfile.mkstemp" not in text)
     ):
         findings.append(
             _finding(
@@ -330,7 +333,7 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
                 "workflow_owns_persistent_file_io",
                 "medium",
                 "Workflow node performs persistent filesystem writes that should be exposed through a file/data driver.",
-                _lines_with(text, [".write_text(", "shutil.copy2(", ".mkdir("]),
+                _lines_with(text, [".write_text(", "shutil.copy2(", ".mkdir(", "open(", ".write("]),
                 [
                     _target(
                         "06_workflows",

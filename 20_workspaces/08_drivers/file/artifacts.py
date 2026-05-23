@@ -22,3 +22,11 @@ def write_json_artifact(path: str | Path, value: dict[str, Any]) -> Path:
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return target
+
+
+def write_text_artifact(path: str | Path, value: str) -> Path:
+    """Write a text artifact, creating its destination directory as needed."""
+    target = Path(path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(value, encoding="utf-8")
+    return target
