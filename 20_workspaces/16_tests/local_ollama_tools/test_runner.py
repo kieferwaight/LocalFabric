@@ -1,4 +1,4 @@
-from mcp_layer.tools.local_tools import local_research_scaffold, run_local_tests
+from mcp_servers.tools.local_tools import local_research_scaffold, run_local_tests
 
 # Test 1: Local Ollama Research Scaffold
 url = "https://raw.githubusercontent.com/modelcontextprotocol/python-sdk/main/README.md"

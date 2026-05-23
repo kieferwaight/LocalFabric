@@ -53,7 +53,7 @@ INDEXED_EXTENSIONS = {
 SKIP_DIRS = {
     ".git", "__pycache__", ".mypy_cache", ".pytest_cache",
     "node_modules", ".venv", "venv", "env", ".tox",
-    "ai_utils.egg-info", ".DS_Store",
+    "*.egg-info", ".DS_Store",
 }
 
 # ------------------------------------------------------------------
