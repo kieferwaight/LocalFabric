@@ -10,6 +10,11 @@ Quote or faithfully summarize the user prompt that initiated this work.
 <prompt>
 ```
 
+## Work Summary
+
+Summarize the completed work, including the affected files or areas and the
+result delivered by this pull request.
+
 ## Approach
 
 Summarize the implementation and identify the affected architecture classifications or directories.
@@ -26,6 +31,6 @@ Record known limitations, migrations, unresolved questions, or follow-up work. W
 
 - [ ] My branch follows `<provider>_<type>_<short-description>`.
 - [ ] I worked only in my provider worktree.
-- [ ] The purpose and assigned prompt are recorded above.
+- [ ] The purpose, assigned prompt, and work summary are recorded above.
 - [ ] I checked the change against the repository classification boundaries.
 - [ ] I ran appropriate validation or explained why it could not be run.
