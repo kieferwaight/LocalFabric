@@ -1,2 +1,0 @@
-- id: notebook/git/gitignore
-  extends: builtin/git/gitignore-python

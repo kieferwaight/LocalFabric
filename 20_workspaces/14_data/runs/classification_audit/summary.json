@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-05-23T18:33:55.149415+00:00",
-  "workspace": "/Users/kwaight/scratch/20_workspaces",
+  "generated_at": "2026-05-23T21:58:27.110830+00:00",
+  "workspace": "/Users/kwaight/agents/codex/LocalFabric/20_workspaces",
   "scan_scope": "20_workspaces source, configuration, documentation, and workflow files",
-  "files_scanned": 246,
+  "files_scanned": 282,
   "findings": 0,
   "findings_by_severity": {},
   "findings_by_rule": {},
-  "jsonl_file": "/Users/kwaight/scratch/20_workspaces/14_data/runs/classification_audit/findings.jsonl",
-  "schema_file": "/Users/kwaight/scratch/20_workspaces/01_contracts/classification_audit_finding.schema.json",
+  "jsonl_file": "/Users/kwaight/agents/codex/LocalFabric/20_workspaces/14_data/runs/classification_audit/findings.jsonl",
+  "schema_file": "/Users/kwaight/agents/codex/LocalFabric/20_workspaces/01_contracts/classification_audit_finding.schema.json",
   "findings_by_status": {}
 }

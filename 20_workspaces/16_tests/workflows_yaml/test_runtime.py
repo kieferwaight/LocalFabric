@@ -41,7 +41,7 @@ def make_runtime(dispatcher: Dispatcher | None = None) -> Runtime:
     return Runtime(env=env, dispatcher=dispatcher or RecordingDispatcher())
 
 
-# ---------- Module library import and notebook examples ----------
+# ---------- Module library import and runnable examples ----------
 
 
 def test_stdlib_manifest_loads_namespaced_modules():
@@ -65,26 +65,26 @@ def test_module_paths_are_relative_to_the_declaring_yaml(tmp_path):
     assert list(runtime.registry) == ["loader", "child"]
 
 
-def test_obsidian_notebook_writes_core_template_markers(tmp_path):
+def test_obsidian_example_writes_core_template_markers(tmp_path):
     runtime = Runtime(env=ShellEnvironment(cwd=str(tmp_path)), dispatcher=Dispatcher())
     runtime.import_yaml(str(YAML_ROOT / "stdlib" / "stdlib.yaml"))
-    runtime.import_yaml(str(YAML_ROOT / "notebooks" / "obsidian-template.yaml"))
+    runtime.import_yaml(str(YAML_ROOT / "examples" / "obsidian-template.yaml"))
 
-    runtime.execute("notebook/obsidian-template", {"obsidian_folder": str(tmp_path)})
+    runtime.execute("example/obsidian-template", {"obsidian_folder": str(tmp_path)})
 
     template = (tmp_path / "Templates" / "daily-note.md").read_text(encoding="utf-8")
     assert "{{date:YYYY-MM-DD}}" in template
     assert "{{date:dddd, MMMM D, YYYY}}" in template
 
 
-def test_github_notebook_composes_gitignore_init_and_gh_steps():
+def test_github_example_composes_gitignore_init_and_gh_steps():
     runtime = make_runtime()
     runtime.import_yaml(str(YAML_ROOT / "stdlib" / "stdlib.yaml"))
-    runtime.import_yaml(str(YAML_ROOT / "notebooks" / "git-current-workspace.yaml"))
+    runtime.import_yaml(str(YAML_ROOT / "examples" / "git-current-workspace.yaml"))
 
-    assembled = runtime.assemble_definition_frame("notebook/git/github")
+    assembled = runtime.assemble_definition_frame("example/git/github")
 
-    assert [next(iter(block)) for block in assembled.run] == ["bash", "python", "bash"]
+    assert [next(iter(block)) for block in assembled.run] == ["bash", "artifact", "bash"]
     assert "repository_name" in assembled.inputs
 
 

@@ -1,8 +1,18 @@
 - id: builtin/git/init-current-workspace
+  title: Initialize Current Git Workspace
+  description: |
+    Initializes the current working directory as a Git repository when needed.
+  tags: [git]
   extends: abstract/base
   variables:
     repository_path: "{{ env.cwd }}"
     initial_branch: "main"
+  docs:
+    variables:
+      repository_path: Directory to initialize.
+      initial_branch: Initial branch name for a new repository.
+    run:
+      - title: Initialize repository
   run:
     - bash: |
         if git -C "{{ repository_path }}" rev-parse --git-dir >/dev/null 2>&1; then
@@ -12,6 +22,10 @@
         fi
 
 - id: builtin/git/gitignore-python
+  title: Write Python Gitignore
+  description: |
+    Writes a Python-oriented `.gitignore` into the current workspace.
+  tags: [git, files, templates]
   extends: builtin/files/write-text
   variables:
     target_path: "{{ env.cwd }}/.gitignore"
@@ -36,8 +50,16 @@
       .env.*
       dist/
       build/
+  docs:
+    variables:
+      target_path: Destination `.gitignore` path.
+      content: Standard Python ignore patterns.
 
 - id: builtin/git/create-github-repository
+  title: Create GitHub Repository
+  description: |
+    Creates an `origin` GitHub repository through an authenticated GitHub CLI.
+  tags: [git, github]
   extends: abstract/base
   inputs:
     repository_name:
@@ -48,12 +70,19 @@
       type: "string"
       required: false
       default: "private"
+      description: "Repository visibility: `public`, `private`, or `internal`."
     description:
       type: "string"
       required: false
-      default: "Created from a LocalFabric YAML notebook."
+      default: "Created from a LocalFabric YAML example."
+      description: Description passed to GitHub CLI.
   variables:
     repository_path: "{{ env.cwd }}"
+  docs:
+    variables:
+      repository_path: Local repository used as the GitHub source.
+    run:
+      - title: Create remote repository
   run:
     - bash: |
         case "{{ visibility }}" in

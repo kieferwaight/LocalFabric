@@ -1,6 +1,6 @@
-# YAML Notebooks
+# YAML Examples
 
-These YAML notebooks are runnable routine examples built from the standard
+These YAML examples are runnable composed workflows built from the standard
 library. Run the commands from `20_workspaces/06_workflows/yaml/`.
 
 ## Obsidian Template
@@ -8,7 +8,7 @@ library. Run the commands from `20_workspaces/06_workflows/yaml/`.
 Create a starter template beneath an Obsidian vault folder:
 
 ```bash
-python interpreter.py notebooks/obsidian-template.yaml notebook/obsidian-template \
+python interpreter.py examples/obsidian-template.yaml example/obsidian-template \
   --obsidian_folder="$HOME/Documents/My Vault"
 ```
 
@@ -21,13 +21,13 @@ Initialize the current directory as a Git repository and add a Python-oriented
 `.gitignore`:
 
 ```bash
-python interpreter.py notebooks/git-current-workspace.yaml notebook/git/init
+python interpreter.py examples/git-current-workspace.yaml example/git/init
 ```
 
 To additionally create a GitHub repository through authenticated `gh`:
 
 ```bash
-python interpreter.py notebooks/git-current-workspace.yaml notebook/git/github \
+python interpreter.py examples/git-current-workspace.yaml example/git/github \
   --repository_name=owner/project-name --visibility=private
 ```
 
@@ -39,5 +39,5 @@ push work automatically.
 Write only the reusable `.gitignore` template in the current directory:
 
 ```bash
-python interpreter.py notebooks/gitignore-template.yaml notebook/git/gitignore
+python interpreter.py examples/gitignore-template.yaml example/git/gitignore
 ```

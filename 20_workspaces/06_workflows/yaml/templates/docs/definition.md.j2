@@ -1,0 +1,124 @@
+{{ runtime.catalog.generated_marker }}
+# {{ definition.title }}
+
+[API index]({{ definition.index_link }}) | [Definition schema]({{ definition.schema_link }})
+
+| Field | Value |
+| --- | --- |
+| ID | `{{ definition.id }}` |
+| Source | `{{ definition.source_path }}` |
+| Tags | {{ definition.tags | join(", ") or "-" }} |
+
+{{ definition.description or "_No description provided._" }}
+
+## Relationships
+
+| Relation | Definitions |
+| --- | --- |
+| Extends | {% if definition.parent %}[{{ definition.parent.title }}]({{ definition.parent.link }}){% else %}-{% endif %} |
+| Mixins | {% if definition.mixin_links %}{% for item in definition.mixin_links %}[{{ item.title }}]({{ item.link }}){% if not loop.last %}, {% endif %}{% endfor %}{% else %}-{% endif %} |
+| Children | {% if definition.child_links %}{% for item in definition.child_links %}[{{ item.title }}]({{ item.link }}){% if not loop.last %}, {% endif %}{% endfor %}{% else %}-{% endif %} |
+| Mixin consumers | {% if definition.consumer_links %}{% for item in definition.consumer_links %}[{{ item.title }}]({{ item.link }}){% if not loop.last %}, {% endif %}{% endfor %}{% else %}-{% endif %} |
+| Modules | {% if definition.modules %}{% for module in definition.modules %}`{{ module }}`{% if not loop.last %}, {% endif %}{% endfor %}{% else %}-{% endif %} |
+
+```mermaid
+flowchart TD
+  {{ definition.mermaid_id }}["{{ definition.title }}"]
+{% if definition.parent -%}
+  {{ definition.mermaid_id }} --> {{ definition.parent.mermaid_id }}["{{ definition.parent.title }}"]
+{% endif -%}
+{% for item in definition.mixin_links -%}
+  {{ definition.mermaid_id }} -.-> {{ item.mermaid_id }}["{{ item.title }}"]
+{% endfor -%}
+{% for item in definition.child_links -%}
+  {{ item.mermaid_id }}["{{ item.title }}"] --> {{ definition.mermaid_id }}
+{% endfor -%}
+```
+
+## Declared API
+
+### Inputs
+
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+{% for item in definition.declared.inputs -%}
+| `{{ item.name }}` | `{{ item.type }}` | {{ "yes" if item.required else "no" }} | `{{ item.default if item.default is not none else "-" }}` | {{ item.description or "-" }} |
+{% else -%}
+| - | - | - | - | No locally declared inputs. |
+{% endfor %}
+
+### Variables
+
+| Name | YAML Type | Value / Template | Description |
+| --- | --- | --- | --- |
+{% for item in definition.declared.variables -%}
+| `{{ item.name }}` | `{{ item.type }}` | `{{ item.value | string | replace("\n", " ") | replace("|", "\\|") }}` | {{ item.description or "-" }} |
+{% else -%}
+| - | - | - | No locally declared variables. |
+{% endfor %}
+
+### Run Operations
+
+{% for item in definition.declared.run -%}
+#### {{ item.title or (item.operation | title) }}
+
+{{ item.description or "_No operation description provided._" }}
+
+```{{ item.operation }}
+{{ item.source }}
+```
+
+{% else -%}
+_No locally declared run operations._
+
+{% endfor -%}
+### Teardown Operations
+
+{% for item in definition.declared.teardown -%}
+#### {{ item.title or (item.operation | title) }}
+
+{{ item.description or "_No operation description provided._" }}
+
+```{{ item.operation }}
+{{ item.source }}
+```
+
+{% else -%}
+_No locally declared teardown operations._
+
+{% endfor -%}
+## Resolved API
+
+### Effective Inputs
+
+| Name | Type | Required | Default | Origin |
+| --- | --- | --- | --- | --- |
+{% for item in definition.resolved.inputs -%}
+| `{{ item.name }}` | `{{ item.type }}` | {{ "yes" if item.required else "no" }} | `{{ item.default if item.default is not none else "-" }}` | [{{ item.origin_title }}]({{ item.origin_link }}) |
+{% else -%}
+| - | - | - | - | No effective inputs. |
+{% endfor %}
+
+### Effective Variables
+
+| Name | Value / Template | Origin |
+| --- | --- | --- |
+{% for item in definition.resolved.variables -%}
+| `{{ item.name }}` | `{{ item.value | string | replace("\n", " ") | replace("|", "\\|") }}` | [{{ item.origin_title }}]({{ item.origin_link }}) |
+{% else -%}
+| - | - | No effective variables. |
+{% endfor %}
+
+### Effective Lifecycle
+
+| Phase | Operation | Origin |
+| --- | --- | --- |
+{% for item in definition.resolved.run -%}
+| Run | `{{ item.operation }}` | [{{ item.origin_title }}]({{ item.origin_link }}) |
+{% endfor -%}
+{% for item in definition.resolved.teardown -%}
+| Teardown | `{{ item.operation }}` | [{{ item.origin_title }}]({{ item.origin_link }}) |
+{% endfor -%}
+{% if not definition.resolved.run and not definition.resolved.teardown -%}
+| - | - | No effective lifecycle operations. |
+{% endif -%}
