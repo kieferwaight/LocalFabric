@@ -101,13 +101,18 @@ Agent-ready specifications and task artifacts.
 
 ```text
 00_specs/
-|-- ideas/
-|-- research/
-|-- requirements/
-|-- tasks/
-|-- prompts/
-`-- final/
+|-- 01_ideas/
+|-- 02_research/
+|-- 03_requirements/
+|-- 04_tasks/
+|-- 05_prompts/
+`-- 06_final/
 ```
+
+The numeric prefixes encode pipeline order: an idea is promoted left to right.
+A spec's slug stays constant across stages — the same `<slug>.md` file appears
+in each folder it has reached, so progress is observable by listing the slug
+across folders.
 
 ### `01_contracts`
 
