@@ -4,17 +4,18 @@ config.py — Configuration and Claude Desktop registration helper.
 Run this file directly to print the JSON block you need to add to
 ~/Library/Application Support/Claude/claude_desktop_config.json:
 
-    python -m mcp_layer.servers.config
+    python -m mcp_servers.config
 """
 
 import json
-import os
 import sys
+from pathlib import Path
 
-# Path to 20_workspaces/ (which carries the import-name symlinks that map
-# `mcp_layer`, `tools`, `drivers`, etc. to their numbered bucket dirs).
-# `__file__` is 20_workspaces/11_mcp/servers/config.py → go up two levels.
-_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+from core.paths import WORKSPACES_ROOT
+
+# Workspace root is 20_workspaces/; used by Claude Desktop registration so
+# the server is launched with the correct cwd and PYTHONPATH.
+_PROJECT_ROOT = str(WORKSPACES_ROOT)
 
 # ------------------------------------------------------------------
 # Server config
@@ -28,10 +29,10 @@ EMBED_MODEL = "nomic-embed-text"
 CHAT_MODEL_PREFERENCE = ("qwen2.5:7b", "qwen2.5", "llama3", "llama3.2", "llama3.1")
 
 # LanceDB store path
-VECTOR_STORE_PATH = os.path.expanduser("~/.local_router_vectors")
+VECTOR_STORE_PATH = str(Path.home() / ".local_router_vectors")
 
 # Embedder cache path
-EMBED_CACHE_PATH = os.path.expanduser("~/.local_router_cache/embed_cache.json")
+EMBED_CACHE_PATH = str(Path.home() / ".local_router_cache" / "embed_cache.json")
 
 # ------------------------------------------------------------------
 # Claude Desktop config snippet
@@ -47,7 +48,7 @@ def claude_desktop_entry() -> dict:
     return {
         "local_router": {
             "command": _python_executable(),
-            "args": ["-m", "mcp_layer.servers.server"],
+            "args": ["-m", "mcp_servers.server"],
             "cwd": _PROJECT_ROOT,
             "env": {
                 "PYTHONPATH": _PROJECT_ROOT,
@@ -58,13 +59,12 @@ def claude_desktop_entry() -> dict:
 
 def _config_path() -> str:
     if sys.platform == "darwin":
-        return os.path.expanduser(
-            "~/Library/Application Support/Claude/claude_desktop_config.json"
-        )
+        return str(Path.home() / "Library/Application Support/Claude/claude_desktop_config.json")
     elif sys.platform == "win32":
-        return os.path.join(os.environ.get("APPDATA", ""), "Claude", "claude_desktop_config.json")
+        import os
+        return str(Path(os.environ.get("APPDATA", "")) / "Claude" / "claude_desktop_config.json")
     else:
-        return os.path.expanduser("~/.config/claude/claude_desktop_config.json")
+        return str(Path.home() / ".config" / "claude" / "claude_desktop_config.json")
 
 
 def print_registration_instructions() -> None:

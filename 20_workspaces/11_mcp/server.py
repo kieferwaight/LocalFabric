@@ -27,8 +27,8 @@ from typing import Optional
 from mcp.server.fastmcp import FastMCP
 from pydantic import BaseModel, Field, ConfigDict
 
-from mcp_layer.servers.config import SERVER_NAME, EMBED_MODEL, VECTOR_STORE_PATH
-from mcp_layer.tools.local_tools import local_research_scaffold, run_local_tests
+from mcp_servers.config import SERVER_NAME, EMBED_MODEL, VECTOR_STORE_PATH
+from mcp_servers.tools.local_tools import local_research_scaffold, run_local_tests
 
 # ------------------------------------------------------------------
 # Server init
