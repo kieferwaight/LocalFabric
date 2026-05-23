@@ -51,6 +51,10 @@ dev = [
     "ruff>=0.4",
     "mypy>=1.10",
 ]
+notebook = [
+    "openai>=1.0",
+    "ipykernel>=6.0",
+]
 
 # ─── Import-name strategy ─────────────────────────────────────────────────────
 # Numeric-prefixed bucket dirs (02_core, 04_harnesses, ...) aren't valid Python
