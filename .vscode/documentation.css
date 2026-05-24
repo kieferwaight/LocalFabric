@@ -1,0 +1,289 @@
+/* ----------------------------------------------------------------------------
+ * LocalFabric — Markdown Preview documentation theme
+ *
+ * Light page · dark "terminal" code blocks · Cascadia Code Nerd Font.
+ * Loaded by VS Code via "markdown.styles" in .vscode/settings.json.
+ * --------------------------------------------------------------------------*/
+
+:root {
+    /* ── Color tokens ──────────────────────────────────────────────────── */
+    --color-bg:           #ffffff;
+    --color-bg-subtle:    #f6f8fa;   /* th, blockquote, kbd, details      */
+    --color-bg-alt:       #fbfcfd;   /* mermaid surface, zebra rows       */
+    --color-fg:           #1f2328;
+    --color-fg-muted:     #57606a;
+    --color-fg-strong:    #0a0c10;   /* headings, kbd, details summary    */
+    --color-accent:       #0969da;   /* links + outline tint              */
+    --color-border:       #d8dee4;   /* single border color, every surface*/
+
+    /* Dark code surface — Catppuccin Frappé "base" */
+    --term-bg:            #303446;
+    --term-fg:            #c6d0f5;
+    --term-muted:         #949cbb;
+    --term-border:        #414559;
+
+    /* Inline code (light surface) */
+    --code-inline-bg:     #eef1f4;
+
+    /* ── Geometry tokens ───────────────────────────────────────────────── */
+    --radius:             6px;
+    --border-width:       1px;
+
+    /* ── Effect tokens ─────────────────────────────────────────────────── */
+    --shadow-color:       rgba(15, 20, 25, 0.06);
+    --shadow-sm:          0 1px 2px var(--shadow-color);
+    --shadow-md:          0 1px 3px var(--shadow-color);
+    --outline-color:      rgba(9, 105, 218, 0.10);   /* --color-accent @ 10% */
+    --outline-offset:     2px;
+
+    /* ── Typography stacks ─────────────────────────────────────────────── */
+    /* Order: Nerd Font → PowerLine → vanilla Cascadia → system fallback.
+       Using the NF variant first means glyphs in the Private-Use Area
+       render (so authors can use icon glyphs inline). */
+    --font-sans:          -apple-system, BlinkMacSystemFont, "Segoe UI",
+                          "Helvetica Neue", Arial, sans-serif;
+    --font-mono:          "CaskaydiaCove Nerd Font", "CaskaydiaMono Nerd Font",
+                          "Cascadia Code NF", "Cascadia Mono NF",
+                          "Cascadia Code PL", "Cascadia Mono PL",
+                          "Cascadia Code", "Cascadia Mono",
+                          ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* ---- Force the light documentation theme regardless of VS Code theme ---- */
+body,
+body.vscode-light,
+body.vscode-dark,
+body.vscode-high-contrast,
+body.vscode-high-contrast-light {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.65;
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 40px 56px 80px;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Headings ---------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-fg-strong);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    line-height: 1.25;
+    margin-top: 1.8em;
+    margin-bottom: 0.6em;
+    letter-spacing: -0.005em;
+}
+h1 {
+    font-size: 2.1em;
+    padding-bottom: 0.35em;
+    border-bottom: var(--border-width) solid var(--color-border);
+    margin-top: 0.2em;
+}
+h2 {
+    font-size: 1.55em;
+    padding-bottom: 0.3em;
+    border-bottom: var(--border-width) solid var(--color-border);
+}
+h3 { font-size: 1.25em; }
+h4 { font-size: 1.05em; }
+h5 { font-size: 0.95em; }
+h6 { font-size: 0.88em; color: var(--color-fg-muted); text-transform: uppercase;
+     letter-spacing: 0.04em; }
+
+/* ---- Links ------------------------------------------------------------- */
+a {
+    color: var(--color-accent);
+    text-decoration: none;
+}
+a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+/* ---- Paragraphs / lists ------------------------------------------------ */
+p { margin: 0.7em 0; }
+ul, ol { padding-left: 1.8em; margin: 0.7em 0; }
+li + li { margin-top: 0.25em; }
+li > p { margin: 0.3em 0; }
+
+/* ---- Blockquotes ------------------------------------------------------- */
+blockquote {
+    margin: 1.1em 0;
+    padding: 0.4em 1.1em;
+    border-left: 3px solid var(--color-border);
+    color: var(--color-fg-muted);
+    background: var(--color-bg-subtle);
+    border-radius: 0 var(--radius) var(--radius) 0;
+}
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child  { margin-bottom: 0; }
+
+/* ---- Horizontal rule --------------------------------------------------- */
+hr {
+    border: none;
+    border-top: var(--border-width) solid var(--color-border);
+    margin: 2.2em 0;
+}
+
+/* ---- Tables — full width ---------------------------------------------- */
+table {
+    display: table;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 1.2em 0;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    font-size: 0.93em;
+    font-feature-settings: "tnum" 1;
+}
+table th,
+table td {
+    padding: 9px 14px;
+    border-bottom: var(--border-width) solid var(--color-border);
+    border-right:  var(--border-width) solid var(--color-border);
+    text-align: left;
+    vertical-align: top;
+}
+table th:last-child,
+table td:last-child { border-right: none; }
+table tr:last-child td { border-bottom: none; }
+table th {
+    background: var(--color-bg-subtle);
+    font-weight: 600;
+    color: var(--color-fg-strong);
+    border-bottom: var(--border-width) solid var(--color-border);
+}
+table tr:nth-child(2n) td { background: var(--color-bg-alt); }
+
+/* ---- Inline code ------------------------------------------------------- */
+:not(pre) > code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    background: var(--code-inline-bg);
+    color: var(--color-fg);
+    border: var(--border-width) solid var(--color-border);
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius);
+    font-feature-settings: "calt" 1, "liga" 1, "ss01" 1;
+    white-space: break-spaces;
+}
+
+/* ---- Code blocks — minimalist modern terminal ------------------------- */
+pre {
+    background: var(--term-bg) !important;
+    color: var(--term-fg) !important;
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    line-height: 1.6;
+    margin: 1.1em 0;
+    padding: 14px 16px;
+    border: var(--border-width) solid var(--term-border);
+    border-radius: var(--radius);
+    overflow-x: auto;
+    box-shadow: var(--shadow-sm);
+    font-feature-settings: "calt" 1, "liga" 1, "ss01" 1;
+}
+pre > code {
+    display: block;
+    padding: 0;
+    background: transparent !important;
+    color: inherit !important;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    font-feature-settings: inherit;
+    white-space: pre;
+}
+
+/* Code-block scrollbar — thin, terminal-tinted */
+pre::-webkit-scrollbar { height: 8px; width: 8px; }
+pre::-webkit-scrollbar-thumb {
+    background: var(--term-border);
+    border-radius: var(--radius);
+}
+pre::-webkit-scrollbar-track { background: transparent; }
+
+/* ---- Mermaid diagrams — clear, framed, interactive surface ------------
+   The Markdown Preview Mermaid extension wraps the rendered SVG in an
+   interactive container (toolbar, zoom, pan). Treat it like a viewport:
+   minimum height, rounded corners, and a subtle outline so the frame
+   reads as a contained interactive region. */
+.mermaid,
+pre.mermaid,
+div.mermaid,
+pre > code.language-mermaid,
+.markdown-preview-mermaid-container,
+.mermaid-container {
+    background: var(--color-bg-alt) !important;
+    color: var(--color-fg) !important;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius);
+    outline: var(--border-width) solid var(--outline-color);
+    outline-offset: var(--outline-offset);
+    padding: 18px;
+    margin: 1.6em 0;
+    min-height: 400px;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    font-family: var(--font-sans);
+    overflow: auto;
+    box-sizing: border-box;
+    position: relative;
+}
+.mermaid svg,
+pre.mermaid svg,
+div.mermaid svg,
+.markdown-preview-mermaid-container svg,
+.mermaid-container svg {
+    max-width: 100%;
+    height: auto;
+    min-height: 360px;
+    display: block;
+    margin: 0 auto;
+}
+
+.mermaid-wrapper {
+    border: var(--border-width) solid var(--color-border) !important;
+}
+
+/* ---- Keyboard ---------------------------------------------------------- */
+kbd {
+    font-family: var(--font-mono);
+    font-size: 0.82em;
+    background: var(--color-bg-subtle);
+    color: var(--color-fg-strong);
+    border: var(--border-width) solid var(--color-border);
+    border-bottom-width: 2px;
+    border-radius: var(--radius);
+    padding: 2px 6px;
+    vertical-align: baseline;
+}
+
+/* ---- Images ------------------------------------------------------------ */
+img {
+    max-width: 100%;
+    border-radius: var(--radius);
+}
+
+/* ---- Task lists -------------------------------------------------------- */
+.task-list-item { list-style: none; }
+.task-list-item-checkbox {
+    margin: 0 0.4em 0 -1.4em;
+    vertical-align: middle;
+}
+
+/* ---- Footnotes / details ---------------------------------------------- */
+details {
+    margin: 1em 0;
+    padding: 0.6em 1em;
+    background: var(--color-bg-subtle);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius);
+}
+details > summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-fg-strong);
+}
