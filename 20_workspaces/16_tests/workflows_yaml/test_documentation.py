@@ -18,7 +18,7 @@ def catalog_runtime(dispatcher=None) -> Runtime:
         dispatcher=dispatcher or RecordingDispatcher(),
     )
     runtime.import_yaml(str(YAML_ROOT / "stdlib" / "stdlib.yaml"))
-    runtime.import_yaml(str(YAML_ROOT / "api-docs.yaml"))
+    runtime.import_yaml(str(YAML_ROOT / "config.yaml"))
     return runtime
 
 
@@ -67,7 +67,6 @@ def test_catalog_tracks_sources_relationships_and_effective_origins() -> None:
     assert entries["builtin/load-modules"]["modules"] == [
         "stdlib.files.yaml",
         "stdlib.git.yaml",
-        "stdlib.template.yaml",
         "stdlib.doc.yaml",
     ]
 
@@ -118,7 +117,9 @@ def test_documentation_workflow_writes_and_checks_generated_reference(tmp_path: 
     pages = sorted((output / "definitions").rglob("*.md"))
     assert len(pages) == len(definitions)
     assert "```mermaid" in (output / "README.md").read_text(encoding="utf-8")
-    definition_page = output / "definitions" / "builtin" / "docs" / "render-reference.md"
+    definition_page = (
+        output / "definitions" / "definition-builtin-docs-prune-definition-pages.md"
+    )
     assert "## Resolved API" in definition_page.read_text(encoding="utf-8")
 
     runtime.execute("docs/api/reference", {"output_dir": str(output), "mode": "check"})

@@ -1,0 +1,16 @@
+- id: docs.catalog.modules
+  title: API Documentation Catalog Sources
+  description: 'Imports template definitions used by the docs workflow and the runnable
+
+    example catalog into the generated YAML API reference.
+
+    '
+  tags:
+  - documentation
+  - modules
+  modules:
+  - docs.definition.template.yaml
+  - docs.definition.template.yaml
+  - docs.definition.template.yaml
+  - docs.definition.template.yaml
+  - examples.catalog.yaml

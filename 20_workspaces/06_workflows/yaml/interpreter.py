@@ -1,32 +1,15 @@
 #!/usr/bin/env python3
 """CLI entry point for the YAML-driven polyglot runtime interpreter."""
-
 from __future__ import annotations
 
 import json
 import os
 import sys
+from pathlib import Path
 
-try:
-    from workflows.yaml.runtime import Runtime, ShellEnvironment
-except ModuleNotFoundError:
-    import importlib.util
-    from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-    workspace_root = Path(__file__).resolve().parents[2]
-    drivers_init = workspace_root / "08_drivers" / "__init__.py"
-    spec = importlib.util.spec_from_file_location(
-        "drivers",
-        drivers_init,
-        submodule_search_locations=[str(drivers_init.parent)],
-    )
-    if spec is None or spec.loader is None:
-        raise
-    drivers = importlib.util.module_from_spec(spec)
-    sys.modules["drivers"] = drivers
-    spec.loader.exec_module(drivers)
-    # Direct invocation from this folder is the documented YAML workflow interface.
-    from runtime import Runtime, ShellEnvironment
+from src import Runtime, ShellEnvironment  # noqa: E402
 
 
 USAGE = (
@@ -34,12 +17,10 @@ USAGE = (
     "[positional args] [--key=value] [--flag]"
 )
 
+STDLIB_PATH = Path(__file__).resolve().parent / "definitions" / "stdlib.yaml"
+
 
 def parse_cli(argv: list[str]) -> tuple[str, str, list[str]]:
-    """Split argv into (yaml_file, definition_id, remainder).
-
-    The first two positional values are mandatory.
-    """
     positional: list[str] = []
     rest: list[str] = []
     for tok in argv:
@@ -65,14 +46,11 @@ def main(argv: list[str] | None = None) -> int:
     debug = bool(env.flags.get("debug"))
 
     runtime = Runtime(env=env, system_debug=debug)
-
-    stdlib_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "stdlib", "stdlib.yaml")
-    if os.path.exists(stdlib_path):
-        runtime.import_yaml(stdlib_path)
+    if STDLIB_PATH.exists():
+        runtime.import_yaml(str(STDLIB_PATH))
     runtime.import_yaml(yaml_file)
 
     arguments: dict[str, object] = dict(env.options)
-    # Positional args are exposed via env.args; we also pass them as 'args'.
     final_scope = runtime.execute(definition_id, arguments)
 
     if debug:

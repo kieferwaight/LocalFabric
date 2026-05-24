@@ -32,30 +32,28 @@ python interpreter.py examples/deploy.yaml cloud/deployer \
 ## Project layout
 
 ```
-interpreter.py          # CLI entry point
-stdlib/
-  stdlib.yaml           # Primary built-in manifest (abstract/base and module loader)
-  stdlib.files.yaml     # Filesystem write/create built-ins
-  stdlib.git.yaml       # Git, GitHub CLI, and gitignore built-ins
-  stdlib.template.yaml  # Template rendering built-ins
-  stdlib.doc.yaml       # API-reference documentation built-ins
-requirements.txt        # pyyaml, jinja2, pytest
-runtime/
+interpreter.py          # CLI entry point (reusable)
+config.yaml             # Project-unique manifest: docs workflow + example catalog
+stdlib/                 # Reusable built-ins, auto-loaded
+  stdlib.yaml           # abstract/base + module loader
+  stdlib.files.yaml     # filesystem write/create
+  stdlib.git.yaml       # git, gh CLI, gitignore
+  stdlib.doc.yaml       # prune-definition-pages helper
+runtime/                # Reusable VM
   shell_environment.py  # immutable env snapshot + CLI parser
   scope_frame.py        # lexically scoped variable frames
-  definition.py         # Definition + InputConstraint dataclasses
+  definition.py         # Definition + TemplateBlock + InputConstraint dataclasses
   compiler.py           # YAML → registry, cycle detection
-  jinja_engine.py       # multi-pass Jinja2 renderer
+  jinja_engine.py       # multi-pass Jinja2 renderer (+ resolve_argument)
   dispatcher.py         # polyglot subprocess runner + state bridge
-  runtime.py            # VM: import / assemble / execute
-examples/
-  deploy.yaml           # extends + mixins + multi-language run
-  examples.yaml         # Example module manifest
-  README.md             # Runnable composition index
-  *.yaml                # Obsidian and Git example definitions
-templates/docs/
-  *.md.j2               # Authored Markdown layouts for generated API docs
-docs/                   # Generated and committed YAML API reference
+  runtime.py            # VM: import / assemble / execute / render
+templates/              # Reusable doc templates (flat YAML, one definition per file)
+  doc-index.yaml        # README page
+  doc-schema.yaml       # Authoring schema page
+  doc-definition.yaml   # Per-definition page
+  doc-component-*.yaml  # Reusable template components (e.g. relationship graph)
+examples/               # Project-unique runnable example definitions
+docs/                   # Generated YAML API reference (flat sibling-linked files)
 ```
 
 ## Standard Library Modules
@@ -69,7 +67,6 @@ default import while built-ins remain grouped by namespace:
   modules:
     - stdlib.files.yaml
     - stdlib.git.yaml
-    - stdlib.template.yaml
     - stdlib.doc.yaml
 ```
 
@@ -99,19 +96,22 @@ Definitions can describe their public contract without affecting runtime behavio
 `title`, Markdown `description`, `tags`, and `docs` enrich generated pages.
 Input descriptions continue to be defined by `inputs.<name>.description`.
 
-The documentation reference is a YAML workflow built from `stdlib.template.yaml`
-and `stdlib.doc.yaml`. From this directory, generate or verify committed pages:
+The documentation workflow lives in `config.yaml` and composes the reusable
+template definitions under `templates/`. From this directory, generate or verify
+committed pages:
 
 ```bash
-python interpreter.py api-docs.yaml docs/api/reference --output_dir=docs --mode=write
-python interpreter.py api-docs.yaml docs/api/reference --output_dir=docs --mode=check
+python interpreter.py config.yaml docs/api/reference --output_dir=docs --mode=write
+python interpreter.py config.yaml docs/api/reference --output_dir=docs --mode=check
 ```
 
 The runtime exposes a read-only `runtime.catalog` during workflow execution.
-`invoke` blocks can compose definitions and iterate catalog entries through
-`for_each`, while native `template` blocks render authored Markdown assets.
-The standard-library `artifact` operation delegates persistent writes and
-directory creation to `drivers.file`.
+`invoke` blocks compose definitions and iterate catalog entries through
+`for_each`. `render` blocks invoke a template definition (any definition with
+a top-level `template:` block) and write the rendered string to `target_path`.
+Inside a template body, the `component('definition-id', **kwargs)` Jinja helper
+renders another template definition inline. The `artifact` operation delegates
+persistent writes and directory creation to `drivers.file`.
 
 ## Tests
 
