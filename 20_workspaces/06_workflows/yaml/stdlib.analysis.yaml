@@ -1,0 +1,48 @@
+# Intelligence-gathering recipe used to populate analysis.jsonl.
+# Re-run when you want a fresh snapshot of files + every YAML `id:` in this subtree.
+
+analysis:
+  output: analysis.jsonl
+  script: _analyze_ids.py
+  record_shapes:
+    file:
+      id: "<relative path from this directory>"
+      type: file
+    definition:
+      id: "<value of any `id:` key in any YAML doc>"
+      file: "<relative path to the YAML file that declared it>"
+      type: "<the parent key the id appeared under — usually `definition`>"
+
+  steps:
+    - name: Enumerate non-ignored files
+      description: |
+        List every tracked + untracked file the repo cares about, scoped to this
+        directory. `--exclude-standard` honors .gitignore / .git/info/exclude.
+      command: git ls-files --cached --others --exclude-standard -- .
+      cwd: .
+    - name: Harvest every YAML id
+      description: |
+        Walk each .yaml/.yml file with PyYAML's safe_load_all and recurse into
+        every dict/list looking for `id:` keys. The parent key (e.g. `definition`,
+        `modules`) is captured as the record's `type` so we can see how ids are
+        used in different positions.
+      requires:
+        - PyYAML (use /Users/kwaight/scratch/20_workspaces/.venv/bin/python)
+
+  run:
+    - title: Execute analysis
+      bash: |
+        /Users/kwaight/scratch/20_workspaces/.venv/bin/python _analyze_ids.py
+    - title: Quick inspection
+      bash: |
+        wc -l analysis.jsonl
+        grep '"type": "file"' analysis.jsonl | head -5
+        grep -v '"type": "file"' analysis.jsonl | head -10
+
+  notes:
+    - System python3 (Homebrew /opt/homebrew/opt/python@3.14) lacks PyYAML; the
+      project venv at 20_workspaces/.venv has it.
+    - The script writes analysis.jsonl in this directory (06_workflows/yaml).
+    - The first pass emits one `file` record per path; the second pass appends
+      one `definition` record per id encountered, so stacking the two reveals
+      which ids live where and whether any ids collide with file paths.

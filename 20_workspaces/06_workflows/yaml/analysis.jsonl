@@ -1,0 +1,109 @@
+{"id": ".DS_Store", "type": "file"}
+{"id": "_analyze_ids.py", "type": "file"}
+{"id": "analysis.jsonl", "type": "file"}
+{"id": "docs/definitions/definition-abstract-base.md", "type": "file"}
+{"id": "docs/definitions/definition-builtin-clean-workspace.md", "type": "file"}
+{"id": "docs/definitions/definition-builtin-docs-prune-definition-pages.md", "type": "file"}
+{"id": "docs/definitions/definition-builtin-files-create-directory.md", "type": "file"}
+{"id": "docs/definitions/definition-builtin-files-write-text.md", "type": "file"}
+{"id": "docs/definitions/definition-builtin-git-create-github-repository.md", "type": "file"}
+{"id": "docs/definitions/definition-builtin-git-gitignore-python.md", "type": "file"}
+{"id": "docs/definitions/definition-builtin-git-init-current-workspace.md", "type": "file"}
+{"id": "docs/definitions/definition-builtin-load-modules.md", "type": "file"}
+{"id": "docs/definitions/definition-builtin-logger.md", "type": "file"}
+{"id": "docs/definitions/definition-builtin-run-command.md", "type": "file"}
+{"id": "docs/definitions/definition-cloud-deployer.md", "type": "file"}
+{"id": "docs/definitions/definition-docs-api-reference.md", "type": "file"}
+{"id": "docs/definitions/definition-docs-catalog-modules.md", "type": "file"}
+{"id": "docs/definitions/definition-docs-templates-component-relationship-graph.md", "type": "file"}
+{"id": "docs/definitions/definition-docs-templates-definition.md", "type": "file"}
+{"id": "docs/definitions/definition-docs-templates-index.md", "type": "file"}
+{"id": "docs/definitions/definition-docs-templates-schema.md", "type": "file"}
+{"id": "docs/definitions/definition-example-git-github.md", "type": "file"}
+{"id": "docs/definitions/definition-example-git-gitignore.md", "type": "file"}
+{"id": "docs/definitions/definition-example-git-init.md", "type": "file"}
+{"id": "docs/definitions/definition-example-obsidian-template.md", "type": "file"}
+{"id": "docs/definitions/definition-examples-catalog-modules.md", "type": "file"}
+{"id": "docs/definitions/definition-mixin-git-info.md", "type": "file"}
+{"id": "docs/definitions/definition-mixin-timestamp.md", "type": "file"}
+{"id": "runtime/.DS_Store", "type": "file"}
+{"id": "templates/doc-component-relationship-graph.yaml", "type": "file"}
+{"id": "templates/doc-definition.yaml", "type": "file"}
+{"id": "templates/doc-index.yaml", "type": "file"}
+{"id": "templates/doc-schema.yaml", "type": "file"}
+{"id": "README.md", "type": "file"}
+{"id": "__init__.py", "type": "file"}
+{"id": "config.yaml", "type": "file"}
+{"id": "docs/README.md", "type": "file"}
+{"id": "docs/definitions/abstract/base.md", "type": "file"}
+{"id": "docs/definitions/builtin/clean-workspace.md", "type": "file"}
+{"id": "docs/definitions/builtin/docs/prune-definition-pages.md", "type": "file"}
+{"id": "docs/definitions/builtin/docs/render-reference.md", "type": "file"}
+{"id": "docs/definitions/builtin/files/create-directory.md", "type": "file"}
+{"id": "docs/definitions/builtin/files/write-text.md", "type": "file"}
+{"id": "docs/definitions/builtin/git/create-github-repository.md", "type": "file"}
+{"id": "docs/definitions/builtin/git/gitignore-python.md", "type": "file"}
+{"id": "docs/definitions/builtin/git/init-current-workspace.md", "type": "file"}
+{"id": "docs/definitions/builtin/load-modules.md", "type": "file"}
+{"id": "docs/definitions/builtin/logger.md", "type": "file"}
+{"id": "docs/definitions/builtin/run-command.md", "type": "file"}
+{"id": "docs/definitions/builtin/template/render-markdown.md", "type": "file"}
+{"id": "docs/definitions/cloud/deployer.md", "type": "file"}
+{"id": "docs/definitions/docs/api/reference.md", "type": "file"}
+{"id": "docs/definitions/docs/catalog/modules.md", "type": "file"}
+{"id": "docs/definitions/example/git/github.md", "type": "file"}
+{"id": "docs/definitions/example/git/gitignore.md", "type": "file"}
+{"id": "docs/definitions/example/git/init.md", "type": "file"}
+{"id": "docs/definitions/example/obsidian-template.md", "type": "file"}
+{"id": "docs/definitions/examples/catalog/modules.md", "type": "file"}
+{"id": "docs/definitions/mixin/git-info.md", "type": "file"}
+{"id": "docs/definitions/mixin/timestamp.md", "type": "file"}
+{"id": "docs/schema.md", "type": "file"}
+{"id": "examples/README.md", "type": "file"}
+{"id": "examples/deploy.yaml", "type": "file"}
+{"id": "examples/examples.yaml", "type": "file"}
+{"id": "examples/git-current-workspace.yaml", "type": "file"}
+{"id": "examples/gitignore-template.yaml", "type": "file"}
+{"id": "examples/obsidian-template.yaml", "type": "file"}
+{"id": "interpreter.py", "type": "file"}
+{"id": "runtime/__init__.py", "type": "file"}
+{"id": "runtime/compiler.py", "type": "file"}
+{"id": "runtime/definition.py", "type": "file"}
+{"id": "runtime/dispatcher.py", "type": "file"}
+{"id": "runtime/jinja_engine.py", "type": "file"}
+{"id": "runtime/runtime.py", "type": "file"}
+{"id": "runtime/scope_frame.py", "type": "file"}
+{"id": "runtime/shell_environment.py", "type": "file"}
+{"id": "stdlib/stdlib.doc.yaml", "type": "file"}
+{"id": "stdlib/stdlib.files.yaml", "type": "file"}
+{"id": "stdlib/stdlib.git.yaml", "type": "file"}
+{"id": "stdlib/stdlib.template.yaml", "type": "file"}
+{"id": "stdlib/stdlib.yaml", "type": "file"}
+{"id": "templates/docs/definition.md.j2", "type": "file"}
+{"id": "templates/docs/index.md.j2", "type": "file"}
+{"id": "templates/docs/schema.md.j2", "type": "file"}
+{"file": "templates/doc-component-relationship-graph.yaml", "id": "docs/templates/component-relationship-graph", "type": "definition"}
+{"file": "templates/doc-definition.yaml", "id": "docs/templates/definition", "type": "definition"}
+{"file": "templates/doc-index.yaml", "id": "docs/templates/index", "type": "definition"}
+{"file": "templates/doc-schema.yaml", "id": "docs/templates/schema", "type": "definition"}
+{"file": "config.yaml", "id": "docs/catalog/modules", "type": "definition"}
+{"file": "config.yaml", "id": "docs/api/reference", "type": "definition"}
+{"file": "examples/deploy.yaml", "id": "mixin/git-info", "type": "definition"}
+{"file": "examples/deploy.yaml", "id": "mixin/timestamp", "type": "definition"}
+{"file": "examples/deploy.yaml", "id": "cloud/deployer", "type": "definition"}
+{"file": "examples/examples.yaml", "id": "examples/catalog/modules", "type": "definition"}
+{"file": "examples/git-current-workspace.yaml", "id": "example/git/init", "type": "definition"}
+{"file": "examples/git-current-workspace.yaml", "id": "example/git/github", "type": "definition"}
+{"file": "examples/gitignore-template.yaml", "id": "example/git/gitignore", "type": "definition"}
+{"file": "examples/obsidian-template.yaml", "id": "example/obsidian-template", "type": "definition"}
+{"file": "stdlib/stdlib.doc.yaml", "id": "builtin/docs/prune-definition-pages", "type": "definition"}
+{"file": "stdlib/stdlib.files.yaml", "id": "builtin/files/write-text", "type": "definition"}
+{"file": "stdlib/stdlib.files.yaml", "id": "builtin/files/create-directory", "type": "definition"}
+{"file": "stdlib/stdlib.git.yaml", "id": "builtin/git/init-current-workspace", "type": "definition"}
+{"file": "stdlib/stdlib.git.yaml", "id": "builtin/git/gitignore-python", "type": "definition"}
+{"file": "stdlib/stdlib.git.yaml", "id": "builtin/git/create-github-repository", "type": "definition"}
+{"file": "stdlib/stdlib.yaml", "id": "abstract/base", "type": "definition"}
+{"file": "stdlib/stdlib.yaml", "id": "builtin/load-modules", "type": "definition"}
+{"file": "stdlib/stdlib.yaml", "id": "builtin/run-command", "type": "definition"}
+{"file": "stdlib/stdlib.yaml", "id": "builtin/clean-workspace", "type": "definition"}
+{"file": "stdlib/stdlib.yaml", "id": "builtin/logger", "type": "definition"}
