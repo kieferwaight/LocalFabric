@@ -1,0 +1,55 @@
+- id: docs.api.reference
+  title: YAML API Reference Build
+  description: 'Public documentation workflow. Renders the index, authoring schema, and one
+
+    page per imported definition by invoking template definitions through
+
+    `render:` blocks, then prunes stale generated pages.
+
+    '
+  tags:
+  - documentation
+  - workflow
+  extends: stdlib.base
+  modules:
+  - docs.catalog.yaml
+  inputs:
+    output_dir:
+      type: string
+      required: false
+      default: docs
+      description: Documentation output directory.
+    mode:
+      type: string
+      required: false
+      default: write
+      description: Either `write` to generate output or `check` to verify it.
+  docs:
+    run:
+    - title: Render API index
+    - title: Render authoring schema
+    - title: Render per-definition pages
+    - title: Prune stale definition pages
+  run:
+  - render:
+      definition: docs.definition.template.index
+      target_path: '{{ output_dir }}/README.md'
+      mode: '{{ mode }}'
+  - render:
+      definition: docs.definition.template.schema
+      target_path: '{{ output_dir }}/schema.md'
+      mode: '{{ mode }}'
+  - render:
+      definition: docs.definition.template.definition
+      arguments:
+        definition: '{{ definition }}'
+      target_path: '{{ output_dir }}/{{ definition.page_path }}'
+      mode: '{{ mode }}'
+    for_each:
+      items: runtime.catalog.definitions
+      as: definition
+  - invoke:
+      definition: stdlib.docs.prune-definition-pages
+      arguments:
+        output_dir: '{{ output_dir }}'
+        mode: '{{ mode }}'
