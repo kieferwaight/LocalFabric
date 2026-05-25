@@ -47,30 +47,52 @@ flowchart LR
 | [Repository Structure](REPO_STRUCTURE.md) | Canonical numbered classifications, ownership rules, and migration guidance. |
 | [Services](SERVICES.md) | Service runtime design, service categories, state model, and operational interface. |
 | [Collaboration](COLLABORATION.md) | Agent worktrees, branch naming, pull request requirements, and integration rules. |
-| [Workspace Guide](20_workspaces/README.md) | Implementation buckets, import strategy, commands, and current workspace conventions. |
-| [Classification Audit](20_workspaces/18_docs/classification_audit.md) | Automated checks for cross-classification responsibility leaks. |
-| [Remediation Workflow](20_workspaces/18_docs/classification_remediation_workflow.md) | Agent workflow for resolving findings safely and iteratively. |
+| [Classification Audit](18_docs/classification_audit.md) | Automated checks for cross-classification responsibility leaks. |
+| [Remediation Workflow](18_docs/classification_remediation_workflow.md) | Agent workflow for resolving findings safely and iteratively. |
 
-## Repository Overview
+## Repository Layout
 
-The implementation is organized under [`20_workspaces/`](20_workspaces/README.md), with each numbered directory owning a distinct responsibility:
+Implementation lives directly under the repo root in numeric-prefixed responsibility buckets. Each bucket owns a single concern.
 
-| Area | Responsibility |
-| --- | --- |
-| Contracts and core | Schemas, protocols, shared primitives, and platform paths. |
-| Adapters, harnesses, and routing | Integration boundaries, execution lifecycle, and dispatch. |
-| Workflows and tools | Composable product capabilities and reusable task units. |
-| Drivers and services | Persistence mechanisms and locally runnable infrastructure. |
-| Prompts, models, and data | AI assets, registries, runtime state, and artifacts. |
-| Tests, scripts, docs, and archive | Validation, operations, guidance, and retained legacy materials. |
+| Bucket | Role | Import name |
+|--------|------|-------------|
+| [`00_specs/`](00_specs/) | Agent-ready specs and task artifacts | — |
+| [`01_contracts/`](01_contracts/) | Shared JSON schemas and Protocol mirrors | — |
+| [`02_core/`](02_core/) | Shared primitives: config, logging, paths | `core` |
+| [`03_adapters/`](03_adapters/) | Interface translation (CLI, REST, OpenAI-compat, MCP) | `adapters` |
+| [`04_harnesses/`](04_harnesses/) | Execution lifecycle per provider | `harnesses` |
+| [`05_router/`](05_router/) | Classification → scoring → dispatch | `router` |
+| [`06_workflows/`](06_workflows/) | LangGraph, LangChain, shell, YAML workflows | `workflows` |
+| [`07_tools/`](07_tools/) | Reusable functional units (image, pdf, vision, embeddings, …) | `tools` |
+| [`08_drivers/`](08_drivers/) | Storage/database connectors | `drivers` |
+| [`09_services/`](09_services/) | Docker-Compose service catalog by category | — |
+| [`10_service_runtime/`](10_service_runtime/) | `cmd <service> <path>` runtime | `service_runtime` |
+| [`11_mcp/`](11_mcp/) | MCP servers and exposure shims | `mcp_servers` |
+| [`12_prompts/`](12_prompts/) | Prompt templates | — |
+| [`13_models/`](13_models/) | Model registry, providers, profiles | — |
+| [`14_data/`](14_data/) | Persistent data (filesystem-backed) | — |
+| [`15_notebooks/`](15_notebooks/) | Exploration notebooks | — |
+| [`16_tests/`](16_tests/) | Integration and contract tests | — |
+| [`17_scripts/`](17_scripts/) | Utility and maintenance scripts | — |
+| [`18_docs/`](18_docs/) | Supporting docs | — |
+| [`19_archive/`](19_archive/) | Deprecated components | — |
+
+## Import-name Strategy
+
+Numeric prefixes are filesystem-only — Python forbids module names that start with a digit. The buckets are registered with clean import names via two synchronized mechanisms:
+
+- **[`pyproject.toml`](pyproject.toml)** — `[tool.setuptools.package-dir]` maps each bucket to its import name. `pip install -e .` writes the aliases into a `.pth` file in site-packages so `from harnesses.base import Harness` resolves naturally.
+- **[`conftest.py`](conftest.py)** — registers the same aliases at pytest startup so the test suite runs without an install step.
+
+`11_mcp/` is intentionally exposed as **`mcp_servers`**, not `mcp`: [`11_mcp/server.py`](11_mcp/server.py) imports `from mcp.server.fastmcp import FastMCP` (the PyPI MCP SDK), so we leave that top-level name unshadowed.
+
+Always import via the clean name (`from drivers.sql.session import init_db`), never via the numeric path.
 
 ## Getting Started
 
-From the repository root:
-
 ```bash
-cd 20_workspaces
 pip install -e .
+pip install -e ".[dev]"           # adds pytest, ruff, mypy
 pytest
 python -m adapters.cli.main --help
 ```
@@ -86,6 +108,12 @@ Expose available integrations through MCP:
 ```bash
 python -m mcp_servers.server
 ```
+
+## Notes for contributors
+
+- Cross-bucket imports use the clean import name (`from drivers.sql.session import init_db`), never the numeric path.
+- [`core.paths.REPO_ROOT`](02_core/src/core/paths.py) is the canonical anchor for path resolution — no `os.path.join(__file__, "..", "..")` patterns anywhere else.
+- [`17_scripts/audit_classifications.py`](17_scripts/audit_classifications.py) checks for layer-boundary violations; run it before opening a PR. Findings land at `14_data/runs/classification_audit/`.
 
 ## Design Principles
 
