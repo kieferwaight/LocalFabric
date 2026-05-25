@@ -65,7 +65,7 @@ Read these documents when a change touches their concern:
 - Keep service definitions self-contained under `09_services/<category>/<name>/`.
   Persistent mounts must be supplied through `DATA_PATH`; avoid hardcoded
   local state paths in Compose definitions.
-- Do not build new work in `00_workspaces_backup/` or `19_archive/`.
+- Do not build new work in `19_archive/`.
 - Keep local agent caches and worktree-specific overrides untracked. Root
   shared guidance files such as `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, and
   `SKILL.md` may be committed when intentionally added.
