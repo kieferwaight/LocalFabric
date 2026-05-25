@@ -48,13 +48,35 @@ _FORWARDED_KEYS: tuple[str, ...] = (
     "variables",
 )
 
+#: Magic marker key embedded in the compiled definition for provider-style
+#: files. ``MarkdownHarness.execute`` reads it to choose between the YAML
+#: runtime path and the provider dispatch path. Underscore-prefixed so the
+#: YAML runtime's schema validator (which is strict about top-level keys)
+#: never sees it — provider files don't reach the runtime in the first place.
+PROVIDER_MARKER_KEY: str = "_markdown_provider"
+
 
 def compile_text(source: str, *, source_path: str = "<string>") -> dict[str, Any]:
-    """Compile markdown text → in-memory YAML runtime definition dict."""
+    """Compile markdown text → in-memory YAML runtime definition dict.
+
+    Two shapes are supported:
+
+    * **Fence-style** (default): frontmatter declares a workflow definition
+      and fenced code blocks in the body become entries on its ``run`` list.
+      Output is consumed by ``workflows.yaml.src.Runtime.import_yaml_raw``.
+
+    * **Provider-style**: when frontmatter declares ``provider:`` the body is
+      treated as a single Jinja-renderable prompt and stored under the
+      ``_markdown_provider`` key. The markdown harness routes these files
+      through ``harnesses.markdown.providers`` instead of the YAML runtime.
+    """
     try:
         fm = _frontmatter.parse(source, source_path=source_path)
     except _frontmatter._FrontmatterError as exc:
         raise MarkdownCompileError(str(exc)) from exc
+
+    if "provider" in fm.metadata:
+        return _compile_provider_style(fm, source_path=source_path)
 
     try:
         fence_blocks = _fences.parse(
@@ -89,6 +111,93 @@ def compile_text(source: str, *, source_path: str = "<string>") -> dict[str, Any
     # blocks' ids still count toward uniqueness"). _compile_run_blocks
     # tracks them.
     _ = seen_ids
+    return definition
+
+
+def _compile_provider_style(
+    fm: _frontmatter.Frontmatter, *, source_path: str
+) -> dict[str, Any]:
+    """Build a provider-style definition dict.
+
+    The body becomes the prompt template; ``inputs``, ``description``, and
+    ``title`` are preserved for documentation. The YAML runtime never sees
+    this dict — the markdown harness reads ``_markdown_provider`` and
+    dispatches via ``harnesses.markdown.providers`` directly.
+    """
+    metadata = fm.metadata
+
+    provider = metadata.get("provider")
+    if not isinstance(provider, str) or not provider.strip():
+        raise MarkdownCompileError(
+            f"{source_path}: frontmatter 'provider' must be a non-empty string."
+        )
+
+    model = metadata.get("model")
+    if model is not None and (not isinstance(model, str) or not model.strip()):
+        raise MarkdownCompileError(
+            f"{source_path}: frontmatter 'model' must be a non-empty string when set."
+        )
+
+    system = metadata.get("system")
+    if system is not None and not isinstance(system, str):
+        raise MarkdownCompileError(
+            f"{source_path}: frontmatter 'system' must be a string when set."
+        )
+
+    stream = metadata.get("stream")
+    if stream is not None and not isinstance(stream, bool):
+        raise MarkdownCompileError(
+            f"{source_path}: frontmatter 'stream' must be a boolean when set."
+        )
+
+    max_tokens = metadata.get("max_tokens")
+    if max_tokens is not None and (
+        isinstance(max_tokens, bool) or not isinstance(max_tokens, int)
+    ):
+        raise MarkdownCompileError(
+            f"{source_path}: frontmatter 'max_tokens' must be an integer when set."
+        )
+
+    temperature = metadata.get("temperature")
+    if temperature is not None and not isinstance(temperature, (int, float)):
+        raise MarkdownCompileError(
+            f"{source_path}: frontmatter 'temperature' must be a number when set."
+        )
+
+    # Reject fence-style keys that would silently no-op under provider mode.
+    for stray in ("extends", "mixins", "modules", "variables"):
+        if stray in metadata:
+            raise MarkdownCompileError(
+                f"{source_path}: frontmatter key {stray!r} is not supported in "
+                "provider-style markdown (provider: is set)."
+            )
+
+    raw_id = metadata["id"]  # frontmatter parser guaranteed presence
+    description = metadata.get("description")
+    title = metadata.get("title")
+    if title is None:
+        title = _first_h1(fm.body) or ""
+    inputs = metadata.get("inputs")
+
+    provider_config = {
+        "provider": provider.strip(),
+        "prompt_template": fm.body,
+        "source_path": source_path,
+    }
+    for key in ("model", "system", "stream", "max_tokens", "temperature"):
+        value = metadata.get(key)
+        if value is not None:
+            provider_config[key] = value
+
+    definition: dict[str, Any] = {
+        "id": raw_id,
+        "title": title,
+        PROVIDER_MARKER_KEY: provider_config,
+    }
+    if description is not None:
+        definition["description"] = description
+    if inputs is not None:
+        definition["inputs"] = inputs
     return definition
 
 

@@ -76,3 +76,18 @@ models:
     type: chat
     location: local
     readme: 13_models/local/gemma2/README.md
+
+  - name: claude-sonnet-4-6
+    provider: claude
+    type: chat
+    location: cloud
+
+  - name: claude-opus-4-7
+    provider: claude
+    type: chat
+    location: cloud
+
+  - name: claude-haiku-4-5
+    provider: claude
+    type: chat
+    location: cloud
