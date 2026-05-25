@@ -12,7 +12,7 @@ Run directly (stdio transport for Claude Desktop):
 
 Install the workspace first so the bucket aliases (mcp_servers, tools,
 workflows, …) resolve:
-    pip install -e .         # from 20_workspaces/
+    pip install -e .         # from repo root
 """
 
 from typing import Optional

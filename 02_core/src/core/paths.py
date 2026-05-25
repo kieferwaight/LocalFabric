@@ -1,8 +1,8 @@
-"""Workspace path constants and predicate helpers.
+"""Repository path constants and predicate helpers.
 
-``WORKSPACES_ROOT`` is the single canonical anchor that every other module
+``REPO_ROOT`` is the single canonical anchor that every other module
 uses to locate buckets (09_services, 14_data, etc.). Override via the
-``WORKSPACES_ROOT`` env var if you need to point at a different tree
+``REPO_ROOT`` env var if you need to point at a different tree
 (e.g. for tests).
 """
 
@@ -14,24 +14,24 @@ from pathlib import Path
 from core.config import get_settings
 
 
-def _resolve_workspaces_root() -> Path:
-    """Resolve the 20_workspaces directory.
+def _resolve_repo_root() -> Path:
+    """Resolve the repo root directory.
 
-    Honours ``WORKSPACES_ROOT`` env var; otherwise derived from this module's
-    file location (``02_core/src/core/paths.py`` → ``20_workspaces``).
+    Honours ``REPO_ROOT`` env var; otherwise derived from this module's
+    file location (``02_core/src/core/paths.py`` → repo root).
     """
-    env_root = os.environ.get("WORKSPACES_ROOT")
+    env_root = os.environ.get("REPO_ROOT")
     if env_root:
         return Path(env_root).expanduser().resolve()
     return Path(__file__).resolve().parents[3]
 
 
-WORKSPACES_ROOT: Path = _resolve_workspaces_root()
+REPO_ROOT: Path = _resolve_repo_root()
 
 
 def data(*parts: str) -> Path:
     """Path under ``14_data/``."""
-    return WORKSPACES_ROOT.joinpath("14_data", *parts)
+    return REPO_ROOT.joinpath("14_data", *parts)
 
 
 def stores(*parts: str) -> Path:
@@ -41,7 +41,7 @@ def stores(*parts: str) -> Path:
 
 def services_dir() -> Path:
     """Path to ``09_services/``."""
-    return WORKSPACES_ROOT / "09_services"
+    return REPO_ROOT / "09_services"
 
 
 def registry_file(name: str) -> Path:

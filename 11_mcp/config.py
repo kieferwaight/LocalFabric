@@ -11,11 +11,11 @@ import json
 import sys
 from pathlib import Path
 
-from core.paths import WORKSPACES_ROOT
+from core.paths import REPO_ROOT
 
-# Workspace root is 20_workspaces/; used by Claude Desktop registration so
-# the server is launched with the correct cwd and PYTHONPATH.
-_PROJECT_ROOT = str(WORKSPACES_ROOT)
+# Repo root; used by Claude Desktop registration so the server is launched
+# with the correct cwd and PYTHONPATH.
+_PROJECT_ROOT = str(REPO_ROOT)
 
 # ------------------------------------------------------------------
 # Server config

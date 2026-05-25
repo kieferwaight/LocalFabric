@@ -27,9 +27,9 @@ from tools.embeddings.embedder import Embedder, EmbedderUnavailable
 # Configuration
 # ------------------------------------------------------------------
 
-_DEFAULT_TARGET = _WORKSPACES_ROOT
+_DEFAULT_TARGET = _REPO_ROOT
 _MANIFEST_PATH = os.path.join(
-    _WORKSPACES_ROOT, "14_data", "cache", "embeddings", "sweep_manifest.json"
+    _REPO_ROOT, "14_data", "cache", "embeddings", "sweep_manifest.json"
 )
 
 # Extensions to index (all others skipped)

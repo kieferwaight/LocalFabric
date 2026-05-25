@@ -22,7 +22,7 @@ EXCLUDED_PARTS = {"__pycache__", ".pytest_cache", ".venv"}
 # Persistent generated output and explicitly archived legacy code are not
 # candidates for active ownership remediation.
 EXCLUDED_BUCKETS = {"14_data", "19_archive"}
-SCAN_SCOPE = "20_workspaces source, configuration, documentation, and workflow files"
+SCAN_SCOPE = "repo source, configuration, documentation, and workflow files"
 VALID_STATUSES = {"open", "accepted", "in_progress", "resolved", "dismissed"}
 
 
@@ -559,7 +559,7 @@ def main() -> None:
         "--workspace",
         type=Path,
         default=Path(__file__).resolve().parent.parent,
-        help="Path to the 20_workspaces directory.",
+        help="Path to the repo root.",
     )
     parser.add_argument(
         "--output-dir",

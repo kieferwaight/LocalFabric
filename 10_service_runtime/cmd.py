@@ -15,9 +15,9 @@ import yaml
 from harnesses.docker_service import DockerServiceHarness
 
 
-_WORKSPACES_ROOT = Path(__file__).resolve().parent.parent
-_SERVICES_DIR = _WORKSPACES_ROOT / "09_services"
-_REGISTRY = _WORKSPACES_ROOT / "14_data" / "_registry" / "services.yaml"
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+_SERVICES_DIR = _REPO_ROOT / "09_services"
+_REGISTRY = _REPO_ROOT / "14_data" / "_registry" / "services.yaml"
 
 
 def _load_registry() -> dict:
