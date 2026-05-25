@@ -17,14 +17,14 @@ agents consume those records and make scoped changes after reviewing evidence.
 
 ## Run The Audit
 
-From `20_workspaces/`:
+From the repo root:
 
 ```bash
 python3 17_scripts/audit_classifications.py
 ```
 
 The crawler reads source, configuration, workflow, and documentation files
-under active `20_workspaces/` buckets. It excludes persistent run data and
+under active numeric-prefixed buckets. It excludes persistent run data and
 `19_archive/`, whose contents are retained for historical reference only. Re-running it
 refreshes current evidence while stable `finding_id` values preserve any
 existing `status` value for findings that remain present.

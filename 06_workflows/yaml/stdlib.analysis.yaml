@@ -27,12 +27,12 @@ analysis:
         `modules`) is captured as the record's `type` so we can see how ids are
         used in different positions.
       requires:
-        - PyYAML (use /Users/kwaight/scratch/20_workspaces/.venv/bin/python)
+        - PyYAML (use /Users/kwaight/scratch/.venv/bin/python)
 
   run:
     - title: Execute analysis
       bash: |
-        /Users/kwaight/scratch/20_workspaces/.venv/bin/python _analyze_ids.py
+        /Users/kwaight/scratch/.venv/bin/python _analyze_ids.py
     - title: Quick inspection
       bash: |
         wc -l analysis.jsonl
@@ -41,7 +41,7 @@ analysis:
 
   notes:
     - System python3 (Homebrew /opt/homebrew/opt/python@3.14) lacks PyYAML; the
-      project venv at 20_workspaces/.venv has it.
+      project venv at .venv has it.
     - The script writes analysis.jsonl in this directory (06_workflows/yaml).
     - The first pass emits one `file` record per path; the second pass appends
       one `definition` record per id encountered, so stacking the two reveals

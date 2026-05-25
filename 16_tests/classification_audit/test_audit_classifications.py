@@ -13,7 +13,7 @@ SPEC.loader.exec_module(AUDIT)
 
 
 def test_prompt_executable_is_flagged(tmp_path: Path) -> None:
-    workspace = tmp_path / "20_workspaces"
+    workspace = tmp_path / "workspace"
     prompt = workspace / "12_prompts" / "tasks" / "vision.py"
     prompt.parent.mkdir(parents=True)
     prompt.write_text(
@@ -30,7 +30,7 @@ def test_prompt_executable_is_flagged(tmp_path: Path) -> None:
 
 
 def test_mcp_documentation_is_not_mistaken_for_execution(tmp_path: Path) -> None:
-    workspace = tmp_path / "20_workspaces"
+    workspace = tmp_path / "workspace"
     readme = workspace / "11_mcp" / "tools" / "README.md"
     readme.parent.mkdir(parents=True)
     readme.write_text("Document usage: `ollama.generate(...)`.\n", encoding="utf-8")
@@ -41,7 +41,7 @@ def test_mcp_documentation_is_not_mistaken_for_execution(tmp_path: Path) -> None
 
 
 def test_tool_provider_execution_includes_harness_destination(tmp_path: Path) -> None:
-    workspace = tmp_path / "20_workspaces"
+    workspace = tmp_path / "workspace"
     tool = workspace / "07_tools" / "vision" / "client.py"
     tool.parent.mkdir(parents=True)
     tool.write_text("from langchain_ollama import ChatOllama\n", encoding="utf-8")
@@ -68,7 +68,7 @@ def test_rescan_preserves_review_status(tmp_path: Path) -> None:
 
 
 def test_workflow_open_write_is_flagged_for_driver_extraction(tmp_path: Path) -> None:
-    workspace = tmp_path / "20_workspaces"
+    workspace = tmp_path / "workspace"
     workflow = workspace / "06_workflows" / "job.py"
     workflow.parent.mkdir(parents=True)
     workflow.write_text(
@@ -82,7 +82,7 @@ def test_workflow_open_write_is_flagged_for_driver_extraction(tmp_path: Path) ->
 
 
 def test_generated_workflow_documentation_is_not_scanned_as_executable_io(tmp_path: Path) -> None:
-    workspace = tmp_path / "20_workspaces"
+    workspace = tmp_path / "workspace"
     documentation = workspace / "06_workflows" / "yaml" / "docs" / "definition.md"
     documentation.parent.mkdir(parents=True)
     documentation.write_text("Example: `target.write_text(content)`.\n", encoding="utf-8")

@@ -2,7 +2,7 @@
 
 ## Summary
 
-I want a [15_notebooks](20_workspaces/15_notebooks) that promotes an idea
+I want a [15_notebooks](15_notebooks) that promotes an idea
 through the `00_specs/` pipeline — from `01_ideas/` to `06_final/` — by calling
 a local LLM at each stage. The notebook is the observable "first trigger" for a
 capability we will eventually expose as a `/promote-spec` command, an MCP tool,
@@ -28,7 +28,7 @@ without rebuilding the whole pipeline.
 - Which prompts are needed per stage and how much context each one carries
   forward from earlier stages.
 - Whether the same notebook can later be lifted into a workflow under
-  [06_workflows/](20_workspaces/06_workflows) without restructuring.
+  [06_workflows/](06_workflows) without restructuring.
 - How `06_final/` should differ from the union of upstream artifacts — is it a
   bundle, an index, or a frozen prompt for a coding agent?
 

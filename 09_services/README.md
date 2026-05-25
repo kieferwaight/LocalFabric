@@ -82,7 +82,7 @@ Each service expects `DATA_PATH` (and any required credentials) to be provided
 via the environment. Compose files do not embed defaults for paths or secrets.
 
 ```bash
-cd 20_workspaces/09_services/databases/pgvector
+cd 09_services/databases/pgvector
 DATA_PATH=../../../14_data/stores/pgvector/research \
   POSTGRES_USER=postgres POSTGRES_PASSWORD=postgres POSTGRES_DB=contentgraph \
   docker compose up -d

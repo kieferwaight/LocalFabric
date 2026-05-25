@@ -10,8 +10,8 @@ promoted_at: '2026-05-23T19:06:13Z'
 # Research — notebook-format-markdown-test
 
 ## Existing Repository Assets
-- `20_workspaces/15_notebooks/` — Target directory for the new notebook; existing notebook templates or execution conventions should be reused.
-- `20_workspaces/12_prompts/tasks/format-markdown.md` — The prompt artifact to be consumed and tested; must be read as-is without modification.
+- `15_notebooks/` — Target directory for the new notebook; existing notebook templates or execution conventions should be reused.
+- `12_prompts/tasks/format-markdown.md` — The prompt artifact to be consumed and tested; must be read as-is without modification.
 - `08_drivers/` or `03_adapters/` — Likely contains existing LLM client implementations (e.g., OpenAI-compatible API wrappers) that should be reused for LM Studio communication.
 - `04_harnesses/` or `06_workflows/` — Existing orchestration harnesses or workflow definitions that may provide reusable step-chaining, logging, or evaluation utilities.
 - `02_core/` — Core configuration, environment variable handling, or prompt-loading utilities that the notebook should leverage instead of hardcoding paths or credentials.

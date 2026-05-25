@@ -1,6 +1,6 @@
 # Tasks — build-the-promotion-workflow
 
-Work items derived from [03_requirements/build-the-promotion-workflow.md](20_workspaces/00_specs/03_requirements/build-the-promotion-workflow.md).
+Work items derived from [03_requirements/build-the-promotion-workflow.md](00_specs/03_requirements/build-the-promotion-workflow.md).
 Each task is scoped to a single bucket so it passes the classification audit
 and can be picked up as an independent branch.
 
@@ -34,7 +34,7 @@ notebook without errors.
 **Bucket:** root `pyproject.toml`
 
 Confirm `[project.optional-dependencies].dev` in
-[20_workspaces/pyproject.toml](20_workspaces/pyproject.toml) includes both
+[pyproject.toml](pyproject.toml) includes both
 packages. Add them if missing.
 
 **Acceptance:** `pip install -e ".[dev]"` succeeds and `import openai, yaml`
@@ -47,7 +47,7 @@ works inside the notebook.
 Implement the notebook per F1–F7 of the requirements. Cell layout:
 
 1. Constants (`SLUG`, `START_STAGE`, `MODEL`, `LMSTUDIO_HOST`).
-2. Path resolution via `core.paths.WORKSPACES_ROOT`.
+2. Path resolution via `core.paths.REPO_ROOT`.
 3. Stage definitions (ordered list of `(folder, prompt_path, output_var)`).
 4. Helper: `read_chain(slug)` — returns dict of upstream artifacts present.
 5. Helper: `render_prompt(template_path, chain)` — Jinja render.
@@ -68,7 +68,7 @@ Implement the notebook per F1–F7 of the requirements. Cell layout:
 
 If the user wants to standardize on a specific LM Studio model (e.g.
 `qwen3.6-27b` from the format-markdown idea), register it in
-[13_models/registry.yaml](20_workspaces/13_models/registry.yaml) and add a
+[13_models/registry.yaml](13_models/registry.yaml) and add a
 README under `13_models/local/<model>/`. Not required for the first
 notebook run — the notebook accepts any chat-capable model string.
 

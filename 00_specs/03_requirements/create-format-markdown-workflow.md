@@ -12,7 +12,7 @@ promoted_at: '2026-05-23T21:40:17Z'
 ## Functional requirements
 
 **F1: Prompt Artifact Loading**  
-The notebook must load `20_workspaces/12_prompts/tasks/format-markdown.md` using the standardized prompt registry/loader from `02_core`, treating it as an immutable input artifact without inline templating or fallback logic. Resolves research Q1.
+The notebook must load `12_prompts/tasks/format-markdown.md` using the standardized prompt registry/loader from `02_core`, treating it as an immutable input artifact without inline templating or fallback logic. Resolves research Q1.
 
 **F2: LM Studio API Communication**  
 All model requests must route through the existing OpenAI-compatible driver in `08_drivers` (or `03_adapters`), initialized via core configuration patterns rather than direct HTTP calls or raw `requests` usage. Resolves research Q2.

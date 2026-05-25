@@ -19,7 +19,7 @@ Produce a Markdown document with these sections, in order:
    the upstream artifacts in `00_specs/0N_<stage>/<slug>.md` are
    authoritative.
 3. `## Stage index` — a Markdown table with one row per upstream stage,
-   linking to the file at `20_workspaces/00_specs/0N_<stage>/<slug>.md`.
+   linking to the file at `00_specs/0N_<stage>/<slug>.md`.
 4. `## Frozen handoff prompt` — a blockquote (`>`-prefixed lines) containing
    a self-contained agent prompt that:
    - Names the worktree convention from `CLAUDE.md`.

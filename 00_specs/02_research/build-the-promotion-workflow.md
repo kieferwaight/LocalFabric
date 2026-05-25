@@ -27,27 +27,27 @@ criteria belong inside requirements").
 
 ## Existing assets to reuse
 
-- **Prompt library** — [12_prompts/](20_workspaces/12_prompts) already
+- **Prompt library** — [12_prompts/](12_prompts) already
   separates `roles/`, `tasks/`, `agents/`, `templates/`. The per-stage
   promotion prompts belong in `12_prompts/tasks/spec_promotion/` (one prompt
   per stage). They must stay provider-agnostic per
-  [12_prompts/README.md](20_workspaces/12_prompts/README.md).
-- **Model registry** — [13_models/registry.yaml](20_workspaces/13_models/registry.yaml)
+  [12_prompts/README.md](12_prompts/README.md).
+- **Model registry** — [13_models/registry.yaml](13_models/registry.yaml)
   lists local Ollama models. LM Studio is declared as a provider in
-  [13_models/providers.yaml](20_workspaces/13_models/providers.yaml) at
+  [13_models/providers.yaml](13_models/providers.yaml) at
   `http://localhost:1234/v1` but has no models registered against it yet.
-- **Notebook precedent** — [15_notebooks/local_ollama_tools_demo.ipynb](20_workspaces/15_notebooks/local_ollama_tools_demo.ipynb)
+- **Notebook precedent** — [15_notebooks/local_ollama_tools_demo.ipynb](15_notebooks/local_ollama_tools_demo.ipynb)
   is the only existing notebook and demonstrates the "shell out + observe"
   cell style we should mirror.
-- **Path anchor** — `core.paths.WORKSPACES_ROOT` is the only sanctioned way to
+- **Path anchor** — `core.paths.REPO_ROOT` is the only sanctioned way to
   reach the spec tree; the notebook must not climb `__file__` parents.
 
 ## Layer ownership (classification audit constraints)
 
-From [18_docs/classification_audit.md](20_workspaces/18_docs/classification_audit.md)
+From [18_docs/classification_audit.md](18_docs/classification_audit.md)
 and [CLAUDE.md](CLAUDE.md):
 
-- A workflow under [06_workflows/](20_workspaces/06_workflows) may orchestrate
+- A workflow under [06_workflows/](06_workflows) may orchestrate
   the promotion but must delegate **file I/O to drivers** and **LLM calls to
   harnesses** — it may not call providers directly.
 - Adapters are stateless translators; the notebook is *not* an adapter.
@@ -56,7 +56,7 @@ and [CLAUDE.md](CLAUDE.md):
   MCP, that handler must not also fetch context, run the prompt, *and* write
   files in one tool.
 
-The notebook itself sits in [15_notebooks/](20_workspaces/15_notebooks), which
+The notebook itself sits in [15_notebooks/](15_notebooks), which
 is a sandbox layer and not audited the same way as the bucket layers. This is
 exactly why the notebook is the right home for the *first* trigger — we can
 prototype the orchestration shape before committing to a workflow placement.
@@ -66,7 +66,7 @@ prototype the orchestration shape before committing to a workflow placement.
 - An OpenAI-compatible chat endpoint. LM Studio (`localhost:1234/v1`) and
   Ollama (`localhost:11434/v1`) are both already declared as providers.
 - Python `openai` client (already a common dep; not yet pinned in
-  [20_workspaces/pyproject.toml](20_workspaces/pyproject.toml) — confirm in
+  [pyproject.toml](pyproject.toml) — confirm in
   requirements stage).
 
 ## Open questions surfaced for the requirements stage

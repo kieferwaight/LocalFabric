@@ -1,7 +1,7 @@
 """One-shot migration: rename ids, merge sibling files, move into new layout.
 
 Run once with the project venv:
-    /Users/kwaight/scratch/20_workspaces/.venv/bin/python _migrate.py
+    /Users/kwaight/scratch/.venv/bin/python _migrate.py
 
 After completion the script can be deleted; the analysis tool lives at
 src/yaml_analysis.py and exposes the same primitives via the CLI.

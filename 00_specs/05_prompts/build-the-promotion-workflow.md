@@ -1,7 +1,7 @@
 # Prompts — build-the-promotion-workflow
 
 Agent-ready prompts, one per task in
-[04_tasks/build-the-promotion-workflow.md](20_workspaces/00_specs/04_tasks/build-the-promotion-workflow.md).
+[04_tasks/build-the-promotion-workflow.md](00_specs/04_tasks/build-the-promotion-workflow.md).
 Each prompt assumes the agent has read the linked upstream artifacts before
 starting and is prepared to follow [CLAUDE.md](CLAUDE.md)'s branch/PR rules.
 
@@ -12,9 +12,9 @@ starting and is prepared to follow [CLAUDE.md](CLAUDE.md)'s branch/PR rules.
 **Branch:** `claude_feature_spec-promotion-prompts`
 
 You are implementing T1 from
-`20_workspaces/00_specs/04_tasks/build-the-promotion-workflow.md`.
+`00_specs/04_tasks/build-the-promotion-workflow.md`.
 
-Create five files under `20_workspaces/12_prompts/tasks/spec_promotion/`:
+Create five files under `12_prompts/tasks/spec_promotion/`:
 `02_research.md`, `03_requirements.md`, `04_tasks.md`, `05_prompts.md`,
 `06_final.md`.
 
@@ -35,8 +35,8 @@ Each prompt:
 Acceptance: when these prompts are rendered with the `01_ideas/`
 `build-the-promotion-workflow.md` content and run against a 7B-class local
 model, the model produces a research-stage artifact that names at least
-[REPO_STRUCTURE.md](REPO_STRUCTURE.md), [12_prompts/](20_workspaces/12_prompts)
-and [13_models/registry.yaml](20_workspaces/13_models/registry.yaml).
+[REPO_STRUCTURE.md](REPO_STRUCTURE.md), [12_prompts/](12_prompts)
+and [13_models/registry.yaml](13_models/registry.yaml).
 
 Do not modify any code in `02_core` through `11_mcp` for this branch.
 
@@ -48,12 +48,12 @@ Do not modify any code in `02_core` through `11_mcp` for this branch.
 
 You are implementing T2.
 
-In [20_workspaces/pyproject.toml](20_workspaces/pyproject.toml), confirm
+In [pyproject.toml](pyproject.toml), confirm
 `openai` and `pyyaml` are present in `[project.optional-dependencies].dev`.
 If either is missing, add it with no version pin (the lockfile, if any,
 governs versions).
 
-Validate by running `pip install -e ".[dev]"` from `20_workspaces/` and
+Validate by running `pip install -e ".[dev]"` from the repo root and
 `python -c "import openai, yaml"`.
 
 ---
@@ -63,16 +63,16 @@ Validate by running `pip install -e ".[dev]"` from `20_workspaces/` and
 **Branch:** `claude_feature_spec-promotion-notebook`
 
 You are implementing T3 from
-`20_workspaces/00_specs/04_tasks/build-the-promotion-workflow.md` and must
+`00_specs/04_tasks/build-the-promotion-workflow.md` and must
 satisfy F1–F7 plus acceptance A1–A5 from
-`20_workspaces/00_specs/03_requirements/build-the-promotion-workflow.md`.
+`00_specs/03_requirements/build-the-promotion-workflow.md`.
 
 The notebook must use the cell layout listed in T3 verbatim — including a
 preview cell + run cell pair per stage. Helper functions live in the notebook
 itself; do not add a Python module under another bucket.
 
-Path resolution: `from core.paths import WORKSPACES_ROOT`, then derive
-`SPECS_ROOT = WORKSPACES_ROOT / "00_specs"`. Do not climb `__file__`.
+Path resolution: `from core.paths import REPO_ROOT`, then derive
+`SPECS_ROOT = REPO_ROOT / "00_specs"`. Do not climb `__file__`.
 
 LLM call: use the `openai` client pointed at `LMSTUDIO_HOST` (default
 `http://localhost:1234/v1`) with `api_key="not-needed"`. Model name is read
@@ -92,7 +92,7 @@ only.
 **Branch:** `claude_chore_register-lmstudio-model`
 
 Only do this if the user explicitly requests it. Pattern: copy any existing
-entry in [13_models/registry.yaml](20_workspaces/13_models/registry.yaml),
+entry in [13_models/registry.yaml](13_models/registry.yaml),
 flip `provider` to `lmstudio`, add a stub README under `13_models/local/`.
 Confirm the classification audit stays clean.
 
