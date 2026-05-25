@@ -8,5 +8,17 @@
     ],
     "markdown.styles": [
         ".vscode/documentation.css"
-    ]
+    ],
+    "workbench.editorAssociations": {
+        "*.md": "vscode.markdown.preview.editor"
+    },
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.pytest_cache": true,
+        "**/.venv": true,
+        "**/venv": true,
+        "**/*.egg-info": true,
+        "00_planning": true,
+        "00_workspaces_backup": true
+    }
 }
