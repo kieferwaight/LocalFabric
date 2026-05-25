@@ -82,7 +82,7 @@ Full rule list in [18_docs/classification_audit.md](18_docs/classification_audit
 
 ## Worktree & Branch Workflow
 
-This repo uses per-provider Git worktrees (see [COLLABORATION.md](COLLABORATION.md)). The Claude worktree is `~/agents/claude/LocalFabric`. **Work only in this worktree.** Do not touch sibling worktrees at `~/agents/{codex,copilot,gemini}/LocalFabric`.
+This repo uses per-provider Git worktrees (see [COLLABORATION.md](COLLABORATION.md)). The Claude worktree is `~/src/worktrees/claude/LocalFabric`. **Work only in this worktree.** Do not touch sibling worktrees at `~/src/worktrees/{codex,copilot,gemini}/LocalFabric`.
 
 Every Claude branch must match `claude_<type>_<short-description>` where `<type>` is one of `feature | bug | docs | refactor | test | chore | audit`. Start each new assignment from a detached-main baseline:
 
