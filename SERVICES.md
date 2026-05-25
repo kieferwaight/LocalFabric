@@ -247,11 +247,63 @@ The runtime must verify readiness before marking a service as ready.
 
 ## Logs
 
-Logs must be written under:
+Service logs must be written under `14_data/logs/` as a single file per
+`(service, instance)` pair:
 
 ```text
-14_data/logs/services/<service>/<instance>/
+14_data/logs/<service>-<instance>.log
+14_data/logs/<service>-<instance>.err   # optional, when stderr is separated
 ```
+
+Do not create per-service subfolders. If a service produces multiple files
+(rotation, multiple streams), use at most one level of nesting:
+`14_data/logs/<service>-<instance>/`.
+
+For Compose-managed services, the runtime is responsible for capturing the
+container's stdout/stderr to this location.
+
+## Runtime State
+
+Host-launched processes (see below) must write their PID file to:
+
+```text
+14_data/runtime/<service>-<instance>.pid
+```
+
+Lock files and sockets follow the same pattern (`.lock`, `.sock`). PID files
+are removed by the runtime when the service stops, and any stale PID file
+should be deleted on next start.
+
+## Host-Launched Services
+
+Some services run directly on the host instead of in a container (npx,
+`python -m`, `uvicorn`, native binaries). They use the **same data conventions
+as Compose-managed services** and are started through the same
+`cmd <service> <data-path>` interface.
+
+### Conventions
+
+- The launcher in [10_service_runtime/](20_workspaces/10_service_runtime/)
+  resolves the service definition, then launches the host process and captures
+  output to `14_data/logs/<service>-<instance>.log`.
+- The launcher writes `14_data/runtime/<service>-<instance>.pid` after fork.
+- The launcher removes the PID file on clean shutdown and flags stale PID
+  files (process gone, file present) on the next `cmd start`.
+- Persistent state (databases, app data) still lives under
+  `14_data/stores/<service>/<instance>/` or `14_data/apps/<service>/<instance>/`,
+  not next to the binary.
+
+### Anti-patterns
+
+Do not write logs, PIDs, or other operational data to:
+
+- The repository root (`./<service>/`)
+- The current working directory of the launching process
+- Any path outside `14_data/`
+
+If a service definition does not yet exist in [09_services/](20_workspaces/09_services/),
+add one — even for host-launched processes — so the launcher and registry can
+resolve it. A host-launched service is still a registered service.
 
 ## Service Composition
 

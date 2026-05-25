@@ -1,0 +1,19 @@
+# Required env: DATA_PATH (host folder for n8n state)
+# Optional env: N8N_PORT (default 5678), N8N_HOST (default localhost), GENERIC_TIMEZONE (default UTC)
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: localfabric-n8n
+    restart: unless-stopped
+    environment:
+      N8N_HOST: ${N8N_HOST:-localhost}
+      N8N_PORT: ${N8N_PORT:-5678}
+      N8N_PROTOCOL: http
+      WEBHOOK_URL: http://${N8N_HOST:-localhost}:${N8N_PORT:-5678}/
+      GENERIC_TIMEZONE: ${GENERIC_TIMEZONE:-UTC}
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_RUNNERS_ENABLED: "true"
+    ports:
+      - "${N8N_PORT:-5678}:5678"
+    volumes:
+      - ${DATA_PATH}:/home/node/.n8n

@@ -59,6 +59,7 @@ All implementation lives under `20_workspaces/` using flat classification bucket
 
 - Do not nest more deeply than two or three levels.
 - Organize by responsibility type, not by project.
+- Scale horizontally (more siblings) before vertically (deeper nesting).
 
 Avoid:
 
@@ -72,6 +73,25 @@ Prefer:
 03_adapters/openai_compatible/ollama.py
 04_harnesses/ollama/harness.py
 ```
+
+This rule applies inside `14_data/` as well. Encode dimensions in **filenames**,
+not in folders.
+
+Avoid:
+
+```text
+14_data/logs/services/n8n/main/n8n.log
+```
+
+Prefer:
+
+```text
+14_data/logs/n8n-main.log
+```
+
+Run artifacts under `14_data/runs/<class>/<run-id>/` are the only place deeper
+nesting is justified, because each run owns its own subtree of outputs. Cap it
+at two levels under `runs/`.
 
 ### 2. Separation of Concerns
 
@@ -327,6 +347,7 @@ All persistent data.
 |-- apps/
 |-- runs/
 |-- logs/
+|-- runtime/
 `-- cache/
 ```
 

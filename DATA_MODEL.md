@@ -39,8 +39,14 @@ All persistent data lives under `20_workspaces/14_data/`.
 |-- apps/
 |-- runs/
 |-- logs/
+|-- runtime/
 `-- cache/
 ```
+
+Each top-level bucket is a single classification of state. Do not introduce
+new top-level folders unless an existing one cannot represent the data without
+distorting its semantics. See [REPO_STRUCTURE.md](REPO_STRUCTURE.md) for the
+flat-structure rule that applies inside every bucket below.
 
 ## 1. Registry
 
@@ -202,16 +208,51 @@ runs/
 
 ## 6. Logs
 
-System logs.
+Captured stdout, stderr, and rotated log output from services, harnesses, and
+workflows.
 
 ```text
 logs/
-|-- harnesses/
-|-- services/
-`-- workflows/
+|-- <service>-<instance>.log
+|-- <service>-<instance>.err
+|-- <harness>-<run>.log
+`-- <workflow>-<run>.log
 ```
 
-## 7. Cache
+### Conventions
+
+- One file per `(producer, instance)` pair. Encode the producer kind and
+  instance name in the filename — do not create per-producer subfolders.
+- When a producer needs many files (rotation, separate streams), allow at most
+  one level of nesting: `logs/<service>-<instance>/<file>`.
+- Filenames are kebab-case and time-sortable. Rotated files use a date suffix:
+  `n8n-main.20260524.log`.
+- Logs are regenerable and safe to delete when the producer is stopped.
+
+## 7. Runtime
+
+Live process state for host-launched services and background processes.
+
+```text
+runtime/
+|-- <service>-<instance>.pid
+|-- <service>-<instance>.lock
+`-- <service>-<instance>.sock
+```
+
+### Characteristics
+
+- Points to a live process or holds a process-scoped lease.
+- Regenerated on every start; meaningless after the producer exits.
+- Distinct from `runs/` (time-scoped artifacts) and `cache/` (regenerable
+  outputs). PIDs and lockfiles are neither artifacts nor outputs.
+- Safe to delete when no producer is running. A stale `.pid` should be removed,
+  not preserved.
+
+Host-launched processes (npx, uvicorn, `python -m`, etc.) must write their PID
+files here. See [SERVICES.md](SERVICES.md) for the launcher contract.
+
+## 8. Cache
 
 Non-critical, regenerable data.
 
@@ -294,6 +335,8 @@ Safe to delete:
 
 - `cache/`
 - `runs/`
+- `logs/`
+- `runtime/` (only when the producer is not running)
 
 Persistent:
 

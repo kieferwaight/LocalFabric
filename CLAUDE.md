@@ -77,8 +77,10 @@ Full rule list in [20_workspaces/18_docs/classification_audit.md](20_workspaces/
 
 - **`core.paths.WORKSPACES_ROOT`** is the only canonical path anchor. Never use `os.path.join(__file__, "..", "..")` to climb out of a bucket — import from `core.paths` instead. Honors the `WORKSPACES_ROOT` env var for relocating the tree (tests use this).
 - All persistent state lives under `20_workspaces/14_data/` and is addressed as `<type>://<path>` (e.g. `postgres://14_data/stores/postgres/research`). See [DATA_MODEL.md](DATA_MODEL.md).
-- Services are addressed by data path: `cmd <service> <data-path>`. Docker Compose definitions are in `09_services/<category>/<service>/`, all volumes must bind through `${DATA_PATH}`.
-- Safe to delete: `14_data/cache/`, `14_data/runs/`. Persistent: `14_data/stores/`, `14_data/apps/`.
+- Services are addressed by data path: `cmd <service> <data-path>`. Docker Compose definitions are in `09_services/<category>/<service>/`, all volumes must bind through `${DATA_PATH}`. Host-launched processes (npx, `python -m`, etc.) follow the same conventions — see [SERVICES.md](SERVICES.md#host-launched-services).
+- Service logs go to `14_data/logs/<service>-<instance>.log`. PID files and live process state go to `14_data/runtime/<service>-<instance>.pid`. **Never write logs or PIDs to the repo root or to an ad-hoc folder.**
+- Flat over nested inside `14_data/`: encode dimensions in filenames, not folder layers (see [REPO_STRUCTURE.md](REPO_STRUCTURE.md#1-flat-structure)).
+- Safe to delete: `14_data/cache/`, `14_data/runs/`, `14_data/logs/`, `14_data/runtime/` (when no producer is running). Persistent: `14_data/stores/`, `14_data/apps/`.
 
 ## Worktree & Branch Workflow
 

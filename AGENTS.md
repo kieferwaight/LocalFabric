@@ -22,7 +22,7 @@ Read these documents when a change touches their concern:
 | `ARCHITECTURE.md` | Execution layers, contracts, and system flow |
 | `REPO_STRUCTURE.md` | Bucket ownership and classification rules |
 | `DATA_MODEL.md` | Persistent data placement and addressing |
-| `SERVICES.md` | Docker service conventions and runtime behavior |
+| `SERVICES.md` | Service conventions, including host-launched processes, log paths, and PID locations |
 | `COLLABORATION.md` | Worktrees, branches, commits, and pull requests |
 | `20_workspaces/README.md` | Imports, bucket map, and development commands |
 

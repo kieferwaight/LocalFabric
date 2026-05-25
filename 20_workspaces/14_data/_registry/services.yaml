@@ -133,6 +133,10 @@ services:
     category: workers
     default_port: 8000
     data_subpath: apps/fastapi
+  n8n:
+    category: workers
+    default_port: 5678
+    data_subpath: apps/n8n
 
   # dev/
   jupyter:
