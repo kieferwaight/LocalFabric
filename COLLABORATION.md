@@ -7,7 +7,7 @@ LocalFabric uses isolated agent worktrees so multiple AI providers can contribut
 The integration workspace is:
 
 ```text
-/Users/kwaight/scratch
+/Users/kwaight/src/LocalFabric
 ```
 
 The `main` branch is the integration branch. Agent implementation work must be performed in the provider's assigned worktree and proposed to `main` through a pull request.
@@ -16,10 +16,10 @@ The `main` branch is the integration branch. Agent implementation work must be p
 
 | Provider | Workspace | Branch Prefix |
 | --- | --- | --- |
-| Codex | `~/agents/codex/LocalFabric` | `codex_` |
-| Claude | `~/agents/claude/LocalFabric` | `claude_` |
-| Copilot | `~/agents/copilot/LocalFabric` | `copilot_` |
-| Gemini | `~/agents/gemini/LocalFabric` | `gemini_` |
+| Codex | `~/src/worktrees/codex/LocalFabric` | `codex_` |
+| Claude | `~/src/worktrees/claude/LocalFabric` | `claude_` |
+| Copilot | `~/src/worktrees/copilot/LocalFabric` | `copilot_` |
+| Gemini | `~/src/worktrees/gemini/LocalFabric` | `gemini_` |
 
 These directories are Git worktrees from the same LocalFabric repository. Each worktree starts at a detached `main` baseline so a provider creates a purpose-specific branch when assigned work begins.
 
@@ -66,7 +66,7 @@ codex_audit_driver-boundaries
 Before editing files, an agent should move to its worktree, refresh its baseline from the integration workspace, and create a new branch:
 
 ```bash
-cd ~/agents/claude/LocalFabric
+cd ~/src/worktrees/claude/LocalFabric
 git switch --detach main
 git switch -c claude_feature_short-description
 ```
