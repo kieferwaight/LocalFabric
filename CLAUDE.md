@@ -4,13 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Shape
 
-LocalFabric is a local-first AI orchestration workspace. All implementation lives under [`20_workspaces/`](20_workspaces/) in numeric-prefixed responsibility buckets (`01_contracts`, `02_core`, `03_adapters`, …, `19_archive`). The root holds only design docs ([ARCHITECTURE.md](ARCHITECTURE.md), [DATA_MODEL.md](DATA_MODEL.md), [REPO_STRUCTURE.md](REPO_STRUCTURE.md), [SERVICES.md](SERVICES.md), [COLLABORATION.md](COLLABORATION.md)) — read these before making cross-bucket changes.
+LocalFabric is a local-first AI orchestration workspace. All implementation lives directly under the repo root in numeric-prefixed responsibility buckets (`01_contracts`, `02_core`, `03_adapters`, …, `19_archive`). The design docs ([ARCHITECTURE.md](ARCHITECTURE.md), [DATA_MODEL.md](DATA_MODEL.md), [REPO_STRUCTURE.md](REPO_STRUCTURE.md), [SERVICES.md](SERVICES.md), [COLLABORATION.md](COLLABORATION.md)) sit alongside the buckets — read these before making cross-bucket changes.
 
-**Working directory for every command below is `20_workspaces/`**, not the repo root. [pyproject.toml](20_workspaces/pyproject.toml), [conftest.py](20_workspaces/conftest.py), and the test root all live there.
+**Working directory for every command below is the repo root.** [pyproject.toml](pyproject.toml), [conftest.py](conftest.py), and the test root all live there.
 
 ## Numeric Bucket → Python Import Name
 
-The numeric prefixes are filesystem-only — Python rejects module names starting with a digit. Clean import names are registered two ways: `[tool.setuptools.package-dir]` in [pyproject.toml](20_workspaces/pyproject.toml) (active after `pip install -e .`) and [conftest.py](20_workspaces/conftest.py) (active during pytest, no install needed). The two **must stay in sync**.
+The numeric prefixes are filesystem-only — Python rejects module names starting with a digit. Clean import names are registered two ways: `[tool.setuptools.package-dir]` in [pyproject.toml](pyproject.toml) (active after `pip install -e .`) and [conftest.py](conftest.py) (active during pytest, no install needed). The two **must stay in sync**.
 
 | Bucket dir | Import as |
 |---|---|
@@ -24,15 +24,13 @@ The numeric prefixes are filesystem-only — Python rejects module names startin
 | `10_service_runtime` | `service_runtime` |
 | `11_mcp` | **`mcp_servers`** (not `mcp`) |
 
-`11_mcp/` is deliberately exposed as `mcp_servers` because [11_mcp/server.py](20_workspaces/11_mcp/server.py) imports `from mcp.server.fastmcp import FastMCP` — the PyPI MCP SDK owns the `mcp` top-level name and we don't shadow it.
+`11_mcp/` is deliberately exposed as `mcp_servers` because [11_mcp/server.py](11_mcp/server.py) imports `from mcp.server.fastmcp import FastMCP` — the PyPI MCP SDK owns the `mcp` top-level name and we don't shadow it.
 
 Always import via the clean name (`from drivers.sql.session import init_db`), never via the numeric path.
 
 ## Commands
 
 ```bash
-cd 20_workspaces
-
 # Install (writes import aliases into a .pth in site-packages)
 pip install -e .
 pip install -e ".[dev]"           # adds pytest, ruff, mypy
@@ -71,12 +69,12 @@ Execution flows **Interface → Router → Workflow (optional) → Harness → A
 - **`12_prompts`** holds templates only — no API clients.
 - **`13_models`** is authoritative for which models are available; configured models must appear in the registry.
 
-Full rule list in [20_workspaces/18_docs/classification_audit.md](20_workspaces/18_docs/classification_audit.md). The audit emits JSONL findings with stable IDs; rerunning preserves `status` on still-present findings.
+Full rule list in [18_docs/classification_audit.md](18_docs/classification_audit.md). The audit emits JSONL findings with stable IDs; rerunning preserves `status` on still-present findings.
 
 ## Path & Data Conventions
 
-- **`core.paths.WORKSPACES_ROOT`** is the only canonical path anchor. Never use `os.path.join(__file__, "..", "..")` to climb out of a bucket — import from `core.paths` instead. Honors the `WORKSPACES_ROOT` env var for relocating the tree (tests use this).
-- All persistent state lives under `20_workspaces/14_data/` and is addressed as `<type>://<path>` (e.g. `postgres://14_data/stores/postgres/research`). See [DATA_MODEL.md](DATA_MODEL.md).
+- **`core.paths.REPO_ROOT`** is the only canonical path anchor. Never use `os.path.join(__file__, "..", "..")` to climb out of a bucket — import from `core.paths` instead. Honors the `REPO_ROOT` env var for relocating the tree (tests use this).
+- All persistent state lives under `14_data/` and is addressed as `<type>://<path>` (e.g. `postgres://14_data/stores/postgres/research`). See [DATA_MODEL.md](DATA_MODEL.md).
 - Services are addressed by data path: `cmd <service> <data-path>`. Docker Compose definitions are in `09_services/<category>/<service>/`, all volumes must bind through `${DATA_PATH}`. Host-launched processes (npx, `python -m`, etc.) follow the same conventions — see [SERVICES.md](SERVICES.md#host-launched-services).
 - Service logs go to `14_data/logs/<service>-<instance>.log`. PID files and live process state go to `14_data/runtime/<service>-<instance>.pid`. **Never write logs or PIDs to the repo root or to an ad-hoc folder.**
 - Flat over nested inside `14_data/`: encode dimensions in filenames, not folder layers (see [REPO_STRUCTURE.md](REPO_STRUCTURE.md#1-flat-structure)).

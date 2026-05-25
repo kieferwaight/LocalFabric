@@ -27,7 +27,7 @@ Each service consists of:
 
 ## Service Catalog Location
 
-Service definitions live under `20_workspaces/09_services/`.
+Service definitions live under `09_services/`.
 
 ## Service Categories
 
@@ -283,7 +283,7 @@ as Compose-managed services** and are started through the same
 
 ### Conventions
 
-- The launcher in [10_service_runtime/](20_workspaces/10_service_runtime/)
+- The launcher in [10_service_runtime/](10_service_runtime/)
   resolves the service definition, then launches the host process and captures
   output to `14_data/logs/<service>-<instance>.log`.
 - The launcher writes `14_data/runtime/<service>-<instance>.pid` after fork.
@@ -301,7 +301,7 @@ Do not write logs, PIDs, or other operational data to:
 - The current working directory of the launching process
 - Any path outside `14_data/`
 
-If a service definition does not yet exist in [09_services/](20_workspaces/09_services/),
+If a service definition does not yet exist in [09_services/](09_services/),
 add one — even for host-launched processes — so the launcher and registry can
 resolve it. A host-launched service is still a registered service.
 

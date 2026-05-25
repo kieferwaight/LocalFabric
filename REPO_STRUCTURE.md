@@ -12,25 +12,6 @@ All code and assets must conform to this layout to ensure consistency, discovera
 .
 |-- .github/
 |   `-- PULL_REQUEST_TEMPLATE.md
-|-- 00_planning/
-|-- 10_todo/
-|-- 20_workspaces/
-|-- README.md
-|-- SECURITY.md
-|-- TESTING.md
-|-- ARCHITECTURE.md
-|-- COLLABORATION.md
-|-- DATA_MODEL.md
-|-- SERVICES.md
-`-- REPO_STRUCTURE.md
-```
-
-## Workspaces Overview
-
-All implementation lives under `20_workspaces/` using flat classification buckets.
-
-```text
-20_workspaces/
 |-- 00_specs/
 |-- 01_contracts/
 |-- 02_core/
@@ -50,8 +31,21 @@ All implementation lives under `20_workspaces/` using flat classification bucket
 |-- 16_tests/
 |-- 17_scripts/
 |-- 18_docs/
-`-- 19_archive/
+|-- 19_archive/
+|-- AGENTS.md
+|-- ARCHITECTURE.md
+|-- CLAUDE.md
+|-- COLLABORATION.md
+|-- DATA_MODEL.md
+|-- GEMINI.md
+|-- README.md
+|-- REPO_STRUCTURE.md
+|-- SERVICES.md
+|-- conftest.py
+`-- pyproject.toml
 ```
+
+All implementation lives in the numeric-prefixed buckets directly under the repo root. Design docs sit alongside them so they are equally discoverable.
 
 ## Classification Rules
 
