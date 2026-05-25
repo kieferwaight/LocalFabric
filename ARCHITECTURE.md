@@ -132,7 +132,7 @@ Filesystem-backed persistent storage.
 
 All data resides under:
 
-`20_workspaces/14_data/`
+`14_data/`
 
 ---
 
@@ -249,16 +249,16 @@ All components communicate via shared contracts:
 
 Located in:
 
-`20_workspaces/01_contracts/`
+`01_contracts/`
 
 ---
 
-## Workspace Organization
+## Repo Organization
 
-All code is organized by classification:
+All code is organized by classification at the repo root:
 
 ```text
-20_workspaces/
+.
 ├── 01_contracts/
 ├── 02_core/
 ├── 03_adapters/

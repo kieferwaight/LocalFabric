@@ -27,7 +27,7 @@ All storage systems are represented as one of the following:
 
 ## Canonical Data Root
 
-All persistent data lives under `20_workspaces/14_data/`.
+All persistent data lives under `14_data/`.
 
 ## Top-Level Structure
 
