@@ -17,8 +17,6 @@
         "**/.pytest_cache": true,
         "**/.venv": true,
         "**/venv": true,
-        "**/*.egg-info": true,
-        "00_planning": true,
-        "00_workspaces_backup": true
+        "**/*.egg-info": true
     }
 }
