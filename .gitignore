@@ -1,6 +1,3 @@
-00_workspaces_backup/
-00_planning/
-
 # Python
 __pycache__/
 *.py[cod]

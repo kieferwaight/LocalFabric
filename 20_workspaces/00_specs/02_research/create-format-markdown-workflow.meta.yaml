@@ -1,6 +1,0 @@
-model: qwen/qwen3.6-27b
-provider: lmstudio
-endpoint: http://localhost:1234/v1
-prompt_path: 12_prompts/tasks/spec_promotion/02_research.md
-prompt_sha256: 380877ce7d51024e87d3ef078a3d0bb73f1fafb54fae883bb62dac6e2b7934dd
-promoted_at: '2026-05-23T19:06:13Z'

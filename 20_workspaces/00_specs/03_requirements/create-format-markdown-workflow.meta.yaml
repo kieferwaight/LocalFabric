@@ -1,6 +1,0 @@
-model: qwen/qwen3.6-27b
-provider: lmstudio
-endpoint: http://localhost:1234/v1
-prompt_path: 12_prompts/tasks/spec_promotion/03_requirements.md
-prompt_sha256: 29953859f29d53befb6e5e0e2e446563cdc00e7e597945f8be16b10280772175
-promoted_at: '2026-05-23T21:40:17Z'
