@@ -1,0 +1,28 @@
+- id: provider.gemini
+  title: gemini
+  description: >
+    Google's hosted Gemini models. Accessed via the Google GenAI API, the
+    google-genai SDK, or the Gemini CLI.
+  tags: [provider]
+  extends: provider.base
+  variables:
+    name: gemini
+    location: cloud
+    documentation:
+      summary: |
+        Google's hosted Gemini models. Accessed via the Google GenAI API, the
+        google-genai SDK, or the Gemini CLI.
+      homepage: https://ai.google.dev
+      vendor: Google
+    endpoint: https://generativelanguage.googleapis.com
+    auth: api_key
+    env:
+      api_key: GEMINI_API_KEY
+    protocols:
+      cli:
+        binary: gemini
+      sdk:
+        package: google-genai
+        languages: [python, typescript]
+      google-api:
+        base_url: https://generativelanguage.googleapis.com

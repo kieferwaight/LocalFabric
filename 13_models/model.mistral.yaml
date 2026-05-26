@@ -1,0 +1,20 @@
+- id: model.mistral
+  title: mistral
+  description: >
+    Fast, efficient instruction-following, summarization, chat, and lightweight
+    coding support.
+  tags: [model]
+  extends: model.base
+  variables:
+    name: mistral
+    documentation:
+      summary: |
+        Fast, efficient instruction-following, summarization, chat, and lightweight
+        coding support.
+      vendor: Mistral AI
+    providers:
+      - ollama
+    features:
+      - text
+      - tool_calling
+      - streaming

@@ -1,0 +1,22 @@
+- id: model.claude-opus-4-7
+  title: claude-opus-4-7
+  description: >
+    Anthropic's flagship Opus-tier model. Highest-capability reasoning with
+    extended thinking, tool use, and vision.
+  tags: [model]
+  extends: model.base
+  variables:
+    name: claude-opus-4-7
+    documentation:
+      summary: |
+        Anthropic's flagship Opus-tier model. Highest-capability reasoning with
+        extended thinking, tool use, and vision.
+      vendor: Anthropic
+    providers:
+      - claude
+    features:
+      - text
+      - tool_calling
+      - thinking
+      - vision
+      - streaming

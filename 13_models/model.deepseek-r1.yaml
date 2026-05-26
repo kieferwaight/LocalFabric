@@ -1,0 +1,20 @@
+- id: model.deepseek-r1
+  title: deepseek-r1
+  description: >
+    Reasoning-heavy tasks such as math, logic, planning, and step-by-step
+    problem solving. Emits visible chain-of-thought.
+  tags: [model]
+  extends: model.base
+  variables:
+    name: deepseek-r1
+    documentation:
+      summary: |
+        Reasoning-heavy tasks such as math, logic, planning, and step-by-step
+        problem solving. Emits visible chain-of-thought.
+      vendor: DeepSeek
+    providers:
+      - ollama
+    features:
+      - text
+      - thinking
+      - streaming

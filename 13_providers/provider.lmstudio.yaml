@@ -1,0 +1,27 @@
+- id: provider.lmstudio
+  title: lmstudio
+  description: >
+    Desktop LLM runtime. Loads quantized open-weight models locally and serves
+    them through a native HTTP API plus an OpenAI-compatible surface.
+  tags: [provider]
+  extends: provider.base
+  variables:
+    name: lmstudio
+    location: local
+    documentation:
+      summary: |
+        Desktop LLM runtime. Loads quantized open-weight models locally and serves
+        them through a native HTTP API plus an OpenAI-compatible surface.
+      homepage: https://lmstudio.ai
+    endpoint: http://localhost:1234
+    auth: none
+    env:
+      host: LMSTUDIO_HOST
+      api_key: LMSTUDIO_API_KEY
+    protocols:
+      cli:
+        binary: lms
+      lmstudio-api:
+        base_url: http://localhost:1234
+      openai-api:
+        base_url: http://localhost:1234/v1

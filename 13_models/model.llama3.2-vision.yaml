@@ -1,0 +1,20 @@
+- id: model.llama3.2-vision
+  title: llama3.2-vision
+  description: >
+    Local vision-capable model used by the image intelligence workflow for
+    visible overview, layout, style, and text extraction tasks.
+  tags: [model]
+  extends: model.base
+  variables:
+    name: llama3.2-vision
+    documentation:
+      summary: |
+        Local vision-capable model used by the image intelligence workflow for
+        visible overview, layout, style, and text extraction tasks.
+      vendor: Meta
+    providers:
+      - ollama
+    features:
+      - text
+      - vision
+      - streaming
