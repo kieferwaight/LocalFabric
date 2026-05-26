@@ -13,6 +13,8 @@
     `docs.api.reference`.
   tags: [documentation, workflow]
   extends: stdlib.base
+  modules:
+    - ../14_templates/docs.readme.yaml
   inputs:
     repo_root:
       type: string

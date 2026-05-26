@@ -7,5 +7,5 @@
   - documentation
   - modules
   modules:
-  - docs.definition.template.yaml
-  - examples.catalog.yaml
+  - ../14_templates/docs.definition.template.yaml
+  - ../15_examples/examples.catalog.yaml

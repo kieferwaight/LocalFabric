@@ -7,6 +7,8 @@
     files so manual edits don't silently overwrite the canonical content.
   tags: [documentation, workflow, classification]
   extends: stdlib.base
+  modules:
+    - ../14_templates/docs.classification.template.yaml
   inputs:
     output_dir:
       type: string

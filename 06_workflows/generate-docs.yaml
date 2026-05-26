@@ -13,7 +13,8 @@
 
       REPO_ROOT = Path(__file__).resolve().parents[1] if "__file__" in dir() else Path(".").resolve()
       INTERPRETER = REPO_ROOT / "02_core" / "runtimes" / "yaml" / "interpreter.py"
-      DEFS_DIR = REPO_ROOT / "02_core" / "runtimes" / "yaml" / "definitions"
+      WORKFLOWS_DIR = REPO_ROOT / "06_workflows"
+      TEMPLATES_DIR = REPO_ROOT / "14_templates"
 
       def _run(yaml_file: Path, def_id: str, mode: str, extra: list) -> int:
           cmd = [sys.executable, str(INTERPRETER), str(yaml_file), def_id, f"--mode={mode}", *extra]
@@ -23,14 +24,14 @@
       argv = sys.argv[1:] if hasattr(sys, "argv") else []
       mode = "check" if "--check" in argv else "write"
 
-      readme_rc = _run(DEFS_DIR / "docs.readme.yaml", "docs.readme", mode, [])
+      readme_rc = _run(TEMPLATES_DIR / "docs.readme.yaml", "docs.readme.generate", mode, [])
       if readme_rc != 0:
           sys.exit(readme_rc)
       classification_rc = _run(
-          DEFS_DIR / "docs.classification.yaml", "docs.classification", mode,
-          ["--output_dir=18_docs"],
+          TEMPLATES_DIR / "docs.classification.template.yaml", "docs.classification.render",
+          mode, ["--output_dir=18_docs"],
       )
       if classification_rc != 0:
           sys.exit(classification_rc)
-      api_rc = _run(DEFS_DIR / "docs.yaml", "docs.api.reference", mode, ["--output_dir=18_docs"])
+      api_rc = _run(WORKFLOWS_DIR / "docs.yaml", "docs.api.reference", mode, ["--output_dir=18_docs"])
       sys.exit(api_rc)
