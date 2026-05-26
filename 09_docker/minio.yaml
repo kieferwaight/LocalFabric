@@ -1,45 +1,45 @@
-id: docker.minio
-name: minio
-category: storage
-purpose: |
-  MinIO S3-compatible object storage server with the console enabled. Used as the
-  blob store for ingested artifacts and intermediate pipeline outputs.
-
-inputs:
-  DATA_PATH:
-    description: Host path for MinIO object storage (binds to /data in container)
-    required: true
-  MINIO_ROOT_USER:
-    description: MinIO root username
-    required: true
-  MINIO_ROOT_PASSWORD:
-    description: MinIO root password
-    required: true
-  MINIO_API_PORT:
-    default: 9000
-    description: Host port for the MinIO S3 API (default 9000)
-    required: false
-  MINIO_CONSOLE_PORT:
-    default: 9001
-    description: Host port for the MinIO console (default 9001)
-    required: false
-
-services:
-  minio:
-    image: minio/minio
-    container_name: contentgraph-minio
-    restart: unless-stopped
-    command: server /data --console-address ":9001"
-    environment:
-      - map: MINIO_ROOT_USER: {{ MINIO_ROOT_USER }}
-        description: MinIO root username
-      - map: MINIO_ROOT_PASSWORD: {{ MINIO_ROOT_PASSWORD }}
-        description: MinIO root password
-    ports:
-      - map: "{{ MINIO_API_PORT }}:9000"
-        description: MinIO S3 API
-      - map: "{{ MINIO_CONSOLE_PORT }}:9001"
-        description: MinIO console UI
-    volumes:
-      - map: {{ DATA_PATH }}:/data
-        description: MinIO object storage data directory
+- id: docker.minio
+  title: MinIO Service
+  description: |
+    MinIO S3-compatible object storage server with the console enabled. Used as the
+    blob store for ingested artifacts and intermediate pipeline outputs.
+  tags: [docker, storage]
+  extends: docker.base
+  inputs:
+    DATA_PATH:
+      type: "string"
+      required: true
+      description: Host path for MinIO object storage (binds to /data in container)
+    MINIO_ROOT_USER:
+      type: "string"
+      required: true
+      description: MinIO root username
+    MINIO_ROOT_PASSWORD:
+      type: "string"
+      required: true
+      description: MinIO root password
+    MINIO_API_PORT:
+      type: "string"
+      required: false
+      default: "9000"
+      description: Host port for the MinIO S3 API (default 9000)
+    MINIO_CONSOLE_PORT:
+      type: "string"
+      required: false
+      default: "9001"
+      description: Host port for the MinIO console (default 9001)
+  variables:
+    services:
+      minio:
+        image: minio/minio
+        container_name: contentgraph-minio
+        restart: unless-stopped
+        command: server /data --console-address ":9001"
+        environment:
+          MINIO_ROOT_USER: "{{ MINIO_ROOT_USER }}"
+          MINIO_ROOT_PASSWORD: "{{ MINIO_ROOT_PASSWORD }}"
+        ports:
+          - "{{ MINIO_API_PORT }}:9000"
+          - "{{ MINIO_CONSOLE_PORT }}:9001"
+        volumes:
+          - "{{ DATA_PATH }}:/data"

@@ -1,44 +1,39 @@
-id: docker.weaviate
-name: weaviate
-category: vector
-purpose: |
-  Weaviate vector database configured for anonymous access with no built-in vectorizer
-  module. Embeddings are produced upstream and pushed in via the HTTP/gRPC APIs.
-
-inputs:
-  DATA_PATH:
-    description: Host path for Weaviate persistence (binds to /var/lib/weaviate in container)
-    required: true
-  WEAVIATE_HTTP_PORT:
-    default: 8085
-    description: Host port to expose the Weaviate HTTP API (default 8085)
-    required: false
-  WEAVIATE_GRPC_PORT:
-    default: 50051
-    description: Host port to expose the Weaviate gRPC API (default 50051)
-    required: false
-
-services:
-  weaviate:
-    image: semitechnologies/weaviate
-    container_name: contentgraph-weaviate
-    restart: unless-stopped
-    environment:
-      - map: QUERY_DEFAULTS_LIMIT: "25"
-        description: Default page size for queries
-      - map: AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "true"
-        description: Allow anonymous access for local development
-      - map: PERSISTENCE_DATA_PATH: /var/lib/weaviate
-        description: Container path Weaviate writes its persistence data to
-      - map: DEFAULT_VECTORIZER_MODULE: none
-        description: Disable built-in vectorizer; expect external embeddings
-      - map: CLUSTER_HOSTNAME: node1
-        description: Cluster node hostname identifier
-    ports:
-      - map: "{{ WEAVIATE_HTTP_PORT }}:8080"
-        description: Weaviate HTTP API
-      - map: "{{ WEAVIATE_GRPC_PORT }}:50051"
-        description: Weaviate gRPC API
-    volumes:
-      - map: {{ DATA_PATH }}:/var/lib/weaviate
-        description: Weaviate persistence directory
+- id: docker.weaviate
+  title: Weaviate Service
+  description: |
+    Weaviate vector database configured for anonymous access with no built-in vectorizer
+    module. Embeddings are produced upstream and pushed in via the HTTP/gRPC APIs.
+  tags: [docker, vector]
+  extends: docker.base
+  inputs:
+    DATA_PATH:
+      type: "string"
+      required: true
+      description: Host path for Weaviate persistence (binds to /var/lib/weaviate in container)
+    WEAVIATE_HTTP_PORT:
+      type: "string"
+      required: false
+      default: "8085"
+      description: Host port to expose the Weaviate HTTP API (default 8085)
+    WEAVIATE_GRPC_PORT:
+      type: "string"
+      required: false
+      default: "50051"
+      description: Host port to expose the Weaviate gRPC API (default 50051)
+  variables:
+    services:
+      weaviate:
+        image: semitechnologies/weaviate
+        container_name: contentgraph-weaviate
+        restart: unless-stopped
+        environment:
+          QUERY_DEFAULTS_LIMIT: "25"
+          AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "true"
+          PERSISTENCE_DATA_PATH: /var/lib/weaviate
+          DEFAULT_VECTORIZER_MODULE: none
+          CLUSTER_HOSTNAME: node1
+        ports:
+          - "{{ WEAVIATE_HTTP_PORT }}:8080"
+          - "{{ WEAVIATE_GRPC_PORT }}:50051"
+        volumes:
+          - "{{ DATA_PATH }}:/var/lib/weaviate"

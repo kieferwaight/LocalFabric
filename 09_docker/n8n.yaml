@@ -1,50 +1,45 @@
-id: docker.n8n
-name: n8n
-category: workers
-purpose: |
-  n8n workflow automation server used for low-code orchestration of local fabric
-  services. Bound data volume persists credentials, workflows, and execution history.
-
-inputs:
-  DATA_PATH:
-    description: Host folder for n8n state (binds to /home/node/.n8n in container)
-    required: true
-  N8N_PORT:
-    default: 5678
-    description: Host port to expose the n8n HTTP interface (default 5678)
-    required: false
-  N8N_HOST:
-    default: localhost
-    description: Hostname n8n advertises in webhook URLs
-    required: false
-  GENERIC_TIMEZONE:
-    default: UTC
-    description: Timezone for scheduled workflows
-    required: false
-
-services:
-  n8n:
-    image: n8nio/n8n:latest
-    container_name: localfabric-n8n
-    restart: unless-stopped
-    environment:
-      - map: N8N_HOST: {{ N8N_HOST }}
-        description: Hostname n8n advertises
-      - map: N8N_PORT: {{ N8N_PORT }}
-        description: Port n8n listens on inside the container
-      - map: N8N_PROTOCOL: http
-        description: Protocol used in webhook URLs
-      - map: WEBHOOK_URL: http://{{ N8N_HOST }}:{{ N8N_PORT }}/
-        description: Public base URL n8n uses to construct webhook URLs
-      - map: GENERIC_TIMEZONE: {{ GENERIC_TIMEZONE }}
-        description: Timezone for scheduled workflows
-      - map: N8N_DIAGNOSTICS_ENABLED: "false"
-        description: Disable usage diagnostics
-      - map: N8N_RUNNERS_ENABLED: "true"
-        description: Enable task runners
-    ports:
-      - map: "{{ N8N_PORT }}:5678"
-        description: n8n HTTP interface
-    volumes:
-      - map: {{ DATA_PATH }}:/home/node/.n8n
-        description: n8n persistent state directory
+- id: docker.n8n
+  title: n8n Service
+  description: |
+    n8n workflow automation server used for low-code orchestration of local fabric
+    services. Bound data volume persists credentials, workflows, and execution history.
+  tags: [docker, workers]
+  extends: docker.base
+  inputs:
+    DATA_PATH:
+      type: "string"
+      required: true
+      description: Host folder for n8n state (binds to /home/node/.n8n in container)
+    N8N_PORT:
+      type: "string"
+      required: false
+      default: "5678"
+      description: Host port to expose the n8n HTTP interface (default 5678)
+    N8N_HOST:
+      type: "string"
+      required: false
+      default: "localhost"
+      description: Hostname n8n advertises in webhook URLs
+    GENERIC_TIMEZONE:
+      type: "string"
+      required: false
+      default: "UTC"
+      description: Timezone for scheduled workflows
+  variables:
+    services:
+      n8n:
+        image: n8nio/n8n:latest
+        container_name: localfabric-n8n
+        restart: unless-stopped
+        environment:
+          N8N_HOST: "{{ N8N_HOST }}"
+          N8N_PORT: "{{ N8N_PORT }}"
+          N8N_PROTOCOL: http
+          WEBHOOK_URL: "http://{{ N8N_HOST }}:{{ N8N_PORT }}/"
+          GENERIC_TIMEZONE: "{{ GENERIC_TIMEZONE }}"
+          N8N_DIAGNOSTICS_ENABLED: "false"
+          N8N_RUNNERS_ENABLED: "true"
+        ports:
+          - "{{ N8N_PORT }}:5678"
+        volumes:
+          - "{{ DATA_PATH }}:/home/node/.n8n"

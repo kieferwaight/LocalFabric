@@ -1,43 +1,43 @@
-id: docker.postgres
-name: postgres
-category: databases
-purpose: |
-  Vanilla PostgreSQL 16 instance for relational storage. Used when no vector workload
-  is required; the pgvector image is preferred for the content graph MVP.
-
-inputs:
-  DATA_PATH:
-    description: Host path for PostgreSQL data storage (binds to /var/lib/postgresql/data in container)
-    required: true
-  POSTGRES_USER:
-    description: PostgreSQL superuser name
-    required: true
-  POSTGRES_PASSWORD:
-    description: PostgreSQL superuser password
-    required: true
-  POSTGRES_DB:
-    description: Initial PostgreSQL database name (default contentgraph)
-    required: true
-  POSTGRES_PORT:
-    default: 5433
-    description: Host port to bind PostgreSQL client traffic (default 5433)
-    required: false
-
-services:
-  postgres:
-    image: postgres:16
-    container_name: contentgraph-postgres
-    restart: unless-stopped
-    environment:
-      - map: POSTGRES_USER: {{ POSTGRES_USER }}
-        description: PostgreSQL superuser name
-      - map: POSTGRES_PASSWORD: {{ POSTGRES_PASSWORD }}
-        description: PostgreSQL superuser password
-      - map: POSTGRES_DB: {{ POSTGRES_DB }}
-        description: Initial PostgreSQL database name
-    ports:
-      - map: "{{ POSTGRES_PORT }}:5432"
-        description: PostgreSQL client traffic
-    volumes:
-      - map: {{ DATA_PATH }}:/var/lib/postgresql/data
-        description: PostgreSQL data directory
+- id: docker.postgres
+  title: PostgreSQL Service
+  description: |
+    Vanilla PostgreSQL 16 instance for relational storage. Used when no vector workload
+    is required; the pgvector image is preferred for the content graph MVP.
+  tags: [docker, databases]
+  extends: docker.base
+  inputs:
+    DATA_PATH:
+      type: "string"
+      required: true
+      description: Host path for PostgreSQL data storage (binds to /var/lib/postgresql/data in container)
+    POSTGRES_USER:
+      type: "string"
+      required: true
+      description: PostgreSQL superuser name
+    POSTGRES_PASSWORD:
+      type: "string"
+      required: true
+      description: PostgreSQL superuser password
+    POSTGRES_DB:
+      type: "string"
+      required: true
+      description: Initial PostgreSQL database name (default contentgraph)
+    POSTGRES_PORT:
+      type: "string"
+      required: false
+      default: "5433"
+      description: Host port to bind PostgreSQL client traffic (default 5433)
+  variables:
+    services:
+      postgres:
+        image: postgres:16
+        container_name: contentgraph-postgres
+        restart: unless-stopped
+        environment:
+          POSTGRES_USER: "{{ POSTGRES_USER }}"
+          POSTGRES_PASSWORD: "{{ POSTGRES_PASSWORD }}"
+          POSTGRES_DB: "{{ POSTGRES_DB }}"
+        ports:
+          - "{{ POSTGRES_PORT }}:5432"
+        volumes:
+          - "{{ DATA_PATH }}:/var/lib/postgresql/data"

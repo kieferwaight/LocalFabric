@@ -1,28 +1,18 @@
-id: docker.libreoffice
-name: libreoffice
-category: document
-purpose: |
-  Headless LibreOffice container used as a conversion worker for Office documents
-  in the ingestion pipeline. Built locally; idles waiting for work on /work.
-
-inputs:
-  DATA_PATH:
-    description: Host path for conversion work (binds to /work in container)
-    required: true
-
-services:
-  libreoffice:
-    build: .
-    image: contentgraph-libreoffice:local
-    container_name: contentgraph-libreoffice
-    restart: unless-stopped
-    volumes:
-      - map: {{ DATA_PATH }}:/work
-        description: Shared working directory for conversion input and output
-
-files:
-  - path: ./Dockerfile
-    content: |
+- id: docker.libreoffice
+  title: LibreOffice Conversion Service
+  description: |
+    Headless LibreOffice container used as a conversion worker for Office documents
+    in the ingestion pipeline. Built locally; idles waiting for work on /work.
+  tags: [docker, document]
+  extends: docker.base
+  inputs:
+    DATA_PATH:
+      type: "string"
+      required: true
+      description: Host path for conversion work (binds to /work in container)
+  variables:
+    image_tag: "contentgraph-libreoffice:local"
+    dockerfile_body: |
       FROM python:3.12-slim
 
       RUN apt-get update \
@@ -32,11 +22,20 @@ files:
       WORKDIR /app
       COPY app /app
       CMD ["python", "worker.py"]
-  - path: ./app/worker.py
-    content: |
-      import time
+    services:
+      libreoffice:
+        build: .
+        image: contentgraph-libreoffice:local
+        container_name: contentgraph-libreoffice
+        restart: unless-stopped
+        volumes:
+          - "{{ DATA_PATH }}:/work"
+    extra_files:
+      - path: "app/worker.py"
+        content: |
+          import time
 
 
-      print("libreoffice conversion worker ready")
-      while True:
-          time.sleep(60)
+          print("libreoffice conversion worker ready")
+          while True:
+              time.sleep(60)

@@ -1,33 +1,33 @@
-id: docker.qdrant
-name: qdrant
-category: vector
-purpose: |
-  Qdrant vector database for similarity search and embedding storage. Exposes both
-  HTTP and gRPC APIs and persists collections under the bound data volume.
-
-inputs:
-  DATA_PATH:
-    description: Host path for Qdrant storage (binds to /qdrant/storage in container)
-    required: true
-  QDRANT_HTTP_PORT:
-    default: 6333
-    description: Host port to expose the Qdrant HTTP API (default 6333)
-    required: false
-  QDRANT_GRPC_PORT:
-    default: 6334
-    description: Host port to expose the Qdrant gRPC API (default 6334)
-    required: false
-
-services:
-  qdrant:
-    image: qdrant/qdrant
-    container_name: contentgraph-qdrant
-    restart: unless-stopped
-    ports:
-      - map: "{{ QDRANT_HTTP_PORT }}:6333"
-        description: Qdrant HTTP API
-      - map: "{{ QDRANT_GRPC_PORT }}:6334"
-        description: Qdrant gRPC API
-    volumes:
-      - map: {{ DATA_PATH }}:/qdrant/storage
-        description: Qdrant collection storage directory
+- id: docker.qdrant
+  title: Qdrant Service
+  description: |
+    Qdrant vector database for similarity search and embedding storage. Exposes both
+    HTTP and gRPC APIs and persists collections under the bound data volume.
+  tags: [docker, vector]
+  extends: docker.base
+  inputs:
+    DATA_PATH:
+      type: "string"
+      required: true
+      description: Host path for Qdrant storage (binds to /qdrant/storage in container)
+    QDRANT_HTTP_PORT:
+      type: "string"
+      required: false
+      default: "6333"
+      description: Host port to expose the Qdrant HTTP API (default 6333)
+    QDRANT_GRPC_PORT:
+      type: "string"
+      required: false
+      default: "6334"
+      description: Host port to expose the Qdrant gRPC API (default 6334)
+  variables:
+    services:
+      qdrant:
+        image: qdrant/qdrant
+        container_name: contentgraph-qdrant
+        restart: unless-stopped
+        ports:
+          - "{{ QDRANT_HTTP_PORT }}:6333"
+          - "{{ QDRANT_GRPC_PORT }}:6334"
+        volumes:
+          - "{{ DATA_PATH }}:/qdrant/storage"

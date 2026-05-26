@@ -1,28 +1,18 @@
-id: docker.tesseract-ocr
-name: tesseract-ocr
-category: document
-purpose: |
-  Tesseract OCR worker built atop a slim Python base with tesseract and poppler
-  installed. Used to extract text from images and PDFs in the ingestion pipeline.
-
-inputs:
-  DATA_PATH:
-    description: Host path for OCR scratch storage (binds to /work in container)
-    required: true
-
-services:
-  tesseract-ocr:
-    build: .
-    image: contentgraph-tesseract-ocr:local
-    container_name: contentgraph-tesseract-ocr
-    restart: unless-stopped
-    volumes:
-      - map: {{ DATA_PATH }}:/work
-        description: Shared working directory for OCR input and output
-
-files:
-  - path: ./Dockerfile
-    content: |
+- id: docker.tesseract-ocr
+  title: Tesseract OCR Service
+  description: |
+    Tesseract OCR worker built atop a slim Python base with tesseract and poppler
+    installed. Used to extract text from images and PDFs in the ingestion pipeline.
+  tags: [docker, document]
+  extends: docker.base
+  inputs:
+    DATA_PATH:
+      type: "string"
+      required: true
+      description: Host path for OCR scratch storage (binds to /work in container)
+  variables:
+    image_tag: "contentgraph-tesseract-ocr:local"
+    dockerfile_body: |
       FROM python:3.12-slim
 
       RUN apt-get update \
@@ -32,11 +22,20 @@ files:
       WORKDIR /app
       COPY app /app
       CMD ["python", "worker.py"]
-  - path: ./app/worker.py
-    content: |
-      import time
+    services:
+      tesseract-ocr:
+        build: .
+        image: contentgraph-tesseract-ocr:local
+        container_name: contentgraph-tesseract-ocr
+        restart: unless-stopped
+        volumes:
+          - "{{ DATA_PATH }}:/work"
+    extra_files:
+      - path: "app/worker.py"
+        content: |
+          import time
 
 
-      print("tesseract OCR worker ready")
-      while True:
-          time.sleep(60)
+          print("tesseract OCR worker ready")
+          while True:
+              time.sleep(60)

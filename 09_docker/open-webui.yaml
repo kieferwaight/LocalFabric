@@ -1,34 +1,34 @@
-id: docker.open-webui
-name: open-webui
-category: ai
-purpose: |
-  Web chat UI fronting Ollama (or another OpenAI-compatible API). Bound data volume keeps
-  user accounts, chat history, and per-user settings between restarts.
-
-inputs:
-  DATA_PATH:
-    description: Host path for Open WebUI state (binds to /app/backend/data in container)
-    required: true
-  OPEN_WEBUI_PORT:
-    default: 3001
-    description: Host port to expose the Open WebUI HTTP interface (default 3001)
-    required: false
-  OLLAMA_BASE_URL:
-    default: http://ollama:11434
-    description: URL of the upstream Ollama API
-    required: false
-
-services:
-  open-webui:
-    image: ghcr.io/open-webui/open-webui:main
-    container_name: contentgraph-open-webui
-    restart: unless-stopped
-    environment:
-      - map: OLLAMA_BASE_URL: {{ OLLAMA_BASE_URL }}
-        description: URL of the upstream Ollama API
-    ports:
-      - map: "{{ OPEN_WEBUI_PORT }}:8080"
-        description: Open WebUI HTTP interface
-    volumes:
-      - map: {{ DATA_PATH }}:/app/backend/data
-        description: Open WebUI persistent state (users, chats, settings)
+- id: docker.open-webui
+  title: Open WebUI Service
+  description: |
+    Web chat UI fronting Ollama (or another OpenAI-compatible API). Bound data volume keeps
+    user accounts, chat history, and per-user settings between restarts.
+  tags: [docker, ai]
+  extends: docker.base
+  inputs:
+    DATA_PATH:
+      type: "string"
+      required: true
+      description: Host path for Open WebUI state (binds to /app/backend/data in container)
+    OPEN_WEBUI_PORT:
+      type: "string"
+      required: false
+      default: "3001"
+      description: Host port to expose the Open WebUI HTTP interface (default 3001)
+    OLLAMA_BASE_URL:
+      type: "string"
+      required: false
+      default: "http://ollama:11434"
+      description: URL of the upstream Ollama API
+  variables:
+    services:
+      open-webui:
+        image: ghcr.io/open-webui/open-webui:main
+        container_name: contentgraph-open-webui
+        restart: unless-stopped
+        environment:
+          OLLAMA_BASE_URL: "{{ OLLAMA_BASE_URL }}"
+        ports:
+          - "{{ OPEN_WEBUI_PORT }}:8080"
+        volumes:
+          - "{{ DATA_PATH }}:/app/backend/data"
