@@ -37,10 +37,9 @@ notebook = ["openai>=1.0", "ipykernel>=6.0"]
 [project.scripts]
 localfabric = "adapters.cli.main:app"
 localfabric-md = "adapters.cli.markdown_runtime_adapter:main"
-localfabric-runtime = "service_runtime.cmd:main"
 
 [tool.setuptools]
-package-dir = { "interfaces" = "01_interfaces", "core" = "02_core", "adapters" = "03_adapters", "harnesses" = "04_harnesses", "router" = "05_router", "workflows" = "06_workflows", "tools" = "07_tools", "drivers" = "08_drivers", "service_runtime" = "10_service_runtime", "mcp_servers" = "11_mcp" }
+package-dir = { "interfaces" = "01_interfaces", "core" = "02_core", "adapters" = "03_adapters", "harnesses" = "04_harnesses", "router" = "05_router", "workflows" = "06_workflows", "tools" = "07_tools", "drivers" = "08_drivers", "mcp_servers" = "11_mcp" }
 packages = [
     "core",
     "interfaces",
@@ -49,7 +48,6 @@ packages = [
     "harnesses",
     "harnesses.claude",
     "harnesses.codex",
-    "harnesses.docker_service",
     "harnesses.gemini",
     "harnesses.lmstudio",
     "harnesses.markdown",
@@ -79,7 +77,6 @@ packages = [
     "drivers.file",
     "drivers.sql",
     "drivers.vector",
-    "service_runtime",
     "mcp_servers",
     "mcp_servers.tools",
 ]
@@ -115,7 +112,6 @@ system_sdk_override = "mcp_servers"
 "07_tools" = "Reusable functional units (image, pdf, vision, embeddings, …)"
 "08_drivers" = "Storage/database connectors"
 "09_services" = "Docker-Compose service catalog by category"
-"10_service_runtime" = "`cmd <service> <path>` runtime"
 "11_mcp" = "MCP servers and exposure shims"
 "12_prompts" = "Prompt templates"
 "13_models" = "Per-model YAML registry (one file per model; declares providers and features)"

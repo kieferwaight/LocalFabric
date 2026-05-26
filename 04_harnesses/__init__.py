@@ -6,18 +6,20 @@ Adapters translate inbound requests; harnesses run them.
 Available harnesses:
     ClaudeHarness          — Anthropic Claude (claude/)
     CodexHarness           — OpenAI Codex CLI (codex/)
-    DockerServiceHarness   — Docker Compose service lifecycle (docker_service/)
     GeminiHarness          — Google Gemini (gemini/)
     LMStudioHarness        — LM Studio local server (lmstudio/)
     MarkdownHarness        — markdown prompt runtime (markdown/)
     OllamaHarness          — Ollama local server (ollama/)
     OpenAIHarness          — OpenAI API (openai/)
+
+Docker service lifecycle is no longer a Python harness — the
+docker.base / compose.up / compose.down YAML definitions own that role
+(see 02_core/yaml/definitions/docker.yaml).
 """
 
 from harnesses.base import Harness, HarnessError, HarnessStatus
 from harnesses.claude import ClaudeHarness
 from harnesses.codex import CodexHarness
-from harnesses.docker_service import DockerServiceHarness
 from harnesses.gemini import GeminiHarness
 from harnesses.lmstudio import LMStudioHarness
 from harnesses.markdown import MarkdownHarness
@@ -27,7 +29,6 @@ from harnesses.openai import OpenAIHarness
 __all__ = [
     "ClaudeHarness",
     "CodexHarness",
-    "DockerServiceHarness",
     "GeminiHarness",
     "Harness",
     "HarnessError",

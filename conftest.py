@@ -28,7 +28,6 @@ _BUCKETS: dict[str, str] = {
     "06_workflows": "workflows",
     "07_tools": "tools",
     "08_drivers": "drivers",
-    "10_service_runtime": "service_runtime",
     "11_mcp": "mcp_servers",
 }
 
