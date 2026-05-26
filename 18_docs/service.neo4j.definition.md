@@ -43,7 +43,7 @@ def_service_neo4j -.-> def_service_docker_mixin["Docker Backend Action Map"]
 | Name | YAML Type | Value / Template | Description |
 | --- | --- | --- | --- |
 | `backend` | `str` | `docker` | - |
-| `target` | `str` | `docker.neo4j` | - |
+| `target` | `str` | `docker.neo4j.service` | - |
 
 
 ### Run Operations
@@ -69,9 +69,9 @@ _No locally declared teardown operations._
 | --- | --- | --- |
 | `system_log_format` | `[{{ entity_id }} \| {{ runtime.version }}]` | [Abstract Base](stdlib.base.definition.md) |
 | `backend` | `docker` | [Neo4j Service (docker backend)](service.neo4j.definition.md) |
-| `target` | `docker.neo4j` | [Neo4j Service (docker backend)](service.neo4j.definition.md) |
+| `target` | `docker.neo4j.service` | [Neo4j Service (docker backend)](service.neo4j.definition.md) |
 | `action_to_def` | `{'start': 'compose.up', 'stop': 'compose.down', 'status': 'compose.status', 'install': 'compose.up', 'uninstall': 'compose.down', 'enable': 'stdlib.logger', 'disable': 'stdlib.logger'}` | [Docker Backend Action Map](service.docker.mixin.definition.md) |
-| `action_arguments` | `{'start': {'target_dir': "14_data/{{ target \| replace('.', '_') }}"}, 'stop': {'target_dir': "14_data/{{ target \| replace('.', '_') }}"}, 'status': {'target_dir': "14_data/{{ target \| replace('.', '_') }}"}, 'install': {'target_dir': "14_data/{{ target \| replace('.', '_') }}"}, 'uninstall': {'target_dir': "14_data/{{ target \| replace('.', '_') }}"}, 'enable': {'message': 'docker backend: enable is a no-op', 'level': 'INFO'}, 'disable': {'message': 'docker backend: disable is a no-op', 'level': 'INFO'}}` | [Docker Backend Action Map](service.docker.mixin.definition.md) |
+| `action_arguments` | `{'start': {'target_dir': "14_data/{{ target \| replace('.service', '') \| replace('.', '_') }}"}, 'stop': {'target_dir': "14_data/{{ target \| replace('.service', '') \| replace('.', '_') }}"}, 'status': {'target_dir': "14_data/{{ target \| replace('.service', '') \| replace('.', '_') }}"}, 'install': {'target_dir': "14_data/{{ target \| replace('.service', '') \| replace('.', '_') }}"}, 'uninstall': {'target_dir': "14_data/{{ target \| replace('.service', '') \| replace('.', '_') }}"}, 'enable': {'message': 'docker backend: enable is a no-op', 'level': 'INFO'}, 'disable': {'message': 'docker backend: disable is a no-op', 'level': 'INFO'}}` | [Docker Backend Action Map](service.docker.mixin.definition.md) |
 
 
 ### Effective Lifecycle

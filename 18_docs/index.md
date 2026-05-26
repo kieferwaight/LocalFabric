@@ -39,8 +39,8 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 | [Run a Service Lifecycle Action](command.service.action.definition.md) | `command.service.action` | `02_core/runtimes/yaml/definitions/command.yaml` | command |
 | [Route an Intent through the Router](command.route.definition.md) | `command.route` | `02_core/runtimes/yaml/definitions/command.yaml` | command |
 | [Folder Scaffold Base](folder.base.definition.md) | `folder.base` | `02_core/runtimes/yaml/definitions/folder.yaml` | folder, abstract |
-| [Dockerfile Mixin](dockerfile.base.definition.md) | `dockerfile.base` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, dockerfile, abstract |
-| [Docker Compose Mixin](compose.base.definition.md) | `compose.base` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, abstract |
+| [Dockerfile Mixin](dockerfile.mixin.definition.md) | `dockerfile.mixin` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, dockerfile, abstract |
+| [Docker Compose Mixin](compose.mixin.definition.md) | `compose.mixin` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, abstract |
 | [Docker Service (Compose + Dockerfile)](docker.base.definition.md) | `docker.base` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, abstract |
 | [Build Docker Image](docker.build.definition.md) | `docker.build` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, build |
 | [Docker Compose Up](compose.up.definition.md) | `compose.up` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, lifecycle |
@@ -66,7 +66,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 | [Docker Backend Action Map](service.docker.mixin.definition.md) | `service.docker.mixin` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker, abstract |
 | [Launchd Backend Action Map](service.launchd.mixin.definition.md) | `service.launchd.mixin` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd, abstract |
 | [Ollama Service (launchd backend)](service.ollama.definition.md) | `service.ollama` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd |
-| [Caffienate Service (launchd backend)](service.caffienate.definition.md) | `service.caffienate` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd |
+| [Caffeinate Service (launchd backend)](service.caffeinate.definition.md) | `service.caffeinate` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd |
 | [LM Studio Service (launchd backend)](service.lm-studio.definition.md) | `service.lm-studio` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd |
 | [Postgres Service (docker backend)](service.postgres.definition.md) | `service.postgres` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker |
 | [Redis Service (docker backend)](service.redis.definition.md) | `service.redis` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker |
@@ -74,21 +74,21 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 | [Task base](task.base.definition.md) | `task.base` | `02_core/runtimes/yaml/definitions/task.yaml` | task, abstract |
 | [JSON Schema Base](schemas.base.definition.md) | `schemas.base` | `02_core/runtimes/yaml/definitions/schemas.yaml` | schema, abstract |
 | [Generate Schema JSON](schemas.generate-json.definition.md) | `schemas.generate-json` | `02_core/runtimes/yaml/definitions/schemas.yaml` | schema, workflow |
-| [Classification Audit Finding](audit.classification_finding.schema.definition.md) | `audit.classification_finding.schema` | `01_schemas/audit.classification_finding.schema.yaml` | schema, audit |
+| [Classification Audit Finding](audit.classification-finding.schema.definition.md) | `audit.classification-finding.schema` | `01_schemas/audit.classification-finding.schema.yaml` | schema, audit |
 | [Dispatch Request Envelope](dispatch.request.schema.definition.md) | `dispatch.request.schema` | `01_schemas/dispatch.request.schema.yaml` | schema, dispatch |
 | [Dispatch Response Envelope](dispatch.response.schema.definition.md) | `dispatch.response.schema` | `01_schemas/dispatch.response.schema.yaml` | schema, dispatch |
-| [Harness Stream Event](harness.stream_event.schema.definition.md) | `harness.stream_event.schema` | `01_schemas/harness.stream_event.schema.yaml` | schema, harness |
+| [Harness Stream Event](harness.stream-event.schema.definition.md) | `harness.stream-event.schema` | `01_schemas/harness.stream-event.schema.yaml` | schema, harness |
 | [Tool Invocation](tool.invocation.schema.definition.md) | `tool.invocation.schema` | `01_schemas/tool.invocation.schema.yaml` | schema, tool |
 | [Audit classification boundaries and ownership](audit.classifications.scan.workflow.definition.md) | `audit.classifications.scan.workflow` | `06_workflows/audit.classifications.scan.workflow.yaml` | workflow |
 | [Regenerate All Workflows Barrels](barrels.regenerate.workflow.definition.md) | `barrels.regenerate.workflow` | `06_workflows/barrels.regenerate.workflow.yaml` | python, generator, workflow |
-| [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.definition.md) | `barrels.regenerate.yaml-runtime` | `06_workflows/barrels.regenerate.workflow.yaml` | python, generator, workflow |
+| [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.workflow.definition.md) | `barrels.regenerate.yaml-runtime.workflow` | `06_workflows/barrels.regenerate.workflow.yaml` | python, generator, workflow |
 | [YAML API Reference Build](docs.api.reference.workflow.definition.md) | `docs.api.reference.workflow` | `06_workflows/docs.api.reference.workflow.yaml` | documentation, workflow |
 | [API Documentation Catalog Sources](docs.catalog.generate.workflow.definition.md) | `docs.catalog.generate.workflow` | `06_workflows/docs.catalog.generate.workflow.yaml` | documentation, modules |
 | [Docs - Relationship Graph Component](docs.definition.template.component-relationship-graph.definition.md) | `docs.definition.template.component-relationship-graph` | `14_templates/docs.definition.template.yaml` | documentation, template, component |
 | [Docs - Definition Page Template](docs.definition.template.definition.definition.md) | `docs.definition.template.definition` | `14_templates/docs.definition.template.yaml` | documentation, template |
 | [Docs - Index Page Template](docs.catalog.template.index.definition.md) | `docs.catalog.template.index` | `14_templates/docs.catalog.template.yaml` | documentation, template |
 | [Docs - Authoring Schema Page Template](docs.catalog.template.schema.definition.md) | `docs.catalog.template.schema` | `14_templates/docs.catalog.template.yaml` | documentation, template |
-| [Example Catalog Modules](examples.catalog.modules.definition.md) | `examples.catalog.modules` | `15_examples/examples.catalog.yaml` | examples, modules |
+| [Example Catalog Modules](examples.catalog.modules.definition.md) | `examples.catalog.modules` | `15_examples/examples.catalog.yaml` | example, modules |
 | [Git Information](cloud.mixin.git-info.definition.md) | `cloud.mixin.git-info` | `15_examples/cloud.yaml` | mixin, git, deployment |
 | [Timestamp](cloud.mixin.timestamp.definition.md) | `cloud.mixin.timestamp` | `15_examples/cloud.yaml` | mixin, deployment |
 | [Cloud Deployer](cloud.deployer.definition.md) | `cloud.deployer` | `15_examples/cloud.yaml` | example, deployment, cloud |
@@ -104,103 +104,101 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 | [Docs - Repo README Template](docs.readme.template.definition.md) | `docs.readme.template` | `14_templates/docs.readme.template.yaml` | documentation, template |
 | [Sweep and embed project files into the vector store](embeddings.sweep.workflow.definition.md) | `embeddings.sweep.workflow` | `06_workflows/embeddings.sweep.workflow.yaml` | workflow |
 | [Classify files for audit and remediation](files.classify.workflow.definition.md) | `files.classify.workflow` | `06_workflows/files.classify.workflow.yaml` | workflow |
-| [Scan Boundary Violations](audit.boundary_violations.scan.task.definition.md) | `audit.boundary_violations.scan.task` | `07_tasks/audit.boundary_violations.scan.task.yaml` | task |
+| [Scan Boundary Violations](audit.boundary-violations.scan.task.definition.md) | `audit.boundary-violations.scan.task` | `07_tasks/audit.boundary-violations.scan.task.yaml` | task |
 | [Fetch readable text from a URL or search topic](browser.fetch.text.task.definition.md) | `browser.fetch.text.task` | `07_tasks/browser.fetch.text.task.yaml` | task |
 | [Build file classification manifest](classify.manifest.build.task.definition.md) | `classify.manifest.build.task` | `07_tasks/classify.manifest.build.task.yaml` | task |
-| [Return broad media class for a path](classify.media.class_for_path.task.definition.md) | `classify.media.class_for_path.task` | `07_tasks/classify.media.class_for_path.task.yaml` | task |
+| [Return broad media class for a path](classify.media.class-for-path.task.definition.md) | `classify.media.class-for-path.task` | `07_tasks/classify.media.class-for-path.task.yaml` | task |
 | [Classify a file by media type and destination](classify.media.file.task.definition.md) | `classify.media.file.task` | `07_tasks/classify.media.file.task.yaml` | task |
-| [Chunk a file into embeddable text segments](embeddings.chunker.chunk_file.task.definition.md) | `embeddings.chunker.chunk_file.task` | `07_tasks/embeddings.chunker.chunk_file.task.yaml` | task |
+| [Chunk a file into embeddable text segments](embeddings.chunker.chunk-file.task.definition.md) | `embeddings.chunker.chunk-file.task` | `07_tasks/embeddings.chunker.chunk-file.task.yaml` | task |
 | [Generate an embedding vector for text](embeddings.embed.text.task.definition.md) | `embeddings.embed.text.task` | `07_tasks/embeddings.embed.text.task.yaml` | task |
 | [Query the local knowledge base](embeddings.query.search.task.definition.md) | `embeddings.query.search.task` | `07_tasks/embeddings.query.search.task.yaml` | task |
-| [Collect indexable files for embedding sweep](embeddings.sweep.collect_files.task.definition.md) | `embeddings.sweep.collect_files.task` | `07_tasks/embeddings.sweep.collect_files.task.yaml` | task |
-| [Compute MD5 hash of a file](embeddings.sweep.file_hash.task.definition.md) | `embeddings.sweep.file_hash.task` | `07_tasks/embeddings.sweep.file_hash.task.yaml` | task |
-| [Load the embedding sweep manifest](embeddings.sweep.load_manifest.task.definition.md) | `embeddings.sweep.load_manifest.task` | `07_tasks/embeddings.sweep.load_manifest.task.yaml` | task |
-| [Persist the embedding sweep manifest](embeddings.sweep.save_manifest.task.definition.md) | `embeddings.sweep.save_manifest.task` | `07_tasks/embeddings.sweep.save_manifest.task.yaml` | task |
+| [Collect indexable files for embedding sweep](embeddings.sweep.collect-files.task.definition.md) | `embeddings.sweep.collect-files.task` | `07_tasks/embeddings.sweep.collect-files.task.yaml` | task |
+| [Compute MD5 hash of a file](embeddings.sweep.file-hash.task.definition.md) | `embeddings.sweep.file-hash.task` | `07_tasks/embeddings.sweep.file-hash.task.yaml` | task |
+| [Load the embedding sweep manifest](embeddings.sweep.load-manifest.task.definition.md) | `embeddings.sweep.load-manifest.task` | `07_tasks/embeddings.sweep.load-manifest.task.yaml` | task |
+| [Persist the embedding sweep manifest](embeddings.sweep.save-manifest.task.definition.md) | `embeddings.sweep.save-manifest.task` | `07_tasks/embeddings.sweep.save-manifest.task.yaml` | task |
 | [Iterate files in a directory tree](files.iter.task.definition.md) | `files.iter.task` | `07_tasks/files.iter.task.yaml` | task |
 | [Compute SHA-256 hash of a file](files.sha256.task.definition.md) | `files.sha256.task` | `07_tasks/files.sha256.task.yaml` | task |
-| [Write data to a JSON file](files.write_json.task.definition.md) | `files.write_json.task` | `07_tasks/files.write_json.task.yaml` | task |
+| [Write data to a JSON file](files.write-json.task.definition.md) | `files.write-json.task` | `07_tasks/files.write-json.task.yaml` | task |
 | [Classify an image by semantic type](image.classify.task.definition.md) | `image.classify.task` | `07_tasks/image.classify.task.yaml` | task |
 | [Extract dominant color palette from an image](image.color.dominant.task.definition.md) | `image.color.dominant.task` | `07_tasks/image.color.dominant.task.yaml` | task |
 | [Extract image file metadata](image.meta.extract.task.definition.md) | `image.meta.extract.task` | `07_tasks/image.meta.extract.task.yaml` | task |
 | [Assess image quality](image.quality.extract.task.definition.md) | `image.quality.extract.task` | `07_tasks/image.quality.extract.task.yaml` | task |
 | [Detect content regions in an image](image.regions.extract.task.definition.md) | `image.regions.extract.task` | `07_tasks/image.regions.extract.task.yaml` | task |
-| [Extract OCR text from an image](image.text_ocr.extract.task.definition.md) | `image.text_ocr.extract.task` | `07_tasks/image.text_ocr.extract.task.yaml` | task |
-| [Infer document type from filename](metadata.doc_type.task.definition.md) | `metadata.doc_type.task` | `07_tasks/metadata.doc_type.task.yaml` | task |
-| [Infer source origin from file path](metadata.source_guess.task.definition.md) | `metadata.source_guess.task` | `07_tasks/metadata.source_guess.task.yaml` | task |
-| [Get PDF page count](pdf.meta.page_count.task.definition.md) | `pdf.meta.page_count.task` | `07_tasks/pdf.meta.page_count.task.yaml` | task |
-| [Fetch and summarize content through a local model](research.local.summarize.task.definition.md) | `research.local.summarize.task` | `07_tasks/research.local.summarize.task.yaml` | task |
+| [Extract OCR text from an image](image.text-ocr.extract.task.definition.md) | `image.text-ocr.extract.task` | `07_tasks/image.text-ocr.extract.task.yaml` | task |
+| [Infer document type from filename](metadata.doc-type.task.definition.md) | `metadata.doc-type.task` | `07_tasks/metadata.doc-type.task.yaml` | task |
+| [Infer source origin from file path](metadata.source-guess.task.definition.md) | `metadata.source-guess.task` | `07_tasks/metadata.source-guess.task.yaml` | task |
+| [Get PDF page count](pdf.meta.page-count.task.definition.md) | `pdf.meta.page-count.task` | `07_tasks/pdf.meta.page-count.task.yaml` | task |
+| [research.local.summarize.task](research.local.summarize.task.definition.md) | `research.local.summarize.task` | `<raw>` | - |
 | [Run local test suite](shell.tests.run.task.definition.md) | `shell.tests.run.task` | `07_tasks/shell.tests.run.task.yaml` | task |
-| [Format a markdown file using a local LM Studio model](text.markdown.format.task.definition.md) | `text.markdown.format.task` | `07_tasks/text.markdown.format.task.yaml` | task |
-| [Casbin Authorization Service](docker.casbin-service.definition.md) | `docker.casbin-service` | `09_docker/casbin-service.yaml` | docker, auth |
-| [ClamAV Service](docker.clamav.definition.md) | `docker.clamav` | `09_docker/clamav.yaml` | docker, document |
-| [FastAPI Service](docker.fastapi.definition.md) | `docker.fastapi` | `09_docker/fastapi.yaml` | docker, workers |
-| [Gitea Service](docker.gitea.definition.md) | `docker.gitea` | `09_docker/gitea.yaml` | docker, dev |
-| [Grafana Service](docker.grafana.definition.md) | `docker.grafana` | `09_docker/grafana.yaml` | docker, observability |
-| [GROBID Service](docker.grobid.definition.md) | `docker.grobid` | `09_docker/grobid.yaml` | docker, document |
-| [Jaeger Service](docker.jaeger.definition.md) | `docker.jaeger` | `09_docker/jaeger.yaml` | docker, observability |
-| [Jupyter Service](docker.jupyter.definition.md) | `docker.jupyter` | `09_docker/jupyter.yaml` | docker, dev |
-| [Keycloak Service](docker.keycloak.definition.md) | `docker.keycloak` | `09_docker/keycloak.yaml` | docker, auth |
-| [LibreOffice Conversion Service](docker.libreoffice.definition.md) | `docker.libreoffice` | `09_docker/libreoffice.yaml` | docker, document |
-| [MinIO Service](docker.minio.definition.md) | `docker.minio` | `09_docker/minio.yaml` | docker, storage |
-| [n8n Service](docker.n8n.definition.md) | `docker.n8n` | `09_docker/n8n.yaml` | docker, workers |
-| [Neo4j Service](docker.neo4j.definition.md) | `docker.neo4j` | `09_docker/neo4j.yaml` | docker, graph |
-| [Ollama Service](docker.ollama.definition.md) | `docker.ollama` | `09_docker/ollama.yaml` | docker, ai |
-| [Open WebUI Service](docker.open-webui.definition.md) | `docker.open-webui` | `09_docker/open-webui.yaml` | docker, ai |
-| [OpenFGA Service](docker.openfga.definition.md) | `docker.openfga` | `09_docker/openfga.yaml` | docker, auth |
-| [OpenSearch Dashboards Service](docker.opensearch-dashboards.definition.md) | `docker.opensearch-dashboards` | `09_docker/opensearch-dashboards.yaml` | docker, search |
-| [OpenSearch Service](docker.opensearch.definition.md) | `docker.opensearch` | `09_docker/opensearch.yaml` | docker, search |
-| [pgvector Service](docker.pgvector.definition.md) | `docker.pgvector` | `09_docker/pgvector.yaml` | docker, database |
-| [Playwright Worker Service](docker.playwright-worker.definition.md) | `docker.playwright-worker` | `09_docker/playwright-worker.yaml` | docker, document |
-| [PostgreSQL Service](docker.postgres.definition.md) | `docker.postgres` | `09_docker/postgres.yaml` | docker, databases |
-| [Prometheus Service](docker.prometheus.definition.md) | `docker.prometheus` | `09_docker/prometheus.yaml` | docker, observability |
-| [Qdrant Service](docker.qdrant.definition.md) | `docker.qdrant` | `09_docker/qdrant.yaml` | docker, vector |
-| [Redis Service](docker.redis.definition.md) | `docker.redis` | `09_docker/redis.yaml` | docker, databases |
-| [Temporal UI Service](docker.temporal-ui.definition.md) | `docker.temporal-ui` | `09_docker/temporal-ui.yaml` | docker, workers |
-| [Temporal Service](docker.temporal.definition.md) | `docker.temporal` | `09_docker/temporal.yaml` | docker, workers |
-| [Tesseract OCR Service](docker.tesseract-ocr.definition.md) | `docker.tesseract-ocr` | `09_docker/tesseract-ocr.yaml` | docker, document |
-| [Apache Tika Service](docker.tika.definition.md) | `docker.tika` | `09_docker/tika.yaml` | docker, document |
-| [Traefik Service](docker.traefik.definition.md) | `docker.traefik` | `09_docker/traefik.yaml` | docker, proxy |
-| [Unstructured Service](docker.unstructured.definition.md) | `docker.unstructured` | `09_docker/unstructured.yaml` | docker, document |
-| [Weaviate Service](docker.weaviate.definition.md) | `docker.weaviate` | `09_docker/weaviate.yaml` | docker, vector |
-| [Content-Graph Worker Service](docker.worker.definition.md) | `docker.worker` | `09_docker/worker.yaml` | docker, workers |
-| [launchd - Caffeinate](launchd.caffienate.definition.md) | `launchd.caffienate` | `09_launchd/caffienate.yaml` | launchd, system |
-| [launchd - Docker](launchd.docker.definition.md) | `launchd.docker` | `09_launchd/docker.yaml` | launchd, runtime |
-| [launchd - LM Studio](launchd.lm-studio.definition.md) | `launchd.lm-studio` | `09_launchd/lm_studio.yaml` | launchd, ai |
-| [launchd - Ollama](launchd.ollama.definition.md) | `launchd.ollama` | `09_launchd/ollama.yaml` | launchd, ai |
-| [claude-haiku-4-5](model.claude-haiku-4-5.definition.md) | `model.claude-haiku-4-5` | `13_models/model.claude-haiku-4-5.yaml` | model |
-| [claude-opus-4-7](model.claude-opus-4-7.definition.md) | `model.claude-opus-4-7` | `13_models/model.claude-opus-4-7.yaml` | model |
-| [claude-sonnet-4-6](model.claude-sonnet-4-6.definition.md) | `model.claude-sonnet-4-6` | `13_models/model.claude-sonnet-4-6.yaml` | model |
-| [deepseek-r1](model.deepseek-r1.definition.md) | `model.deepseek-r1` | `13_models/model.deepseek-r1.yaml` | model |
-| [gemma2](model.gemma2.definition.md) | `model.gemma2` | `13_models/model.gemma2.yaml` | model |
-| [gemma3](model.gemma3.definition.md) | `model.gemma3` | `13_models/model.gemma3.yaml` | model |
-| [llama3.1](model.llama3.1.definition.md) | `model.llama3.1` | `13_models/model.llama3.1.yaml` | model |
-| [llama3.2-vision](model.llama3.2-vision.definition.md) | `model.llama3.2-vision` | `13_models/model.llama3.2-vision.yaml` | model |
-| [llama3.2](model.llama3.2.definition.md) | `model.llama3.2` | `13_models/model.llama3.2.yaml` | model |
-| [llama3](model.llama3.definition.md) | `model.llama3` | `13_models/model.llama3.yaml` | model |
-| [mistral](model.mistral.definition.md) | `model.mistral` | `13_models/model.mistral.yaml` | model |
-| [nomic-embed-text](model.nomic-embed-text.definition.md) | `model.nomic-embed-text` | `13_models/model.nomic-embed-text.yaml` | model |
-| [qwen2.5](model.qwen2.5.definition.md) | `model.qwen2.5` | `13_models/model.qwen2.5.yaml` | model |
-| [qwen3](model.qwen3.definition.md) | `model.qwen3` | `13_models/model.qwen3.yaml` | model |
-| [claude](provider.claude.definition.md) | `provider.claude` | `13_providers/provider.claude.yaml` | provider |
-| [gemini](provider.gemini.definition.md) | `provider.gemini` | `13_providers/provider.gemini.yaml` | provider |
-| [lmstudio](provider.lmstudio.definition.md) | `provider.lmstudio` | `13_providers/provider.lmstudio.yaml` | provider |
-| [ollama](provider.ollama.definition.md) | `provider.ollama` | `13_providers/provider.ollama.yaml` | provider |
-| [openai](provider.openai.definition.md) | `provider.openai` | `13_providers/provider.openai.yaml` | provider |
-| [Hello Polyglot](examples.hello-polyglot.definition.md) | `examples.hello-polyglot` | `<raw>` | - |
-| [Hello Python](examples.hello-python.definition.md) | `examples.hello-python` | `<raw>` | - |
-| [Hello Shell](examples.hello-shell.definition.md) | `examples.hello-shell` | `<raw>` | - |
-| [Format Markdown for Compliance](tasks.format-markdown.definition.md) | `tasks.format-markdown` | `<raw>` | - |
-| [tasks.generate-title-from-text](tasks.generate-title-from-text.definition.md) | `tasks.generate-title-from-text` | `<raw>` | - |
-| [tasks.research-summary](tasks.research-summary.definition.md) | `tasks.research-summary` | `<raw>` | - |
-| [Spec promotion — Final stage](tasks.spec-promotion.final.definition.md) | `tasks.spec-promotion.final` | `<raw>` | - |
-| [Spec promotion — Prompts stage](tasks.spec-promotion.prompts.definition.md) | `tasks.spec-promotion.prompts` | `<raw>` | - |
-| [Spec promotion — Requirements stage](tasks.spec-promotion.requirements.definition.md) | `tasks.spec-promotion.requirements` | `<raw>` | - |
-| [Spec promotion — Research stage](tasks.spec-promotion.research.definition.md) | `tasks.spec-promotion.research` | `<raw>` | - |
-| [Spec promotion — Tasks stage](tasks.spec-promotion.tasks.definition.md) | `tasks.spec-promotion.tasks` | `<raw>` | - |
-| [tasks.vision.layout](tasks.vision.layout.definition.md) | `tasks.vision.layout` | `<raw>` | - |
-| [tasks.vision.overview](tasks.vision.overview.definition.md) | `tasks.vision.overview` | `<raw>` | - |
-| [tasks.vision.style](tasks.vision.style.definition.md) | `tasks.vision.style` | `<raw>` | - |
-| [tasks.vision.visible-text](tasks.vision.visible-text.definition.md) | `tasks.vision.visible-text` | `<raw>` | - |
+| [Format Markdown for Compliance](text.markdown.format.task.definition.md) | `text.markdown.format.task` | `<raw>` | - |
+| [Casbin Authorization Service](docker.casbin.service.definition.md) | `docker.casbin.service` | `09_docker/docker.casbin.service.yaml` | docker, auth |
+| [ClamAV Service](docker.clamav.service.definition.md) | `docker.clamav.service` | `09_docker/docker.clamav.service.yaml` | docker, document |
+| [FastAPI Service](docker.fastapi.service.definition.md) | `docker.fastapi.service` | `09_docker/docker.fastapi.service.yaml` | docker, workers |
+| [Gitea Service](docker.gitea.service.definition.md) | `docker.gitea.service` | `09_docker/docker.gitea.service.yaml` | docker, dev |
+| [Grafana Service](docker.grafana.service.definition.md) | `docker.grafana.service` | `09_docker/docker.grafana.service.yaml` | docker, observability |
+| [GROBID Service](docker.grobid.service.definition.md) | `docker.grobid.service` | `09_docker/docker.grobid.service.yaml` | docker, document |
+| [Jaeger Service](docker.jaeger.service.definition.md) | `docker.jaeger.service` | `09_docker/docker.jaeger.service.yaml` | docker, observability |
+| [Jupyter Service](docker.jupyter.service.definition.md) | `docker.jupyter.service` | `09_docker/docker.jupyter.service.yaml` | docker, dev |
+| [Keycloak Service](docker.keycloak.service.definition.md) | `docker.keycloak.service` | `09_docker/docker.keycloak.service.yaml` | docker, auth |
+| [LibreOffice Conversion Service](docker.libreoffice.service.definition.md) | `docker.libreoffice.service` | `09_docker/docker.libreoffice.service.yaml` | docker, document |
+| [MinIO Service](docker.minio.service.definition.md) | `docker.minio.service` | `09_docker/docker.minio.service.yaml` | docker, storage |
+| [n8n Service](docker.n8n.service.definition.md) | `docker.n8n.service` | `09_docker/docker.n8n.service.yaml` | docker, workers |
+| [Neo4j Service](docker.neo4j.service.definition.md) | `docker.neo4j.service` | `09_docker/docker.neo4j.service.yaml` | docker, graph |
+| [Ollama Service](docker.ollama.service.definition.md) | `docker.ollama.service` | `09_docker/docker.ollama.service.yaml` | docker, ai |
+| [Open WebUI Service](docker.open-webui.service.definition.md) | `docker.open-webui.service` | `09_docker/docker.open-webui.service.yaml` | docker, ai |
+| [OpenFGA Service](docker.openfga.service.definition.md) | `docker.openfga.service` | `09_docker/docker.openfga.service.yaml` | docker, auth |
+| [OpenSearch Dashboards Service](docker.opensearch-dashboards.service.definition.md) | `docker.opensearch-dashboards.service` | `09_docker/docker.opensearch-dashboards.service.yaml` | docker, search |
+| [OpenSearch Service](docker.opensearch.service.definition.md) | `docker.opensearch.service` | `09_docker/docker.opensearch.service.yaml` | docker, search |
+| [pgvector Service](docker.pgvector.service.definition.md) | `docker.pgvector.service` | `09_docker/docker.pgvector.service.yaml` | docker, database |
+| [Playwright Worker Service](docker.playwright-worker.service.definition.md) | `docker.playwright-worker.service` | `09_docker/docker.playwright-worker.service.yaml` | docker, document |
+| [PostgreSQL Service](docker.postgres.service.definition.md) | `docker.postgres.service` | `09_docker/docker.postgres.service.yaml` | docker, database |
+| [Prometheus Service](docker.prometheus.service.definition.md) | `docker.prometheus.service` | `09_docker/docker.prometheus.service.yaml` | docker, observability |
+| [Qdrant Service](docker.qdrant.service.definition.md) | `docker.qdrant.service` | `09_docker/docker.qdrant.service.yaml` | docker, vector |
+| [Redis Service](docker.redis.service.definition.md) | `docker.redis.service` | `09_docker/docker.redis.service.yaml` | docker, database |
+| [Temporal UI Service](docker.temporal-ui.service.definition.md) | `docker.temporal-ui.service` | `09_docker/docker.temporal-ui.service.yaml` | docker, workers |
+| [Temporal Service](docker.temporal.service.definition.md) | `docker.temporal.service` | `09_docker/docker.temporal.service.yaml` | docker, workers |
+| [Tesseract OCR Service](docker.tesseract-ocr.service.definition.md) | `docker.tesseract-ocr.service` | `09_docker/docker.tesseract-ocr.service.yaml` | docker, document |
+| [Apache Tika Service](docker.tika.service.definition.md) | `docker.tika.service` | `09_docker/docker.tika.service.yaml` | docker, document |
+| [Traefik Service](docker.traefik.service.definition.md) | `docker.traefik.service` | `09_docker/docker.traefik.service.yaml` | docker, proxy |
+| [Unstructured Service](docker.unstructured.service.definition.md) | `docker.unstructured.service` | `09_docker/docker.unstructured.service.yaml` | docker, document |
+| [Weaviate Service](docker.weaviate.service.definition.md) | `docker.weaviate.service` | `09_docker/docker.weaviate.service.yaml` | docker, vector |
+| [Content-Graph Worker Service](docker.worker.service.definition.md) | `docker.worker.service` | `09_docker/docker.worker.service.yaml` | docker, workers |
+| [launchd - Caffeinate](launchd.caffeinate.service.definition.md) | `launchd.caffeinate.service` | `09_launchd/launchd.caffeinate.service.yaml` | launchd, system |
+| [launchd - Docker](launchd.docker.service.definition.md) | `launchd.docker.service` | `09_launchd/launchd.docker.service.yaml` | launchd, runtime |
+| [launchd - LM Studio](launchd.lm-studio.service.definition.md) | `launchd.lm-studio.service` | `09_launchd/launchd.lm-studio.service.yaml` | launchd, ai |
+| [launchd - Ollama](launchd.ollama.service.definition.md) | `launchd.ollama.service` | `09_launchd/launchd.ollama.service.yaml` | launchd, ai |
+| [claude-haiku-4-5](model.claude.claude-haiku-4-5.model.definition.md) | `model.claude.claude-haiku-4-5.model` | `13_models/model.claude.claude-haiku-4-5.model.yaml` | model |
+| [claude-opus-4-7](model.claude.claude-opus-4-7.model.definition.md) | `model.claude.claude-opus-4-7.model` | `13_models/model.claude.claude-opus-4-7.model.yaml` | model |
+| [claude-sonnet-4-6](model.claude.claude-sonnet-4-6.model.definition.md) | `model.claude.claude-sonnet-4-6.model` | `13_models/model.claude.claude-sonnet-4-6.model.yaml` | model |
+| [deepseek-r1](model.ollama.deepseek-r1.model.definition.md) | `model.ollama.deepseek-r1.model` | `13_models/model.ollama.deepseek-r1.model.yaml` | model |
+| [gemma2](model.ollama.gemma2.model.definition.md) | `model.ollama.gemma2.model` | `13_models/model.ollama.gemma2.model.yaml` | model |
+| [gemma3](model.ollama.gemma3.model.definition.md) | `model.ollama.gemma3.model` | `13_models/model.ollama.gemma3.model.yaml` | model |
+| [llama3.1](model.ollama.llama3-1.model.definition.md) | `model.ollama.llama3-1.model` | `13_models/model.ollama.llama3-1.model.yaml` | model |
+| [llama3.2-vision](model.ollama.llama3-2-vision.model.definition.md) | `model.ollama.llama3-2-vision.model` | `13_models/model.ollama.llama3-2-vision.model.yaml` | model |
+| [llama3.2](model.ollama.llama3-2.model.definition.md) | `model.ollama.llama3-2.model` | `13_models/model.ollama.llama3-2.model.yaml` | model |
+| [llama3](model.ollama.llama3.model.definition.md) | `model.ollama.llama3.model` | `13_models/model.ollama.llama3.model.yaml` | model |
+| [mistral](model.ollama.mistral.model.definition.md) | `model.ollama.mistral.model` | `13_models/model.ollama.mistral.model.yaml` | model |
+| [nomic-embed-text](model.ollama.nomic-embed-text.model.definition.md) | `model.ollama.nomic-embed-text.model` | `13_models/model.ollama.nomic-embed-text.model.yaml` | model |
+| [qwen2.5](model.ollama.qwen2-5.model.definition.md) | `model.ollama.qwen2-5.model` | `13_models/model.ollama.qwen2-5.model.yaml` | model |
+| [qwen3](model.ollama.qwen3.model.definition.md) | `model.ollama.qwen3.model` | `13_models/model.ollama.qwen3.model.yaml` | model |
+| [claude](provider.claude.provider.definition.md) | `provider.claude.provider` | `13_providers/provider.claude.provider.yaml` | provider |
+| [gemini](provider.gemini.provider.definition.md) | `provider.gemini.provider` | `13_providers/provider.gemini.provider.yaml` | provider |
+| [lmstudio](provider.lmstudio.provider.definition.md) | `provider.lmstudio.provider` | `13_providers/provider.lmstudio.provider.yaml` | provider |
+| [ollama](provider.ollama.provider.definition.md) | `provider.ollama.provider` | `13_providers/provider.ollama.provider.yaml` | provider |
+| [openai](provider.openai.provider.definition.md) | `provider.openai.provider` | `13_providers/provider.openai.provider.yaml` | provider |
+| [image.vision.layout.task](image.vision.layout.task.definition.md) | `image.vision.layout.task` | `<raw>` | - |
+| [image.vision.overview.task](image.vision.overview.task.definition.md) | `image.vision.overview.task` | `<raw>` | - |
+| [image.vision.style.task](image.vision.style.task.definition.md) | `image.vision.style.task` | `<raw>` | - |
+| [image.vision.visible-text.task](image.vision.visible-text.task.definition.md) | `image.vision.visible-text.task` | `<raw>` | - |
+| [Hello Polyglot](polyglot.hello.example.definition.md) | `polyglot.hello.example` | `<raw>` | - |
+| [Hello Python](python.hello.example.definition.md) | `python.hello.example` | `<raw>` | - |
+| [Hello Shell](shell.hello.example.definition.md) | `shell.hello.example` | `<raw>` | - |
+| [Spec promotion — Final stage](spec.promotion.final.task.definition.md) | `spec.promotion.final.task` | `<raw>` | - |
+| [Spec promotion — Prompts stage](spec.promotion.prompts.task.definition.md) | `spec.promotion.prompts.task` | `<raw>` | - |
+| [Spec promotion — Requirements stage](spec.promotion.requirements.task.definition.md) | `spec.promotion.requirements.task` | `<raw>` | - |
+| [Spec promotion — Research stage](spec.promotion.research.task.definition.md) | `spec.promotion.research.task` | `<raw>` | - |
+| [Spec promotion — Tasks stage](spec.promotion.tasks.task.definition.md) | `spec.promotion.tasks.task` | `<raw>` | - |
+| [text.title.generate.task](text.title.generate.task.definition.md) | `text.title.generate.task` | `<raw>` | - |
 
 
 ## Tags
@@ -211,8 +209,8 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 - [Analysis Base](stdlib.analysis.base.definition.md) (`stdlib.analysis.base`)
 - [Abstract Command Base](command.base.definition.md) (`command.base`)
 - [Folder Scaffold Base](folder.base.definition.md) (`folder.base`)
-- [Dockerfile Mixin](dockerfile.base.definition.md) (`dockerfile.base`)
-- [Docker Compose Mixin](compose.base.definition.md) (`compose.base`)
+- [Dockerfile Mixin](dockerfile.mixin.definition.md) (`dockerfile.mixin`)
+- [Docker Compose Mixin](compose.mixin.definition.md) (`compose.mixin`)
 - [Docker Service (Compose + Dockerfile)](docker.base.definition.md) (`docker.base`)
 - [launchd Job Base](launchd.base.definition.md) (`launchd.base`)
 - [launchd Lifecycle Base](launchd.lifecycle.base.definition.md) (`launchd.lifecycle.base`)
@@ -228,10 +226,10 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### ai
 
-- [Ollama Service](docker.ollama.definition.md) (`docker.ollama`)
-- [Open WebUI Service](docker.open-webui.definition.md) (`docker.open-webui`)
-- [launchd - LM Studio](launchd.lm-studio.definition.md) (`launchd.lm-studio`)
-- [launchd - Ollama](launchd.ollama.definition.md) (`launchd.ollama`)
+- [Ollama Service](docker.ollama.service.definition.md) (`docker.ollama.service`)
+- [Open WebUI Service](docker.open-webui.service.definition.md) (`docker.open-webui.service`)
+- [launchd - LM Studio](launchd.lm-studio.service.definition.md) (`launchd.lm-studio.service`)
+- [launchd - Ollama](launchd.ollama.service.definition.md) (`launchd.ollama.service`)
 
 
 ### analysis
@@ -243,14 +241,14 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### audit
 
-- [Classification Audit Finding](audit.classification_finding.schema.definition.md) (`audit.classification_finding.schema`)
+- [Classification Audit Finding](audit.classification-finding.schema.definition.md) (`audit.classification-finding.schema`)
 
 
 ### auth
 
-- [Casbin Authorization Service](docker.casbin-service.definition.md) (`docker.casbin-service`)
-- [Keycloak Service](docker.keycloak.definition.md) (`docker.keycloak`)
-- [OpenFGA Service](docker.openfga.definition.md) (`docker.openfga`)
+- [Casbin Authorization Service](docker.casbin.service.definition.md) (`docker.casbin.service`)
+- [Keycloak Service](docker.keycloak.service.definition.md) (`docker.keycloak.service`)
+- [OpenFGA Service](docker.openfga.service.definition.md) (`docker.openfga.service`)
 
 
 ### build
@@ -285,7 +283,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### compose
 
-- [Docker Compose Mixin](compose.base.definition.md) (`compose.base`)
+- [Docker Compose Mixin](compose.mixin.definition.md) (`compose.mixin`)
 - [Docker Compose Up](compose.up.definition.md) (`compose.up`)
 - [Docker Compose Down](compose.down.definition.md) (`compose.down`)
 - [Docker Compose Status](compose.status.definition.md) (`compose.status`)
@@ -300,13 +298,9 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### database
 
-- [pgvector Service](docker.pgvector.definition.md) (`docker.pgvector`)
-
-
-### databases
-
-- [PostgreSQL Service](docker.postgres.definition.md) (`docker.postgres`)
-- [Redis Service](docker.redis.definition.md) (`docker.redis`)
+- [pgvector Service](docker.pgvector.service.definition.md) (`docker.pgvector.service`)
+- [PostgreSQL Service](docker.postgres.service.definition.md) (`docker.postgres.service`)
+- [Redis Service](docker.redis.service.definition.md) (`docker.redis.service`)
 
 
 ### deployment
@@ -323,8 +317,8 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### dev
 
-- [Gitea Service](docker.gitea.definition.md) (`docker.gitea`)
-- [Jupyter Service](docker.jupyter.definition.md) (`docker.jupyter`)
+- [Gitea Service](docker.gitea.service.definition.md) (`docker.gitea.service`)
+- [Jupyter Service](docker.jupyter.service.definition.md) (`docker.jupyter.service`)
 
 
 ### dispatch
@@ -335,8 +329,8 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### docker
 
-- [Dockerfile Mixin](dockerfile.base.definition.md) (`dockerfile.base`)
-- [Docker Compose Mixin](compose.base.definition.md) (`compose.base`)
+- [Dockerfile Mixin](dockerfile.mixin.definition.md) (`dockerfile.mixin`)
+- [Docker Compose Mixin](compose.mixin.definition.md) (`compose.mixin`)
 - [Docker Service (Compose + Dockerfile)](docker.base.definition.md) (`docker.base`)
 - [Build Docker Image](docker.build.definition.md) (`docker.build`)
 - [Docker Compose Up](compose.up.definition.md) (`compose.up`)
@@ -348,54 +342,54 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 - [Postgres Service (docker backend)](service.postgres.definition.md) (`service.postgres`)
 - [Redis Service (docker backend)](service.redis.definition.md) (`service.redis`)
 - [Neo4j Service (docker backend)](service.neo4j.definition.md) (`service.neo4j`)
-- [Casbin Authorization Service](docker.casbin-service.definition.md) (`docker.casbin-service`)
-- [ClamAV Service](docker.clamav.definition.md) (`docker.clamav`)
-- [FastAPI Service](docker.fastapi.definition.md) (`docker.fastapi`)
-- [Gitea Service](docker.gitea.definition.md) (`docker.gitea`)
-- [Grafana Service](docker.grafana.definition.md) (`docker.grafana`)
-- [GROBID Service](docker.grobid.definition.md) (`docker.grobid`)
-- [Jaeger Service](docker.jaeger.definition.md) (`docker.jaeger`)
-- [Jupyter Service](docker.jupyter.definition.md) (`docker.jupyter`)
-- [Keycloak Service](docker.keycloak.definition.md) (`docker.keycloak`)
-- [LibreOffice Conversion Service](docker.libreoffice.definition.md) (`docker.libreoffice`)
-- [MinIO Service](docker.minio.definition.md) (`docker.minio`)
-- [n8n Service](docker.n8n.definition.md) (`docker.n8n`)
-- [Neo4j Service](docker.neo4j.definition.md) (`docker.neo4j`)
-- [Ollama Service](docker.ollama.definition.md) (`docker.ollama`)
-- [Open WebUI Service](docker.open-webui.definition.md) (`docker.open-webui`)
-- [OpenFGA Service](docker.openfga.definition.md) (`docker.openfga`)
-- [OpenSearch Dashboards Service](docker.opensearch-dashboards.definition.md) (`docker.opensearch-dashboards`)
-- [OpenSearch Service](docker.opensearch.definition.md) (`docker.opensearch`)
-- [pgvector Service](docker.pgvector.definition.md) (`docker.pgvector`)
-- [Playwright Worker Service](docker.playwright-worker.definition.md) (`docker.playwright-worker`)
-- [PostgreSQL Service](docker.postgres.definition.md) (`docker.postgres`)
-- [Prometheus Service](docker.prometheus.definition.md) (`docker.prometheus`)
-- [Qdrant Service](docker.qdrant.definition.md) (`docker.qdrant`)
-- [Redis Service](docker.redis.definition.md) (`docker.redis`)
-- [Temporal UI Service](docker.temporal-ui.definition.md) (`docker.temporal-ui`)
-- [Temporal Service](docker.temporal.definition.md) (`docker.temporal`)
-- [Tesseract OCR Service](docker.tesseract-ocr.definition.md) (`docker.tesseract-ocr`)
-- [Apache Tika Service](docker.tika.definition.md) (`docker.tika`)
-- [Traefik Service](docker.traefik.definition.md) (`docker.traefik`)
-- [Unstructured Service](docker.unstructured.definition.md) (`docker.unstructured`)
-- [Weaviate Service](docker.weaviate.definition.md) (`docker.weaviate`)
-- [Content-Graph Worker Service](docker.worker.definition.md) (`docker.worker`)
+- [Casbin Authorization Service](docker.casbin.service.definition.md) (`docker.casbin.service`)
+- [ClamAV Service](docker.clamav.service.definition.md) (`docker.clamav.service`)
+- [FastAPI Service](docker.fastapi.service.definition.md) (`docker.fastapi.service`)
+- [Gitea Service](docker.gitea.service.definition.md) (`docker.gitea.service`)
+- [Grafana Service](docker.grafana.service.definition.md) (`docker.grafana.service`)
+- [GROBID Service](docker.grobid.service.definition.md) (`docker.grobid.service`)
+- [Jaeger Service](docker.jaeger.service.definition.md) (`docker.jaeger.service`)
+- [Jupyter Service](docker.jupyter.service.definition.md) (`docker.jupyter.service`)
+- [Keycloak Service](docker.keycloak.service.definition.md) (`docker.keycloak.service`)
+- [LibreOffice Conversion Service](docker.libreoffice.service.definition.md) (`docker.libreoffice.service`)
+- [MinIO Service](docker.minio.service.definition.md) (`docker.minio.service`)
+- [n8n Service](docker.n8n.service.definition.md) (`docker.n8n.service`)
+- [Neo4j Service](docker.neo4j.service.definition.md) (`docker.neo4j.service`)
+- [Ollama Service](docker.ollama.service.definition.md) (`docker.ollama.service`)
+- [Open WebUI Service](docker.open-webui.service.definition.md) (`docker.open-webui.service`)
+- [OpenFGA Service](docker.openfga.service.definition.md) (`docker.openfga.service`)
+- [OpenSearch Dashboards Service](docker.opensearch-dashboards.service.definition.md) (`docker.opensearch-dashboards.service`)
+- [OpenSearch Service](docker.opensearch.service.definition.md) (`docker.opensearch.service`)
+- [pgvector Service](docker.pgvector.service.definition.md) (`docker.pgvector.service`)
+- [Playwright Worker Service](docker.playwright-worker.service.definition.md) (`docker.playwright-worker.service`)
+- [PostgreSQL Service](docker.postgres.service.definition.md) (`docker.postgres.service`)
+- [Prometheus Service](docker.prometheus.service.definition.md) (`docker.prometheus.service`)
+- [Qdrant Service](docker.qdrant.service.definition.md) (`docker.qdrant.service`)
+- [Redis Service](docker.redis.service.definition.md) (`docker.redis.service`)
+- [Temporal UI Service](docker.temporal-ui.service.definition.md) (`docker.temporal-ui.service`)
+- [Temporal Service](docker.temporal.service.definition.md) (`docker.temporal.service`)
+- [Tesseract OCR Service](docker.tesseract-ocr.service.definition.md) (`docker.tesseract-ocr.service`)
+- [Apache Tika Service](docker.tika.service.definition.md) (`docker.tika.service`)
+- [Traefik Service](docker.traefik.service.definition.md) (`docker.traefik.service`)
+- [Unstructured Service](docker.unstructured.service.definition.md) (`docker.unstructured.service`)
+- [Weaviate Service](docker.weaviate.service.definition.md) (`docker.weaviate.service`)
+- [Content-Graph Worker Service](docker.worker.service.definition.md) (`docker.worker.service`)
 
 
 ### dockerfile
 
-- [Dockerfile Mixin](dockerfile.base.definition.md) (`dockerfile.base`)
+- [Dockerfile Mixin](dockerfile.mixin.definition.md) (`dockerfile.mixin`)
 
 
 ### document
 
-- [ClamAV Service](docker.clamav.definition.md) (`docker.clamav`)
-- [GROBID Service](docker.grobid.definition.md) (`docker.grobid`)
-- [LibreOffice Conversion Service](docker.libreoffice.definition.md) (`docker.libreoffice`)
-- [Playwright Worker Service](docker.playwright-worker.definition.md) (`docker.playwright-worker`)
-- [Tesseract OCR Service](docker.tesseract-ocr.definition.md) (`docker.tesseract-ocr`)
-- [Apache Tika Service](docker.tika.definition.md) (`docker.tika`)
-- [Unstructured Service](docker.unstructured.definition.md) (`docker.unstructured`)
+- [ClamAV Service](docker.clamav.service.definition.md) (`docker.clamav.service`)
+- [GROBID Service](docker.grobid.service.definition.md) (`docker.grobid.service`)
+- [LibreOffice Conversion Service](docker.libreoffice.service.definition.md) (`docker.libreoffice.service`)
+- [Playwright Worker Service](docker.playwright-worker.service.definition.md) (`docker.playwright-worker.service`)
+- [Tesseract OCR Service](docker.tesseract-ocr.service.definition.md) (`docker.tesseract-ocr.service`)
+- [Apache Tika Service](docker.tika.service.definition.md) (`docker.tika.service`)
+- [Unstructured Service](docker.unstructured.service.definition.md) (`docker.unstructured.service`)
 
 
 ### documentation
@@ -416,16 +410,12 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### example
 
+- [Example Catalog Modules](examples.catalog.modules.definition.md) (`examples.catalog.modules`)
 - [Cloud Deployer](cloud.deployer.definition.md) (`cloud.deployer`)
 - [Initialize Git Example](git.init.definition.md) (`git.init`)
 - [GitHub Repository Example](git.github.definition.md) (`git.github`)
 - [Gitignore Template Example](git.gitignore.definition.md) (`git.gitignore`)
 - [Obsidian Daily Note Template](obsidian.template.definition.md) (`obsidian.template`)
-
-
-### examples
-
-- [Example Catalog Modules](examples.catalog.modules.definition.md) (`examples.catalog.modules`)
 
 
 ### files
@@ -447,7 +437,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 - [Generate Python Barrel](stdlib.python.barrel.definition.md) (`stdlib.python.barrel`)
 - [Regenerate All Workflows Barrels](barrels.regenerate.workflow.definition.md) (`barrels.regenerate.workflow`)
-- [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.definition.md) (`barrels.regenerate.yaml-runtime`)
+- [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.workflow.definition.md) (`barrels.regenerate.yaml-runtime.workflow`)
 
 
 ### git
@@ -469,12 +459,12 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### graph
 
-- [Neo4j Service](docker.neo4j.definition.md) (`docker.neo4j`)
+- [Neo4j Service](docker.neo4j.service.definition.md) (`docker.neo4j.service`)
 
 
 ### harness
 
-- [Harness Stream Event](harness.stream_event.schema.definition.md) (`harness.stream_event.schema`)
+- [Harness Stream Event](harness.stream-event.schema.definition.md) (`harness.stream-event.schema`)
 
 
 ### intelligence
@@ -496,12 +486,12 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 - [Print LaunchAgent Status](launchd.status.definition.md) (`launchd.status`)
 - [Launchd Backend Action Map](service.launchd.mixin.definition.md) (`service.launchd.mixin`)
 - [Ollama Service (launchd backend)](service.ollama.definition.md) (`service.ollama`)
-- [Caffienate Service (launchd backend)](service.caffienate.definition.md) (`service.caffienate`)
+- [Caffeinate Service (launchd backend)](service.caffeinate.definition.md) (`service.caffeinate`)
 - [LM Studio Service (launchd backend)](service.lm-studio.definition.md) (`service.lm-studio`)
-- [launchd - Caffeinate](launchd.caffienate.definition.md) (`launchd.caffienate`)
-- [launchd - Docker](launchd.docker.definition.md) (`launchd.docker`)
-- [launchd - LM Studio](launchd.lm-studio.definition.md) (`launchd.lm-studio`)
-- [launchd - Ollama](launchd.ollama.definition.md) (`launchd.ollama`)
+- [launchd - Caffeinate](launchd.caffeinate.service.definition.md) (`launchd.caffeinate.service`)
+- [launchd - Docker](launchd.docker.service.definition.md) (`launchd.docker.service`)
+- [launchd - LM Studio](launchd.lm-studio.service.definition.md) (`launchd.lm-studio.service`)
+- [launchd - Ollama](launchd.ollama.service.definition.md) (`launchd.ollama.service`)
 
 
 ### lifecycle
@@ -534,20 +524,20 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 ### model
 
 - [LLM Model Record](model.base.definition.md) (`model.base`)
-- [claude-haiku-4-5](model.claude-haiku-4-5.definition.md) (`model.claude-haiku-4-5`)
-- [claude-opus-4-7](model.claude-opus-4-7.definition.md) (`model.claude-opus-4-7`)
-- [claude-sonnet-4-6](model.claude-sonnet-4-6.definition.md) (`model.claude-sonnet-4-6`)
-- [deepseek-r1](model.deepseek-r1.definition.md) (`model.deepseek-r1`)
-- [gemma2](model.gemma2.definition.md) (`model.gemma2`)
-- [gemma3](model.gemma3.definition.md) (`model.gemma3`)
-- [llama3.1](model.llama3.1.definition.md) (`model.llama3.1`)
-- [llama3.2-vision](model.llama3.2-vision.definition.md) (`model.llama3.2-vision`)
-- [llama3.2](model.llama3.2.definition.md) (`model.llama3.2`)
-- [llama3](model.llama3.definition.md) (`model.llama3`)
-- [mistral](model.mistral.definition.md) (`model.mistral`)
-- [nomic-embed-text](model.nomic-embed-text.definition.md) (`model.nomic-embed-text`)
-- [qwen2.5](model.qwen2.5.definition.md) (`model.qwen2.5`)
-- [qwen3](model.qwen3.definition.md) (`model.qwen3`)
+- [claude-haiku-4-5](model.claude.claude-haiku-4-5.model.definition.md) (`model.claude.claude-haiku-4-5.model`)
+- [claude-opus-4-7](model.claude.claude-opus-4-7.model.definition.md) (`model.claude.claude-opus-4-7.model`)
+- [claude-sonnet-4-6](model.claude.claude-sonnet-4-6.model.definition.md) (`model.claude.claude-sonnet-4-6.model`)
+- [deepseek-r1](model.ollama.deepseek-r1.model.definition.md) (`model.ollama.deepseek-r1.model`)
+- [gemma2](model.ollama.gemma2.model.definition.md) (`model.ollama.gemma2.model`)
+- [gemma3](model.ollama.gemma3.model.definition.md) (`model.ollama.gemma3.model`)
+- [llama3.1](model.ollama.llama3-1.model.definition.md) (`model.ollama.llama3-1.model`)
+- [llama3.2-vision](model.ollama.llama3-2-vision.model.definition.md) (`model.ollama.llama3-2-vision.model`)
+- [llama3.2](model.ollama.llama3-2.model.definition.md) (`model.ollama.llama3-2.model`)
+- [llama3](model.ollama.llama3.model.definition.md) (`model.ollama.llama3.model`)
+- [mistral](model.ollama.mistral.model.definition.md) (`model.ollama.mistral.model`)
+- [nomic-embed-text](model.ollama.nomic-embed-text.model.definition.md) (`model.ollama.nomic-embed-text.model`)
+- [qwen2.5](model.ollama.qwen2-5.model.definition.md) (`model.ollama.qwen2-5.model`)
+- [qwen3](model.ollama.qwen3.model.definition.md) (`model.ollama.qwen3.model`)
 
 
 ### modules
@@ -559,9 +549,9 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### observability
 
-- [Grafana Service](docker.grafana.definition.md) (`docker.grafana`)
-- [Jaeger Service](docker.jaeger.definition.md) (`docker.jaeger`)
-- [Prometheus Service](docker.prometheus.definition.md) (`docker.prometheus`)
+- [Grafana Service](docker.grafana.service.definition.md) (`docker.grafana.service`)
+- [Jaeger Service](docker.jaeger.service.definition.md) (`docker.jaeger.service`)
+- [Prometheus Service](docker.prometheus.service.definition.md) (`docker.prometheus.service`)
 
 
 ### obsidian
@@ -572,16 +562,16 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 ### provider
 
 - [LLM Provider Record](provider.base.definition.md) (`provider.base`)
-- [claude](provider.claude.definition.md) (`provider.claude`)
-- [gemini](provider.gemini.definition.md) (`provider.gemini`)
-- [lmstudio](provider.lmstudio.definition.md) (`provider.lmstudio`)
-- [ollama](provider.ollama.definition.md) (`provider.ollama`)
-- [openai](provider.openai.definition.md) (`provider.openai`)
+- [claude](provider.claude.provider.definition.md) (`provider.claude.provider`)
+- [gemini](provider.gemini.provider.definition.md) (`provider.gemini.provider`)
+- [lmstudio](provider.lmstudio.provider.definition.md) (`provider.lmstudio.provider`)
+- [ollama](provider.ollama.provider.definition.md) (`provider.ollama.provider`)
+- [openai](provider.openai.provider.definition.md) (`provider.openai.provider`)
 
 
 ### proxy
 
-- [Traefik Service](docker.traefik.definition.md) (`docker.traefik`)
+- [Traefik Service](docker.traefik.service.definition.md) (`docker.traefik.service`)
 
 
 ### python
@@ -589,7 +579,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 - [Python Barrel - __init__.py Template](stdlib.python.barrel.template.definition.md) (`stdlib.python.barrel.template`)
 - [Generate Python Barrel](stdlib.python.barrel.definition.md) (`stdlib.python.barrel`)
 - [Regenerate All Workflows Barrels](barrels.regenerate.workflow.definition.md) (`barrels.regenerate.workflow`)
-- [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.definition.md) (`barrels.regenerate.yaml-runtime`)
+- [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.workflow.definition.md) (`barrels.regenerate.yaml-runtime.workflow`)
 
 
 ### route
@@ -600,24 +590,24 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### runtime
 
-- [launchd - Docker](launchd.docker.definition.md) (`launchd.docker`)
+- [launchd - Docker](launchd.docker.service.definition.md) (`launchd.docker.service`)
 
 
 ### schema
 
 - [JSON Schema Base](schemas.base.definition.md) (`schemas.base`)
 - [Generate Schema JSON](schemas.generate-json.definition.md) (`schemas.generate-json`)
-- [Classification Audit Finding](audit.classification_finding.schema.definition.md) (`audit.classification_finding.schema`)
+- [Classification Audit Finding](audit.classification-finding.schema.definition.md) (`audit.classification-finding.schema`)
 - [Dispatch Request Envelope](dispatch.request.schema.definition.md) (`dispatch.request.schema`)
 - [Dispatch Response Envelope](dispatch.response.schema.definition.md) (`dispatch.response.schema`)
-- [Harness Stream Event](harness.stream_event.schema.definition.md) (`harness.stream_event.schema`)
+- [Harness Stream Event](harness.stream-event.schema.definition.md) (`harness.stream-event.schema`)
 - [Tool Invocation](tool.invocation.schema.definition.md) (`tool.invocation.schema`)
 
 
 ### search
 
-- [OpenSearch Dashboards Service](docker.opensearch-dashboards.definition.md) (`docker.opensearch-dashboards`)
-- [OpenSearch Service](docker.opensearch.definition.md) (`docker.opensearch`)
+- [OpenSearch Dashboards Service](docker.opensearch-dashboards.service.definition.md) (`docker.opensearch-dashboards.service`)
+- [OpenSearch Service](docker.opensearch.service.definition.md) (`docker.opensearch.service`)
 
 
 ### service
@@ -626,7 +616,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 - [Docker Backend Action Map](service.docker.mixin.definition.md) (`service.docker.mixin`)
 - [Launchd Backend Action Map](service.launchd.mixin.definition.md) (`service.launchd.mixin`)
 - [Ollama Service (launchd backend)](service.ollama.definition.md) (`service.ollama`)
-- [Caffienate Service (launchd backend)](service.caffienate.definition.md) (`service.caffienate`)
+- [Caffeinate Service (launchd backend)](service.caffeinate.definition.md) (`service.caffeinate`)
 - [LM Studio Service (launchd backend)](service.lm-studio.definition.md) (`service.lm-studio`)
 - [Postgres Service (docker backend)](service.postgres.definition.md) (`service.postgres`)
 - [Redis Service (docker backend)](service.redis.definition.md) (`service.redis`)
@@ -640,44 +630,42 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### storage
 
-- [MinIO Service](docker.minio.definition.md) (`docker.minio`)
+- [MinIO Service](docker.minio.service.definition.md) (`docker.minio.service`)
 
 
 ### system
 
-- [launchd - Caffeinate](launchd.caffienate.definition.md) (`launchd.caffienate`)
+- [launchd - Caffeinate](launchd.caffeinate.service.definition.md) (`launchd.caffeinate.service`)
 
 
 ### task
 
 - [Task base](task.base.definition.md) (`task.base`)
-- [Scan Boundary Violations](audit.boundary_violations.scan.task.definition.md) (`audit.boundary_violations.scan.task`)
+- [Scan Boundary Violations](audit.boundary-violations.scan.task.definition.md) (`audit.boundary-violations.scan.task`)
 - [Fetch readable text from a URL or search topic](browser.fetch.text.task.definition.md) (`browser.fetch.text.task`)
 - [Build file classification manifest](classify.manifest.build.task.definition.md) (`classify.manifest.build.task`)
-- [Return broad media class for a path](classify.media.class_for_path.task.definition.md) (`classify.media.class_for_path.task`)
+- [Return broad media class for a path](classify.media.class-for-path.task.definition.md) (`classify.media.class-for-path.task`)
 - [Classify a file by media type and destination](classify.media.file.task.definition.md) (`classify.media.file.task`)
-- [Chunk a file into embeddable text segments](embeddings.chunker.chunk_file.task.definition.md) (`embeddings.chunker.chunk_file.task`)
+- [Chunk a file into embeddable text segments](embeddings.chunker.chunk-file.task.definition.md) (`embeddings.chunker.chunk-file.task`)
 - [Generate an embedding vector for text](embeddings.embed.text.task.definition.md) (`embeddings.embed.text.task`)
 - [Query the local knowledge base](embeddings.query.search.task.definition.md) (`embeddings.query.search.task`)
-- [Collect indexable files for embedding sweep](embeddings.sweep.collect_files.task.definition.md) (`embeddings.sweep.collect_files.task`)
-- [Compute MD5 hash of a file](embeddings.sweep.file_hash.task.definition.md) (`embeddings.sweep.file_hash.task`)
-- [Load the embedding sweep manifest](embeddings.sweep.load_manifest.task.definition.md) (`embeddings.sweep.load_manifest.task`)
-- [Persist the embedding sweep manifest](embeddings.sweep.save_manifest.task.definition.md) (`embeddings.sweep.save_manifest.task`)
+- [Collect indexable files for embedding sweep](embeddings.sweep.collect-files.task.definition.md) (`embeddings.sweep.collect-files.task`)
+- [Compute MD5 hash of a file](embeddings.sweep.file-hash.task.definition.md) (`embeddings.sweep.file-hash.task`)
+- [Load the embedding sweep manifest](embeddings.sweep.load-manifest.task.definition.md) (`embeddings.sweep.load-manifest.task`)
+- [Persist the embedding sweep manifest](embeddings.sweep.save-manifest.task.definition.md) (`embeddings.sweep.save-manifest.task`)
 - [Iterate files in a directory tree](files.iter.task.definition.md) (`files.iter.task`)
 - [Compute SHA-256 hash of a file](files.sha256.task.definition.md) (`files.sha256.task`)
-- [Write data to a JSON file](files.write_json.task.definition.md) (`files.write_json.task`)
+- [Write data to a JSON file](files.write-json.task.definition.md) (`files.write-json.task`)
 - [Classify an image by semantic type](image.classify.task.definition.md) (`image.classify.task`)
 - [Extract dominant color palette from an image](image.color.dominant.task.definition.md) (`image.color.dominant.task`)
 - [Extract image file metadata](image.meta.extract.task.definition.md) (`image.meta.extract.task`)
 - [Assess image quality](image.quality.extract.task.definition.md) (`image.quality.extract.task`)
 - [Detect content regions in an image](image.regions.extract.task.definition.md) (`image.regions.extract.task`)
-- [Extract OCR text from an image](image.text_ocr.extract.task.definition.md) (`image.text_ocr.extract.task`)
-- [Infer document type from filename](metadata.doc_type.task.definition.md) (`metadata.doc_type.task`)
-- [Infer source origin from file path](metadata.source_guess.task.definition.md) (`metadata.source_guess.task`)
-- [Get PDF page count](pdf.meta.page_count.task.definition.md) (`pdf.meta.page_count.task`)
-- [Fetch and summarize content through a local model](research.local.summarize.task.definition.md) (`research.local.summarize.task`)
+- [Extract OCR text from an image](image.text-ocr.extract.task.definition.md) (`image.text-ocr.extract.task`)
+- [Infer document type from filename](metadata.doc-type.task.definition.md) (`metadata.doc-type.task`)
+- [Infer source origin from file path](metadata.source-guess.task.definition.md) (`metadata.source-guess.task`)
+- [Get PDF page count](pdf.meta.page-count.task.definition.md) (`pdf.meta.page-count.task`)
 - [Run local test suite](shell.tests.run.task.definition.md) (`shell.tests.run.task`)
-- [Format a markdown file using a local LM Studio model](text.markdown.format.task.definition.md) (`text.markdown.format.task`)
 
 
 ### template
@@ -713,17 +701,17 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### vector
 
-- [Qdrant Service](docker.qdrant.definition.md) (`docker.qdrant`)
-- [Weaviate Service](docker.weaviate.definition.md) (`docker.weaviate`)
+- [Qdrant Service](docker.qdrant.service.definition.md) (`docker.qdrant.service`)
+- [Weaviate Service](docker.weaviate.service.definition.md) (`docker.weaviate.service`)
 
 
 ### workers
 
-- [FastAPI Service](docker.fastapi.definition.md) (`docker.fastapi`)
-- [n8n Service](docker.n8n.definition.md) (`docker.n8n`)
-- [Temporal UI Service](docker.temporal-ui.definition.md) (`docker.temporal-ui`)
-- [Temporal Service](docker.temporal.definition.md) (`docker.temporal`)
-- [Content-Graph Worker Service](docker.worker.definition.md) (`docker.worker`)
+- [FastAPI Service](docker.fastapi.service.definition.md) (`docker.fastapi.service`)
+- [n8n Service](docker.n8n.service.definition.md) (`docker.n8n.service`)
+- [Temporal UI Service](docker.temporal-ui.service.definition.md) (`docker.temporal-ui.service`)
+- [Temporal Service](docker.temporal.service.definition.md) (`docker.temporal.service`)
+- [Content-Graph Worker Service](docker.worker.service.definition.md) (`docker.worker.service`)
 
 
 ### workflow
@@ -733,7 +721,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 - [Generate Schema JSON](schemas.generate-json.definition.md) (`schemas.generate-json`)
 - [Audit classification boundaries and ownership](audit.classifications.scan.workflow.definition.md) (`audit.classifications.scan.workflow`)
 - [Regenerate All Workflows Barrels](barrels.regenerate.workflow.definition.md) (`barrels.regenerate.workflow`)
-- [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.definition.md) (`barrels.regenerate.yaml-runtime`)
+- [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.workflow.definition.md) (`barrels.regenerate.yaml-runtime.workflow`)
 - [YAML API Reference Build](docs.api.reference.workflow.definition.md) (`docs.api.reference.workflow`)
 - [Render Classification Docs](docs.classification.render.workflow.definition.md) (`docs.classification.render.workflow`)
 - [Generate Documentation](docs.generate.workflow.definition.md) (`docs.generate.workflow`)
@@ -790,14 +778,14 @@ def_command_route["Route an Intent through the Router"]
 def_command_route --> def_command.base
 def_folder_base["Folder Scaffold Base"]
 def_folder_base --> def_stdlib.base
-def_dockerfile_base["Dockerfile Mixin"]
-def_dockerfile_base --> def_stdlib.base
-def_compose_base["Docker Compose Mixin"]
-def_compose_base --> def_stdlib.base
+def_dockerfile_mixin["Dockerfile Mixin"]
+def_dockerfile_mixin --> def_stdlib.base
+def_compose_mixin["Docker Compose Mixin"]
+def_compose_mixin --> def_stdlib.base
 def_docker_base["Docker Service (Compose + Dockerfile)"]
 def_docker_base --> def_folder.base
-def_docker_base -.-> def_dockerfile.base
-def_docker_base -.-> def_compose.base
+def_docker_base -.-> def_dockerfile.mixin
+def_docker_base -.-> def_compose.mixin
 def_docker_build["Build Docker Image"]
 def_docker_build --> def_stdlib.run_command
 def_compose_up["Docker Compose Up"]
@@ -846,9 +834,9 @@ def_service_launchd_mixin --> def_stdlib.base
 def_service_ollama["Ollama Service (launchd backend)"]
 def_service_ollama --> def_service.base
 def_service_ollama -.-> def_service.launchd.mixin
-def_service_caffienate["Caffienate Service (launchd backend)"]
-def_service_caffienate --> def_service.base
-def_service_caffienate -.-> def_service.launchd.mixin
+def_service_caffeinate["Caffeinate Service (launchd backend)"]
+def_service_caffeinate --> def_service.base
+def_service_caffeinate -.-> def_service.launchd.mixin
 def_service_lm_studio["LM Studio Service (launchd backend)"]
 def_service_lm_studio --> def_service.base
 def_service_lm_studio -.-> def_service.launchd.mixin
@@ -880,8 +868,8 @@ def_audit_classifications_scan_workflow["Audit classification boundaries and own
 def_audit_classifications_scan_workflow --> def_stdlib.base
 def_barrels_regenerate_workflow["Regenerate All Workflows Barrels"]
 def_barrels_regenerate_workflow --> def_stdlib.base
-def_barrels_regenerate_yaml_runtime["Regenerate workflows.yaml Bucket Barrels"]
-def_barrels_regenerate_yaml_runtime --> def_stdlib.base
+def_barrels_regenerate_yaml_runtime_workflow["Regenerate workflows.yaml Bucket Barrels"]
+def_barrels_regenerate_yaml_runtime_workflow --> def_stdlib.base
 def_docs_api_reference_workflow["YAML API Reference Build"]
 def_docs_api_reference_workflow --> def_stdlib.base
 def_docs_catalog_generate_workflow["API Documentation Catalog Sources"]
@@ -968,137 +956,133 @@ def_metadata_source_guess_task["Infer source origin from file path"]
 def_metadata_source_guess_task --> def_task.base
 def_pdf_meta_page_count_task["Get PDF page count"]
 def_pdf_meta_page_count_task --> def_task.base
-def_research_local_summarize_task["Fetch and summarize content through a local model"]
-def_research_local_summarize_task --> def_task.base
+def_research_local_summarize_task["research.local.summarize.task"]
 def_shell_tests_run_task["Run local test suite"]
 def_shell_tests_run_task --> def_task.base
-def_text_markdown_format_task["Format a markdown file using a local LM Studio model"]
-def_text_markdown_format_task --> def_task.base
+def_text_markdown_format_task["Format Markdown for Compliance"]
 def_docker_casbin_service["Casbin Authorization Service"]
 def_docker_casbin_service --> def_docker.base
-def_docker_clamav["ClamAV Service"]
-def_docker_clamav --> def_docker.base
-def_docker_fastapi["FastAPI Service"]
-def_docker_fastapi --> def_docker.base
-def_docker_gitea["Gitea Service"]
-def_docker_gitea --> def_docker.base
-def_docker_grafana["Grafana Service"]
-def_docker_grafana --> def_docker.base
-def_docker_grobid["GROBID Service"]
-def_docker_grobid --> def_docker.base
-def_docker_jaeger["Jaeger Service"]
-def_docker_jaeger --> def_docker.base
-def_docker_jupyter["Jupyter Service"]
-def_docker_jupyter --> def_docker.base
-def_docker_keycloak["Keycloak Service"]
-def_docker_keycloak --> def_docker.base
-def_docker_libreoffice["LibreOffice Conversion Service"]
-def_docker_libreoffice --> def_docker.base
-def_docker_minio["MinIO Service"]
-def_docker_minio --> def_docker.base
-def_docker_n8n["n8n Service"]
-def_docker_n8n --> def_docker.base
-def_docker_neo4j["Neo4j Service"]
-def_docker_neo4j --> def_docker.base
-def_docker_ollama["Ollama Service"]
-def_docker_ollama --> def_docker.base
-def_docker_open_webui["Open WebUI Service"]
-def_docker_open_webui --> def_docker.base
-def_docker_openfga["OpenFGA Service"]
-def_docker_openfga --> def_docker.base
-def_docker_opensearch_dashboards["OpenSearch Dashboards Service"]
-def_docker_opensearch_dashboards --> def_docker.base
-def_docker_opensearch["OpenSearch Service"]
-def_docker_opensearch --> def_docker.base
-def_docker_pgvector["pgvector Service"]
-def_docker_pgvector --> def_docker.base
-def_docker_playwright_worker["Playwright Worker Service"]
-def_docker_playwright_worker --> def_docker.base
-def_docker_postgres["PostgreSQL Service"]
-def_docker_postgres --> def_docker.base
-def_docker_prometheus["Prometheus Service"]
-def_docker_prometheus --> def_docker.base
-def_docker_qdrant["Qdrant Service"]
-def_docker_qdrant --> def_docker.base
-def_docker_redis["Redis Service"]
-def_docker_redis --> def_docker.base
-def_docker_temporal_ui["Temporal UI Service"]
-def_docker_temporal_ui --> def_docker.base
-def_docker_temporal["Temporal Service"]
-def_docker_temporal --> def_docker.base
-def_docker_tesseract_ocr["Tesseract OCR Service"]
-def_docker_tesseract_ocr --> def_docker.base
-def_docker_tika["Apache Tika Service"]
-def_docker_tika --> def_docker.base
-def_docker_traefik["Traefik Service"]
-def_docker_traefik --> def_docker.base
-def_docker_unstructured["Unstructured Service"]
-def_docker_unstructured --> def_docker.base
-def_docker_weaviate["Weaviate Service"]
-def_docker_weaviate --> def_docker.base
-def_docker_worker["Content-Graph Worker Service"]
-def_docker_worker --> def_docker.base
-def_launchd_caffienate["launchd - Caffeinate"]
-def_launchd_caffienate --> def_launchd.base
-def_launchd_docker["launchd - Docker"]
-def_launchd_docker --> def_launchd.base
-def_launchd_lm_studio["launchd - LM Studio"]
-def_launchd_lm_studio --> def_launchd.base
-def_launchd_ollama["launchd - Ollama"]
-def_launchd_ollama --> def_launchd.base
-def_model_claude_haiku_4_5["claude-haiku-4-5"]
-def_model_claude_haiku_4_5 --> def_model.base
-def_model_claude_opus_4_7["claude-opus-4-7"]
-def_model_claude_opus_4_7 --> def_model.base
-def_model_claude_sonnet_4_6["claude-sonnet-4-6"]
-def_model_claude_sonnet_4_6 --> def_model.base
-def_model_deepseek_r1["deepseek-r1"]
-def_model_deepseek_r1 --> def_model.base
-def_model_gemma2["gemma2"]
-def_model_gemma2 --> def_model.base
-def_model_gemma3["gemma3"]
-def_model_gemma3 --> def_model.base
-def_model_llama3_1["llama3.1"]
-def_model_llama3_1 --> def_model.base
-def_model_llama3_2_vision["llama3.2-vision"]
-def_model_llama3_2_vision --> def_model.base
-def_model_llama3_2["llama3.2"]
-def_model_llama3_2 --> def_model.base
-def_model_llama3["llama3"]
-def_model_llama3 --> def_model.base
-def_model_mistral["mistral"]
-def_model_mistral --> def_model.base
-def_model_nomic_embed_text["nomic-embed-text"]
-def_model_nomic_embed_text --> def_model.base
-def_model_qwen2_5["qwen2.5"]
-def_model_qwen2_5 --> def_model.base
-def_model_qwen3["qwen3"]
-def_model_qwen3 --> def_model.base
-def_provider_claude["claude"]
-def_provider_claude --> def_provider.base
-def_provider_gemini["gemini"]
-def_provider_gemini --> def_provider.base
-def_provider_lmstudio["lmstudio"]
-def_provider_lmstudio --> def_provider.base
-def_provider_ollama["ollama"]
-def_provider_ollama --> def_provider.base
-def_provider_openai["openai"]
-def_provider_openai --> def_provider.base
-def_examples_hello_polyglot["Hello Polyglot"]
-def_examples_hello_python["Hello Python"]
-def_examples_hello_shell["Hello Shell"]
-def_tasks_format_markdown["Format Markdown for Compliance"]
-def_tasks_generate_title_from_text["tasks.generate-title-from-text"]
-def_tasks_research_summary["tasks.research-summary"]
-def_tasks_spec_promotion_final["Spec promotion — Final stage"]
-def_tasks_spec_promotion_prompts["Spec promotion — Prompts stage"]
-def_tasks_spec_promotion_requirements["Spec promotion — Requirements stage"]
-def_tasks_spec_promotion_research["Spec promotion — Research stage"]
-def_tasks_spec_promotion_tasks["Spec promotion — Tasks stage"]
-def_tasks_vision_layout["tasks.vision.layout"]
-def_tasks_vision_overview["tasks.vision.overview"]
-def_tasks_vision_style["tasks.vision.style"]
-def_tasks_vision_visible_text["tasks.vision.visible-text"]
+def_docker_clamav_service["ClamAV Service"]
+def_docker_clamav_service --> def_docker.base
+def_docker_fastapi_service["FastAPI Service"]
+def_docker_fastapi_service --> def_docker.base
+def_docker_gitea_service["Gitea Service"]
+def_docker_gitea_service --> def_docker.base
+def_docker_grafana_service["Grafana Service"]
+def_docker_grafana_service --> def_docker.base
+def_docker_grobid_service["GROBID Service"]
+def_docker_grobid_service --> def_docker.base
+def_docker_jaeger_service["Jaeger Service"]
+def_docker_jaeger_service --> def_docker.base
+def_docker_jupyter_service["Jupyter Service"]
+def_docker_jupyter_service --> def_docker.base
+def_docker_keycloak_service["Keycloak Service"]
+def_docker_keycloak_service --> def_docker.base
+def_docker_libreoffice_service["LibreOffice Conversion Service"]
+def_docker_libreoffice_service --> def_docker.base
+def_docker_minio_service["MinIO Service"]
+def_docker_minio_service --> def_docker.base
+def_docker_n8n_service["n8n Service"]
+def_docker_n8n_service --> def_docker.base
+def_docker_neo4j_service["Neo4j Service"]
+def_docker_neo4j_service --> def_docker.base
+def_docker_ollama_service["Ollama Service"]
+def_docker_ollama_service --> def_docker.base
+def_docker_open_webui_service["Open WebUI Service"]
+def_docker_open_webui_service --> def_docker.base
+def_docker_openfga_service["OpenFGA Service"]
+def_docker_openfga_service --> def_docker.base
+def_docker_opensearch_dashboards_service["OpenSearch Dashboards Service"]
+def_docker_opensearch_dashboards_service --> def_docker.base
+def_docker_opensearch_service["OpenSearch Service"]
+def_docker_opensearch_service --> def_docker.base
+def_docker_pgvector_service["pgvector Service"]
+def_docker_pgvector_service --> def_docker.base
+def_docker_playwright_worker_service["Playwright Worker Service"]
+def_docker_playwright_worker_service --> def_docker.base
+def_docker_postgres_service["PostgreSQL Service"]
+def_docker_postgres_service --> def_docker.base
+def_docker_prometheus_service["Prometheus Service"]
+def_docker_prometheus_service --> def_docker.base
+def_docker_qdrant_service["Qdrant Service"]
+def_docker_qdrant_service --> def_docker.base
+def_docker_redis_service["Redis Service"]
+def_docker_redis_service --> def_docker.base
+def_docker_temporal_ui_service["Temporal UI Service"]
+def_docker_temporal_ui_service --> def_docker.base
+def_docker_temporal_service["Temporal Service"]
+def_docker_temporal_service --> def_docker.base
+def_docker_tesseract_ocr_service["Tesseract OCR Service"]
+def_docker_tesseract_ocr_service --> def_docker.base
+def_docker_tika_service["Apache Tika Service"]
+def_docker_tika_service --> def_docker.base
+def_docker_traefik_service["Traefik Service"]
+def_docker_traefik_service --> def_docker.base
+def_docker_unstructured_service["Unstructured Service"]
+def_docker_unstructured_service --> def_docker.base
+def_docker_weaviate_service["Weaviate Service"]
+def_docker_weaviate_service --> def_docker.base
+def_docker_worker_service["Content-Graph Worker Service"]
+def_docker_worker_service --> def_docker.base
+def_launchd_caffeinate_service["launchd - Caffeinate"]
+def_launchd_caffeinate_service --> def_launchd.base
+def_launchd_docker_service["launchd - Docker"]
+def_launchd_docker_service --> def_launchd.base
+def_launchd_lm_studio_service["launchd - LM Studio"]
+def_launchd_lm_studio_service --> def_launchd.base
+def_launchd_ollama_service["launchd - Ollama"]
+def_launchd_ollama_service --> def_launchd.base
+def_model_claude_claude_haiku_4_5_model["claude-haiku-4-5"]
+def_model_claude_claude_haiku_4_5_model --> def_model.base
+def_model_claude_claude_opus_4_7_model["claude-opus-4-7"]
+def_model_claude_claude_opus_4_7_model --> def_model.base
+def_model_claude_claude_sonnet_4_6_model["claude-sonnet-4-6"]
+def_model_claude_claude_sonnet_4_6_model --> def_model.base
+def_model_ollama_deepseek_r1_model["deepseek-r1"]
+def_model_ollama_deepseek_r1_model --> def_model.base
+def_model_ollama_gemma2_model["gemma2"]
+def_model_ollama_gemma2_model --> def_model.base
+def_model_ollama_gemma3_model["gemma3"]
+def_model_ollama_gemma3_model --> def_model.base
+def_model_ollama_llama3_1_model["llama3.1"]
+def_model_ollama_llama3_1_model --> def_model.base
+def_model_ollama_llama3_2_vision_model["llama3.2-vision"]
+def_model_ollama_llama3_2_vision_model --> def_model.base
+def_model_ollama_llama3_2_model["llama3.2"]
+def_model_ollama_llama3_2_model --> def_model.base
+def_model_ollama_llama3_model["llama3"]
+def_model_ollama_llama3_model --> def_model.base
+def_model_ollama_mistral_model["mistral"]
+def_model_ollama_mistral_model --> def_model.base
+def_model_ollama_nomic_embed_text_model["nomic-embed-text"]
+def_model_ollama_nomic_embed_text_model --> def_model.base
+def_model_ollama_qwen2_5_model["qwen2.5"]
+def_model_ollama_qwen2_5_model --> def_model.base
+def_model_ollama_qwen3_model["qwen3"]
+def_model_ollama_qwen3_model --> def_model.base
+def_provider_claude_provider["claude"]
+def_provider_claude_provider --> def_provider.base
+def_provider_gemini_provider["gemini"]
+def_provider_gemini_provider --> def_provider.base
+def_provider_lmstudio_provider["lmstudio"]
+def_provider_lmstudio_provider --> def_provider.base
+def_provider_ollama_provider["ollama"]
+def_provider_ollama_provider --> def_provider.base
+def_provider_openai_provider["openai"]
+def_provider_openai_provider --> def_provider.base
+def_image_vision_layout_task["image.vision.layout.task"]
+def_image_vision_overview_task["image.vision.overview.task"]
+def_image_vision_style_task["image.vision.style.task"]
+def_image_vision_visible_text_task["image.vision.visible-text.task"]
+def_polyglot_hello_example["Hello Polyglot"]
+def_python_hello_example["Hello Python"]
+def_shell_hello_example["Hello Shell"]
+def_spec_promotion_final_task["Spec promotion — Final stage"]
+def_spec_promotion_prompts_task["Spec promotion — Prompts stage"]
+def_spec_promotion_requirements_task["Spec promotion — Requirements stage"]
+def_spec_promotion_research_task["Spec promotion — Research stage"]
+def_spec_promotion_tasks_task["Spec promotion — Tasks stage"]
+def_text_title_generate_task["text.title.generate.task"]
 ```
 
 ## Module Imports

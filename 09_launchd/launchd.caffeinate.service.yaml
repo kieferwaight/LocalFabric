@@ -1,0 +1,16 @@
+- id: launchd.caffeinate.service
+  title: launchd - Caffeinate
+  description: |
+    Holds the system awake under launchd by running macOS's `caffeinate -d`.
+    Useful for keeping local services warm while the lid is closed.
+  tags: [launchd, system]
+  extends: launchd.base
+  launchd:
+    name: caffeinate
+    category: system
+    label: com.localfabric.caffeinate
+    program:
+      - /usr/bin/caffeinate
+      - -d
+    stdout: "{{ log_dir }}/caffeinate.out.log"
+    stderr: "{{ log_dir }}/caffeinate.err.log"

@@ -1,0 +1,20 @@
+- id: model.ollama.gemma3.model
+  title: gemma3
+  description: >
+    Efficient general-purpose chat, multimodal vision tasks, and single-GPU
+    local workflows.
+  tags: [model]
+  extends: model.base
+  variables:
+    name: gemma3
+    documentation:
+      summary: |
+        Efficient general-purpose chat, multimodal vision tasks, and single-GPU
+        local workflows.
+      vendor: Google
+    providers:
+      - ollama
+    features:
+      - text
+      - vision
+      - streaming

@@ -129,7 +129,7 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
                             "12_prompts",
                             f"12_prompts/{prompt_name}.md",
                             "Retain only task instructions and expected output format as a template.",
-                            "Use flat dot-notation filenames (e.g. tasks.vision.overview.md) with an 'id' in frontmatter matching the stem.",
+                            "Use flat dot-notation filenames (e.g. image.vision.overview.task.md) with an 'id' in frontmatter matching the stem.",
                         ),
                         _target(
                             "04_harnesses",
@@ -264,7 +264,7 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
                     ),
                     _target(
                         "12_prompts",
-                        "12_prompts/tasks.research-summary.md",
+                        "12_prompts/research.local.summarize.task.md",
                         "Store local research summarization instructions.",
                         "Use provider-agnostic task templates.",
                     ),
@@ -465,7 +465,7 @@ def run_audit(workspace: Path, output_dir: Path) -> tuple[list[dict[str, Any]], 
         "findings_by_severity": dict(Counter(item["violation"]["severity"] for item in findings)),
         "findings_by_rule": dict(Counter(item["violation"]["code"] for item in findings)),
         "jsonl_file": str((output_dir / "findings.jsonl").resolve()),
-        "schema_file": str((workspace / "01_schemas/audit.classification_finding.schema.yaml").resolve()),
+        "schema_file": str((workspace / "01_schemas/audit.classification-finding.schema.yaml").resolve()),
     }
     return findings, summary
 

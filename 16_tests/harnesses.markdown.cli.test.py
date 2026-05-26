@@ -12,14 +12,14 @@ PROMPTS = Path(__file__).resolve().parents[1] / "12_prompts"
 
 
 def test_cli_runs_hello_shell_example() -> None:
-    rc = main([str(PROMPTS / "examples.hello-shell.md")])
+    rc = main([str(PROMPTS / "shell.hello.example.md")])
     assert rc == 0
 
 
 def test_cli_runs_polyglot_example_with_debug(capsys: pytest.CaptureFixture[str]) -> None:
     rc = main(
         [
-            str(PROMPTS / "examples.hello-polyglot.md"),
+            str(PROMPTS / "polyglot.hello.example.md"),
             "--name=World",
             "--debug",
         ]
@@ -29,7 +29,7 @@ def test_cli_runs_polyglot_example_with_debug(capsys: pytest.CaptureFixture[str]
     # The debug flag prints the final scope as JSON; the JSON object should be
     # the last thing on stdout and must include the resolved input.
     last_json = _last_json_object(captured.out)
-    assert last_json["entity_id"] == "examples.hello-polyglot"
+    assert last_json["entity_id"] == "polyglot.hello.example"
     assert last_json["name"] == "World"
 
 

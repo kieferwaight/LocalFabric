@@ -27,7 +27,7 @@ _OPTIONS = {
 def _read_prompt(task: str) -> str:
     if task not in {*_TASKS, "visible-text"}:
         raise ValueError(f"Unknown vision task: {task}")
-    path = _PROMPTS_DIR / f"tasks.vision.{task}.md"
+    path = _PROMPTS_DIR / f"image.vision.{task}.task.md"
     return parse_frontmatter(path.read_text(encoding="utf-8"), source_path=str(path)).body.strip()
 
 

@@ -1,0 +1,22 @@
+- id: model.claude.claude-sonnet-4-6.model
+  title: claude-sonnet-4-6
+  description: >
+    Balanced Sonnet-tier Claude model. Extended thinking, tool use, vision,
+    and long context.
+  tags: [model]
+  extends: model.base
+  variables:
+    name: claude-sonnet-4-6
+    documentation:
+      summary: |
+        Balanced Sonnet-tier Claude model. Extended thinking, tool use, vision,
+        and long context.
+      vendor: Anthropic
+    providers:
+      - claude
+    features:
+      - text
+      - tool_calling
+      - thinking
+      - vision
+      - streaming

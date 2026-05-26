@@ -1,0 +1,19 @@
+- id: model.ollama.gemma2.model
+  title: gemma2
+  description: >
+    Efficient general chat, summarization, question answering, and everyday
+    local assistant use.
+  tags: [model]
+  extends: model.base
+  variables:
+    name: gemma2
+    documentation:
+      summary: |
+        Efficient general chat, summarization, question answering, and everyday
+        local assistant use.
+      vendor: Google
+    providers:
+      - ollama
+    features:
+      - text
+      - streaming

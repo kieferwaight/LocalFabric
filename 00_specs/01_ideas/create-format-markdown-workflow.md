@@ -1,6 +1,6 @@
 # Idea
 ## Summary
-I want a [15_notebook](15_notebooks) that allows me to test the [format-markdown.md](12_prompts/tasks.format-markdown.md) prompt.
+I want a [15_notebook](15_notebooks) that allows me to test the [format-markdown.md](12_prompts/text.markdown.format.task.md) prompt.
 In the notebook, I want to be able to have a clump of text, run the sequence, and it generate formatted markdown.
 I want to use LM Studio http://localhost:1234/v1 with qwen/qwen3.6-27b . The server needs to allow at least 10k context and I think the limit is 18k for the model
 This should expand to eventually provide an interactive test across the entire system pipeline of markdown formatting.

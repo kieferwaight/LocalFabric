@@ -58,7 +58,8 @@ _No operation description provided._
 invoke:
   definition: '{{ definition.id }}'
   arguments:
-    target_dir: '{{ output_root }}/{{ definition.id | replace(''docker.'', '''') }}'
+    target_dir: '{{ output_root }}/{{ definition.id | replace(''docker.'', '''') |
+      replace(''.service'', '''') }}'
 for_each:
   items: runtime.catalog.definitions | selectattr('has_docker') | list
   as: definition

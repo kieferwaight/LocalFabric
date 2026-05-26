@@ -11,7 +11,7 @@
 
 Regenerates `__init__.py` files across the whole `workflows` namespace:
 the top-level `06_workflows/__init__.py` (subpackage-exposing barrel),
-then the per-subpackage barrels via `barrels.regenerate.yaml-runtime`. Run this
+then the per-subpackage barrels via `barrels.regenerate.yaml-runtime.workflow`. Run this
 from anywhere — paths anchor on `runtime.workflow_dir`, not shell cwd.
 
 
@@ -71,7 +71,7 @@ _No operation description provided._
 
 ```invoke
 invoke:
-  definition: barrels.regenerate.yaml-runtime
+  definition: barrels.regenerate.yaml-runtime.workflow
   arguments:
     mode: '{{ mode }}'
 ```

@@ -8,7 +8,7 @@ from lib.audit import scan_boundary_violations as AUDIT
 
 def test_prompt_executable_is_flagged(tmp_path: Path) -> None:
     workspace = tmp_path / "workspace"
-    prompt = workspace / "12_prompts" / "tasks.vision.py"
+    prompt = workspace / "12_prompts" / "image.vision.layout.task.py"
     prompt.parent.mkdir(parents=True)
     prompt.write_text(
         'import urllib.request\napi_url = "http://localhost"\nprompt = "describe"\n',

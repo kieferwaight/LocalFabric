@@ -1,0 +1,22 @@
+- id: image.text-ocr.extract.task
+  title: Extract OCR text from an image
+  description: |
+    Run OCR on an image and return full text, word count, per-word
+    bounding boxes, and block groupings.
+    Wraps lib.image.text_ocr.extract_text.
+  tags: [task]
+  extends: task.base
+  inputs:
+    path:
+      type: string
+      required: true
+      description: Path to the image file.
+  run:
+    - python: |
+        import json, os
+        from pathlib import Path
+        from lib.image.text_ocr import extract_text
+
+        result = extract_text(Path("{{ path }}"))
+        with open(os.environ["STATE_FILE"], "w") as f:
+            json.dump(result, f)

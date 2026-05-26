@@ -102,7 +102,7 @@ final_scope = harness.execute(path, arguments={"name": "world"})
 
 # Provider-style files return a ProviderResult — or an iterator of text
 # chunks when the file requests streaming.
-result = harness.execute("examples.summarize-code.md", arguments={"input": "def f(): ..."})
+result = harness.execute("code.summarize.example.md", arguments={"input": "def f(): ..."})
 print(result.text)
 ```
 
@@ -123,7 +123,7 @@ file. Pass `--debug` to dump the final scope as JSON.
 Example:
 
 ```
-python -m adapters.cli.markdown_runtime_adapter 12_prompts/examples.hello-polyglot.md \
+python -m adapters.cli.markdown_runtime_adapter 12_prompts/polyglot.hello.example.md \
     --name=World --debug
 ```
 
@@ -136,7 +136,7 @@ any CLI arguments.
 
 ```markdown
 ---
-id: examples.summarize-code
+id: code.summarize.example
 description: Summarize a code file using Claude
 provider: claude
 model: claude-sonnet-4-6

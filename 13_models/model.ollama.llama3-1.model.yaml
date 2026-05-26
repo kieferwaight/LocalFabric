@@ -1,0 +1,20 @@
+- id: model.ollama.llama3-1.model
+  title: llama3.1
+  description: >
+    General-purpose chat, instruction following, tool use, and long-context
+    local assistant workflows.
+  tags: [model]
+  extends: model.base
+  variables:
+    name: llama3.1
+    documentation:
+      summary: |
+        General-purpose chat, instruction following, tool use, and long-context
+        local assistant workflows.
+      vendor: Meta
+    providers:
+      - ollama
+    features:
+      - text
+      - tool_calling
+      - streaming

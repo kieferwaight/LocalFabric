@@ -1,0 +1,47 @@
+- id: docker.gitea.service
+  title: Gitea Service
+  description: |
+    Self-hosted Gitea git server with SQLite backend. Provides local Git hosting and
+    Web UI for sharing repositories between local fabric services.
+  tags: [docker, dev]
+  extends: docker.base
+  inputs:
+    DATA_PATH:
+      type: "string"
+      required: true
+      description: Host path for Gitea state (binds to /data in container)
+    GITEA_HTTP_PORT:
+      type: "string"
+      required: false
+      default: "3000"
+      description: Host port to expose the Gitea HTTP interface (default 3000)
+    GITEA_SSH_PORT:
+      type: "string"
+      required: false
+      default: "2222"
+      description: Host port to expose Gitea SSH (default 2222)
+    USER_UID:
+      type: "string"
+      required: false
+      default: "1000"
+      description: UID for the Gitea container user (default 1000)
+    USER_GID:
+      type: "string"
+      required: false
+      default: "1000"
+      description: GID for the Gitea container user (default 1000)
+  variables:
+    services:
+      gitea:
+        image: gitea/gitea:latest
+        container_name: contentgraph-gitea
+        restart: unless-stopped
+        environment:
+          USER_UID: "{{ USER_UID }}"
+          USER_GID: "{{ USER_GID }}"
+          GITEA__database__DB_TYPE: sqlite3
+        ports:
+          - "{{ GITEA_HTTP_PORT }}:3000"
+          - "{{ GITEA_SSH_PORT }}:22"
+        volumes:
+          - "{{ DATA_PATH }}:/data"

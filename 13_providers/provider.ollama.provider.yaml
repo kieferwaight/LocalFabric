@@ -1,0 +1,30 @@
+- id: provider.ollama.provider
+  title: ollama
+  description: >
+    Local-first runtime for open-weight LLMs. Pulls model weights on demand and
+    serves them through a daemon that ships both a native API and an OpenAI
+    Chat Completions-compatible surface.
+  tags: [provider]
+  extends: provider.base
+  variables:
+    name: ollama
+    location: local
+    documentation:
+      summary: |
+        Local-first runtime for open-weight LLMs. Pulls model weights on demand and
+        serves them through a daemon that ships both a native API and an OpenAI
+        Chat Completions-compatible surface.
+      homepage: https://ollama.com
+      install: brew install ollama
+    endpoint: http://localhost:11434
+    auth: none
+    env:
+      host: OLLAMA_HOST
+    protocols:
+      cli:
+        binary: ollama
+        invocation: ollama run <model>
+      ollama-api:
+        base_url: http://localhost:11434/api
+      openai-api:
+        base_url: http://localhost:11434/v1

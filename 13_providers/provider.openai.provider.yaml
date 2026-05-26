@@ -1,0 +1,28 @@
+- id: provider.openai.provider
+  title: openai
+  description: >
+    OpenAI's hosted model catalog (GPT-class chat, code, embedding, and vision).
+    The canonical owner of the OpenAI Chat Completions wire format.
+  tags: [provider]
+  extends: provider.base
+  variables:
+    name: openai
+    location: cloud
+    documentation:
+      summary: |
+        OpenAI's hosted model catalog (GPT-class chat, code, embedding, and vision).
+        The canonical owner of the OpenAI Chat Completions wire format.
+      homepage: https://platform.openai.com
+      vendor: OpenAI
+    endpoint: https://api.openai.com
+    auth: api_key
+    env:
+      api_key: OPENAI_API_KEY
+    protocols:
+      cli:
+        binary: codex
+      sdk:
+        package: openai
+        languages: [python, typescript]
+      openai-api:
+        base_url: https://api.openai.com/v1

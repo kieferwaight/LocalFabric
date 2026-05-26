@@ -15,9 +15,9 @@ You are implementing T1 from
 `00_specs/04_tasks/build-the-promotion-workflow.md`.
 
 Create five files in the flat `12_prompts/` directory using the
-`tasks.spec-promotion.*` namespace: `tasks.spec-promotion.research.md`,
-`tasks.spec-promotion.requirements.md`, `tasks.spec-promotion.tasks.md`,
-`tasks.spec-promotion.prompts.md`, `tasks.spec-promotion.final.md`. Each
+`spec.promotion.*` namespace: `spec.promotion.research.task.md`,
+`spec.promotion.requirements.task.md`, `spec.promotion.tasks.task.md`,
+`spec.promotion.prompts.task.md`, `spec.promotion.final.task.md`. Each
 file declares an `id:` in YAML frontmatter that matches its filename stem.
 
 Each prompt:

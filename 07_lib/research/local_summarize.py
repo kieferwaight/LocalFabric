@@ -3,7 +3,7 @@
 The public entry point is ``local_research_scaffold(topic_or_url)``. It fetches
 readable text via ``lib.browser.fetch_text``, selects an available Ollama model
 (preferring ``qwen2.5:7b``), loads the prompt template from
-``12_prompts/tasks.research-summary.md``, and invokes the model through
+``12_prompts/research.local.summarize.task.md``, and invokes the model through
 ``OllamaHarness``. Stateful pieces — model selection and harness construction —
 happen inside each call; this is intentional (keeps the function simple and
 avoids shared state). Pass an explicit ``harness`` argument to inject a fake
@@ -23,7 +23,7 @@ from harnesses.ollama import OllamaHarness
 from lib.browser.fetch_text import fetch_readable_text
 
 
-_PROMPT_PATH = Path(__file__).resolve().parents[2] / "12_prompts" / "tasks.research-summary.md"
+_PROMPT_PATH = Path(__file__).resolve().parents[2] / "12_prompts" / "research.local.summarize.task.md"
 _MODEL_PREFERENCE = ("qwen2.5:7b", "qwen2.5", "llama3", "llama3.2", "llama3.1")
 
 

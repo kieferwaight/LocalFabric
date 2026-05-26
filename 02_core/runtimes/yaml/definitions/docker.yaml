@@ -1,11 +1,11 @@
-- id: dockerfile.base
+- id: dockerfile.mixin
   title: Dockerfile Mixin
   description: |
     Variable surface for definitions that emit a `Dockerfile`. Provides
     `dockerfile_body` (the rendered Dockerfile contents), `image_tag` (the
     tag to use when building), and `build_context` (the directory passed to
     `docker build`). This mixin is typically composed into `docker.base`
-    alongside `compose.base`; it does not add run blocks of its own.
+    alongside `compose.mixin`; it does not add run blocks of its own.
 
     Children that do not need a Dockerfile leave `dockerfile_body` empty;
     the scaffolding loop in `folder.base` rejects empty entries via
@@ -14,7 +14,7 @@
   extends: stdlib.base
   variables:
     dockerfile_body: ""
-    image_tag: "{{ entity_id | replace('docker.', '') }}:local"
+    image_tag: "{{ entity_id | replace('docker.', '') | replace('.service', '') }}:local"
     build_context: "{{ target_dir }}"
   docs:
     variables:
@@ -22,14 +22,14 @@
       image_tag: Tag applied when building the image.
       build_context: Directory passed to `docker build` as the context.
 
-- id: compose.base
+- id: compose.mixin
   title: Docker Compose Mixin
   description: |
     Variable surface for definitions that emit a `docker-compose.yml`.
     Provides the `services`, `networks`, and `volumes` mappings plus the
     `compose_yaml` rendered document (JSON form, which is valid YAML for
     Docker Compose). This mixin is typically composed into `docker.base`
-    alongside `dockerfile.base`; it does not add run blocks of its own.
+    alongside `dockerfile.mixin`; it does not add run blocks of its own.
 
     Children populate `services` (and optionally `networks`/`volumes`); the
     `compose_yaml` template assembles them into a single document.
@@ -52,7 +52,7 @@
   title: Docker Service (Compose + Dockerfile)
   description: |
     Concrete base for a docker service definition. Combines the
-    `dockerfile.base` and `compose.base` variable surfaces with the
+    `dockerfile.mixin` and `compose.mixin` variable surfaces with the
     `folder.base` scaffolding loop, so children only declare the data
     (services, dockerfile_body, extra_files) and the inherited run blocks
     materialize the directory under `target_dir`.
@@ -63,7 +63,7 @@
     `folder.base` scaffolding loop and are not written.
   tags: [docker, abstract]
   extends: folder.base
-  mixins: [dockerfile.base, compose.base]
+  mixins: [dockerfile.mixin, compose.mixin]
   variables:
     extra_files: []
     files:
@@ -182,7 +182,7 @@
     - invoke:
         definition: "{{ definition.id }}"
         arguments:
-          target_dir: "{{ output_root }}/{{ definition.id | replace('docker.', '') }}"
+          target_dir: "{{ output_root }}/{{ definition.id | replace('docker.', '') | replace('.service', '') }}"
       for_each:
         items: "runtime.catalog.definitions | selectattr('has_docker') | list"
         as: definition

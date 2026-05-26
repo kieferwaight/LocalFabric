@@ -17,7 +17,7 @@
 #     mixins: [service.launchd.mixin]
 #     variables:
 #       backend: launchd
-#       target: launchd.ollama
+#       target: launchd.ollama.service
 
 - id: service.base
   title: Service Abstraction Base
@@ -25,7 +25,7 @@
     Abstract base for a runtime service. Children declare a `backend`
     variable ("docker" | "launchd") and a `target` variable (the
     backend-specific definition id this service is backed by — e.g.
-    "docker.ollama" or "launchd.ollama"). They MUST also extend exactly
+    "docker.ollama.service" or "launchd.ollama.service"). They MUST also extend exactly
     one of the action-mixins (service.docker.mixin or
     service.launchd.mixin) so that `action_to_def` resolves correctly.
 
@@ -43,7 +43,7 @@
       description: "Lifecycle verb: start | stop | enable | disable | install | uninstall | status"
   variables:
     backend: ""                # set by child: "docker" | "launchd"
-    target: ""                 # set by child: "docker.<id>" or "launchd.<id>"
+    target: ""                 # set by child: "docker.<id>.service" or "launchd.<id>.service"
     action_to_def: {}          # set by service.<backend>.mixin
     action_arguments: {}       # set by service.<backend>.mixin
   run:
@@ -75,11 +75,11 @@
       disable:   "stdlib.logger"
     # Per-action arguments mapping. `target` resolves at runtime via Jinja.
     action_arguments:
-      start:     {target_dir: "14_data/{{ target | replace('.', '_') }}"}
-      stop:      {target_dir: "14_data/{{ target | replace('.', '_') }}"}
-      status:    {target_dir: "14_data/{{ target | replace('.', '_') }}"}
-      install:   {target_dir: "14_data/{{ target | replace('.', '_') }}"}
-      uninstall: {target_dir: "14_data/{{ target | replace('.', '_') }}"}
+      start:     {target_dir: "14_data/{{ target | replace('.service', '') | replace('.', '_') }}"}
+      stop:      {target_dir: "14_data/{{ target | replace('.service', '') | replace('.', '_') }}"}
+      status:    {target_dir: "14_data/{{ target | replace('.service', '') | replace('.', '_') }}"}
+      install:   {target_dir: "14_data/{{ target | replace('.service', '') | replace('.', '_') }}"}
+      uninstall: {target_dir: "14_data/{{ target | replace('.service', '') | replace('.', '_') }}"}
       enable:    {message: "docker backend: enable is a no-op", level: "INFO"}
       disable:   {message: "docker backend: disable is a no-op", level: "INFO"}
 
@@ -119,7 +119,7 @@
 #   - mixins: [service.<backend>.mixin]
 #   - variables.backend and variables.target
 #
-# Launchd-backed services: ollama, caffienate, lm-studio
+# Launchd-backed services: ollama, caffeinate, lm-studio
 # Docker-backed services:  postgres, redis, neo4j
 
 - id: service.ollama
@@ -130,17 +130,17 @@
   mixins: [service.launchd.mixin]
   variables:
     backend: launchd
-    target: launchd.ollama
+    target: launchd.ollama.service
 
-- id: service.caffienate
-  title: Caffienate Service (launchd backend)
+- id: service.caffeinate
+  title: Caffeinate Service (launchd backend)
   description: macOS Caffeinate keep-awake daemon managed via launchd.
   tags: [service, launchd]
   extends: service.base
   mixins: [service.launchd.mixin]
   variables:
     backend: launchd
-    target: launchd.caffienate
+    target: launchd.caffeinate.service
 
 - id: service.lm-studio
   title: LM Studio Service (launchd backend)
@@ -150,7 +150,7 @@
   mixins: [service.launchd.mixin]
   variables:
     backend: launchd
-    target: launchd.lm-studio
+    target: launchd.lm-studio.service
 
 - id: service.postgres
   title: Postgres Service (docker backend)
@@ -160,7 +160,7 @@
   mixins: [service.docker.mixin]
   variables:
     backend: docker
-    target: docker.postgres
+    target: docker.postgres.service
 
 - id: service.redis
   title: Redis Service (docker backend)
@@ -170,7 +170,7 @@
   mixins: [service.docker.mixin]
   variables:
     backend: docker
-    target: docker.redis
+    target: docker.redis.service
 
 - id: service.neo4j
   title: Neo4j Service (docker backend)
@@ -180,4 +180,4 @@
   mixins: [service.docker.mixin]
   variables:
     backend: docker
-    target: docker.neo4j
+    target: docker.neo4j.service

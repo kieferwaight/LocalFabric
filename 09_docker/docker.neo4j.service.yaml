@@ -1,0 +1,49 @@
+- id: docker.neo4j.service
+  title: Neo4j Service
+  description: |
+    Neo4j 5 graph database used as the canonical content graph store. Bound data, logs,
+    import, and plugins directories live under the configured data root for inspection.
+  tags: [docker, graph]
+  extends: docker.base
+  inputs:
+    DATA_PATH:
+      type: "string"
+      required: true
+      description: Host root path containing data/, logs/, import/, and plugins/ subdirectories
+    NEO4J_PASSWORD:
+      type: "string"
+      required: true
+      description: Password for the Neo4j user
+    NEO4J_USER:
+      type: "string"
+      required: false
+      default: "neo4j"
+      description: Neo4j auth username (default neo4j)
+    NEO4J_HTTP_PORT:
+      type: "string"
+      required: false
+      default: "7474"
+      description: Host port for the Neo4j browser/HTTP API (default 7474)
+    NEO4J_BOLT_PORT:
+      type: "string"
+      required: false
+      default: "7687"
+      description: Host port for the Neo4j Bolt protocol (default 7687)
+  variables:
+    services:
+      neo4j:
+        image: neo4j:5
+        container_name: contentgraph-neo4j
+        restart: unless-stopped
+        environment:
+          NEO4J_AUTH: "{{ NEO4J_USER }}/{{ NEO4J_PASSWORD }}"
+          NEO4J_server_memory_heap_initial__size: 512m
+          NEO4J_server_memory_heap_max__size: 2G
+        ports:
+          - "{{ NEO4J_HTTP_PORT }}:7474"
+          - "{{ NEO4J_BOLT_PORT }}:7687"
+        volumes:
+          - "{{ DATA_PATH }}/data:/data"
+          - "{{ DATA_PATH }}/logs:/logs"
+          - "{{ DATA_PATH }}/import:/var/lib/neo4j/import"
+          - "{{ DATA_PATH }}/plugins:/plugins"

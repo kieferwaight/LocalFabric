@@ -21,7 +21,7 @@ Carries no run blocks.
 | --- | --- |
 | Extends | [Abstract Base](stdlib.base.definition.md) |
 | Mixins | - |
-| Children | [claude](provider.claude.definition.md), [gemini](provider.gemini.definition.md), [lmstudio](provider.lmstudio.definition.md), [ollama](provider.ollama.definition.md), [openai](provider.openai.definition.md) |
+| Children | [claude](provider.claude.provider.definition.md), [gemini](provider.gemini.provider.definition.md), [lmstudio](provider.lmstudio.provider.definition.md), [ollama](provider.ollama.provider.definition.md), [openai](provider.openai.provider.definition.md) |
 | Mixin consumers | - |
 | Modules | - |
 
@@ -29,11 +29,11 @@ Carries no run blocks.
 flowchart LR
   def_provider_base["LLM Provider Record"]
 def_provider_base --> def_stdlib_base["Abstract Base"]
-def_provider_claude["claude"] --> def_provider_base
-def_provider_gemini["gemini"] --> def_provider_base
-def_provider_lmstudio["lmstudio"] --> def_provider_base
-def_provider_ollama["ollama"] --> def_provider_base
-def_provider_openai["openai"] --> def_provider_base
+def_provider_claude_provider["claude"] --> def_provider_base
+def_provider_gemini_provider["gemini"] --> def_provider_base
+def_provider_lmstudio_provider["lmstudio"] --> def_provider_base
+def_provider_ollama_provider["ollama"] --> def_provider_base
+def_provider_openai_provider["openai"] --> def_provider_base
 ```
 
 

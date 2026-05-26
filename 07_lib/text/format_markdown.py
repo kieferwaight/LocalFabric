@@ -1,6 +1,6 @@
 """Markdown formatting via a local LM Studio harness.
 
-Reads a markdown file, applies the formatting prompt from ``12_prompts/tasks.format-markdown.md``
+Reads a markdown file, applies the formatting prompt from ``12_prompts/text.markdown.format.task.md``
 through an LM Studio harness, and returns the formatted content string. The harness is
 constructed internally by default; pass an ``executor`` to inject a fake in tests.
 
@@ -16,7 +16,7 @@ from typing import Protocol
 
 from core.runtimes.markdown.frontmatter import parse as parse_frontmatter
 
-PROMPT_PATH = Path(__file__).resolve().parents[2] / "12_prompts" / "tasks.format-markdown.md"
+PROMPT_PATH = Path(__file__).resolve().parents[2] / "12_prompts" / "text.markdown.format.task.md"
 
 
 class _MarkdownExecutor(Protocol):

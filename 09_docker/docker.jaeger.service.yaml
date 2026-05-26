@@ -1,0 +1,41 @@
+- id: docker.jaeger.service
+  title: Jaeger Service
+  description: |
+    Jaeger all-in-one tracing backend with OTLP receivers enabled. Used to collect
+    distributed traces from the content graph services for debugging and analysis.
+  tags: [docker, observability]
+  extends: docker.base
+  inputs:
+    DATA_PATH:
+      type: "string"
+      required: true
+      description: Host path for Jaeger scratch storage (binds to /tmp in container)
+    JAEGER_UI_PORT:
+      type: "string"
+      required: false
+      default: "16686"
+      description: Host port to expose the Jaeger UI (default 16686)
+    JAEGER_OTLP_GRPC_PORT:
+      type: "string"
+      required: false
+      default: "4317"
+      description: Host port for the OTLP gRPC receiver (default 4317)
+    JAEGER_OTLP_HTTP_PORT:
+      type: "string"
+      required: false
+      default: "4318"
+      description: Host port for the OTLP HTTP receiver (default 4318)
+  variables:
+    services:
+      jaeger:
+        image: jaegertracing/all-in-one
+        container_name: contentgraph-jaeger
+        restart: unless-stopped
+        environment:
+          COLLECTOR_OTLP_ENABLED: "true"
+        ports:
+          - "{{ JAEGER_UI_PORT }}:16686"
+          - "{{ JAEGER_OTLP_GRPC_PORT }}:4317"
+          - "{{ JAEGER_OTLP_HTTP_PORT }}:4318"
+        volumes:
+          - "{{ DATA_PATH }}:/tmp"

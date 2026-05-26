@@ -57,7 +57,7 @@
 # Lifecycle commands
 #
 # Every launchd lifecycle wrapper accepts the same two inputs:
-#   - definition: a launchd definition id (e.g. `launchd.caffienate`).
+#   - definition: a launchd definition id (e.g. `launchd.caffeinate`).
 #                 When provided, `label` is resolved from the catalog's
 #                 `launchd.label` for that definition.
 #   - label:      an explicit job label override (used when `definition`
@@ -86,7 +86,7 @@
       type: string
       required: false
       default: ""
-      description: launchd definition id (e.g. `launchd.caffienate`). Used to auto-resolve the job label from the catalog.
+      description: launchd definition id (e.g. `launchd.caffeinate`). Used to auto-resolve the job label from the catalog.
     label:
       type: string
       required: false

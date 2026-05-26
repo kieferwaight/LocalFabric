@@ -46,7 +46,7 @@ For any prompt template, a caller (notebook, workflow, MCP tool) can say:
 
 ```python
 invocation = Invocation(
-    prompt=Prompt.load("tasks.spec-promotion.requirements.md"),
+    prompt=Prompt.load("spec.promotion.requirements.task.md"),
     model=registry["qwen3"],
     runtime=Runtime(temperature=0.2),
 )

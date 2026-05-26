@@ -22,7 +22,7 @@ input that they resolve to a label via the catalog.
 | Extends | [Abstract Base](stdlib.base.definition.md) |
 | Mixins | - |
 | Children | - |
-| Mixin consumers | [Ollama Service (launchd backend)](service.ollama.definition.md), [Caffienate Service (launchd backend)](service.caffienate.definition.md), [LM Studio Service (launchd backend)](service.lm-studio.definition.md) |
+| Mixin consumers | [Ollama Service (launchd backend)](service.ollama.definition.md), [Caffeinate Service (launchd backend)](service.caffeinate.definition.md), [LM Studio Service (launchd backend)](service.lm-studio.definition.md) |
 | Modules | - |
 
 ```mermaid

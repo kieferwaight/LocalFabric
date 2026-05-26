@@ -28,9 +28,9 @@ criteria belong inside requirements").
 ## Existing assets to reuse
 
 - **Prompt library** — [12_prompts/](12_prompts) is a flat directory of
-  prompts named with dot-notation classification (e.g. `tasks.vision.overview.md`,
-  `examples.hello-shell.md`). The per-stage promotion prompts live under the
-  `tasks.spec-promotion.*` namespace (one prompt per stage). They must stay
+  prompts named with dot-notation classification (e.g. `image.vision.overview.task.md`,
+  `shell.hello.example.md`). The per-stage promotion prompts live under the
+  `spec.promotion.*` namespace (one prompt per stage). They must stay
   provider-agnostic per [12_prompts/README.md](12_prompts/README.md).
 - **Model registry** — [13_models/registry.yaml](13_models/registry.yaml)
   lists local Ollama models. LM Studio is declared as a provider in

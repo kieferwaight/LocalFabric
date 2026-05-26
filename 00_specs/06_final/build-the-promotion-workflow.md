@@ -40,7 +40,7 @@ linked upstream artifacts before doing anything else.
 >
 > 1. `claude_feature_spec-promotion-prompts` — create the five per-stage
 >    prompt templates in the flat `20_workspaces/12_prompts/` directory
->    under the `tasks.spec-promotion.*` namespace as specified in P1 of
+>    under the `spec.promotion.*` namespace as specified in P1 of
 >    the prompts stage. Use the hand-written upstream artifacts of this
 >    very spec as worked examples — the prompts should produce artifacts
 >    of the same shape.

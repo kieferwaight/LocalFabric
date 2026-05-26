@@ -7,7 +7,7 @@
 | --- | --- |
 | ID | `examples.catalog.modules` |
 | Source | `15_examples/examples.catalog.yaml` |
-| Tags | examples, modules |
+| Tags | example, modules |
 
 Imports the shipped runnable compositions used as examples of the YAML workflow API.
 

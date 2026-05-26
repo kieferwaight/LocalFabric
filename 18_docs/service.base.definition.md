@@ -12,7 +12,7 @@
 Abstract base for a runtime service. Children declare a `backend`
 variable ("docker" | "launchd") and a `target` variable (the
 backend-specific definition id this service is backed by — e.g.
-"docker.ollama" or "launchd.ollama"). They MUST also extend exactly
+"docker.ollama.service" or "launchd.ollama.service"). They MUST also extend exactly
 one of the action-mixins (service.docker.mixin or
 service.launchd.mixin) so that `action_to_def` resolves correctly.
 
@@ -29,7 +29,7 @@ to pass through.
 | --- | --- |
 | Extends | [Abstract Base](stdlib.base.definition.md) |
 | Mixins | - |
-| Children | [Ollama Service (launchd backend)](service.ollama.definition.md), [Caffienate Service (launchd backend)](service.caffienate.definition.md), [LM Studio Service (launchd backend)](service.lm-studio.definition.md), [Postgres Service (docker backend)](service.postgres.definition.md), [Redis Service (docker backend)](service.redis.definition.md), [Neo4j Service (docker backend)](service.neo4j.definition.md) |
+| Children | [Ollama Service (launchd backend)](service.ollama.definition.md), [Caffeinate Service (launchd backend)](service.caffeinate.definition.md), [LM Studio Service (launchd backend)](service.lm-studio.definition.md), [Postgres Service (docker backend)](service.postgres.definition.md), [Redis Service (docker backend)](service.redis.definition.md), [Neo4j Service (docker backend)](service.neo4j.definition.md) |
 | Mixin consumers | - |
 | Modules | - |
 
@@ -38,7 +38,7 @@ flowchart LR
   def_service_base["Service Abstraction Base"]
 def_service_base --> def_stdlib_base["Abstract Base"]
 def_service_ollama["Ollama Service (launchd backend)"] --> def_service_base
-def_service_caffienate["Caffienate Service (launchd backend)"] --> def_service_base
+def_service_caffeinate["Caffeinate Service (launchd backend)"] --> def_service_base
 def_service_lm_studio["LM Studio Service (launchd backend)"] --> def_service_base
 def_service_postgres["Postgres Service (docker backend)"] --> def_service_base
 def_service_redis["Redis Service (docker backend)"] --> def_service_base

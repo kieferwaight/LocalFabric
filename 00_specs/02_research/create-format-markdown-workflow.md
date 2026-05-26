@@ -2,7 +2,7 @@
 model: qwen/qwen3.6-27b
 provider: lmstudio
 endpoint: http://localhost:1234/v1
-prompt_path: 12_prompts/tasks.spec-promotion.research.md
+prompt_path: 12_prompts/spec.promotion.research.task.md
 prompt_sha256: 380877ce7d51024e87d3ef078a3d0bb73f1fafb54fae883bb62dac6e2b7934dd
 promoted_at: '2026-05-23T19:06:13Z'
 ---
@@ -11,7 +11,7 @@ promoted_at: '2026-05-23T19:06:13Z'
 
 ## Existing Repository Assets
 - `15_notebooks/` — Target directory for the new notebook; existing notebook templates or execution conventions should be reused.
-- `12_prompts/tasks.format-markdown.md` — The prompt artifact to be consumed and tested; must be read as-is without modification.
+- `12_prompts/text.markdown.format.task.md` — The prompt artifact to be consumed and tested; must be read as-is without modification.
 - `08_drivers/` or `03_adapters/` — Likely contains existing LLM client implementations (e.g., OpenAI-compatible API wrappers) that should be reused for LM Studio communication.
 - `04_harnesses/` or `06_workflows/` — Existing orchestration harnesses or workflow definitions that may provide reusable step-chaining, logging, or evaluation utilities.
 - `02_core/` — Core configuration, environment variable handling, or prompt-loading utilities that the notebook should leverage instead of hardcoding paths or credentials.

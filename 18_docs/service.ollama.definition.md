@@ -43,7 +43,7 @@ def_service_ollama -.-> def_service_launchd_mixin["Launchd Backend Action Map"]
 | Name | YAML Type | Value / Template | Description |
 | --- | --- | --- | --- |
 | `backend` | `str` | `launchd` | - |
-| `target` | `str` | `launchd.ollama` | - |
+| `target` | `str` | `launchd.ollama.service` | - |
 
 
 ### Run Operations
@@ -69,7 +69,7 @@ _No locally declared teardown operations._
 | --- | --- | --- |
 | `system_log_format` | `[{{ entity_id }} \| {{ runtime.version }}]` | [Abstract Base](stdlib.base.definition.md) |
 | `backend` | `launchd` | [Ollama Service (launchd backend)](service.ollama.definition.md) |
-| `target` | `launchd.ollama` | [Ollama Service (launchd backend)](service.ollama.definition.md) |
+| `target` | `launchd.ollama.service` | [Ollama Service (launchd backend)](service.ollama.definition.md) |
 | `action_to_def` | `{'start': 'launchd.start', 'stop': 'launchd.stop', 'enable': 'launchd.enable', 'disable': 'launchd.disable', 'install': 'launchd.install', 'uninstall': 'launchd.uninstall', 'status': 'launchd.status'}` | [Launchd Backend Action Map](service.launchd.mixin.definition.md) |
 | `action_arguments` | `{'start': {'definition': '{{ target }}'}, 'stop': {'definition': '{{ target }}'}, 'enable': {'definition': '{{ target }}'}, 'disable': {'definition': '{{ target }}'}, 'install': {'definition': '{{ target }}'}, 'uninstall': {'definition': '{{ target }}'}, 'status': {'definition': '{{ target }}'}}` | [Launchd Backend Action Map](service.launchd.mixin.definition.md) |
 

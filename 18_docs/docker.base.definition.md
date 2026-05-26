@@ -10,7 +10,7 @@
 | Tags | docker, abstract |
 
 Concrete base for a docker service definition. Combines the
-`dockerfile.base` and `compose.base` variable surfaces with the
+`dockerfile.mixin` and `compose.mixin` variable surfaces with the
 `folder.base` scaffolding loop, so children only declare the data
 (services, dockerfile_body, extra_files) and the inherited run blocks
 materialize the directory under `target_dir`.
@@ -26,8 +26,8 @@ entry, and any `extra_files` the child appends. Empty-content entries
 | Relation | Definitions |
 | --- | --- |
 | Extends | [Folder Scaffold Base](folder.base.definition.md) |
-| Mixins | [Dockerfile Mixin](dockerfile.base.definition.md), [Docker Compose Mixin](compose.base.definition.md) |
-| Children | [Casbin Authorization Service](docker.casbin-service.definition.md), [ClamAV Service](docker.clamav.definition.md), [FastAPI Service](docker.fastapi.definition.md), [Gitea Service](docker.gitea.definition.md), [Grafana Service](docker.grafana.definition.md), [GROBID Service](docker.grobid.definition.md), [Jaeger Service](docker.jaeger.definition.md), [Jupyter Service](docker.jupyter.definition.md), [Keycloak Service](docker.keycloak.definition.md), [LibreOffice Conversion Service](docker.libreoffice.definition.md), [MinIO Service](docker.minio.definition.md), [n8n Service](docker.n8n.definition.md), [Neo4j Service](docker.neo4j.definition.md), [Ollama Service](docker.ollama.definition.md), [Open WebUI Service](docker.open-webui.definition.md), [OpenFGA Service](docker.openfga.definition.md), [OpenSearch Dashboards Service](docker.opensearch-dashboards.definition.md), [OpenSearch Service](docker.opensearch.definition.md), [pgvector Service](docker.pgvector.definition.md), [Playwright Worker Service](docker.playwright-worker.definition.md), [PostgreSQL Service](docker.postgres.definition.md), [Prometheus Service](docker.prometheus.definition.md), [Qdrant Service](docker.qdrant.definition.md), [Redis Service](docker.redis.definition.md), [Temporal UI Service](docker.temporal-ui.definition.md), [Temporal Service](docker.temporal.definition.md), [Tesseract OCR Service](docker.tesseract-ocr.definition.md), [Apache Tika Service](docker.tika.definition.md), [Traefik Service](docker.traefik.definition.md), [Unstructured Service](docker.unstructured.definition.md), [Weaviate Service](docker.weaviate.definition.md), [Content-Graph Worker Service](docker.worker.definition.md) |
+| Mixins | [Dockerfile Mixin](dockerfile.mixin.definition.md), [Docker Compose Mixin](compose.mixin.definition.md) |
+| Children | [Casbin Authorization Service](docker.casbin.service.definition.md), [ClamAV Service](docker.clamav.service.definition.md), [FastAPI Service](docker.fastapi.service.definition.md), [Gitea Service](docker.gitea.service.definition.md), [Grafana Service](docker.grafana.service.definition.md), [GROBID Service](docker.grobid.service.definition.md), [Jaeger Service](docker.jaeger.service.definition.md), [Jupyter Service](docker.jupyter.service.definition.md), [Keycloak Service](docker.keycloak.service.definition.md), [LibreOffice Conversion Service](docker.libreoffice.service.definition.md), [MinIO Service](docker.minio.service.definition.md), [n8n Service](docker.n8n.service.definition.md), [Neo4j Service](docker.neo4j.service.definition.md), [Ollama Service](docker.ollama.service.definition.md), [Open WebUI Service](docker.open-webui.service.definition.md), [OpenFGA Service](docker.openfga.service.definition.md), [OpenSearch Dashboards Service](docker.opensearch-dashboards.service.definition.md), [OpenSearch Service](docker.opensearch.service.definition.md), [pgvector Service](docker.pgvector.service.definition.md), [Playwright Worker Service](docker.playwright-worker.service.definition.md), [PostgreSQL Service](docker.postgres.service.definition.md), [Prometheus Service](docker.prometheus.service.definition.md), [Qdrant Service](docker.qdrant.service.definition.md), [Redis Service](docker.redis.service.definition.md), [Temporal UI Service](docker.temporal-ui.service.definition.md), [Temporal Service](docker.temporal.service.definition.md), [Tesseract OCR Service](docker.tesseract-ocr.service.definition.md), [Apache Tika Service](docker.tika.service.definition.md), [Traefik Service](docker.traefik.service.definition.md), [Unstructured Service](docker.unstructured.service.definition.md), [Weaviate Service](docker.weaviate.service.definition.md), [Content-Graph Worker Service](docker.worker.service.definition.md) |
 | Mixin consumers | - |
 | Modules | - |
 
@@ -35,40 +35,40 @@ entry, and any `extra_files` the child appends. Empty-content entries
 flowchart LR
   def_docker_base["Docker Service (Compose + Dockerfile)"]
 def_docker_base --> def_folder_base["Folder Scaffold Base"]
-def_docker_base -.-> def_dockerfile_base["Dockerfile Mixin"]
-def_docker_base -.-> def_compose_base["Docker Compose Mixin"]
+def_docker_base -.-> def_dockerfile_mixin["Dockerfile Mixin"]
+def_docker_base -.-> def_compose_mixin["Docker Compose Mixin"]
 def_docker_casbin_service["Casbin Authorization Service"] --> def_docker_base
-def_docker_clamav["ClamAV Service"] --> def_docker_base
-def_docker_fastapi["FastAPI Service"] --> def_docker_base
-def_docker_gitea["Gitea Service"] --> def_docker_base
-def_docker_grafana["Grafana Service"] --> def_docker_base
-def_docker_grobid["GROBID Service"] --> def_docker_base
-def_docker_jaeger["Jaeger Service"] --> def_docker_base
-def_docker_jupyter["Jupyter Service"] --> def_docker_base
-def_docker_keycloak["Keycloak Service"] --> def_docker_base
-def_docker_libreoffice["LibreOffice Conversion Service"] --> def_docker_base
-def_docker_minio["MinIO Service"] --> def_docker_base
-def_docker_n8n["n8n Service"] --> def_docker_base
-def_docker_neo4j["Neo4j Service"] --> def_docker_base
-def_docker_ollama["Ollama Service"] --> def_docker_base
-def_docker_open_webui["Open WebUI Service"] --> def_docker_base
-def_docker_openfga["OpenFGA Service"] --> def_docker_base
-def_docker_opensearch_dashboards["OpenSearch Dashboards Service"] --> def_docker_base
-def_docker_opensearch["OpenSearch Service"] --> def_docker_base
-def_docker_pgvector["pgvector Service"] --> def_docker_base
-def_docker_playwright_worker["Playwright Worker Service"] --> def_docker_base
-def_docker_postgres["PostgreSQL Service"] --> def_docker_base
-def_docker_prometheus["Prometheus Service"] --> def_docker_base
-def_docker_qdrant["Qdrant Service"] --> def_docker_base
-def_docker_redis["Redis Service"] --> def_docker_base
-def_docker_temporal_ui["Temporal UI Service"] --> def_docker_base
-def_docker_temporal["Temporal Service"] --> def_docker_base
-def_docker_tesseract_ocr["Tesseract OCR Service"] --> def_docker_base
-def_docker_tika["Apache Tika Service"] --> def_docker_base
-def_docker_traefik["Traefik Service"] --> def_docker_base
-def_docker_unstructured["Unstructured Service"] --> def_docker_base
-def_docker_weaviate["Weaviate Service"] --> def_docker_base
-def_docker_worker["Content-Graph Worker Service"] --> def_docker_base
+def_docker_clamav_service["ClamAV Service"] --> def_docker_base
+def_docker_fastapi_service["FastAPI Service"] --> def_docker_base
+def_docker_gitea_service["Gitea Service"] --> def_docker_base
+def_docker_grafana_service["Grafana Service"] --> def_docker_base
+def_docker_grobid_service["GROBID Service"] --> def_docker_base
+def_docker_jaeger_service["Jaeger Service"] --> def_docker_base
+def_docker_jupyter_service["Jupyter Service"] --> def_docker_base
+def_docker_keycloak_service["Keycloak Service"] --> def_docker_base
+def_docker_libreoffice_service["LibreOffice Conversion Service"] --> def_docker_base
+def_docker_minio_service["MinIO Service"] --> def_docker_base
+def_docker_n8n_service["n8n Service"] --> def_docker_base
+def_docker_neo4j_service["Neo4j Service"] --> def_docker_base
+def_docker_ollama_service["Ollama Service"] --> def_docker_base
+def_docker_open_webui_service["Open WebUI Service"] --> def_docker_base
+def_docker_openfga_service["OpenFGA Service"] --> def_docker_base
+def_docker_opensearch_dashboards_service["OpenSearch Dashboards Service"] --> def_docker_base
+def_docker_opensearch_service["OpenSearch Service"] --> def_docker_base
+def_docker_pgvector_service["pgvector Service"] --> def_docker_base
+def_docker_playwright_worker_service["Playwright Worker Service"] --> def_docker_base
+def_docker_postgres_service["PostgreSQL Service"] --> def_docker_base
+def_docker_prometheus_service["Prometheus Service"] --> def_docker_base
+def_docker_qdrant_service["Qdrant Service"] --> def_docker_base
+def_docker_redis_service["Redis Service"] --> def_docker_base
+def_docker_temporal_ui_service["Temporal UI Service"] --> def_docker_base
+def_docker_temporal_service["Temporal Service"] --> def_docker_base
+def_docker_tesseract_ocr_service["Tesseract OCR Service"] --> def_docker_base
+def_docker_tika_service["Apache Tika Service"] --> def_docker_base
+def_docker_traefik_service["Traefik Service"] --> def_docker_base
+def_docker_unstructured_service["Unstructured Service"] --> def_docker_base
+def_docker_weaviate_service["Weaviate Service"] --> def_docker_base
+def_docker_worker_service["Content-Graph Worker Service"] --> def_docker_base
 ```
 
 
@@ -111,13 +111,13 @@ _No locally declared teardown operations._
 | Name | Value / Template | Origin |
 | --- | --- | --- |
 | `system_log_format` | `[{{ entity_id }} \| {{ runtime.version }}]` | [Abstract Base](stdlib.base.definition.md) |
-| `dockerfile_body` | `` | [Dockerfile Mixin](dockerfile.base.definition.md) |
-| `image_tag` | `{{ entity_id \| replace('docker.', '') }}:local` | [Dockerfile Mixin](dockerfile.base.definition.md) |
-| `build_context` | `{{ target_dir }}` | [Dockerfile Mixin](dockerfile.base.definition.md) |
-| `services` | `{}` | [Docker Compose Mixin](compose.base.definition.md) |
-| `networks` | `{}` | [Docker Compose Mixin](compose.base.definition.md) |
-| `volumes` | `{}` | [Docker Compose Mixin](compose.base.definition.md) |
-| `compose_yaml` | `{{ {'services': services, 'networks': networks, 'volumes': volumes} \| tojson(indent=2) }} ` | [Docker Compose Mixin](compose.base.definition.md) |
+| `dockerfile_body` | `` | [Dockerfile Mixin](dockerfile.mixin.definition.md) |
+| `image_tag` | `{{ entity_id \| replace('docker.', '') \| replace('.service', '') }}:local` | [Dockerfile Mixin](dockerfile.mixin.definition.md) |
+| `build_context` | `{{ target_dir }}` | [Dockerfile Mixin](dockerfile.mixin.definition.md) |
+| `services` | `{}` | [Docker Compose Mixin](compose.mixin.definition.md) |
+| `networks` | `{}` | [Docker Compose Mixin](compose.mixin.definition.md) |
+| `volumes` | `{}` | [Docker Compose Mixin](compose.mixin.definition.md) |
+| `compose_yaml` | `{{ {'services': services, 'networks': networks, 'volumes': volumes} \| tojson(indent=2) }} ` | [Docker Compose Mixin](compose.mixin.definition.md) |
 | `extra_files` | `[]` | [Docker Service (Compose + Dockerfile)](docker.base.definition.md) |
 | `files` | `[{'path': 'Dockerfile', 'content': '{{ dockerfile_body }}'}, {'path': 'docker-compose.yml', 'content': '{{ compose_yaml }}'}]` | [Docker Service (Compose + Dockerfile)](docker.base.definition.md) |
 

@@ -1,0 +1,21 @@
+- id: metadata.doc-type.task
+  title: Infer document type from filename
+  description: |
+    Infer a document type label ("report", "prompt", "specification",
+    "draft", or "note") from a filename string.
+    Wraps lib.metadata.extract.infer_doc_type.
+  tags: [task]
+  extends: task.base
+  inputs:
+    name:
+      type: string
+      required: true
+      description: Filename (or any string) to classify.
+  run:
+    - python: |
+        import json, os
+        from lib.metadata.extract import infer_doc_type
+
+        doc_type = infer_doc_type("{{ name }}")
+        with open(os.environ["STATE_FILE"], "w") as f:
+            json.dump({"doc_type": doc_type}, f)

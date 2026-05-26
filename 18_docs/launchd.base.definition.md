@@ -24,17 +24,17 @@ runtime for the full table. Unknown keys are passed through unchanged.
 | --- | --- |
 | Extends | - |
 | Mixins | - |
-| Children | [launchd - Caffeinate](launchd.caffienate.definition.md), [launchd - Docker](launchd.docker.definition.md), [launchd - LM Studio](launchd.lm-studio.definition.md), [launchd - Ollama](launchd.ollama.definition.md) |
+| Children | [launchd - Caffeinate](launchd.caffeinate.service.definition.md), [launchd - Docker](launchd.docker.service.definition.md), [launchd - LM Studio](launchd.lm-studio.service.definition.md), [launchd - Ollama](launchd.ollama.service.definition.md) |
 | Mixin consumers | - |
 | Modules | - |
 
 ```mermaid
 flowchart LR
   def_launchd_base["launchd Job Base"]
-def_launchd_caffienate["launchd - Caffeinate"] --> def_launchd_base
-def_launchd_docker["launchd - Docker"] --> def_launchd_base
-def_launchd_lm_studio["launchd - LM Studio"] --> def_launchd_base
-def_launchd_ollama["launchd - Ollama"] --> def_launchd_base
+def_launchd_caffeinate_service["launchd - Caffeinate"] --> def_launchd_base
+def_launchd_docker_service["launchd - Docker"] --> def_launchd_base
+def_launchd_lm_studio_service["launchd - LM Studio"] --> def_launchd_base
+def_launchd_ollama_service["launchd - Ollama"] --> def_launchd_base
 ```
 
 

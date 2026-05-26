@@ -21,7 +21,7 @@ only declare what is specific to themselves.
 | --- | --- |
 | Extends | - |
 | Mixins | - |
-| Children | [Classification Audit Finding](audit.classification_finding.schema.definition.md), [Dispatch Request Envelope](dispatch.request.schema.definition.md), [Dispatch Response Envelope](dispatch.response.schema.definition.md), [Harness Stream Event](harness.stream_event.schema.definition.md), [Tool Invocation](tool.invocation.schema.definition.md) |
+| Children | [Classification Audit Finding](audit.classification-finding.schema.definition.md), [Dispatch Request Envelope](dispatch.request.schema.definition.md), [Dispatch Response Envelope](dispatch.response.schema.definition.md), [Harness Stream Event](harness.stream-event.schema.definition.md), [Tool Invocation](tool.invocation.schema.definition.md) |
 | Mixin consumers | - |
 | Modules | - |
 

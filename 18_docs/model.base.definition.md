@@ -21,7 +21,7 @@ downstream tooling can rely on the shape. Carries no run blocks.
 | --- | --- |
 | Extends | [Abstract Base](stdlib.base.definition.md) |
 | Mixins | - |
-| Children | [claude-haiku-4-5](model.claude-haiku-4-5.definition.md), [claude-opus-4-7](model.claude-opus-4-7.definition.md), [claude-sonnet-4-6](model.claude-sonnet-4-6.definition.md), [deepseek-r1](model.deepseek-r1.definition.md), [gemma2](model.gemma2.definition.md), [gemma3](model.gemma3.definition.md), [llama3.1](model.llama3.1.definition.md), [llama3.2-vision](model.llama3.2-vision.definition.md), [llama3.2](model.llama3.2.definition.md), [llama3](model.llama3.definition.md), [mistral](model.mistral.definition.md), [nomic-embed-text](model.nomic-embed-text.definition.md), [qwen2.5](model.qwen2.5.definition.md), [qwen3](model.qwen3.definition.md) |
+| Children | [claude-haiku-4-5](model.claude.claude-haiku-4-5.model.definition.md), [claude-opus-4-7](model.claude.claude-opus-4-7.model.definition.md), [claude-sonnet-4-6](model.claude.claude-sonnet-4-6.model.definition.md), [deepseek-r1](model.ollama.deepseek-r1.model.definition.md), [gemma2](model.ollama.gemma2.model.definition.md), [gemma3](model.ollama.gemma3.model.definition.md), [llama3.1](model.ollama.llama3-1.model.definition.md), [llama3.2-vision](model.ollama.llama3-2-vision.model.definition.md), [llama3.2](model.ollama.llama3-2.model.definition.md), [llama3](model.ollama.llama3.model.definition.md), [mistral](model.ollama.mistral.model.definition.md), [nomic-embed-text](model.ollama.nomic-embed-text.model.definition.md), [qwen2.5](model.ollama.qwen2-5.model.definition.md), [qwen3](model.ollama.qwen3.model.definition.md) |
 | Mixin consumers | - |
 | Modules | - |
 
@@ -29,20 +29,20 @@ downstream tooling can rely on the shape. Carries no run blocks.
 flowchart LR
   def_model_base["LLM Model Record"]
 def_model_base --> def_stdlib_base["Abstract Base"]
-def_model_claude_haiku_4_5["claude-haiku-4-5"] --> def_model_base
-def_model_claude_opus_4_7["claude-opus-4-7"] --> def_model_base
-def_model_claude_sonnet_4_6["claude-sonnet-4-6"] --> def_model_base
-def_model_deepseek_r1["deepseek-r1"] --> def_model_base
-def_model_gemma2["gemma2"] --> def_model_base
-def_model_gemma3["gemma3"] --> def_model_base
-def_model_llama3_1["llama3.1"] --> def_model_base
-def_model_llama3_2_vision["llama3.2-vision"] --> def_model_base
-def_model_llama3_2["llama3.2"] --> def_model_base
-def_model_llama3["llama3"] --> def_model_base
-def_model_mistral["mistral"] --> def_model_base
-def_model_nomic_embed_text["nomic-embed-text"] --> def_model_base
-def_model_qwen2_5["qwen2.5"] --> def_model_base
-def_model_qwen3["qwen3"] --> def_model_base
+def_model_claude_claude_haiku_4_5_model["claude-haiku-4-5"] --> def_model_base
+def_model_claude_claude_opus_4_7_model["claude-opus-4-7"] --> def_model_base
+def_model_claude_claude_sonnet_4_6_model["claude-sonnet-4-6"] --> def_model_base
+def_model_ollama_deepseek_r1_model["deepseek-r1"] --> def_model_base
+def_model_ollama_gemma2_model["gemma2"] --> def_model_base
+def_model_ollama_gemma3_model["gemma3"] --> def_model_base
+def_model_ollama_llama3_1_model["llama3.1"] --> def_model_base
+def_model_ollama_llama3_2_vision_model["llama3.2-vision"] --> def_model_base
+def_model_ollama_llama3_2_model["llama3.2"] --> def_model_base
+def_model_ollama_llama3_model["llama3"] --> def_model_base
+def_model_ollama_mistral_model["mistral"] --> def_model_base
+def_model_ollama_nomic_embed_text_model["nomic-embed-text"] --> def_model_base
+def_model_ollama_qwen2_5_model["qwen2.5"] --> def_model_base
+def_model_ollama_qwen3_model["qwen3"] --> def_model_base
 ```
 
 

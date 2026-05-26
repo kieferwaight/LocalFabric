@@ -21,7 +21,7 @@
 
       | Artifact | Purpose |
       | --- | --- |
-      | `01_schemas/audit.classification_finding.schema.yaml` | Contract for one JSONL finding |
+      | `01_schemas/audit.classification-finding.schema.yaml` | Contract for one JSONL finding |
       | `07_lib/audit/scan_boundary_violations.py` | Deterministic crawler and finding generator |
       | `06_workflows/audit.classifications.scan.workflow.yaml` | YAML workflow that invokes the crawler |
       | `14_data/runs/classification_audit/findings.jsonl` | Open decomposition work queue |

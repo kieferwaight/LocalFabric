@@ -45,7 +45,7 @@ def_launchd_status["Print LaunchAgent Status"] --> def_launchd_lifecycle_base
 
 | Name | Type | Required | Default | Description |
 | --- | --- | --- | --- | --- |
-| `definition` | `string` | no | `` | launchd definition id (e.g. `launchd.caffienate`). Used to auto-resolve the job label from the catalog. |
+| `definition` | `string` | no | `` | launchd definition id (e.g. `launchd.caffeinate`). Used to auto-resolve the job label from the catalog. |
 | `label` | `string` | no | `` | Explicit launchd job label. Takes effect when `definition` is empty. |
 
 

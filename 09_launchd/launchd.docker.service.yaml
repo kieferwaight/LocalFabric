@@ -1,0 +1,17 @@
+- id: launchd.docker.service
+  title: launchd - Docker
+  description: |
+    Stub for a launchd-managed Docker daemon on macOS. Expand `program` to
+    point at the desired runner (orbctl, colima, docker desktop helper, ...).
+  tags: [launchd, runtime]
+  extends: launchd.base
+  launchd:
+    name: docker
+    category: runtime
+    label: com.localfabric.docker
+    program:
+      - /usr/local/bin/docker
+      - system
+      - info
+    stdout: "{{ log_dir }}/docker.out.log"
+    stderr: "{{ log_dir }}/docker.err.log"

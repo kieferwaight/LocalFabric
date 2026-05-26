@@ -1,0 +1,21 @@
+- id: classify.media.class-for-path.task
+  title: Return broad media class for a path
+  description: |
+    Return a broad media class string ("image", "document", or "unknown")
+    for the given path. Wraps lib.classify.media.media_class_for_path.
+  tags: [task]
+  extends: task.base
+  inputs:
+    path:
+      type: string
+      required: true
+      description: Path to the file (used for extension-based classification).
+  run:
+    - python: |
+        import json, os
+        from pathlib import Path
+        from lib.classify.media import media_class_for_path
+
+        media_class = media_class_for_path(Path("{{ path }}"))
+        with open(os.environ["STATE_FILE"], "w") as f:
+            json.dump({"media_class": media_class}, f)

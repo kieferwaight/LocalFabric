@@ -9,18 +9,18 @@ and can be picked up as an independent branch.
 **Bucket:** `12_prompts`
 
 Add five prompt templates in the flat `12_prompts/` directory under the
-`tasks.spec-promotion.*` namespace:
+`spec.promotion.*` namespace:
 
-- `tasks.spec-promotion.research.md` — given an idea, produce a survey of
+- `spec.promotion.research.task.md` — given an idea, produce a survey of
   repo assets that bear on the idea and surface open questions for
   requirements.
-- `tasks.spec-promotion.requirements.md` — given idea + research, produce
+- `spec.promotion.requirements.task.md` — given idea + research, produce
   functional and non-functional requirements plus acceptance criteria.
-- `tasks.spec-promotion.tasks.md` — given idea + research + requirements,
+- `spec.promotion.tasks.task.md` — given idea + research + requirements,
   produce a bucketed task list.
-- `tasks.spec-promotion.prompts.md` — given the full chain, produce
+- `spec.promotion.prompts.task.md` — given the full chain, produce
   agent-ready prompts for each task.
-- `tasks.spec-promotion.final.md` — given the full chain, produce the
+- `spec.promotion.final.task.md` — given the full chain, produce the
   frozen handoff prompt plus an index.
 
 Each template uses Jinja-style `{{idea}}`, `{{research}}`, `{{requirements}}`,
