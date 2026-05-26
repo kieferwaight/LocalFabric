@@ -15,7 +15,12 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from harnesses.markdown import MarkdownCompileError, MarkdownHarness
+from harnesses.markdown import (
+    MarkdownCompileError,
+    MarkdownHarness,
+    ProviderError,
+    ProviderResult,
+)
 from workflows.yaml.src import Runtime, ShellEnvironment
 
 USAGE = (
@@ -70,13 +75,48 @@ def main(argv: list[str] | None = None) -> int:
 
     harness = MarkdownHarness(runtime=runtime)
     try:
-        final_scope = harness.execute(markdown_file, dict(env.options))
+        result = harness.execute(markdown_file, dict(env.options))
     except MarkdownCompileError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
+    except ProviderError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 3
+
+    if isinstance(result, ProviderResult):
+        # Provider-style: write the assistant text to stdout. Tail with a
+        # newline if the response doesn't already end in one so the user's
+        # shell prompt doesn't run into the response.
+        sys.stdout.write(result.text)
+        if result.text and not result.text.endswith("\n"):
+            sys.stdout.write("\n")
+        sys.stdout.flush()
+        if debug:
+            print(
+                json.dumps(
+                    {"model": result.model, "usage": result.usage},
+                    indent=2,
+                    default=str,
+                ),
+                file=sys.stderr,
+            )
+        return 0
+
+    if not isinstance(result, dict):
+        # Streaming provider: the harness already echoes each chunk to
+        # stdout. Drain the iterator so the API call actually completes.
+        try:
+            for _ in result:
+                pass
+        except ProviderError as exc:
+            print(f"\nerror: {exc}", file=sys.stderr)
+            return 3
+        sys.stdout.write("\n")
+        sys.stdout.flush()
+        return 0
 
     if debug:
-        print(json.dumps(_jsonable(final_scope), indent=2, default=str))
+        print(json.dumps(_jsonable(result), indent=2, default=str))
     return 0
 
 

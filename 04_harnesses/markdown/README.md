@@ -1,9 +1,16 @@
 # Markdown Runtime Harness
 
-A thin compile-and-dispatch shim that turns `.md` files into definitions the
-YAML workflow runtime executes. The harness owns markdown ingest only —
-script execution, inheritance, scope frames, and the IPC state bridge stay
-with `workflows.yaml`.
+A thin compile-and-dispatch shim that turns `.md` files into either YAML
+workflow definitions *or* provider prompts:
+
+- **Fence-style** files (no `provider:` in frontmatter) compile into a YAML
+  runtime definition whose `run:` list is built from fenced bash/python/js
+  code blocks. The YAML runtime owns execution, inheritance, scope, and the
+  IPC state bridge — the harness owns markdown ingest only.
+- **Provider-style** files (`provider:` declared in frontmatter) skip the
+  YAML runtime entirely. The body is treated as a single Jinja-renderable
+  prompt and dispatched through `harnesses.markdown.providers` to the
+  matching provider harness (e.g. `harnesses.claude.ClaudeHarness`).
 
 ## File format
 
@@ -89,7 +96,14 @@ harness.compile_text(source, source_path=...)  # pure: text → definition dict
 harness.compile_file(path)               # read + compile
 harness.register(path)                   # compile + import into runtime
 harness.register_dir(path, recursive=True)
+
+# Fence-style files return the final scope dict.
 final_scope = harness.execute(path, arguments={"name": "world"})
+
+# Provider-style files return a ProviderResult — or an iterator of text
+# chunks when the file requests streaming.
+result = harness.execute("summarize-code.md", arguments={"input": "def f(): ..."})
+print(result.text)
 ```
 
 `MarkdownCompileError` is raised for malformed markdown (missing
@@ -113,11 +127,74 @@ python -m adapters.cli.markdown 12_prompts/markdown/examples/hello-polyglot.md \
     --name=World --debug
 ```
 
-## Out of scope (steps 2 and 3)
+## Provider-style files
 
-- Inter-block I/O (`BLOCK_<id>_STDOUT` env vars). See the YAML dispatcher.
-- LLM operations — `ollama` / `claude` fences compiled to a `model:`
-  structured op.
+When frontmatter declares `provider:`, the file describes a single prompt
+sent to a hosted LLM rather than a workflow of fence blocks. The body is
+the prompt template; Jinja tokens resolve against declared `inputs` and
+any CLI arguments.
 
-The forward-compat attribute pass-through (`_markdown_attributes`) is the
-seam these later steps will hook into.
+```markdown
+---
+id: examples.summarize-code
+description: Summarize a code file using Claude
+provider: claude
+model: claude-sonnet-4-6
+inputs:
+  input:
+    type: string
+    required: true
+---
+
+You are a senior engineer. Summarize the following code clearly and concisely:
+
+{{ input }}
+```
+
+Supported frontmatter fields:
+
+| Field | Type | Purpose |
+| --- | --- | --- |
+| `provider` | string (required) | Provider key registered in `harnesses.markdown.providers.PROVIDERS`. |
+| `model` | string | Model id passed to the provider; per-provider default applies when omitted. |
+| `system` | string | Optional system prompt forwarded to the provider. |
+| `max_tokens` | integer | Upper bound on response tokens. |
+| `temperature` | number | Sampling temperature. |
+| `stream` | boolean | When `true`, the harness streams chunks to stdout and returns an iterator instead of a `ProviderResult`. |
+| `inputs` | mapping | Same shape as fence-style inputs; values are rendered into the prompt body. |
+
+Provider-style files do **not** support fence-style keys (`extends`,
+`mixins`, `modules`, `variables`) — the compiler rejects them with a clear
+error rather than silently no-op.
+
+### Built-in providers
+
+| Name | Backed by | Default model | Auth |
+| --- | --- | --- | --- |
+| `claude` | `harnesses.claude.ClaudeHarness` | `claude-sonnet-4-6` | `ANTHROPIC_API_KEY` env var |
+
+`ClaudeProvider` lazily constructs its underlying harness — importing it
+doesn't require the `anthropic` SDK. The first call to `.run()` triggers
+the SDK import and key check; missing `ANTHROPIC_API_KEY` surfaces as a
+`ProviderError` with a clear message.
+
+To register a custom provider:
+
+```python
+from harnesses.markdown.providers import register_provider
+
+register_provider("my-provider", MyProviderFactory)
+```
+
+Tests can inject a stub provider without touching the global registry:
+
+```python
+harness = MarkdownHarness(provider_overrides={"claude": stub_provider})
+```
+
+## Out of scope
+
+- Inter-block I/O (`BLOCK_<id>_STDOUT` env vars) for fence-style files.
+  See the YAML dispatcher.
+- LLM blocks via `claude` / `ollama` fence languages — the provider-style
+  file shape covers the LLM dispatch use case.
