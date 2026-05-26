@@ -6,7 +6,7 @@ The Router is the single entry point most callers want: hand it a task string
 three stages of the pipeline so callers don't have to chain them by hand.
 
 Usage:
-    from router import Router
+    from core.router import Router
 
     r = Router()
     result = r.route("Run pytest and tell me what's failing")
@@ -15,7 +15,7 @@ Usage:
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Any, Optional
 
 from router.classifier import Classifier, TaskProfile
 from router.dispatcher import Dispatcher, DispatchResult
@@ -29,24 +29,37 @@ class Router:
 
     Each stage is held as an attribute so callers can replace it (e.g. inject
     a mock Dispatcher in tests) without subclassing.
+
+    Args:
+        runtime:    Optional Runtime instance (with stdlib modules loaded).
+                    When supplied, the Scorer loads routes from the catalog and
+                    the Dispatcher invokes routes via runtime.execute().
+                    When None, the scorer returns no candidates and the
+                    dispatcher returns FAILURE — useful as a null router in
+                    tests that only need the classify() stage.
+        classifier: Override the Classifier stage.
+        scorer:     Override the Scorer stage.
+        dispatcher: Override the Dispatcher stage.
+        policy:     Override the Policy.
     """
 
     def __init__(
         self,
+        runtime: Any = None,
         classifier: Optional[Classifier] = None,
         scorer: Optional[Scorer] = None,
         dispatcher: Optional[Dispatcher] = None,
         policy: Optional[Policy] = None,
     ) -> None:
         self.classifier = classifier or Classifier()
-        self.scorer = scorer or Scorer()
-        self.dispatcher = dispatcher or Dispatcher()
+        self.scorer = scorer or Scorer(runtime=runtime)
+        self.dispatcher = dispatcher or Dispatcher(runtime=runtime)
         self.policy = policy or Policy()
 
     def route(
         self,
         task: str,
-        context: Optional[str] = None,
+        context: Any = None,
         available_routes: Optional[set[str]] = None,
     ) -> DispatchResult:
         """

@@ -216,6 +216,7 @@ class Runtime:
                 "has_model": self._descends_from(def_id, "model.base"),
                 "has_provider": self._descends_from(def_id, "provider.base"),
                 "has_folder": self._descends_from(def_id, "folder.base"),
+                "has_route": self._descends_from(def_id, "route.base"),
                 "declared": {
                     "inputs": self._input_entries(definition.inputs, def_id),
                     "variables": self._variable_entries(definition, def_id),

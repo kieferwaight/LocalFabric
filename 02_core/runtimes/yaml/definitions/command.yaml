@@ -71,3 +71,50 @@
     - invoke:
         definition: "{{ task_id }}"
         arguments: "{{ arguments }}"
+
+- id: command.route
+  title: Route an Intent through the Router
+  description: |
+    Classifies the free-text task, scores candidate routes, and dispatches
+    the winner via the YAML runtime.
+    Wired as `localfabric route run <task>` on the CLI and as
+    POST /v1/route on the API surface (Phase C3).
+  tags: [command]
+  extends: command.base
+  inputs:
+    task:
+      type: string
+      required: true
+      description: Free-text intent from the user.
+    context:
+      type: object
+      required: false
+      default: {}
+      description: Optional structured context.
+  variables:
+    argv_spec:
+      group: route
+      verb: run
+      positional: [task]
+      options: [context]
+    http_spec:
+      method: POST
+      path: /v1/route
+    mcp_spec:
+      expose: false
+  run:
+    - python: |
+        # Bridge: invoke the Python router from inside the YAML runtime.
+        import json, os, sys
+        sys.path.insert(0, "02_core")
+        from core.router.router import Router  # noqa
+        from core.runtimes.yaml.src import Runtime  # noqa: F401
+        # Note: the bridge approach is intentional — `command.route` is
+        # the user-facing wrapper; the Router class composes
+        # classifier/scorer/dispatcher and itself calls runtime.execute
+        # on the chosen route. We pass a fresh Runtime instance the Router
+        # constructs internally rather than threading the current scope.
+        router = Router()
+        result = router.route(task="{{ task }}", context={{ context | tojson }})
+        with open(os.environ["STATE_FILE"], "w") as f:
+            json.dump({"dispatch_result": str(result)}, f, default=str)

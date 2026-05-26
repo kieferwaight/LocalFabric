@@ -33,6 +33,7 @@
     - launchd.yaml
     - model.yaml
     - provider.yaml
+    - route.yaml
   variables:
     module_namespace: "builtin"
 

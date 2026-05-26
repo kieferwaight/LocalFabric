@@ -4,18 +4,28 @@ scorer.py — Score candidate execution routes by confidence.
 The scorer takes a TaskProfile and the list of currently available routes,
 then returns a ranked list of RouteCandidate objects with confidence scores.
 
+Routes are now loaded from the YAML runtime catalog (every definition
+descended from `route.base` and tagged `has_route=True`) rather than
+a hardcoded dict. The catalog loader is invoked at construction time;
+call `reload_routes()` to refresh after catalog changes.
+
 Scoring factors (v1 — rule-based with historical weight overlay):
-  1. Intent → route affinity (hard-coded per-intent preferences)
+  1. Intent → route affinity (declared per-route as `intent_affinity` variable)
   2. Complexity tier match (LOCAL / HYBRID / FRONTIER / AGENT)
   3. Route availability (is the service reachable right now?)
   4. Historical performance weight (loaded from feedback.json, falls back to 1.0)
 
 Usage:
-    from router.scorer import Scorer, RouteCandidate
-    from router.classifier import Classifier
+    from core.router.scorer import Scorer, RouteCandidate
+    from core.router.classifier import Classifier
+    from core.runtimes.yaml.src import Runtime
+
+    r = Runtime(workflow_dir='02_core/runtimes/yaml')
+    r.import_yaml('02_core/runtimes/yaml/definitions/stdlib.yaml')
+    r.execute('stdlib.load-modules', {})
 
     clf = Classifier()
-    scorer = Scorer()
+    scorer = Scorer(runtime=r)
 
     profile = clf.classify("run pytest and show me the failures")
     candidates = scorer.score(profile)
@@ -31,43 +41,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 
 from router.classifier import Intent, Complexity, TaskProfile
-
-# ------------------------------------------------------------------
-# Route registry
-# ------------------------------------------------------------------
-
-# Each route is identified by a string ID.
-# Add new routes here as the system grows.
-
-ROUTES = {
-    # Local routes (free, fast)
-    "local_research":    {"tier": Complexity.LOCAL,    "description": "local_research_scaffold via Ollama"},
-    "local_tests":       {"tier": Complexity.LOCAL,    "description": "run_local_tests via subprocess"},
-    "local_embed":       {"tier": Complexity.LOCAL,    "description": "sweep + embed via nomic-embed-text"},
-    "local_query":       {"tier": Complexity.LOCAL,    "description": "query_local_knowledge via LanceDB"},
-    # Hybrid routes
-    "hybrid_research":   {"tier": Complexity.HYBRID,   "description": "local pre-process + frontier summarize"},
-    # Frontier routes (paid)
-    "frontier_claude":   {"tier": Complexity.FRONTIER, "description": "Claude API (claude-sonnet / claude-opus)"},
-    "frontier_gemini":   {"tier": Complexity.FRONTIER, "description": "Google Gemini API"},
-    "frontier_codex":    {"tier": Complexity.FRONTIER, "description": "OpenAI Codex / GPT-4o"},
-    # Agent routes
-    "agent_research":    {"tier": Complexity.AGENT,    "description": "multi-step research agent"},
-    "agent_code":        {"tier": Complexity.AGENT,    "description": "multi-step code generation + test agent"},
-}
-
-# Intent → preferred route IDs (ordered by preference)
-_INTENT_ROUTE_MAP: dict[Intent, list[str]] = {
-    Intent.RESEARCH:  ["local_research", "hybrid_research", "frontier_claude"],
-    Intent.TESTING:   ["local_tests"],
-    Intent.CODE_FIX:  ["frontier_claude", "frontier_codex", "hybrid_research"],
-    Intent.CODE_GEN:  ["frontier_claude", "frontier_codex", "frontier_gemini"],
-    Intent.EMBED:     ["local_embed"],
-    Intent.QUERY:     ["local_query"],
-    Intent.SUMMARIZE: ["local_research", "hybrid_research", "frontier_claude"],
-    Intent.ROUTE:     ["frontier_claude"],
-    Intent.UNKNOWN:   ["local_research", "frontier_claude"],
-}
+from router.catalog_loader import RouteEntry, load_routes
 
 _FEEDBACK_PATH = os.path.expanduser("~/.local_router_cache/feedback.json")
 
@@ -97,6 +71,44 @@ class RouteCandidate:
 
 
 # ------------------------------------------------------------------
+# Helpers
+# ------------------------------------------------------------------
+
+def _tier_from_str(tier_str: str) -> Complexity:
+    """Map a tier string from a RouteEntry to the Complexity enum."""
+    mapping = {
+        "LOCAL":    Complexity.LOCAL,
+        "HYBRID":   Complexity.HYBRID,
+        "FRONTIER": Complexity.FRONTIER,
+        "AGENT":    Complexity.AGENT,
+        # lower-case aliases (in case someone writes them that way in YAML)
+        "local":    Complexity.LOCAL,
+        "hybrid":   Complexity.HYBRID,
+        "frontier": Complexity.FRONTIER,
+        "agent":    Complexity.AGENT,
+    }
+    return mapping.get(tier_str, Complexity.LOCAL)
+
+
+def _affinity_score(intent: Intent, entry: RouteEntry) -> float:
+    """
+    Return an affinity score for a single route entry given the primary intent.
+
+    The `intent_affinity` field on a route is a list of intent label strings
+    (e.g. ["RESEARCH", "SUMMARIZE"]). The position in the list gives a falloff:
+      1st = 1.0, 2nd = 0.75, 3rd = 0.50, … clamped to 0.0 minimum.
+    Routes that don't list the intent get a small non-zero floor (0.1) so
+    non-preferred routes are still ranked (not hidden entirely).
+    """
+    intent_label = intent.value.upper()
+    affinity_list = [label.upper() for label in entry.intent_affinity]
+    if intent_label in affinity_list:
+        rank = affinity_list.index(intent_label)
+        return max(0.0, 1.0 - rank * 0.25)
+    return 0.1  # non-preferred floor
+
+
+# ------------------------------------------------------------------
 # Scorer
 # ------------------------------------------------------------------
 
@@ -104,13 +116,36 @@ class Scorer:
     """
     Score and rank candidate routes for a given TaskProfile.
 
+    Routes are loaded from the YAML runtime catalog at construction time.
     Historical weights are loaded from ~/.local_router_cache/feedback.json
-    (written by feedback.py). If the file doesn't exist, all weights default to 1.0.
+    (written by feedback.py). If the file doesn't exist, all weights default
+    to 1.0.
+
+    Args:
+        runtime:       Runtime instance with stdlib modules already loaded.
+                       If None, the scorer returns an empty candidates list
+                       (useful as a null scorer in tests that don't need routes).
+        feedback_path: Override path for the feedback JSON file.
     """
 
-    def __init__(self, feedback_path: str = _FEEDBACK_PATH) -> None:
+    def __init__(
+        self,
+        runtime=None,
+        feedback_path: str = _FEEDBACK_PATH,
+    ) -> None:
+        self._runtime = runtime
         self._feedback_path = feedback_path
         self._weights: dict[str, float] = self._load_weights()
+        self._routes: list[RouteEntry] = self._load_routes()
+
+    def _load_routes(self) -> list[RouteEntry]:
+        if self._runtime is None:
+            return []
+        return load_routes(self._runtime)
+
+    def reload_routes(self) -> None:
+        """Reload routes from the catalog (call after catalog changes)."""
+        self._routes = self._load_routes()
 
     def _load_weights(self) -> dict[str, float]:
         if os.path.exists(self._feedback_path):
@@ -144,21 +179,14 @@ class Scorer:
         """
         candidates: list[RouteCandidate] = []
 
-        for route_id, meta in ROUTES.items():
-            tier = meta["tier"]
-            desc = meta["description"]
-            is_available = (available_routes is None) or (route_id in available_routes)
+        for entry in self._routes:
+            tier = _tier_from_str(entry.tier)
+            is_available = (available_routes is None) or (entry.id in available_routes)
 
             breakdown: dict[str, float] = {}
 
-            # 1. Intent affinity — position in the preferred list for this intent
-            preferred = _INTENT_ROUTE_MAP.get(profile.primary_intent(), [])
-            if route_id in preferred:
-                rank = preferred.index(route_id)
-                affinity = max(0.0, 1.0 - rank * 0.25)   # 1st=1.0, 2nd=0.75, 3rd=0.50 …
-            else:
-                affinity = 0.1   # small non-zero so non-preferred routes are still ranked
-
+            # 1. Intent affinity — position in the per-route intent_affinity list
+            affinity = _affinity_score(profile.primary_intent(), entry)
             breakdown["intent_affinity"] = affinity
 
             # 2. Complexity tier match
@@ -170,7 +198,7 @@ class Scorer:
             breakdown["confidence_boost"] = round(confidence_boost, 3)
 
             # 4. Historical weight (default 1.0 if no data)
-            hist_weight = self._weights.get(route_id, 1.0)
+            hist_weight = self._weights.get(entry.id, 1.0)
             breakdown["historical_weight"] = hist_weight
 
             # Composite score
@@ -183,10 +211,10 @@ class Scorer:
                 score *= 0.05
 
             candidates.append(RouteCandidate(
-                route_id=route_id,
+                route_id=entry.id,
                 score=score,
                 tier=tier,
-                description=desc,
+                description=entry.description.strip(),
                 available=is_available,
                 score_breakdown=breakdown,
             ))
@@ -203,24 +231,3 @@ class Scorer:
         distance = abs(p_idx - r_idx)
         # Exact match = 1.0; one tier off = 0.6; two off = 0.3; three off = 0.1
         return [1.0, 0.6, 0.3, 0.1][min(distance, 3)]
-
-
-if __name__ == "__main__":
-    from router.classifier import Classifier
-
-    clf = Classifier()
-    scorer = Scorer()
-
-    tasks = [
-        "Run the test suite and show me what's failing",
-        "Research how FastMCP handles async tools",
-        "Write a new Python class for chunking YAML files",
-    ]
-    for task in tasks:
-        profile = clf.classify(task)
-        candidates = scorer.score(profile)
-        print(f"\n> {task[:65]}")
-        print(f"  Intent: {profile.primary_intent().value}  Complexity: {profile.complexity.value}")
-        for c in candidates[:3]:
-            avail = "✓" if c.available else "✗"
-            print(f"  {avail} [{c.score:.3f}] {c.route_id} — {c.description}")

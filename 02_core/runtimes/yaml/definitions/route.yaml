@@ -1,0 +1,82 @@
+# route.yaml — route-as-YAML contract
+#
+# Every router-eligible definition extends route.base and declares:
+#   intent_affinity  — list of Intent labels this route serves
+#   tier             — complexity tier: LOCAL | HYBRID | FRONTIER | AGENT
+#   cost             — relative cost integer (0 = free local, 10 = frontier API)
+#   deferred_model   — optional model id used when tier is FRONTIER
+#
+# The classifier produces a TaskProfile; the scorer ranks every definition
+# with `has_route=True`; the dispatcher invokes the winner via
+# runtime.execute(route_id, arguments={"task": <text>, "context": <ctx>}).
+
+- id: route.base
+  title: Routable Definition Base
+  description: |
+    Abstract base for definitions discoverable by the router. Children
+    declare:
+      - intent_affinity: list of intent labels this route serves
+        (e.g. ["RESEARCH", "SUMMARIZE"]).
+      - tier: complexity tier — "LOCAL", "HYBRID", "FRONTIER", or "AGENT".
+      - cost: relative cost integer (0 = free local, 10 = frontier API).
+      - deferred_model: optional model id used when tier is FRONTIER and
+        the dispatcher should defer to the caller (e.g. "claude-sonnet-4-6").
+    The classifier produces a TaskProfile; the scorer ranks every route
+    whose `has_route` catalog flag is True; the dispatcher invokes the
+    winner via `runtime.execute(route_id, arguments={"task": <text>,
+    "context": <ctx>})`.
+  tags: [route, abstract]
+  extends: stdlib.base
+  variables:
+    intent_affinity: []
+    tier: "LOCAL"
+    cost: 0
+    deferred_model: ""
+  docs:
+    variables:
+      intent_affinity: >
+        List of Intent label strings (e.g. ["RESEARCH", "SUMMARIZE"]) this
+        route serves. Used by scorer.py for affinity scoring.
+      tier: >
+        Complexity tier — LOCAL, HYBRID, FRONTIER, or AGENT.
+        Must match one of the Complexity enum values in classifier.py.
+      cost: >
+        Relative cost integer. 0 = free local execution, 10 = expensive
+        frontier API call. Used by policy filtering.
+      deferred_model: >
+        Optional model id (e.g. "claude-sonnet-4-6"). When set and tier is
+        FRONTIER, the dispatcher returns a DEFERRED result with this model
+        so the calling agent can invoke it directly.
+
+- id: route.echo
+  title: Echo Route (smoke test)
+  description: |
+    Trivial route that echoes its task input — exists so the router can
+    be exercised end-to-end without external dependencies. Replace or
+    delete once real routes are authored.
+  tags: [route]
+  extends: route.base
+  inputs:
+    task:
+      type: string
+      required: true
+      description: Free-text intent from the user.
+    context:
+      type: object
+      required: false
+      default: {}
+      description: Optional structured context for the route.
+  variables:
+    intent_affinity: ["UNKNOWN"]
+    tier: "LOCAL"
+    cost: 0
+  run:
+    - python: |
+        import json, os
+        context_val = {{ context | tojson }}
+        payload = {
+            "echoed": "{{ task }}",
+            "context_keys": list(context_val.keys()) if isinstance(context_val, dict) else [],
+        }
+        with open(os.environ["STATE_FILE"], "w") as f:
+            json.dump(payload, f)

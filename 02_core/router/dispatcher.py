@@ -2,21 +2,28 @@
 dispatcher.py — Execute the selected route and return a result.
 
 The dispatcher is the execution layer of the routing pipeline. It receives
-the top-ranked RouteCandidate (from scorer.py) and calls the appropriate
-local tool, hybrid pipeline, or frontier model adapter.
+the top-ranked RouteCandidate (from scorer.py) and invokes it via the YAML
+runtime:
 
-v1 implements local routes directly. Frontier routes return a structured
-stub that tells the calling agent which model to use and with what prompt —
-actual frontier API calls are the responsibility of the agent/MCP client.
+    runtime.execute(route_id, arguments={"task": task, "context": context})
+
+For FRONTIER / AGENT routes whose `deferred_model` is set, the dispatcher
+returns a DEFERRED result rather than calling the model directly — the MCP
+client or agent is responsible for making the actual API call.
 
 Usage:
-    from router.classifier import Classifier
-    from router.scorer import Scorer
-    from router.dispatcher import Dispatcher
+    from core.router.classifier import Classifier
+    from core.router.scorer import Scorer
+    from core.router.dispatcher import Dispatcher
+    from core.runtimes.yaml.src import Runtime
+
+    r = Runtime(workflow_dir='02_core/runtimes/yaml')
+    r.import_yaml('02_core/runtimes/yaml/definitions/stdlib.yaml')
+    r.execute('stdlib.load-modules', {})
 
     clf = Classifier()
-    scorer = Scorer()
-    dispatcher = Dispatcher()
+    scorer = Scorer(runtime=r)
+    dispatcher = Dispatcher(runtime=r)
 
     profile = clf.classify("run pytest")
     candidates = scorer.score(profile)
@@ -29,13 +36,9 @@ from __future__ import annotations
 import time
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
+from typing import Any, Optional
 
 from router.scorer import RouteCandidate, Complexity
-
-# Bucket directories (02_core, 04_harnesses, 05_router, 07_tools, 08_drivers,
-# 11_mcp, etc.) must be on PYTHONPATH for cross-bucket imports to resolve.
-# This will be handled by the workspace-level pyproject.toml we add later.
 
 
 # ------------------------------------------------------------------
@@ -75,12 +78,23 @@ class DispatchResult:
 
 class Dispatcher:
     """
-    Execute the best available route for a task.
+    Execute the best available route for a task via the YAML runtime.
 
-    For local routes: calls the tool directly and returns the output.
-    For frontier routes: returns a DEFERRED result with model + prompt,
-    so the MCP client or agent can make the actual API call.
+    For routes with a `deferred_model` set and tier FRONTIER/AGENT: returns a
+    DEFERRED result with model + prompt so the MCP client or agent can make
+    the actual API call.
+
+    For all other routes: calls runtime.execute(route_id, arguments={...})
+    and returns the scope dict as the output.
+
+    Args:
+        runtime: Runtime instance with stdlib modules already loaded.
+                 Required for actual route execution; if None, all dispatches
+                 return FAILURE (useful as a null dispatcher in tests).
     """
+
+    def __init__(self, runtime=None) -> None:
+        self._runtime = runtime
 
     def dispatch(
         self,
@@ -143,123 +157,85 @@ class Dispatcher:
         candidate: RouteCandidate,
         context: Optional[str],
     ) -> DispatchResult:
-        """Route to the correct handler based on route_id."""
+        """Invoke the route via runtime.execute, or defer for frontier routes."""
         rid = candidate.route_id
 
-        if rid == "local_research":
-            return self._local_research(task, candidate)
-        elif rid == "local_tests":
-            return self._local_tests(task, candidate)
-        elif rid == "local_embed":
-            return self._local_embed(task, candidate)
-        elif rid == "local_query":
-            return self._local_query(task, candidate)
-        elif rid == "hybrid_research":
-            return self._hybrid_research(task, candidate, context)
-        elif candidate.tier in (Complexity.FRONTIER, Complexity.AGENT):
-            return self._defer_to_frontier(task, candidate, context)
-        else:
+        if self._runtime is None:
             return DispatchResult(
                 route_id=rid,
                 status=ResultStatus.FAILURE,
                 output="",
-                error=f"No handler implemented for route: {rid}",
+                error="Dispatcher has no runtime; cannot execute route.",
             )
 
-    # ------------------------------------------------------------------
-    # Local handlers
-    # ------------------------------------------------------------------
+        # FRONTIER / AGENT routes with a deferred_model: hand off to the caller.
+        if candidate.tier in (Complexity.FRONTIER, Complexity.AGENT):
+            # Check if the catalog entry carries a deferred_model.
+            deferred_model = self._get_deferred_model(rid)
+            if deferred_model:
+                return self._defer_to_frontier(task, candidate, context, deferred_model)
 
-    def _local_research(self, task: str, c: RouteCandidate) -> DispatchResult:
-        from workflows.research.local import local_research_scaffold
-        output = local_research_scaffold(task)
-        return DispatchResult(route_id=c.route_id, status=ResultStatus.SUCCESS, output=output)
-
-    def _local_tests(self, task: str, c: RouteCandidate) -> DispatchResult:
-        from tools.shell.run_tests import run_local_tests
-        # Extract command from task if present (e.g. "run pytest -k smoke")
-        command = "pytest"
-        lower = task.lower()
-        for kw in ("pytest", "npm test", "python -m pytest", "make test"):
-            if kw in lower:
-                # Grab from the keyword to end of line
-                idx = lower.index(kw)
-                command = task[idx:].split("\n")[0].strip()
-                break
-        output = run_local_tests(command)
-        status = ResultStatus.SUCCESS if "SUCCESS" in output else ResultStatus.FAILURE
-        return DispatchResult(route_id=c.route_id, status=status, output=output)
-
-    def _local_embed(self, task: str, c: RouteCandidate) -> DispatchResult:
+        # All other routes: call through the YAML runtime.
         try:
-            from tools.embeddings.sweep import sweep
-            stats = sweep(dry_run=False)
-            output = (
-                f"Sweep complete — {stats['files_changed']} files changed, "
-                f"{stats['chunks_added']} chunks added in {stats['elapsed_sec']}s."
+            ctx_arg: Any = {}
+            if isinstance(context, dict):
+                ctx_arg = context
+            elif context is not None:
+                ctx_arg = {"raw": context}
+
+            scope = self._runtime.execute(
+                rid,
+                arguments={"task": task, "context": ctx_arg},
             )
-            return DispatchResult(route_id=c.route_id, status=ResultStatus.SUCCESS, output=output)
+            import json as _json
+            output = _json.dumps(scope, default=str)
+            return DispatchResult(
+                route_id=rid,
+                status=ResultStatus.SUCCESS,
+                output=output,
+            )
         except Exception as exc:
             return DispatchResult(
-                route_id=c.route_id, status=ResultStatus.FAILURE, output="", error=str(exc)
+                route_id=rid,
+                status=ResultStatus.FAILURE,
+                output="",
+                error=str(exc),
             )
 
-    def _local_query(self, task: str, c: RouteCandidate) -> DispatchResult:
+    def _get_deferred_model(self, route_id: str) -> Optional[str]:
+        """Look up the deferred_model variable for a route from the catalog."""
+        if self._runtime is None:
+            return None
         try:
-            from tools.embeddings.query import LocalKnowledgeQuery
-            lkq = LocalKnowledgeQuery()
-            output = lkq.query(task)
-            return DispatchResult(route_id=c.route_id, status=ResultStatus.SUCCESS, output=output)
-        except Exception as exc:
-            return DispatchResult(
-                route_id=c.route_id, status=ResultStatus.FAILURE, output="", error=str(exc)
-            )
-
-    def _hybrid_research(
-        self, task: str, c: RouteCandidate, context: Optional[str]
-    ) -> DispatchResult:
-        """Local pre-process → return deferred prompt for frontier completion."""
-        from workflows.research.local import local_research_scaffold
-        local_summary = local_research_scaffold(task)
-        deferred_prompt = self._build_hybrid_prompt(task, local_summary, context)
-        return DispatchResult(
-            route_id=c.route_id,
-            status=ResultStatus.DEFERRED,
-            output=local_summary,
-            deferred_model="claude-sonnet",
-            deferred_prompt=deferred_prompt,
-        )
+            assembled = self._runtime.assemble_definition_frame(route_id)
+            value = assembled.variables.get("deferred_model") or ""
+            return str(value) if value else None
+        except Exception:
+            return None
 
     # ------------------------------------------------------------------
     # Frontier / agent deferral
     # ------------------------------------------------------------------
 
     def _defer_to_frontier(
-        self, task: str, c: RouteCandidate, context: Optional[str]
+        self,
+        task: str,
+        candidate: RouteCandidate,
+        context: Optional[str],
+        deferred_model: str,
     ) -> DispatchResult:
         """
         Build a frontier prompt and return a DEFERRED result.
         The MCP client or agent is responsible for making the actual API call.
         """
-        model = self._select_model(c)
         prompt = self._build_frontier_prompt(task, context)
         return DispatchResult(
-            route_id=c.route_id,
+            route_id=candidate.route_id,
             status=ResultStatus.DEFERRED,
-            output=f"[Deferred to {model}]\n\n{prompt}",
-            deferred_model=model,
+            output=f"[Deferred to {deferred_model}]\n\n{prompt}",
+            deferred_model=deferred_model,
             deferred_prompt=prompt,
         )
-
-    @staticmethod
-    def _select_model(c: RouteCandidate) -> str:
-        if "claude" in c.route_id:
-            return "claude-sonnet-4-6"
-        elif "gemini" in c.route_id:
-            return "gemini-2.0-flash"
-        elif "codex" in c.route_id:
-            return "gpt-4o"
-        return "claude-sonnet-4-6"  # default
 
     @staticmethod
     def _build_frontier_prompt(task: str, context: Optional[str]) -> str:
@@ -268,30 +244,3 @@ class Dispatcher:
             parts.append(f"## Local Context\n\n{context}\n")
         parts.append(f"## Task\n\n{task}")
         return "\n".join(parts)
-
-    @staticmethod
-    def _build_hybrid_prompt(task: str, local_summary: str, context: Optional[str]) -> str:
-        parts = []
-        if context:
-            parts.append(f"## Local Knowledge Base Context\n\n{context}\n")
-        parts.append(f"## Local Pre-processed Summary\n\n{local_summary}\n")
-        parts.append(f"## Original Task\n\n{task}")
-        return "\n".join(parts)
-
-
-if __name__ == "__main__":
-    from router.classifier import Classifier
-    from router.scorer import Scorer
-
-    clf = Classifier()
-    scorer = Scorer()
-    dispatcher = Dispatcher()
-
-    task = "Run pytest and tell me what's failing"
-    profile = clf.classify(task)
-    candidates = scorer.score(profile)
-    result = dispatcher.dispatch(task=task, candidates=candidates)
-
-    print(f"Route: {result.route_id}")
-    print(f"Status: {result.status.value}")
-    print(f"Output:\n{result.output[:500]}")
