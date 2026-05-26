@@ -1,0 +1,163 @@
+- id: embeddings.sweep
+  title: Sweep and embed project files into the vector store
+  description: |-
+    Walk *source_dir*, chunk every indexable file, generate embeddings via the
+    local Ollama harness, upsert changed chunks into LanceDB, and persist an
+    MD5 manifest so unchanged files are skipped on subsequent runs.
+
+    Equivalent to the old ``tasks.embeddings.sweep.sweep()`` function, but
+    expressed as a YAML workflow so it can be scheduled, composed, and
+    dry-run through the standard YAML runtime.
+  tags: [workflow]
+  extends: stdlib.base
+  inputs:
+    source_dir:
+      type: string
+      description: Root directory to sweep. Defaults to the repo root.
+      default: ""
+    manifest_path:
+      type: string
+      description: >-
+        Path to the JSON manifest file that tracks file hashes.
+        Defaults to 14_data/cache/embeddings/sweep_manifest.json under the repo root.
+      default: ""
+    force:
+      type: boolean
+      description: Re-embed all files even if unchanged.
+      default: false
+    clear:
+      type: boolean
+      description: Drop the entire vector store before sweeping.
+      default: false
+    dry_run:
+      type: boolean
+      description: Print what would be processed without writing to the store.
+      default: false
+    verbose:
+      type: boolean
+      description: Print per-chunk progress.
+      default: false
+  run:
+    python: |
+      import os
+      import time
+
+      from core.environment import REPO_ROOT as _REPO_ROOT
+      from drivers.vector.lancedb_driver import LanceStore
+      from tasks.embeddings.chunker import chunk_file
+      from tasks.embeddings.embedder import Embedder, EmbedderUnavailable
+      from tasks.embeddings.sweep import (
+          collect_files,
+          file_hash,
+          load_manifest,
+          save_manifest,
+      )
+
+      # ------------------------------------------------------------------
+      # Resolve inputs
+      # ------------------------------------------------------------------
+      _target_dir = source_dir if source_dir else str(_REPO_ROOT)
+      _manifest_path = manifest_path if manifest_path else os.path.join(
+          str(_REPO_ROOT), "14_data", "cache", "embeddings", "sweep_manifest.json"
+      )
+
+      print(f"[Sweep] Target: {_target_dir}")
+      print(
+          f"[Sweep] Mode: {'dry-run' if dry_run else 'live'}"
+          + (" | force-reindex" if force else "")
+          + (" | clear-store" if clear else "")
+      )
+
+      # ------------------------------------------------------------------
+      # Initialise
+      # ------------------------------------------------------------------
+      t0 = time.time()
+      store = LanceStore()
+      embedder = Embedder()
+      manifest = load_manifest(_manifest_path)
+
+      if clear and not dry_run:
+          store.clear()
+          manifest = {}
+          print("[Sweep] Store cleared.")
+
+      files = collect_files(_target_dir)
+      print(f"[Sweep] Found {len(files)} indexable files.")
+
+      stats = {
+          "files_scanned": len(files),
+          "files_changed": 0,
+          "chunks_added": 0,
+          "skipped": 0,
+          "errors": 0,
+          "elapsed_sec": 0.0,
+      }
+
+      # ------------------------------------------------------------------
+      # Main loop: hash → skip-if-unchanged → chunk → embed → upsert
+      # ------------------------------------------------------------------
+      for path in files:
+          try:
+              fhash = file_hash(path)
+          except OSError as exc:
+              print(f"[Sweep] ERROR reading {path}: {exc}")
+              stats["errors"] += 1
+              continue
+
+          rel = os.path.relpath(path, _target_dir)
+
+          if not force and manifest.get(path) == fhash:
+              stats["skipped"] += 1
+              if verbose:
+                  print(f"[Sweep] SKIP (unchanged): {rel}")
+              continue
+
+          stats["files_changed"] += 1
+          print(f"[Sweep] Processing: {rel}")
+
+          if dry_run:
+              chunks = chunk_file(path)
+              print(f"  → would embed {len(chunks)} chunks")
+              continue
+
+          chunks = chunk_file(path)
+          if not chunks:
+              manifest[path] = fhash
+              continue
+
+          if manifest.get(path):
+              store.delete_source(os.path.abspath(path))
+
+          try:
+              chunks = embedder.embed_chunks(chunks, verbose=verbose)
+          except EmbedderUnavailable as exc:
+              print(f"[Sweep] ABORT — Embedder unavailable: {exc}")
+              print("[Sweep] Make sure Ollama is running: ollama serve")
+              stats["elapsed_sec"] = time.time() - t0
+              break
+
+          added = store.add(chunks)
+          stats["chunks_added"] += added
+          manifest[path] = fhash
+
+          if verbose:
+              print(f"  → added {added} chunks")
+
+      # ------------------------------------------------------------------
+      # Finalise
+      # ------------------------------------------------------------------
+      if not dry_run:
+          save_manifest(_manifest_path, manifest)
+          embedder.flush_cache()
+
+      stats["elapsed_sec"] = round(time.time() - t0, 2)
+
+      print("\n" + "=" * 50)
+      print("[Sweep] Summary")
+      print(f"  Files scanned : {stats['files_scanned']}")
+      print(f"  Files changed : {stats['files_changed']}")
+      print(f"  Chunks added  : {stats['chunks_added']}")
+      print(f"  Skipped       : {stats['skipped']}")
+      print(f"  Errors        : {stats['errors']}")
+      print(f"  Elapsed       : {stats['elapsed_sec']}s")
+      print("=" * 50)
