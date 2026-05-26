@@ -28,9 +28,9 @@ def yaml_node(
     Example:
         runtime = Runtime(workflow_dir="02_core/runtimes/yaml")
         runtime.import_yaml("02_core/runtimes/yaml/definitions/stdlib.yaml")
-        runtime.execute("stdlib.load-modules", {})
+        runtime.execute("stdlib.load-modules.workflow", {})
         node_fn = yaml_node(
-            "stdlib.logger",
+            "stdlib.logger.task",
             input_keys=["message", "level"],
             output_key="logger_result",
             runtime=runtime,

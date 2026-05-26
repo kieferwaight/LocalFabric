@@ -17,7 +17,7 @@ Two former occupants moved out:
   :mod:`core.runtimes.markdown` alongside the YAML runtime and the
   LangGraph runtime, since all three normalise to YAML.
 - Docker service lifecycle is no longer a Python harness — the
-  docker.base / compose.up / compose.down YAML definitions own that
+  docker.base / compose.up.task / compose.down.task YAML definitions own that
   role (see 02_core/runtimes/yaml/definitions/docker.yaml).
 """
 

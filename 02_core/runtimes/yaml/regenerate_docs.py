@@ -46,8 +46,8 @@ def main(argv: list[str] | None = None) -> int:
     # available before any bucket file references them.
     defs_dir = REPO_ROOT / "02_core" / "runtimes" / "yaml" / "definitions"
     runtime.import_yaml(str(defs_dir / "stdlib.yaml"))
-    runtime.execute("stdlib.load-modules", {})
-    # schemas.yaml is not a module of stdlib.load-modules; load explicitly.
+    runtime.execute("stdlib.load-modules.workflow", {})
+    # schemas.yaml is not a module of stdlib.load-modules.workflow; load explicitly.
     runtime.import_yaml(str(defs_dir / "schemas.yaml"))
 
     markdown_harness = MarkdownHarness(runtime=runtime)

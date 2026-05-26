@@ -22,7 +22,7 @@ input that they resolve to a label via the catalog.
 | Extends | [Abstract Base](stdlib.base.definition.md) |
 | Mixins | - |
 | Children | - |
-| Mixin consumers | [Ollama Service (launchd backend)](service.ollama.definition.md), [Caffeinate Service (launchd backend)](service.caffeinate.definition.md), [LM Studio Service (launchd backend)](service.lm-studio.definition.md) |
+| Mixin consumers | [Ollama Service (launchd backend)](service.ollama.service.definition.md), [Caffeinate Service (launchd backend)](service.caffeinate.service.definition.md), [LM Studio Service (launchd backend)](service.lm-studio.service.definition.md) |
 | Modules | - |
 
 ```mermaid
@@ -45,7 +45,7 @@ def_service_launchd_mixin --> def_stdlib_base["Abstract Base"]
 
 | Name | YAML Type | Value / Template | Description |
 | --- | --- | --- | --- |
-| `action_to_def` | `dict` | `{'start': 'launchd.start', 'stop': 'launchd.stop', 'enable': 'launchd.enable', 'disable': 'launchd.disable', 'install': 'launchd.install', 'uninstall': 'launchd.uninstall', 'status': 'launchd.status'}` | - |
+| `action_to_def` | `dict` | `{'start': 'launchd.start.task', 'stop': 'launchd.stop.task', 'enable': 'launchd.enable.task', 'disable': 'launchd.disable.task', 'install': 'launchd.install.task', 'uninstall': 'launchd.uninstall.task', 'status': 'launchd.status.task'}` | - |
 | `action_arguments` | `dict` | `{'start': {'definition': '{{ target }}'}, 'stop': {'definition': '{{ target }}'}, 'enable': {'definition': '{{ target }}'}, 'disable': {'definition': '{{ target }}'}, 'install': {'definition': '{{ target }}'}, 'uninstall': {'definition': '{{ target }}'}, 'status': {'definition': '{{ target }}'}}` | - |
 
 
@@ -71,7 +71,7 @@ _No locally declared teardown operations._
 | Name | Value / Template | Origin |
 | --- | --- | --- |
 | `system_log_format` | `[{{ entity_id }} \| {{ runtime.version }}]` | [Abstract Base](stdlib.base.definition.md) |
-| `action_to_def` | `{'start': 'launchd.start', 'stop': 'launchd.stop', 'enable': 'launchd.enable', 'disable': 'launchd.disable', 'install': 'launchd.install', 'uninstall': 'launchd.uninstall', 'status': 'launchd.status'}` | [Launchd Backend Action Map](service.launchd.mixin.definition.md) |
+| `action_to_def` | `{'start': 'launchd.start.task', 'stop': 'launchd.stop.task', 'enable': 'launchd.enable.task', 'disable': 'launchd.disable.task', 'install': 'launchd.install.task', 'uninstall': 'launchd.uninstall.task', 'status': 'launchd.status.task'}` | [Launchd Backend Action Map](service.launchd.mixin.definition.md) |
 | `action_arguments` | `{'start': {'definition': '{{ target }}'}, 'stop': {'definition': '{{ target }}'}, 'enable': {'definition': '{{ target }}'}, 'disable': {'definition': '{{ target }}'}, 'install': {'definition': '{{ target }}'}, 'uninstall': {'definition': '{{ target }}'}, 'status': {'definition': '{{ target }}'}}` | [Launchd Backend Action Map](service.launchd.mixin.definition.md) |
 
 

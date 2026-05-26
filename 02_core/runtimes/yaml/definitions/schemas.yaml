@@ -11,7 +11,7 @@
     type: object
     additionalProperties: false
 
-- id: schemas.generate-json
+- id: schemas.generate-json.workflow
   title: Generate Schema JSON
   description: |
     Emits one `.json` file per definition that declares a `schema:` block, by

@@ -1,4 +1,4 @@
-- id: stdlib.git.init-current-workspace
+- id: stdlib.git.init-current-workspace.task
   title: Initialize Current Git Workspace
   description: |
     Initializes the current working directory as a Git repository when needed.
@@ -21,12 +21,12 @@
           git -C "{{ repository_path }}" init -b "{{ initial_branch }}"
         fi
 
-- id: stdlib.git.gitignore-python
+- id: stdlib.git.gitignore-python.task
   title: Write Python Gitignore
   description: |
     Writes a Python-oriented `.gitignore` into the current workspace.
   tags: [git, files, templates]
-  extends: stdlib.files.write-text
+  extends: stdlib.files.write-text.task
   variables:
     target_path: "{{ env.cwd }}/.gitignore"
     content: |
@@ -55,7 +55,7 @@
       target_path: Destination `.gitignore` path.
       content: Standard Python ignore patterns.
 
-- id: stdlib.git.create-github-repository
+- id: stdlib.git.create-github-repository.task
   title: Create GitHub Repository
   description: |
     Creates an `origin` GitHub repository through an authenticated GitHub CLI.

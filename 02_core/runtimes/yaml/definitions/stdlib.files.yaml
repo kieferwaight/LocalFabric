@@ -1,4 +1,4 @@
-- id: stdlib.files.write-text
+- id: stdlib.files.write-text.task
   title: Write Text File
   description: |
     Writes rendered UTF-8 text and restores escaped template markers.
@@ -22,7 +22,7 @@
         content: "{{ content }}"
         restore_template_markers: true
 
-- id: stdlib.files.create-directory
+- id: stdlib.files.create-directory.task
   title: Create Directory
   description: |
     Creates a directory and any missing parent directories.
@@ -41,10 +41,10 @@
         action: create_directory
         target_path: "{{ directory_path }}"
 
-- id: stdlib.files.write
+- id: stdlib.files.write.task
   title: Write Text File (input form)
   description: |
-    Input-driven sibling of `stdlib.files.write-text`. Designed to be invoked
+    Input-driven sibling of `stdlib.files.write-text.task`. Designed to be invoked
     with `arguments:` so callers can pass `target_path` and `content` per
     iteration (e.g. inside a `for_each` loop). The variable-based
     `write-text` definition cannot receive values through invoke arguments,

@@ -17,7 +17,7 @@ Initializes local Git files and creates a matching remote GitHub repository.
 | Relation | Definitions |
 | --- | --- |
 | Extends | - |
-| Mixins | [Initialize Current Git Workspace](stdlib.git.init-current-workspace.definition.md), [Write Python Gitignore](stdlib.git.gitignore-python.definition.md), [Create GitHub Repository](stdlib.git.create-github-repository.definition.md) |
+| Mixins | [Initialize Current Git Workspace](stdlib.git.init-current-workspace.task.definition.md), [Write Python Gitignore](stdlib.git.gitignore-python.task.definition.md), [Create GitHub Repository](stdlib.git.create-github-repository.task.definition.md) |
 | Children | - |
 | Mixin consumers | - |
 | Modules | - |
@@ -25,9 +25,9 @@ Initializes local Git files and creates a matching remote GitHub repository.
 ```mermaid
 flowchart LR
   def_git_github["GitHub Repository Example"]
-def_git_github -.-> def_stdlib_git_init_current_workspace["Initialize Current Git Workspace"]
-def_git_github -.-> def_stdlib_git_gitignore_python["Write Python Gitignore"]
-def_git_github -.-> def_stdlib_git_create_github_repository["Create GitHub Repository"]
+def_git_github -.-> def_stdlib_git_init_current_workspace_task["Initialize Current Git Workspace"]
+def_git_github -.-> def_stdlib_git_gitignore_python_task["Write Python Gitignore"]
+def_git_github -.-> def_stdlib_git_create_github_repository_task["Create GitHub Repository"]
 ```
 
 
@@ -61,9 +61,9 @@ _No locally declared teardown operations._
 
 | Name | Type | Required | Default | Origin |
 | --- | --- | --- | --- | --- |
-| `repository_name` | `string` | yes | `-` | [Create GitHub Repository](stdlib.git.create-github-repository.definition.md) |
-| `visibility` | `string` | no | `private` | [Create GitHub Repository](stdlib.git.create-github-repository.definition.md) |
-| `description` | `string` | no | `Created from a LocalFabric YAML example.` | [Create GitHub Repository](stdlib.git.create-github-repository.definition.md) |
+| `repository_name` | `string` | yes | `-` | [Create GitHub Repository](stdlib.git.create-github-repository.task.definition.md) |
+| `visibility` | `string` | no | `private` | [Create GitHub Repository](stdlib.git.create-github-repository.task.definition.md) |
+| `description` | `string` | no | `Created from a LocalFabric YAML example.` | [Create GitHub Repository](stdlib.git.create-github-repository.task.definition.md) |
 
 
 ### Effective Variables
@@ -71,16 +71,16 @@ _No locally declared teardown operations._
 | Name | Value / Template | Origin |
 | --- | --- | --- |
 | `system_log_format` | `[{{ entity_id }} \| {{ runtime.version }}]` | [Abstract Base](stdlib.base.definition.md) |
-| `repository_path` | `{{ env.cwd }}` | [Create GitHub Repository](stdlib.git.create-github-repository.definition.md) |
-| `initial_branch` | `main` | [Initialize Current Git Workspace](stdlib.git.init-current-workspace.definition.md) |
-| `target_path` | `{{ env.cwd }}/.gitignore` | [Write Python Gitignore](stdlib.git.gitignore-python.definition.md) |
-| `content` | `# Python __pycache__/ *.py[cod] *.egg-info/ .pytest_cache/ .mypy_cache/ .ruff_cache/ .venv/ venv/  # Editors and operating system files .DS_Store .idea/ .vscode/  # Local secrets and output .env .env.* dist/ build/ ` | [Write Python Gitignore](stdlib.git.gitignore-python.definition.md) |
+| `repository_path` | `{{ env.cwd }}` | [Create GitHub Repository](stdlib.git.create-github-repository.task.definition.md) |
+| `initial_branch` | `main` | [Initialize Current Git Workspace](stdlib.git.init-current-workspace.task.definition.md) |
+| `target_path` | `{{ env.cwd }}/.gitignore` | [Write Python Gitignore](stdlib.git.gitignore-python.task.definition.md) |
+| `content` | `# Python __pycache__/ *.py[cod] *.egg-info/ .pytest_cache/ .mypy_cache/ .ruff_cache/ .venv/ venv/  # Editors and operating system files .DS_Store .idea/ .vscode/  # Local secrets and output .env .env.* dist/ build/ ` | [Write Python Gitignore](stdlib.git.gitignore-python.task.definition.md) |
 
 
 ### Effective Lifecycle
 
 | Phase | Operation | Origin |
 | --- | --- | --- |
-| Run | `bash` | [Initialize Current Git Workspace](stdlib.git.init-current-workspace.definition.md) |
-| Run | `artifact` | [Write Text File](stdlib.files.write-text.definition.md) |
-| Run | `bash` | [Create GitHub Repository](stdlib.git.create-github-repository.definition.md) |
+| Run | `bash` | [Initialize Current Git Workspace](stdlib.git.init-current-workspace.task.definition.md) |
+| Run | `artifact` | [Write Text File](stdlib.files.write-text.task.definition.md) |
+| Run | `bash` | [Create GitHub Repository](stdlib.git.create-github-repository.task.definition.md) |

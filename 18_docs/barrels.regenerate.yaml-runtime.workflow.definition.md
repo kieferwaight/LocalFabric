@@ -56,7 +56,7 @@ _No operation description provided._
 
 ```invoke
 invoke:
-  definition: stdlib.python.barrel
+  definition: stdlib.python.barrel.task
   arguments:
     package_dir: '{{ runtime.workflow_dir }}/src'
     package_doc: YAML-driven polyglot abstract state machine runtime.
@@ -69,7 +69,7 @@ _No operation description provided._
 
 ```invoke
 invoke:
-  definition: stdlib.python.barrel
+  definition: stdlib.python.barrel.task
   arguments:
     package_dir: '{{ runtime.workflow_dir }}'
     package_doc: "YAML polyglot runtime \u2014 public surface for `workflows.yaml`."

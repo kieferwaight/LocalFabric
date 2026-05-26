@@ -29,7 +29,7 @@ to pass through.
 | --- | --- |
 | Extends | [Abstract Base](stdlib.base.definition.md) |
 | Mixins | - |
-| Children | [Ollama Service (launchd backend)](service.ollama.definition.md), [Caffeinate Service (launchd backend)](service.caffeinate.definition.md), [LM Studio Service (launchd backend)](service.lm-studio.definition.md), [Postgres Service (docker backend)](service.postgres.definition.md), [Redis Service (docker backend)](service.redis.definition.md), [Neo4j Service (docker backend)](service.neo4j.definition.md) |
+| Children | [Ollama Service (launchd backend)](service.ollama.service.definition.md), [Caffeinate Service (launchd backend)](service.caffeinate.service.definition.md), [LM Studio Service (launchd backend)](service.lm-studio.service.definition.md), [Postgres Service (docker backend)](service.postgres.service.definition.md), [Redis Service (docker backend)](service.redis.service.definition.md), [Neo4j Service (docker backend)](service.neo4j.service.definition.md) |
 | Mixin consumers | - |
 | Modules | - |
 
@@ -37,12 +37,12 @@ to pass through.
 flowchart LR
   def_service_base["Service Abstraction Base"]
 def_service_base --> def_stdlib_base["Abstract Base"]
-def_service_ollama["Ollama Service (launchd backend)"] --> def_service_base
-def_service_caffeinate["Caffeinate Service (launchd backend)"] --> def_service_base
-def_service_lm_studio["LM Studio Service (launchd backend)"] --> def_service_base
-def_service_postgres["Postgres Service (docker backend)"] --> def_service_base
-def_service_redis["Redis Service (docker backend)"] --> def_service_base
-def_service_neo4j["Neo4j Service (docker backend)"] --> def_service_base
+def_service_ollama_service["Ollama Service (launchd backend)"] --> def_service_base
+def_service_caffeinate_service["Caffeinate Service (launchd backend)"] --> def_service_base
+def_service_lm_studio_service["LM Studio Service (launchd backend)"] --> def_service_base
+def_service_postgres_service["Postgres Service (docker backend)"] --> def_service_base
+def_service_redis_service["Redis Service (docker backend)"] --> def_service_base
+def_service_neo4j_service["Neo4j Service (docker backend)"] --> def_service_base
 ```
 
 

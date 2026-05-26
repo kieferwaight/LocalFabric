@@ -42,7 +42,7 @@ def _load_runtime():
 
     r = Runtime(workflow_dir=str(_YAML_RUNTIME_DIR))
     r.import_yaml(str(_STDLIB_YAML))
-    r.execute("stdlib.load-modules", {})
+    r.execute("stdlib.load-modules.workflow", {})
     return r
 
 

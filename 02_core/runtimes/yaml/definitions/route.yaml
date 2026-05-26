@@ -48,7 +48,7 @@
         FRONTIER, the dispatcher returns a DEFERRED result with this model
         so the calling agent can invoke it directly.
 
-- id: route.echo
+- id: route.echo.route
   title: Echo Route (smoke test)
   description: |
     Trivial route that echoes its task input — exists so the router can

@@ -1,7 +1,7 @@
 # 15_examples/
 
 Example and demo YAML definitions showing how to compose the YAML runtime. These files
-are NOT auto-loaded by `stdlib.load-modules`; load them explicitly via `modules:` or
+are NOT auto-loaded by `stdlib.load-modules.workflow`; load them explicitly via `modules:` or
 `runtime.import_yaml(...)` when exercising examples.
 
 | File | What it shows |

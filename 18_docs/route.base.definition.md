@@ -29,7 +29,7 @@ winner via `runtime.execute(route_id, arguments={"task": <text>,
 | --- | --- |
 | Extends | [Abstract Base](stdlib.base.definition.md) |
 | Mixins | - |
-| Children | [Echo Route (smoke test)](route.echo.definition.md) |
+| Children | [Echo Route (smoke test)](route.echo.route.definition.md) |
 | Mixin consumers | - |
 | Modules | - |
 
@@ -37,7 +37,7 @@ winner via `runtime.execute(route_id, arguments={"task": <text>,
 flowchart LR
   def_route_base["Routable Definition Base"]
 def_route_base --> def_stdlib_base["Abstract Base"]
-def_route_echo["Echo Route (smoke test)"] --> def_route_base
+def_route_echo_route["Echo Route (smoke test)"] --> def_route_base
 ```
 
 

@@ -3,7 +3,7 @@
   description: |
     Creates a starter daily-note Markdown template beneath an Obsidian folder.
   tags: [example, obsidian, templates]
-  extends: stdlib.files.write-text
+  extends: stdlib.files.write-text.task
   inputs:
     obsidian_folder:
       type: "string"

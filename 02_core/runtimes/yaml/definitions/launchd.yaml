@@ -22,7 +22,7 @@
     run_at_load: true
     keep_alive: true
 
-- id: launchd.generate-plist
+- id: launchd.generate-plist.workflow
   title: Generate launchd Plists
   description: |
     Emits one `.plist` file per definition that declares a `launchd:` block, by
@@ -69,7 +69,7 @@
 #
 # `install` / `uninstall` additionally need the path to the rendered
 # `.plist`. By default we look under `09_launchd/<definition-id>.plist`,
-# matching `launchd.generate-plist`'s default output layout.
+# matching `launchd.generate-plist.workflow`'s default output layout.
 # ---------------------------------------------------------------------------
 
 - id: launchd.lifecycle.base
@@ -80,7 +80,7 @@
     `resolved_label` variable so concrete lifecycle definitions only declare
     their `command:` payload.
   tags: [launchd, lifecycle, abstract]
-  extends: stdlib.run-command
+  extends: stdlib.run-command.task
   inputs:
     definition:
       type: string
@@ -98,7 +98,7 @@
     variables:
       resolved_label: Effective launchctl label — either looked up from `definition` or copied from `label`.
 
-- id: launchd.install
+- id: launchd.install.task
   title: Install LaunchAgent
   description: |
     Copies the rendered `.plist` into `~/Library/LaunchAgents/` and
@@ -120,7 +120,7 @@
       launchctl bootout "gui/$UID/{{ resolved_label }}" 2>/dev/null || true
       launchctl bootstrap "gui/$UID" "$HOME/Library/LaunchAgents/{{ resolved_label }}.plist"
 
-- id: launchd.uninstall
+- id: launchd.uninstall.task
   title: Uninstall LaunchAgent
   description: |
     Boots the job out of the user GUI domain and removes its `.plist` from
@@ -133,7 +133,7 @@
       launchctl bootout "gui/$UID/{{ resolved_label }}" 2>/dev/null || true
       rm -f "$HOME/Library/LaunchAgents/{{ resolved_label }}.plist"
 
-- id: launchd.enable
+- id: launchd.enable.task
   title: Enable LaunchAgent
   description: |
     Marks the job as enabled in the user GUI domain so it loads at login
@@ -143,38 +143,38 @@
   variables:
     command: "launchctl enable gui/$UID/{{ resolved_label }}"
 
-- id: launchd.disable
+- id: launchd.disable.task
   title: Disable LaunchAgent
   description: |
     Marks the job as disabled in the user GUI domain. Disabled jobs persist
-    across reboots and bootstraps until `launchd.enable` is invoked.
+    across reboots and bootstraps until `launchd.enable.task` is invoked.
   tags: [launchd, lifecycle]
   extends: launchd.lifecycle.base
   variables:
     command: "launchctl disable gui/$UID/{{ resolved_label }}"
 
-- id: launchd.start
+- id: launchd.start.task
   title: Start LaunchAgent
   description: |
     Kickstarts the job immediately. With `-k`, an already-running job is
     restarted (functions as a "reload"). The job must already be loaded
-    (`launchd.install`) for this to succeed.
+    (`launchd.install.task`) for this to succeed.
   tags: [launchd, lifecycle]
   extends: launchd.lifecycle.base
   variables:
     command: "launchctl kickstart -k gui/$UID/{{ resolved_label }}"
 
-- id: launchd.stop
+- id: launchd.stop.task
   title: Stop LaunchAgent
   description: |
     Sends SIGTERM to the running job. The job remains loaded — use
-    `launchd.uninstall` to fully remove it.
+    `launchd.uninstall.task` to fully remove it.
   tags: [launchd, lifecycle]
   extends: launchd.lifecycle.base
   variables:
     command: "launchctl kill SIGTERM gui/$UID/{{ resolved_label }}"
 
-- id: launchd.status
+- id: launchd.status.task
   title: Print LaunchAgent Status
   description: |
     Prints launchd's view of the job (last exit code, run count, current
@@ -185,4 +185,4 @@
   variables:
     command: |
       launchctl print "gui/$UID/{{ resolved_label }}" 2>/dev/null \
-        || echo "launchd job '{{ resolved_label }}' is not loaded (install with launchd.install)"
+        || echo "launchd job '{{ resolved_label }}' is not loaded (install with launchd.install.task)"

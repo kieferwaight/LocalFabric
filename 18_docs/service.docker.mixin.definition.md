@@ -16,7 +16,7 @@ derive as `14_data/<target-flat>/`.
 
 Note: docker has no "enable"/"disable" concept (compose services
 are always reachable once their compose file exists), so those verbs
-map to no-ops via a `stdlib.logger` invocation that records the no-op.
+map to no-ops via a `stdlib.logger.task` invocation that records the no-op.
 
 
 ## Relationships
@@ -26,7 +26,7 @@ map to no-ops via a `stdlib.logger` invocation that records the no-op.
 | Extends | [Abstract Base](stdlib.base.definition.md) |
 | Mixins | - |
 | Children | - |
-| Mixin consumers | [Postgres Service (docker backend)](service.postgres.definition.md), [Redis Service (docker backend)](service.redis.definition.md), [Neo4j Service (docker backend)](service.neo4j.definition.md) |
+| Mixin consumers | [Postgres Service (docker backend)](service.postgres.service.definition.md), [Redis Service (docker backend)](service.redis.service.definition.md), [Neo4j Service (docker backend)](service.neo4j.service.definition.md) |
 | Modules | - |
 
 ```mermaid
@@ -49,7 +49,7 @@ def_service_docker_mixin --> def_stdlib_base["Abstract Base"]
 
 | Name | YAML Type | Value / Template | Description |
 | --- | --- | --- | --- |
-| `action_to_def` | `dict` | `{'start': 'compose.up', 'stop': 'compose.down', 'status': 'compose.status', 'install': 'compose.up', 'uninstall': 'compose.down', 'enable': 'stdlib.logger', 'disable': 'stdlib.logger'}` | - |
+| `action_to_def` | `dict` | `{'start': 'compose.up.task', 'stop': 'compose.down.task', 'status': 'compose.status.task', 'install': 'compose.up.task', 'uninstall': 'compose.down.task', 'enable': 'stdlib.logger.task', 'disable': 'stdlib.logger.task'}` | - |
 | `action_arguments` | `dict` | `{'start': {'target_dir': "14_data/{{ target \| replace('.service', '') \| replace('.', '_') }}"}, 'stop': {'target_dir': "14_data/{{ target \| replace('.service', '') \| replace('.', '_') }}"}, 'status': {'target_dir': "14_data/{{ target \| replace('.service', '') \| replace('.', '_') }}"}, 'install': {'target_dir': "14_data/{{ target \| replace('.service', '') \| replace('.', '_') }}"}, 'uninstall': {'target_dir': "14_data/{{ target \| replace('.service', '') \| replace('.', '_') }}"}, 'enable': {'message': 'docker backend: enable is a no-op', 'level': 'INFO'}, 'disable': {'message': 'docker backend: disable is a no-op', 'level': 'INFO'}}` | - |
 
 
@@ -75,7 +75,7 @@ _No locally declared teardown operations._
 | Name | Value / Template | Origin |
 | --- | --- | --- |
 | `system_log_format` | `[{{ entity_id }} \| {{ runtime.version }}]` | [Abstract Base](stdlib.base.definition.md) |
-| `action_to_def` | `{'start': 'compose.up', 'stop': 'compose.down', 'status': 'compose.status', 'install': 'compose.up', 'uninstall': 'compose.down', 'enable': 'stdlib.logger', 'disable': 'stdlib.logger'}` | [Docker Backend Action Map](service.docker.mixin.definition.md) |
+| `action_to_def` | `{'start': 'compose.up.task', 'stop': 'compose.down.task', 'status': 'compose.status.task', 'install': 'compose.up.task', 'uninstall': 'compose.down.task', 'enable': 'stdlib.logger.task', 'disable': 'stdlib.logger.task'}` | [Docker Backend Action Map](service.docker.mixin.definition.md) |
 | `action_arguments` | `{'start': {'target_dir': "14_data/{{ target \| replace('.service', '') \| replace('.', '_') }}"}, 'stop': {'target_dir': "14_data/{{ target \| replace('.service', '') \| replace('.', '_') }}"}, 'status': {'target_dir': "14_data/{{ target \| replace('.service', '') \| replace('.', '_') }}"}, 'install': {'target_dir': "14_data/{{ target \| replace('.service', '') \| replace('.', '_') }}"}, 'uninstall': {'target_dir': "14_data/{{ target \| replace('.service', '') \| replace('.', '_') }}"}, 'enable': {'message': 'docker backend: enable is a no-op', 'level': 'INFO'}, 'disable': {'message': 'docker backend: disable is a no-op', 'level': 'INFO'}}` | [Docker Backend Action Map](service.docker.mixin.definition.md) |
 
 

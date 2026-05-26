@@ -14,7 +14,7 @@
         to the workflow's own `src/` (resolved via the runtime's
         `workflow_dir` anchor, so it's independent of shell cwd).
 
-- id: stdlib.analysis.snapshot
+- id: stdlib.analysis.snapshot.task
   title: Write Analysis Snapshot
   description: |
     Walks every tracked/untracked file in this workflow and emits a JSONL
@@ -40,7 +40,7 @@
         count = write_snapshot(Path("{{ output_path }}"))
         print(f"wrote {count} records to {{ output_path }}")
 
-- id: stdlib.analysis.verify-references
+- id: stdlib.analysis.verify-references.task
   title: Verify Definition References
   description: |
     Pre-runtime safety net: fails the workflow if any `extends`, `mixins`,

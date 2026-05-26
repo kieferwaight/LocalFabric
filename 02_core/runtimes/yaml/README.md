@@ -27,7 +27,7 @@ python interpreter.py <yaml_file> <definition_id> [positional args] [--key=value
 
 - [definitions/stdlib.yaml](definitions/stdlib.yaml) is auto-imported before any
   user file. It defines the `stdlib.base` abstract frame and
-  `stdlib.load-modules`, which pulls in the namespaced standard library modules.
+  `stdlib.load-modules.workflow`, which pulls in the namespaced standard library modules.
 - The `<yaml_file>` argument is the file containing (or transitively importing)
   `<definition_id>`. Pass a path relative to this directory.
 - `--debug` prints the final scope frame as JSON to stdout.
@@ -71,18 +71,18 @@ docs/                     # Generated YAML API reference (committed)
 ## Standard Library Modules
 
 A definition can declare relative YAML dependencies with `modules:`.
-`stdlib.load-modules` uses this to keep a single default import while built-ins
+`stdlib.load-modules.workflow` uses this to keep a single default import while built-ins
 stay grouped by namespace:
 
 ```yaml
-- id: stdlib.load-modules
+- id: stdlib.load-modules.workflow
   modules:
     - stdlib.files.yaml
     - stdlib.git.yaml
     - stdlib.docs.yaml
 ```
 
-`stdlib.files.write-text` expands `[[OPEN_TEMPLATE]]` and `[[CLOSE_TEMPLATE]]`
+`stdlib.files.write-text.task` expands `[[OPEN_TEMPLATE]]` and `[[CLOSE_TEMPLATE]]`
 while writing, so examples can safely emit literal Obsidian template tokens
 through the multi-pass Jinja renderer.
 
@@ -92,7 +92,7 @@ Definitions can describe their public contract without affecting runtime
 behavior:
 
 ```yaml
-- id: stdlib.files.write-text
+- id: stdlib.files.write-text.task
   title: Write Text File
   description: |
     Writes rendered UTF-8 content to a target path.

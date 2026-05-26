@@ -19,7 +19,7 @@
       - title: Regenerate workflows.yaml bucket barrels
   run:
     - invoke:
-        definition: stdlib.python.barrel
+        definition: stdlib.python.barrel.task
         arguments:
           package_dir: "{{ runtime.workflow_dir }}/.."
           package_doc: "Workflows namespace — orchestration entry points across LangGraph, research, and the YAML polyglot runtime."
@@ -51,13 +51,13 @@
       - title: Regenerate top-level workflows.yaml barrel
   run:
     - invoke:
-        definition: stdlib.python.barrel
+        definition: stdlib.python.barrel.task
         arguments:
           package_dir: "{{ runtime.workflow_dir }}/src"
           package_doc: "YAML-driven polyglot abstract state machine runtime."
           mode: "{{ mode }}"
     - invoke:
-        definition: stdlib.python.barrel
+        definition: stdlib.python.barrel.task
         arguments:
           package_dir: "{{ runtime.workflow_dir }}"
           package_doc: "YAML polyglot runtime — public surface for `workflows.yaml`."

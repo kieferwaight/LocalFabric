@@ -103,7 +103,7 @@ def test_extends_stdlib_runs_inherited_blocks() -> None:
     harness = MarkdownHarness(runtime=runtime)
     scope = harness.execute(FIXTURES / "extends_stdlib.md")
     # The inherited run block executes `command`; scope should reflect the
-    # command's working_dir variable being bound (stdlib.run-command resolves
+    # command's working_dir variable being bound (stdlib.run-command.task resolves
     # it from env.cwd by default).
     assert scope["command"] == "echo from-stdlib"
 

@@ -15,7 +15,7 @@ disk. Children declare a local `files` variable (a list of mappings with
 `target_dir` input.
 
 `path` is interpreted relative to `target_dir`. The directory is created
-first; each file is then written via `stdlib.files.write` inside a
+first; each file is then written via `stdlib.files.write.task` inside a
 `for_each` loop. Children that need to skip a file should omit it from
 the `files` list rather than emit an empty entry.
 
@@ -64,7 +64,7 @@ _No operation description provided._
 
 ```invoke
 invoke:
-  definition: stdlib.files.create-directory
+  definition: stdlib.files.create-directory.task
   arguments:
     directory_path: '{{ target_dir }}'
 ```
@@ -75,7 +75,7 @@ _No operation description provided._
 
 ```invoke
 invoke:
-  definition: stdlib.files.write
+  definition: stdlib.files.write.task
   arguments:
     target_path: '{{ target_dir }}/{{ file.path }}'
     content: '{{ file.content }}'

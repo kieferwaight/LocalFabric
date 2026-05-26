@@ -94,7 +94,7 @@ _No operation description provided._
 
 ```invoke
 invoke:
-  definition: stdlib.docs.prune-definition-pages
+  definition: stdlib.docs.prune-definition-pages.task
   arguments:
     output_dir: '{{ output_dir }}'
     mode: '{{ mode }}'

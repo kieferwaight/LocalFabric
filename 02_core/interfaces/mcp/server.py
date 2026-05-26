@@ -61,7 +61,7 @@ def main() -> None:
 
     runtime = Runtime(workflow_dir=str(_yaml_root))
     runtime.import_yaml(str(_yaml_root / "definitions" / "stdlib.yaml"))
-    runtime.execute("stdlib.load-modules", {})
+    runtime.execute("stdlib.load-modules.workflow", {})
 
     # ------------------------------------------------------------------
     # (b) Build the command registry

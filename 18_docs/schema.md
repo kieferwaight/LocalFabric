@@ -7,7 +7,7 @@ optional and never changes execution behavior.
 ## Documented Definition
 
 ```yaml
-- id: stdlib.files.write-text
+- id: stdlib.files.write-text.task
   title: Write Text File
   description: |
     Writes rendered UTF-8 content to a target path.

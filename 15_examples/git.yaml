@@ -4,8 +4,8 @@
     Composes local repository initialization with a reusable Python gitignore.
   tags: [example, git]
   mixins:
-    - stdlib.git.init-current-workspace
-    - stdlib.git.gitignore-python
+    - stdlib.git.init-current-workspace.task
+    - stdlib.git.gitignore-python.task
 
 - id: git.github
   title: GitHub Repository Example
@@ -13,13 +13,13 @@
     Initializes local Git files and creates a matching remote GitHub repository.
   tags: [example, git, github]
   mixins:
-    - stdlib.git.init-current-workspace
-    - stdlib.git.gitignore-python
-    - stdlib.git.create-github-repository
+    - stdlib.git.init-current-workspace.task
+    - stdlib.git.gitignore-python.task
+    - stdlib.git.create-github-repository.task
 
 - id: git.gitignore
   title: Gitignore Template Example
   description: |
     Writes the standard Python `.gitignore` template in the active workspace.
   tags: [example, git, templates]
-  extends: stdlib.git.gitignore-python
+  extends: stdlib.git.gitignore-python.task

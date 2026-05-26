@@ -15,7 +15,7 @@
         import sys
         print(f"Booting execution frame cascade...")
 
-- id: stdlib.load-modules
+- id: stdlib.load-modules.workflow
   title: Load Standard Library Modules
   description: |
     Declares the namespaced standard-library modules included in every interpreter run.
@@ -39,7 +39,7 @@
   variables:
     module_namespace: "builtin"
 
-- id: stdlib.run-command
+- id: stdlib.run-command.task
   title: Run Command
   description: |
     Executes a shell command in a supplied working directory.
@@ -67,7 +67,7 @@
         cd "{{ working_dir }}"
         {{ command }}
 
-- id: stdlib.clean-workspace
+- id: stdlib.clean-workspace.task
   title: Clean Workspace
   description: |
     Removes an existing workspace directory when explicitly invoked.
@@ -88,7 +88,7 @@
           rm -rf "{{ target_path }}"
         fi
 
-- id: stdlib.logger
+- id: stdlib.logger.task
   title: Logger
   description: |
     Prints a timestamped log message.

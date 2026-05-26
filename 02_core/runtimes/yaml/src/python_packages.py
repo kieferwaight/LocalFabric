@@ -1,6 +1,6 @@
 """AST-based introspection of Python packages, for barrel `__init__.py` generation.
 
-The runtime calls this from `stdlib.python.barrel` to scan a package directory,
+The runtime calls this from `stdlib.python.barrel.task` to scan a package directory,
 read each module's `__all__`, and feed the results into a Jinja template that
 renders the package's `__init__.py`.
 

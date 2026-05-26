@@ -19,23 +19,23 @@ their `command:` payload.
 
 | Relation | Definitions |
 | --- | --- |
-| Extends | [Run Command](stdlib.run-command.definition.md) |
+| Extends | [Run Command](stdlib.run-command.task.definition.md) |
 | Mixins | - |
-| Children | [Install LaunchAgent](launchd.install.definition.md), [Uninstall LaunchAgent](launchd.uninstall.definition.md), [Enable LaunchAgent](launchd.enable.definition.md), [Disable LaunchAgent](launchd.disable.definition.md), [Start LaunchAgent](launchd.start.definition.md), [Stop LaunchAgent](launchd.stop.definition.md), [Print LaunchAgent Status](launchd.status.definition.md) |
+| Children | [Install LaunchAgent](launchd.install.task.definition.md), [Uninstall LaunchAgent](launchd.uninstall.task.definition.md), [Enable LaunchAgent](launchd.enable.task.definition.md), [Disable LaunchAgent](launchd.disable.task.definition.md), [Start LaunchAgent](launchd.start.task.definition.md), [Stop LaunchAgent](launchd.stop.task.definition.md), [Print LaunchAgent Status](launchd.status.task.definition.md) |
 | Mixin consumers | - |
 | Modules | - |
 
 ```mermaid
 flowchart LR
   def_launchd_lifecycle_base["launchd Lifecycle Base"]
-def_launchd_lifecycle_base --> def_stdlib_run_command["Run Command"]
-def_launchd_install["Install LaunchAgent"] --> def_launchd_lifecycle_base
-def_launchd_uninstall["Uninstall LaunchAgent"] --> def_launchd_lifecycle_base
-def_launchd_enable["Enable LaunchAgent"] --> def_launchd_lifecycle_base
-def_launchd_disable["Disable LaunchAgent"] --> def_launchd_lifecycle_base
-def_launchd_start["Start LaunchAgent"] --> def_launchd_lifecycle_base
-def_launchd_stop["Stop LaunchAgent"] --> def_launchd_lifecycle_base
-def_launchd_status["Print LaunchAgent Status"] --> def_launchd_lifecycle_base
+def_launchd_lifecycle_base --> def_stdlib_run_command_task["Run Command"]
+def_launchd_install_task["Install LaunchAgent"] --> def_launchd_lifecycle_base
+def_launchd_uninstall_task["Uninstall LaunchAgent"] --> def_launchd_lifecycle_base
+def_launchd_enable_task["Enable LaunchAgent"] --> def_launchd_lifecycle_base
+def_launchd_disable_task["Disable LaunchAgent"] --> def_launchd_lifecycle_base
+def_launchd_start_task["Start LaunchAgent"] --> def_launchd_lifecycle_base
+def_launchd_stop_task["Stop LaunchAgent"] --> def_launchd_lifecycle_base
+def_launchd_status_task["Print LaunchAgent Status"] --> def_launchd_lifecycle_base
 ```
 
 
@@ -70,8 +70,8 @@ _No locally declared teardown operations._
 
 | Name | Type | Required | Default | Origin |
 | --- | --- | --- | --- | --- |
-| `command` | `string` | no | `` | [Run Command](stdlib.run-command.definition.md) |
-| `working_dir` | `string` | no | `{{ env.cwd }}` | [Run Command](stdlib.run-command.definition.md) |
+| `command` | `string` | no | `` | [Run Command](stdlib.run-command.task.definition.md) |
+| `working_dir` | `string` | no | `{{ env.cwd }}` | [Run Command](stdlib.run-command.task.definition.md) |
 | `definition` | `string` | no | `` | [launchd Lifecycle Base](launchd.lifecycle.base.definition.md) |
 | `label` | `string` | no | `` | [launchd Lifecycle Base](launchd.lifecycle.base.definition.md) |
 
@@ -88,4 +88,4 @@ _No locally declared teardown operations._
 
 | Phase | Operation | Origin |
 | --- | --- | --- |
-| Run | `bash` | [Run Command](stdlib.run-command.definition.md) |
+| Run | `bash` | [Run Command](stdlib.run-command.task.definition.md) |

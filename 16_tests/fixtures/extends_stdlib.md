@@ -1,6 +1,6 @@
 ---
 id: tests.extends-stdlib
-extends: stdlib.run-command
+extends: stdlib.run-command.task
 inputs:
   command:
     default: "echo from-stdlib"
@@ -8,4 +8,4 @@ inputs:
 
 # Extends stdlib
 
-Inherits `stdlib.run-command`'s run blocks; no additional fences needed.
+Inherits `stdlib.run-command.task`'s run blocks; no additional fences needed.

@@ -43,7 +43,7 @@ class CommandRegistry:
     ----------
     runtime:
         A fully-loaded :class:`~core.runtimes.yaml.src.Runtime` instance
-        (i.e. ``stdlib.load-modules`` has already been executed so that
+        (i.e. ``stdlib.load-modules.workflow`` has already been executed so that
         ``command.yaml`` is registered).
     """
 
@@ -135,7 +135,7 @@ if __name__ == "__main__":
 
     r = Runtime(workflow_dir=str(_repo_root / "02_core/runtimes/yaml"))
     r.import_yaml(str(_repo_root / "02_core/runtimes/yaml/definitions/stdlib.yaml"))
-    r.execute("stdlib.load-modules", {})
+    r.execute("stdlib.load-modules.workflow", {})
 
     reg = CommandRegistry(r)
     for cmd in reg.iter_commands():

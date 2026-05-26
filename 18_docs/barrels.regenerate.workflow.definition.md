@@ -56,7 +56,7 @@ _No operation description provided._
 
 ```invoke
 invoke:
-  definition: stdlib.python.barrel
+  definition: stdlib.python.barrel.task
   arguments:
     package_dir: '{{ runtime.workflow_dir }}/..'
     package_doc: "Workflows namespace \u2014 orchestration entry points across LangGraph,\

@@ -76,14 +76,14 @@
       extra_files: Additional files to scaffold beside Dockerfile and compose.
       files: Combined Dockerfile + compose entries (extra_files concat happens in the loop).
 
-- id: docker.build
+- id: docker.build.task
   title: Build Docker Image
   description: |
     Builds the docker image for a `docker.base` child. Reads `image_tag`
     and `build_context` from the child's variables (or accepts overrides
-    via inputs). Wraps `stdlib.run-command`.
+    via inputs). Wraps `stdlib.run-command.task`.
   tags: [docker, build]
-  extends: stdlib.run-command
+  extends: stdlib.run-command.task
   inputs:
     image_tag:
       type: "string"
@@ -96,14 +96,14 @@
   variables:
     command: "docker build -t {{ image_tag }} {{ build_context }}"
 
-- id: compose.up
+- id: compose.up.task
   title: Docker Compose Up
   description: |
     Starts a scaffolded docker compose project in detached mode. The
     `target_dir` input must point at a folder containing a generated
     `docker-compose.yml`.
   tags: [docker, compose, lifecycle]
-  extends: stdlib.run-command
+  extends: stdlib.run-command.task
   inputs:
     target_dir:
       type: "string"
@@ -112,13 +112,13 @@
   variables:
     command: "docker compose -f {{ target_dir }}/docker-compose.yml up -d"
 
-- id: compose.down
+- id: compose.down.task
   title: Docker Compose Down
   description: |
     Stops a scaffolded docker compose project and removes its containers
     and default networks. Volumes are preserved.
   tags: [docker, compose, lifecycle]
-  extends: stdlib.run-command
+  extends: stdlib.run-command.task
   inputs:
     target_dir:
       type: "string"
@@ -127,12 +127,12 @@
   variables:
     command: "docker compose -f {{ target_dir }}/docker-compose.yml down"
 
-- id: compose.status
+- id: compose.status.task
   title: Docker Compose Status
   description: |
     Lists the running containers for a scaffolded docker compose project.
   tags: [docker, compose, lifecycle]
-  extends: stdlib.run-command
+  extends: stdlib.run-command.task
   inputs:
     target_dir:
       type: "string"
@@ -141,12 +141,12 @@
   variables:
     command: "docker compose -f {{ target_dir }}/docker-compose.yml ps"
 
-- id: compose.logs
+- id: compose.logs.task
   title: Docker Compose Logs
   description: |
     Tails the most recent logs for a scaffolded docker compose project.
   tags: [docker, compose, lifecycle]
-  extends: stdlib.run-command
+  extends: stdlib.run-command.task
   inputs:
     target_dir:
       type: "string"
@@ -160,13 +160,13 @@
   variables:
     command: "docker compose -f {{ target_dir }}/docker-compose.yml logs --tail {{ tail }}"
 
-- id: docker.generate-all
+- id: docker.generate-all.workflow
   title: Scaffold All Docker Services
   description: |
     Iterates `runtime.catalog.definitions` for every concrete docker
     service (any definition tagged `docker` but not `abstract`) and
     invokes it, scaffolding the per-service files under `output_root`.
-    Mirrors the `launchd.generate-plist` workflow.
+    Mirrors the `launchd.generate-plist.workflow` workflow.
   tags: [docker, workflow]
   extends: stdlib.base
   inputs:

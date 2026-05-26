@@ -74,7 +74,7 @@
       ]
       {% endif %}
 
-- id: stdlib.python.barrel
+- id: stdlib.python.barrel.task
   title: Generate Python Barrel
   description: |
     Scans `package_dir` for direct sibling modules and subpackages, then

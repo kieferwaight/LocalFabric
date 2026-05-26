@@ -7,12 +7,12 @@
 # backend-specific argument map from `action_arguments[action]`.
 #
 # Two mixins wire up the per-backend action maps:
-#   - service.docker.mixin  →  compose.up / compose.down / compose.status / …
-#   - service.launchd.mixin →  launchd.start / launchd.stop / launchd.status / …
+#   - service.docker.mixin  →  compose.up.task / compose.down.task / compose.status.task / …
+#   - service.launchd.mixin →  launchd.start.task / launchd.stop.task / launchd.status.task / …
 #
 # Concrete services extend service.base and include exactly one mixin:
 #
-#   - id: service.ollama
+#   - id: service.ollama.service
 #     extends: service.base
 #     mixins: [service.launchd.mixin]
 #     variables:
@@ -61,18 +61,18 @@
 
     Note: docker has no "enable"/"disable" concept (compose services
     are always reachable once their compose file exists), so those verbs
-    map to no-ops via a `stdlib.logger` invocation that records the no-op.
+    map to no-ops via a `stdlib.logger.task` invocation that records the no-op.
   tags: [service, docker, abstract]
   extends: stdlib.base
   variables:
     action_to_def:
-      start:     "compose.up"
-      stop:      "compose.down"
-      status:    "compose.status"
-      install:   "compose.up"          # docker "install" == scaffold + bring up
-      uninstall: "compose.down"
-      enable:    "stdlib.logger"
-      disable:   "stdlib.logger"
+      start:     "compose.up.task"
+      stop:      "compose.down.task"
+      status:    "compose.status.task"
+      install:   "compose.up.task"          # docker "install" == scaffold + bring up
+      uninstall: "compose.down.task"
+      enable:    "stdlib.logger.task"
+      disable:   "stdlib.logger.task"
     # Per-action arguments mapping. `target` resolves at runtime via Jinja.
     action_arguments:
       start:     {target_dir: "14_data/{{ target | replace('.service', '') | replace('.', '_') }}"}
@@ -94,13 +94,13 @@
   extends: stdlib.base
   variables:
     action_to_def:
-      start:     "launchd.start"
-      stop:      "launchd.stop"
-      enable:    "launchd.enable"
-      disable:   "launchd.disable"
-      install:   "launchd.install"
-      uninstall: "launchd.uninstall"
-      status:    "launchd.status"
+      start:     "launchd.start.task"
+      stop:      "launchd.stop.task"
+      enable:    "launchd.enable.task"
+      disable:   "launchd.disable.task"
+      install:   "launchd.install.task"
+      uninstall: "launchd.uninstall.task"
+      status:    "launchd.status.task"
     action_arguments:
       start:     {definition: "{{ target }}"}
       stop:      {definition: "{{ target }}"}
@@ -122,7 +122,7 @@
 # Launchd-backed services: ollama, caffeinate, lm-studio
 # Docker-backed services:  postgres, redis, neo4j
 
-- id: service.ollama
+- id: service.ollama.service
   title: Ollama Service (launchd backend)
   description: Local Ollama model server managed via launchd.
   tags: [service, launchd]
@@ -132,7 +132,7 @@
     backend: launchd
     target: launchd.ollama.service
 
-- id: service.caffeinate
+- id: service.caffeinate.service
   title: Caffeinate Service (launchd backend)
   description: macOS Caffeinate keep-awake daemon managed via launchd.
   tags: [service, launchd]
@@ -142,7 +142,7 @@
     backend: launchd
     target: launchd.caffeinate.service
 
-- id: service.lm-studio
+- id: service.lm-studio.service
   title: LM Studio Service (launchd backend)
   description: LM Studio local inference server managed via launchd.
   tags: [service, launchd]
@@ -152,7 +152,7 @@
     backend: launchd
     target: launchd.lm-studio.service
 
-- id: service.postgres
+- id: service.postgres.service
   title: Postgres Service (docker backend)
   description: Local Postgres database managed via docker-compose.
   tags: [service, docker]
@@ -162,7 +162,7 @@
     backend: docker
     target: docker.postgres.service
 
-- id: service.redis
+- id: service.redis.service
   title: Redis Service (docker backend)
   description: Local Redis cache managed via docker-compose.
   tags: [service, docker]
@@ -172,7 +172,7 @@
     backend: docker
     target: docker.redis.service
 
-- id: service.neo4j
+- id: service.neo4j.service
   title: Neo4j Service (docker backend)
   description: Local Neo4j graph database managed via docker-compose.
   tags: [service, docker]

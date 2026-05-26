@@ -16,7 +16,7 @@ Writes the standard Python `.gitignore` template in the active workspace.
 
 | Relation | Definitions |
 | --- | --- |
-| Extends | [Write Python Gitignore](stdlib.git.gitignore-python.definition.md) |
+| Extends | [Write Python Gitignore](stdlib.git.gitignore-python.task.definition.md) |
 | Mixins | - |
 | Children | - |
 | Mixin consumers | - |
@@ -25,7 +25,7 @@ Writes the standard Python `.gitignore` template in the active workspace.
 ```mermaid
 flowchart LR
   def_git_gitignore["Gitignore Template Example"]
-def_git_gitignore --> def_stdlib_git_gitignore_python["Write Python Gitignore"]
+def_git_gitignore --> def_stdlib_git_gitignore_python_task["Write Python Gitignore"]
 ```
 
 
@@ -67,12 +67,12 @@ _No locally declared teardown operations._
 | Name | Value / Template | Origin |
 | --- | --- | --- |
 | `system_log_format` | `[{{ entity_id }} \| {{ runtime.version }}]` | [Abstract Base](stdlib.base.definition.md) |
-| `target_path` | `{{ env.cwd }}/.gitignore` | [Write Python Gitignore](stdlib.git.gitignore-python.definition.md) |
-| `content` | `# Python __pycache__/ *.py[cod] *.egg-info/ .pytest_cache/ .mypy_cache/ .ruff_cache/ .venv/ venv/  # Editors and operating system files .DS_Store .idea/ .vscode/  # Local secrets and output .env .env.* dist/ build/ ` | [Write Python Gitignore](stdlib.git.gitignore-python.definition.md) |
+| `target_path` | `{{ env.cwd }}/.gitignore` | [Write Python Gitignore](stdlib.git.gitignore-python.task.definition.md) |
+| `content` | `# Python __pycache__/ *.py[cod] *.egg-info/ .pytest_cache/ .mypy_cache/ .ruff_cache/ .venv/ venv/  # Editors and operating system files .DS_Store .idea/ .vscode/  # Local secrets and output .env .env.* dist/ build/ ` | [Write Python Gitignore](stdlib.git.gitignore-python.task.definition.md) |
 
 
 ### Effective Lifecycle
 
 | Phase | Operation | Origin |
 | --- | --- | --- |
-| Run | `artifact` | [Write Text File](stdlib.files.write-text.definition.md) |
+| Run | `artifact` | [Write Text File](stdlib.files.write-text.task.definition.md) |

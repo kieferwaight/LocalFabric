@@ -19,7 +19,7 @@ Usage:
 
     r = Runtime(workflow_dir='02_core/runtimes/yaml')
     r.import_yaml('02_core/runtimes/yaml/definitions/stdlib.yaml')
-    r.execute('stdlib.load-modules', {})
+    r.execute('stdlib.load-modules.workflow', {})
 
     clf = Classifier()
     scorer = Scorer(runtime=r)

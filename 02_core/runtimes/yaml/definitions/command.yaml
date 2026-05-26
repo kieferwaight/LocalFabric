@@ -38,7 +38,7 @@
         FastMCP exposure flag consumed by binder.bind_fastmcp() (Phase C4).
         Shape: {expose: bool}.
 
-- id: command.task.run
+- id: command.task.run.command
   title: Run Task
   description: |
     Invoke a task definition by id, passing an optional arguments mapping.
@@ -72,7 +72,7 @@
         definition: "{{ task_id }}"
         arguments: "{{ arguments }}"
 
-- id: command.service.action
+- id: command.service.action.command
   title: Run a Service Lifecycle Action
   description: |
     Invokes a service definition (tagged `service`) with the given
@@ -87,7 +87,7 @@
     service_id:
       type: string
       required: true
-      description: Service definition id (e.g. service.ollama). Must descend from service.base.
+      description: Service definition id (e.g. service.ollama.service). Must descend from service.base.
     action:
       type: string
       required: true
@@ -109,7 +109,7 @@
         arguments:
           action: "{{ action }}"
 
-- id: command.route
+- id: command.route.command
   title: Route an Intent through the Router
   description: |
     Classifies the free-text task, scores candidate routes, and dispatches
@@ -146,7 +146,7 @@
         sys.path.insert(0, "02_core")
         from core.router.router import Router  # noqa
         from core.runtimes.yaml.src import Runtime  # noqa: F401
-        # Note: the bridge approach is intentional — `command.route` is
+        # Note: the bridge approach is intentional — `command.route.command` is
         # the user-facing wrapper; the Router class composes
         # classifier/scorer/dispatcher and itself calls runtime.execute
         # on the chosen route. We pass a fresh Runtime instance the Router

@@ -1,4 +1,4 @@
-- id: stdlib.docs.prune-definition-pages
+- id: stdlib.docs.prune-definition-pages.task
   title: Prune Generated Definition Pages
   description: |
     Removes obsolete generated definition pages in write mode and rejects them in check mode.

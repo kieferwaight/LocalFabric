@@ -21,7 +21,7 @@ This definition is never executed directly; it is only an ancestor.
 | --- | --- |
 | Extends | [Abstract Base](stdlib.base.definition.md) |
 | Mixins | - |
-| Children | [Run Task](command.task.run.definition.md), [Run a Service Lifecycle Action](command.service.action.definition.md), [Route an Intent through the Router](command.route.definition.md) |
+| Children | [Run Task](command.task.run.command.definition.md), [Run a Service Lifecycle Action](command.service.action.command.definition.md), [Route an Intent through the Router](command.route.command.definition.md) |
 | Mixin consumers | - |
 | Modules | - |
 
@@ -29,9 +29,9 @@ This definition is never executed directly; it is only an ancestor.
 flowchart LR
   def_command_base["Abstract Command Base"]
 def_command_base --> def_stdlib_base["Abstract Base"]
-def_command_task_run["Run Task"] --> def_command_base
-def_command_service_action["Run a Service Lifecycle Action"] --> def_command_base
-def_command_route["Route an Intent through the Router"] --> def_command_base
+def_command_task_run_command["Run Task"] --> def_command_base
+def_command_service_action_command["Run a Service Lifecycle Action"] --> def_command_base
+def_command_route_command["Route an Intent through the Router"] --> def_command_base
 ```
 
 

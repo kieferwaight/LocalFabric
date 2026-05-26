@@ -19,7 +19,7 @@ Shared scaffolding for analysis definitions. Pins the path to the
 | --- | --- |
 | Extends | [Abstract Base](stdlib.base.definition.md) |
 | Mixins | - |
-| Children | [Write Analysis Snapshot](stdlib.analysis.snapshot.definition.md), [Verify Definition References](stdlib.analysis.verify-references.definition.md) |
+| Children | [Write Analysis Snapshot](stdlib.analysis.snapshot.task.definition.md), [Verify Definition References](stdlib.analysis.verify-references.task.definition.md) |
 | Mixin consumers | - |
 | Modules | - |
 
@@ -27,8 +27,8 @@ Shared scaffolding for analysis definitions. Pins the path to the
 flowchart LR
   def_stdlib_analysis_base["Analysis Base"]
 def_stdlib_analysis_base --> def_stdlib_base["Abstract Base"]
-def_stdlib_analysis_snapshot["Write Analysis Snapshot"] --> def_stdlib_analysis_base
-def_stdlib_analysis_verify_references["Verify Definition References"] --> def_stdlib_analysis_base
+def_stdlib_analysis_snapshot_task["Write Analysis Snapshot"] --> def_stdlib_analysis_base
+def_stdlib_analysis_verify_references_task["Verify Definition References"] --> def_stdlib_analysis_base
 ```
 
 

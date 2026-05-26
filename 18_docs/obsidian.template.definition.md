@@ -16,7 +16,7 @@ Creates a starter daily-note Markdown template beneath an Obsidian folder.
 
 | Relation | Definitions |
 | --- | --- |
-| Extends | [Write Text File](stdlib.files.write-text.definition.md) |
+| Extends | [Write Text File](stdlib.files.write-text.task.definition.md) |
 | Mixins | - |
 | Children | - |
 | Mixin consumers | - |
@@ -25,7 +25,7 @@ Creates a starter daily-note Markdown template beneath an Obsidian folder.
 ```mermaid
 flowchart LR
   def_obsidian_template["Obsidian Daily Note Template"]
-def_obsidian_template --> def_stdlib_files_write_text["Write Text File"]
+def_obsidian_template --> def_stdlib_files_write_text_task["Write Text File"]
 ```
 
 
@@ -78,4 +78,4 @@ _No locally declared teardown operations._
 
 | Phase | Operation | Origin |
 | --- | --- | --- |
-| Run | `artifact` | [Write Text File](stdlib.files.write-text.definition.md) |
+| Run | `artifact` | [Write Text File](stdlib.files.write-text.task.definition.md) |

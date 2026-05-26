@@ -18,62 +18,62 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 | Definition | ID | Source | Tags |
 | --- | --- | --- | --- |
 | [Abstract Base](stdlib.base.definition.md) | `stdlib.base` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | core, abstract |
-| [Load Standard Library Modules](stdlib.load-modules.definition.md) | `stdlib.load-modules` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | core, modules |
-| [Run Command](stdlib.run-command.definition.md) | `stdlib.run-command` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | shell |
-| [Clean Workspace](stdlib.clean-workspace.definition.md) | `stdlib.clean-workspace` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | files, destructive |
-| [Logger](stdlib.logger.definition.md) | `stdlib.logger` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | logging |
-| [Write Text File](stdlib.files.write-text.definition.md) | `stdlib.files.write-text` | `02_core/runtimes/yaml/definitions/stdlib.files.yaml` | files, templates |
-| [Create Directory](stdlib.files.create-directory.definition.md) | `stdlib.files.create-directory` | `02_core/runtimes/yaml/definitions/stdlib.files.yaml` | files |
-| [Write Text File (input form)](stdlib.files.write.definition.md) | `stdlib.files.write` | `02_core/runtimes/yaml/definitions/stdlib.files.yaml` | files, templates |
-| [Initialize Current Git Workspace](stdlib.git.init-current-workspace.definition.md) | `stdlib.git.init-current-workspace` | `02_core/runtimes/yaml/definitions/stdlib.git.yaml` | git |
-| [Write Python Gitignore](stdlib.git.gitignore-python.definition.md) | `stdlib.git.gitignore-python` | `02_core/runtimes/yaml/definitions/stdlib.git.yaml` | git, files, templates |
-| [Create GitHub Repository](stdlib.git.create-github-repository.definition.md) | `stdlib.git.create-github-repository` | `02_core/runtimes/yaml/definitions/stdlib.git.yaml` | git, github |
-| [Prune Generated Definition Pages](stdlib.docs.prune-definition-pages.definition.md) | `stdlib.docs.prune-definition-pages` | `02_core/runtimes/yaml/definitions/stdlib.docs.yaml` | documentation, files |
+| [Load Standard Library Modules](stdlib.load-modules.workflow.definition.md) | `stdlib.load-modules.workflow` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | core, modules |
+| [Run Command](stdlib.run-command.task.definition.md) | `stdlib.run-command.task` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | shell |
+| [Clean Workspace](stdlib.clean-workspace.task.definition.md) | `stdlib.clean-workspace.task` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | files, destructive |
+| [Logger](stdlib.logger.task.definition.md) | `stdlib.logger.task` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | logging |
+| [Write Text File](stdlib.files.write-text.task.definition.md) | `stdlib.files.write-text.task` | `02_core/runtimes/yaml/definitions/stdlib.files.yaml` | files, templates |
+| [Create Directory](stdlib.files.create-directory.task.definition.md) | `stdlib.files.create-directory.task` | `02_core/runtimes/yaml/definitions/stdlib.files.yaml` | files |
+| [Write Text File (input form)](stdlib.files.write.task.definition.md) | `stdlib.files.write.task` | `02_core/runtimes/yaml/definitions/stdlib.files.yaml` | files, templates |
+| [Initialize Current Git Workspace](stdlib.git.init-current-workspace.task.definition.md) | `stdlib.git.init-current-workspace.task` | `02_core/runtimes/yaml/definitions/stdlib.git.yaml` | git |
+| [Write Python Gitignore](stdlib.git.gitignore-python.task.definition.md) | `stdlib.git.gitignore-python.task` | `02_core/runtimes/yaml/definitions/stdlib.git.yaml` | git, files, templates |
+| [Create GitHub Repository](stdlib.git.create-github-repository.task.definition.md) | `stdlib.git.create-github-repository.task` | `02_core/runtimes/yaml/definitions/stdlib.git.yaml` | git, github |
+| [Prune Generated Definition Pages](stdlib.docs.prune-definition-pages.task.definition.md) | `stdlib.docs.prune-definition-pages.task` | `02_core/runtimes/yaml/definitions/stdlib.docs.yaml` | documentation, files |
 | [Analysis Base](stdlib.analysis.base.definition.md) | `stdlib.analysis.base` | `02_core/runtimes/yaml/definitions/stdlib.analysis.yaml` | analysis, abstract |
-| [Write Analysis Snapshot](stdlib.analysis.snapshot.definition.md) | `stdlib.analysis.snapshot` | `02_core/runtimes/yaml/definitions/stdlib.analysis.yaml` | analysis, intelligence |
-| [Verify Definition References](stdlib.analysis.verify-references.definition.md) | `stdlib.analysis.verify-references` | `02_core/runtimes/yaml/definitions/stdlib.analysis.yaml` | analysis, validation |
+| [Write Analysis Snapshot](stdlib.analysis.snapshot.task.definition.md) | `stdlib.analysis.snapshot.task` | `02_core/runtimes/yaml/definitions/stdlib.analysis.yaml` | analysis, intelligence |
+| [Verify Definition References](stdlib.analysis.verify-references.task.definition.md) | `stdlib.analysis.verify-references.task` | `02_core/runtimes/yaml/definitions/stdlib.analysis.yaml` | analysis, validation |
 | [Python Barrel - __init__.py Template](stdlib.python.barrel.template.definition.md) | `stdlib.python.barrel.template` | `02_core/runtimes/yaml/definitions/stdlib.python.yaml` | python, template |
-| [Generate Python Barrel](stdlib.python.barrel.definition.md) | `stdlib.python.barrel` | `02_core/runtimes/yaml/definitions/stdlib.python.yaml` | python, generator |
+| [Generate Python Barrel](stdlib.python.barrel.task.definition.md) | `stdlib.python.barrel.task` | `02_core/runtimes/yaml/definitions/stdlib.python.yaml` | python, generator |
 | [Abstract Command Base](command.base.definition.md) | `command.base` | `02_core/runtimes/yaml/definitions/command.yaml` | command, abstract |
-| [Run Task](command.task.run.definition.md) | `command.task.run` | `02_core/runtimes/yaml/definitions/command.yaml` | command |
-| [Run a Service Lifecycle Action](command.service.action.definition.md) | `command.service.action` | `02_core/runtimes/yaml/definitions/command.yaml` | command |
-| [Route an Intent through the Router](command.route.definition.md) | `command.route` | `02_core/runtimes/yaml/definitions/command.yaml` | command |
+| [Run Task](command.task.run.command.definition.md) | `command.task.run.command` | `02_core/runtimes/yaml/definitions/command.yaml` | command |
+| [Run a Service Lifecycle Action](command.service.action.command.definition.md) | `command.service.action.command` | `02_core/runtimes/yaml/definitions/command.yaml` | command |
+| [Route an Intent through the Router](command.route.command.definition.md) | `command.route.command` | `02_core/runtimes/yaml/definitions/command.yaml` | command |
 | [Folder Scaffold Base](folder.base.definition.md) | `folder.base` | `02_core/runtimes/yaml/definitions/folder.yaml` | folder, abstract |
 | [Dockerfile Mixin](dockerfile.mixin.definition.md) | `dockerfile.mixin` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, dockerfile, abstract |
 | [Docker Compose Mixin](compose.mixin.definition.md) | `compose.mixin` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, abstract |
 | [Docker Service (Compose + Dockerfile)](docker.base.definition.md) | `docker.base` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, abstract |
-| [Build Docker Image](docker.build.definition.md) | `docker.build` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, build |
-| [Docker Compose Up](compose.up.definition.md) | `compose.up` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, lifecycle |
-| [Docker Compose Down](compose.down.definition.md) | `compose.down` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, lifecycle |
-| [Docker Compose Status](compose.status.definition.md) | `compose.status` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, lifecycle |
-| [Docker Compose Logs](compose.logs.definition.md) | `compose.logs` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, lifecycle |
-| [Scaffold All Docker Services](docker.generate-all.definition.md) | `docker.generate-all` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, workflow |
+| [Build Docker Image](docker.build.task.definition.md) | `docker.build.task` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, build |
+| [Docker Compose Up](compose.up.task.definition.md) | `compose.up.task` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, lifecycle |
+| [Docker Compose Down](compose.down.task.definition.md) | `compose.down.task` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, lifecycle |
+| [Docker Compose Status](compose.status.task.definition.md) | `compose.status.task` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, lifecycle |
+| [Docker Compose Logs](compose.logs.task.definition.md) | `compose.logs.task` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, lifecycle |
+| [Scaffold All Docker Services](docker.generate-all.workflow.definition.md) | `docker.generate-all.workflow` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, workflow |
 | [launchd Job Base](launchd.base.definition.md) | `launchd.base` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, abstract |
-| [Generate launchd Plists](launchd.generate-plist.definition.md) | `launchd.generate-plist` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, workflow |
+| [Generate launchd Plists](launchd.generate-plist.workflow.definition.md) | `launchd.generate-plist.workflow` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, workflow |
 | [launchd Lifecycle Base](launchd.lifecycle.base.definition.md) | `launchd.lifecycle.base` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle, abstract |
-| [Install LaunchAgent](launchd.install.definition.md) | `launchd.install` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
-| [Uninstall LaunchAgent](launchd.uninstall.definition.md) | `launchd.uninstall` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
-| [Enable LaunchAgent](launchd.enable.definition.md) | `launchd.enable` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
-| [Disable LaunchAgent](launchd.disable.definition.md) | `launchd.disable` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
-| [Start LaunchAgent](launchd.start.definition.md) | `launchd.start` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
-| [Stop LaunchAgent](launchd.stop.definition.md) | `launchd.stop` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
-| [Print LaunchAgent Status](launchd.status.definition.md) | `launchd.status` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
+| [Install LaunchAgent](launchd.install.task.definition.md) | `launchd.install.task` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
+| [Uninstall LaunchAgent](launchd.uninstall.task.definition.md) | `launchd.uninstall.task` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
+| [Enable LaunchAgent](launchd.enable.task.definition.md) | `launchd.enable.task` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
+| [Disable LaunchAgent](launchd.disable.task.definition.md) | `launchd.disable.task` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
+| [Start LaunchAgent](launchd.start.task.definition.md) | `launchd.start.task` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
+| [Stop LaunchAgent](launchd.stop.task.definition.md) | `launchd.stop.task` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
+| [Print LaunchAgent Status](launchd.status.task.definition.md) | `launchd.status.task` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
 | [LLM Model Record](model.base.definition.md) | `model.base` | `02_core/runtimes/yaml/definitions/model.yaml` | model, abstract |
 | [LLM Provider Record](provider.base.definition.md) | `provider.base` | `02_core/runtimes/yaml/definitions/provider.yaml` | provider, abstract |
 | [Routable Definition Base](route.base.definition.md) | `route.base` | `02_core/runtimes/yaml/definitions/route.yaml` | route, abstract |
-| [Echo Route (smoke test)](route.echo.definition.md) | `route.echo` | `02_core/runtimes/yaml/definitions/route.yaml` | route |
+| [Echo Route (smoke test)](route.echo.route.definition.md) | `route.echo.route` | `02_core/runtimes/yaml/definitions/route.yaml` | route |
 | [Service Abstraction Base](service.base.definition.md) | `service.base` | `02_core/runtimes/yaml/definitions/service.yaml` | service, abstract |
 | [Docker Backend Action Map](service.docker.mixin.definition.md) | `service.docker.mixin` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker, abstract |
 | [Launchd Backend Action Map](service.launchd.mixin.definition.md) | `service.launchd.mixin` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd, abstract |
-| [Ollama Service (launchd backend)](service.ollama.definition.md) | `service.ollama` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd |
-| [Caffeinate Service (launchd backend)](service.caffeinate.definition.md) | `service.caffeinate` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd |
-| [LM Studio Service (launchd backend)](service.lm-studio.definition.md) | `service.lm-studio` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd |
-| [Postgres Service (docker backend)](service.postgres.definition.md) | `service.postgres` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker |
-| [Redis Service (docker backend)](service.redis.definition.md) | `service.redis` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker |
-| [Neo4j Service (docker backend)](service.neo4j.definition.md) | `service.neo4j` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker |
+| [Ollama Service (launchd backend)](service.ollama.service.definition.md) | `service.ollama.service` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd |
+| [Caffeinate Service (launchd backend)](service.caffeinate.service.definition.md) | `service.caffeinate.service` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd |
+| [LM Studio Service (launchd backend)](service.lm-studio.service.definition.md) | `service.lm-studio.service` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd |
+| [Postgres Service (docker backend)](service.postgres.service.definition.md) | `service.postgres.service` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker |
+| [Redis Service (docker backend)](service.redis.service.definition.md) | `service.redis.service` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker |
+| [Neo4j Service (docker backend)](service.neo4j.service.definition.md) | `service.neo4j.service` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker |
 | [Task base](task.base.definition.md) | `task.base` | `02_core/runtimes/yaml/definitions/task.yaml` | task, abstract |
 | [JSON Schema Base](schemas.base.definition.md) | `schemas.base` | `02_core/runtimes/yaml/definitions/schemas.yaml` | schema, abstract |
-| [Generate Schema JSON](schemas.generate-json.definition.md) | `schemas.generate-json` | `02_core/runtimes/yaml/definitions/schemas.yaml` | schema, workflow |
+| [Generate Schema JSON](schemas.generate-json.workflow.definition.md) | `schemas.generate-json.workflow` | `02_core/runtimes/yaml/definitions/schemas.yaml` | schema, workflow |
 | [Classification Audit Finding](audit.classification-finding.schema.definition.md) | `audit.classification-finding.schema` | `01_schemas/audit.classification-finding.schema.yaml` | schema, audit |
 | [Dispatch Request Envelope](dispatch.request.schema.definition.md) | `dispatch.request.schema` | `01_schemas/dispatch.request.schema.yaml` | schema, dispatch |
 | [Dispatch Response Envelope](dispatch.response.schema.definition.md) | `dispatch.response.schema` | `01_schemas/dispatch.response.schema.yaml` | schema, dispatch |
@@ -235,8 +235,8 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 ### analysis
 
 - [Analysis Base](stdlib.analysis.base.definition.md) (`stdlib.analysis.base`)
-- [Write Analysis Snapshot](stdlib.analysis.snapshot.definition.md) (`stdlib.analysis.snapshot`)
-- [Verify Definition References](stdlib.analysis.verify-references.definition.md) (`stdlib.analysis.verify-references`)
+- [Write Analysis Snapshot](stdlib.analysis.snapshot.task.definition.md) (`stdlib.analysis.snapshot.task`)
+- [Verify Definition References](stdlib.analysis.verify-references.task.definition.md) (`stdlib.analysis.verify-references.task`)
 
 
 ### audit
@@ -253,7 +253,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### build
 
-- [Build Docker Image](docker.build.definition.md) (`docker.build`)
+- [Build Docker Image](docker.build.task.definition.md) (`docker.build.task`)
 
 
 ### classification
@@ -271,9 +271,9 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 ### command
 
 - [Abstract Command Base](command.base.definition.md) (`command.base`)
-- [Run Task](command.task.run.definition.md) (`command.task.run`)
-- [Run a Service Lifecycle Action](command.service.action.definition.md) (`command.service.action`)
-- [Route an Intent through the Router](command.route.definition.md) (`command.route`)
+- [Run Task](command.task.run.command.definition.md) (`command.task.run.command`)
+- [Run a Service Lifecycle Action](command.service.action.command.definition.md) (`command.service.action.command`)
+- [Route an Intent through the Router](command.route.command.definition.md) (`command.route.command`)
 
 
 ### component
@@ -284,16 +284,16 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 ### compose
 
 - [Docker Compose Mixin](compose.mixin.definition.md) (`compose.mixin`)
-- [Docker Compose Up](compose.up.definition.md) (`compose.up`)
-- [Docker Compose Down](compose.down.definition.md) (`compose.down`)
-- [Docker Compose Status](compose.status.definition.md) (`compose.status`)
-- [Docker Compose Logs](compose.logs.definition.md) (`compose.logs`)
+- [Docker Compose Up](compose.up.task.definition.md) (`compose.up.task`)
+- [Docker Compose Down](compose.down.task.definition.md) (`compose.down.task`)
+- [Docker Compose Status](compose.status.task.definition.md) (`compose.status.task`)
+- [Docker Compose Logs](compose.logs.task.definition.md) (`compose.logs.task`)
 
 
 ### core
 
 - [Abstract Base](stdlib.base.definition.md) (`stdlib.base`)
-- [Load Standard Library Modules](stdlib.load-modules.definition.md) (`stdlib.load-modules`)
+- [Load Standard Library Modules](stdlib.load-modules.workflow.definition.md) (`stdlib.load-modules.workflow`)
 
 
 ### database
@@ -312,7 +312,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### destructive
 
-- [Clean Workspace](stdlib.clean-workspace.definition.md) (`stdlib.clean-workspace`)
+- [Clean Workspace](stdlib.clean-workspace.task.definition.md) (`stdlib.clean-workspace.task`)
 
 
 ### dev
@@ -332,16 +332,16 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 - [Dockerfile Mixin](dockerfile.mixin.definition.md) (`dockerfile.mixin`)
 - [Docker Compose Mixin](compose.mixin.definition.md) (`compose.mixin`)
 - [Docker Service (Compose + Dockerfile)](docker.base.definition.md) (`docker.base`)
-- [Build Docker Image](docker.build.definition.md) (`docker.build`)
-- [Docker Compose Up](compose.up.definition.md) (`compose.up`)
-- [Docker Compose Down](compose.down.definition.md) (`compose.down`)
-- [Docker Compose Status](compose.status.definition.md) (`compose.status`)
-- [Docker Compose Logs](compose.logs.definition.md) (`compose.logs`)
-- [Scaffold All Docker Services](docker.generate-all.definition.md) (`docker.generate-all`)
+- [Build Docker Image](docker.build.task.definition.md) (`docker.build.task`)
+- [Docker Compose Up](compose.up.task.definition.md) (`compose.up.task`)
+- [Docker Compose Down](compose.down.task.definition.md) (`compose.down.task`)
+- [Docker Compose Status](compose.status.task.definition.md) (`compose.status.task`)
+- [Docker Compose Logs](compose.logs.task.definition.md) (`compose.logs.task`)
+- [Scaffold All Docker Services](docker.generate-all.workflow.definition.md) (`docker.generate-all.workflow`)
 - [Docker Backend Action Map](service.docker.mixin.definition.md) (`service.docker.mixin`)
-- [Postgres Service (docker backend)](service.postgres.definition.md) (`service.postgres`)
-- [Redis Service (docker backend)](service.redis.definition.md) (`service.redis`)
-- [Neo4j Service (docker backend)](service.neo4j.definition.md) (`service.neo4j`)
+- [Postgres Service (docker backend)](service.postgres.service.definition.md) (`service.postgres.service`)
+- [Redis Service (docker backend)](service.redis.service.definition.md) (`service.redis.service`)
+- [Neo4j Service (docker backend)](service.neo4j.service.definition.md) (`service.neo4j.service`)
 - [Casbin Authorization Service](docker.casbin.service.definition.md) (`docker.casbin.service`)
 - [ClamAV Service](docker.clamav.service.definition.md) (`docker.clamav.service`)
 - [FastAPI Service](docker.fastapi.service.definition.md) (`docker.fastapi.service`)
@@ -394,7 +394,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### documentation
 
-- [Prune Generated Definition Pages](stdlib.docs.prune-definition-pages.definition.md) (`stdlib.docs.prune-definition-pages`)
+- [Prune Generated Definition Pages](stdlib.docs.prune-definition-pages.task.definition.md) (`stdlib.docs.prune-definition-pages.task`)
 - [YAML API Reference Build](docs.api.reference.workflow.definition.md) (`docs.api.reference.workflow`)
 - [API Documentation Catalog Sources](docs.catalog.generate.workflow.definition.md) (`docs.catalog.generate.workflow`)
 - [Docs - Relationship Graph Component](docs.definition.template.component-relationship-graph.definition.md) (`docs.definition.template.component-relationship-graph`)
@@ -420,12 +420,12 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### files
 
-- [Clean Workspace](stdlib.clean-workspace.definition.md) (`stdlib.clean-workspace`)
-- [Write Text File](stdlib.files.write-text.definition.md) (`stdlib.files.write-text`)
-- [Create Directory](stdlib.files.create-directory.definition.md) (`stdlib.files.create-directory`)
-- [Write Text File (input form)](stdlib.files.write.definition.md) (`stdlib.files.write`)
-- [Write Python Gitignore](stdlib.git.gitignore-python.definition.md) (`stdlib.git.gitignore-python`)
-- [Prune Generated Definition Pages](stdlib.docs.prune-definition-pages.definition.md) (`stdlib.docs.prune-definition-pages`)
+- [Clean Workspace](stdlib.clean-workspace.task.definition.md) (`stdlib.clean-workspace.task`)
+- [Write Text File](stdlib.files.write-text.task.definition.md) (`stdlib.files.write-text.task`)
+- [Create Directory](stdlib.files.create-directory.task.definition.md) (`stdlib.files.create-directory.task`)
+- [Write Text File (input form)](stdlib.files.write.task.definition.md) (`stdlib.files.write.task`)
+- [Write Python Gitignore](stdlib.git.gitignore-python.task.definition.md) (`stdlib.git.gitignore-python.task`)
+- [Prune Generated Definition Pages](stdlib.docs.prune-definition-pages.task.definition.md) (`stdlib.docs.prune-definition-pages.task`)
 
 
 ### folder
@@ -435,16 +435,16 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### generator
 
-- [Generate Python Barrel](stdlib.python.barrel.definition.md) (`stdlib.python.barrel`)
+- [Generate Python Barrel](stdlib.python.barrel.task.definition.md) (`stdlib.python.barrel.task`)
 - [Regenerate All Workflows Barrels](barrels.regenerate.workflow.definition.md) (`barrels.regenerate.workflow`)
 - [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.workflow.definition.md) (`barrels.regenerate.yaml-runtime.workflow`)
 
 
 ### git
 
-- [Initialize Current Git Workspace](stdlib.git.init-current-workspace.definition.md) (`stdlib.git.init-current-workspace`)
-- [Write Python Gitignore](stdlib.git.gitignore-python.definition.md) (`stdlib.git.gitignore-python`)
-- [Create GitHub Repository](stdlib.git.create-github-repository.definition.md) (`stdlib.git.create-github-repository`)
+- [Initialize Current Git Workspace](stdlib.git.init-current-workspace.task.definition.md) (`stdlib.git.init-current-workspace.task`)
+- [Write Python Gitignore](stdlib.git.gitignore-python.task.definition.md) (`stdlib.git.gitignore-python.task`)
+- [Create GitHub Repository](stdlib.git.create-github-repository.task.definition.md) (`stdlib.git.create-github-repository.task`)
 - [Git Information](cloud.mixin.git-info.definition.md) (`cloud.mixin.git-info`)
 - [Initialize Git Example](git.init.definition.md) (`git.init`)
 - [GitHub Repository Example](git.github.definition.md) (`git.github`)
@@ -453,7 +453,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### github
 
-- [Create GitHub Repository](stdlib.git.create-github-repository.definition.md) (`stdlib.git.create-github-repository`)
+- [Create GitHub Repository](stdlib.git.create-github-repository.task.definition.md) (`stdlib.git.create-github-repository.task`)
 - [GitHub Repository Example](git.github.definition.md) (`git.github`)
 
 
@@ -469,25 +469,25 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### intelligence
 
-- [Write Analysis Snapshot](stdlib.analysis.snapshot.definition.md) (`stdlib.analysis.snapshot`)
+- [Write Analysis Snapshot](stdlib.analysis.snapshot.task.definition.md) (`stdlib.analysis.snapshot.task`)
 
 
 ### launchd
 
 - [launchd Job Base](launchd.base.definition.md) (`launchd.base`)
-- [Generate launchd Plists](launchd.generate-plist.definition.md) (`launchd.generate-plist`)
+- [Generate launchd Plists](launchd.generate-plist.workflow.definition.md) (`launchd.generate-plist.workflow`)
 - [launchd Lifecycle Base](launchd.lifecycle.base.definition.md) (`launchd.lifecycle.base`)
-- [Install LaunchAgent](launchd.install.definition.md) (`launchd.install`)
-- [Uninstall LaunchAgent](launchd.uninstall.definition.md) (`launchd.uninstall`)
-- [Enable LaunchAgent](launchd.enable.definition.md) (`launchd.enable`)
-- [Disable LaunchAgent](launchd.disable.definition.md) (`launchd.disable`)
-- [Start LaunchAgent](launchd.start.definition.md) (`launchd.start`)
-- [Stop LaunchAgent](launchd.stop.definition.md) (`launchd.stop`)
-- [Print LaunchAgent Status](launchd.status.definition.md) (`launchd.status`)
+- [Install LaunchAgent](launchd.install.task.definition.md) (`launchd.install.task`)
+- [Uninstall LaunchAgent](launchd.uninstall.task.definition.md) (`launchd.uninstall.task`)
+- [Enable LaunchAgent](launchd.enable.task.definition.md) (`launchd.enable.task`)
+- [Disable LaunchAgent](launchd.disable.task.definition.md) (`launchd.disable.task`)
+- [Start LaunchAgent](launchd.start.task.definition.md) (`launchd.start.task`)
+- [Stop LaunchAgent](launchd.stop.task.definition.md) (`launchd.stop.task`)
+- [Print LaunchAgent Status](launchd.status.task.definition.md) (`launchd.status.task`)
 - [Launchd Backend Action Map](service.launchd.mixin.definition.md) (`service.launchd.mixin`)
-- [Ollama Service (launchd backend)](service.ollama.definition.md) (`service.ollama`)
-- [Caffeinate Service (launchd backend)](service.caffeinate.definition.md) (`service.caffeinate`)
-- [LM Studio Service (launchd backend)](service.lm-studio.definition.md) (`service.lm-studio`)
+- [Ollama Service (launchd backend)](service.ollama.service.definition.md) (`service.ollama.service`)
+- [Caffeinate Service (launchd backend)](service.caffeinate.service.definition.md) (`service.caffeinate.service`)
+- [LM Studio Service (launchd backend)](service.lm-studio.service.definition.md) (`service.lm-studio.service`)
 - [launchd - Caffeinate](launchd.caffeinate.service.definition.md) (`launchd.caffeinate.service`)
 - [launchd - Docker](launchd.docker.service.definition.md) (`launchd.docker.service`)
 - [launchd - LM Studio](launchd.lm-studio.service.definition.md) (`launchd.lm-studio.service`)
@@ -496,23 +496,23 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### lifecycle
 
-- [Docker Compose Up](compose.up.definition.md) (`compose.up`)
-- [Docker Compose Down](compose.down.definition.md) (`compose.down`)
-- [Docker Compose Status](compose.status.definition.md) (`compose.status`)
-- [Docker Compose Logs](compose.logs.definition.md) (`compose.logs`)
+- [Docker Compose Up](compose.up.task.definition.md) (`compose.up.task`)
+- [Docker Compose Down](compose.down.task.definition.md) (`compose.down.task`)
+- [Docker Compose Status](compose.status.task.definition.md) (`compose.status.task`)
+- [Docker Compose Logs](compose.logs.task.definition.md) (`compose.logs.task`)
 - [launchd Lifecycle Base](launchd.lifecycle.base.definition.md) (`launchd.lifecycle.base`)
-- [Install LaunchAgent](launchd.install.definition.md) (`launchd.install`)
-- [Uninstall LaunchAgent](launchd.uninstall.definition.md) (`launchd.uninstall`)
-- [Enable LaunchAgent](launchd.enable.definition.md) (`launchd.enable`)
-- [Disable LaunchAgent](launchd.disable.definition.md) (`launchd.disable`)
-- [Start LaunchAgent](launchd.start.definition.md) (`launchd.start`)
-- [Stop LaunchAgent](launchd.stop.definition.md) (`launchd.stop`)
-- [Print LaunchAgent Status](launchd.status.definition.md) (`launchd.status`)
+- [Install LaunchAgent](launchd.install.task.definition.md) (`launchd.install.task`)
+- [Uninstall LaunchAgent](launchd.uninstall.task.definition.md) (`launchd.uninstall.task`)
+- [Enable LaunchAgent](launchd.enable.task.definition.md) (`launchd.enable.task`)
+- [Disable LaunchAgent](launchd.disable.task.definition.md) (`launchd.disable.task`)
+- [Start LaunchAgent](launchd.start.task.definition.md) (`launchd.start.task`)
+- [Stop LaunchAgent](launchd.stop.task.definition.md) (`launchd.stop.task`)
+- [Print LaunchAgent Status](launchd.status.task.definition.md) (`launchd.status.task`)
 
 
 ### logging
 
-- [Logger](stdlib.logger.definition.md) (`stdlib.logger`)
+- [Logger](stdlib.logger.task.definition.md) (`stdlib.logger.task`)
 
 
 ### mixin
@@ -542,7 +542,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### modules
 
-- [Load Standard Library Modules](stdlib.load-modules.definition.md) (`stdlib.load-modules`)
+- [Load Standard Library Modules](stdlib.load-modules.workflow.definition.md) (`stdlib.load-modules.workflow`)
 - [API Documentation Catalog Sources](docs.catalog.generate.workflow.definition.md) (`docs.catalog.generate.workflow`)
 - [Example Catalog Modules](examples.catalog.modules.definition.md) (`examples.catalog.modules`)
 
@@ -577,7 +577,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 ### python
 
 - [Python Barrel - __init__.py Template](stdlib.python.barrel.template.definition.md) (`stdlib.python.barrel.template`)
-- [Generate Python Barrel](stdlib.python.barrel.definition.md) (`stdlib.python.barrel`)
+- [Generate Python Barrel](stdlib.python.barrel.task.definition.md) (`stdlib.python.barrel.task`)
 - [Regenerate All Workflows Barrels](barrels.regenerate.workflow.definition.md) (`barrels.regenerate.workflow`)
 - [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.workflow.definition.md) (`barrels.regenerate.yaml-runtime.workflow`)
 
@@ -585,7 +585,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 ### route
 
 - [Routable Definition Base](route.base.definition.md) (`route.base`)
-- [Echo Route (smoke test)](route.echo.definition.md) (`route.echo`)
+- [Echo Route (smoke test)](route.echo.route.definition.md) (`route.echo.route`)
 
 
 ### runtime
@@ -596,7 +596,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 ### schema
 
 - [JSON Schema Base](schemas.base.definition.md) (`schemas.base`)
-- [Generate Schema JSON](schemas.generate-json.definition.md) (`schemas.generate-json`)
+- [Generate Schema JSON](schemas.generate-json.workflow.definition.md) (`schemas.generate-json.workflow`)
 - [Classification Audit Finding](audit.classification-finding.schema.definition.md) (`audit.classification-finding.schema`)
 - [Dispatch Request Envelope](dispatch.request.schema.definition.md) (`dispatch.request.schema`)
 - [Dispatch Response Envelope](dispatch.response.schema.definition.md) (`dispatch.response.schema`)
@@ -615,17 +615,17 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 - [Service Abstraction Base](service.base.definition.md) (`service.base`)
 - [Docker Backend Action Map](service.docker.mixin.definition.md) (`service.docker.mixin`)
 - [Launchd Backend Action Map](service.launchd.mixin.definition.md) (`service.launchd.mixin`)
-- [Ollama Service (launchd backend)](service.ollama.definition.md) (`service.ollama`)
-- [Caffeinate Service (launchd backend)](service.caffeinate.definition.md) (`service.caffeinate`)
-- [LM Studio Service (launchd backend)](service.lm-studio.definition.md) (`service.lm-studio`)
-- [Postgres Service (docker backend)](service.postgres.definition.md) (`service.postgres`)
-- [Redis Service (docker backend)](service.redis.definition.md) (`service.redis`)
-- [Neo4j Service (docker backend)](service.neo4j.definition.md) (`service.neo4j`)
+- [Ollama Service (launchd backend)](service.ollama.service.definition.md) (`service.ollama.service`)
+- [Caffeinate Service (launchd backend)](service.caffeinate.service.definition.md) (`service.caffeinate.service`)
+- [LM Studio Service (launchd backend)](service.lm-studio.service.definition.md) (`service.lm-studio.service`)
+- [Postgres Service (docker backend)](service.postgres.service.definition.md) (`service.postgres.service`)
+- [Redis Service (docker backend)](service.redis.service.definition.md) (`service.redis.service`)
+- [Neo4j Service (docker backend)](service.neo4j.service.definition.md) (`service.neo4j.service`)
 
 
 ### shell
 
-- [Run Command](stdlib.run-command.definition.md) (`stdlib.run-command`)
+- [Run Command](stdlib.run-command.task.definition.md) (`stdlib.run-command.task`)
 
 
 ### storage
@@ -682,9 +682,9 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### templates
 
-- [Write Text File](stdlib.files.write-text.definition.md) (`stdlib.files.write-text`)
-- [Write Text File (input form)](stdlib.files.write.definition.md) (`stdlib.files.write`)
-- [Write Python Gitignore](stdlib.git.gitignore-python.definition.md) (`stdlib.git.gitignore-python`)
+- [Write Text File](stdlib.files.write-text.task.definition.md) (`stdlib.files.write-text.task`)
+- [Write Text File (input form)](stdlib.files.write.task.definition.md) (`stdlib.files.write.task`)
+- [Write Python Gitignore](stdlib.git.gitignore-python.task.definition.md) (`stdlib.git.gitignore-python.task`)
 - [Gitignore Template Example](git.gitignore.definition.md) (`git.gitignore`)
 - [Obsidian Daily Note Template](obsidian.template.definition.md) (`obsidian.template`)
 
@@ -696,7 +696,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### validation
 
-- [Verify Definition References](stdlib.analysis.verify-references.definition.md) (`stdlib.analysis.verify-references`)
+- [Verify Definition References](stdlib.analysis.verify-references.task.definition.md) (`stdlib.analysis.verify-references.task`)
 
 
 ### vector
@@ -716,9 +716,9 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### workflow
 
-- [Scaffold All Docker Services](docker.generate-all.definition.md) (`docker.generate-all`)
-- [Generate launchd Plists](launchd.generate-plist.definition.md) (`launchd.generate-plist`)
-- [Generate Schema JSON](schemas.generate-json.definition.md) (`schemas.generate-json`)
+- [Scaffold All Docker Services](docker.generate-all.workflow.definition.md) (`docker.generate-all.workflow`)
+- [Generate launchd Plists](launchd.generate-plist.workflow.definition.md) (`launchd.generate-plist.workflow`)
+- [Generate Schema JSON](schemas.generate-json.workflow.definition.md) (`schemas.generate-json.workflow`)
 - [Audit classification boundaries and ownership](audit.classifications.scan.workflow.definition.md) (`audit.classifications.scan.workflow`)
 - [Regenerate All Workflows Barrels](barrels.regenerate.workflow.definition.md) (`barrels.regenerate.workflow`)
 - [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.workflow.definition.md) (`barrels.regenerate.yaml-runtime.workflow`)
@@ -737,45 +737,45 @@ Solid arrows identify `extends`; dashed arrows identify mixin use.
 ```mermaid
 flowchart TD
 def_stdlib_base["Abstract Base"]
-def_stdlib_load_modules["Load Standard Library Modules"]
-def_stdlib_load_modules --> def_stdlib.base
-def_stdlib_run_command["Run Command"]
-def_stdlib_run_command --> def_stdlib.base
-def_stdlib_clean_workspace["Clean Workspace"]
-def_stdlib_clean_workspace --> def_stdlib.base
-def_stdlib_logger["Logger"]
-def_stdlib_logger --> def_stdlib.base
-def_stdlib_files_write_text["Write Text File"]
-def_stdlib_files_write_text --> def_stdlib.base
-def_stdlib_files_create_directory["Create Directory"]
-def_stdlib_files_create_directory --> def_stdlib.base
-def_stdlib_files_write["Write Text File (input form)"]
-def_stdlib_files_write --> def_stdlib.base
-def_stdlib_git_init_current_workspace["Initialize Current Git Workspace"]
-def_stdlib_git_init_current_workspace --> def_stdlib.base
-def_stdlib_git_gitignore_python["Write Python Gitignore"]
-def_stdlib_git_gitignore_python --> def_stdlib.files.write_text
-def_stdlib_git_create_github_repository["Create GitHub Repository"]
-def_stdlib_git_create_github_repository --> def_stdlib.base
-def_stdlib_docs_prune_definition_pages["Prune Generated Definition Pages"]
-def_stdlib_docs_prune_definition_pages --> def_stdlib.base
+def_stdlib_load_modules_workflow["Load Standard Library Modules"]
+def_stdlib_load_modules_workflow --> def_stdlib.base
+def_stdlib_run_command_task["Run Command"]
+def_stdlib_run_command_task --> def_stdlib.base
+def_stdlib_clean_workspace_task["Clean Workspace"]
+def_stdlib_clean_workspace_task --> def_stdlib.base
+def_stdlib_logger_task["Logger"]
+def_stdlib_logger_task --> def_stdlib.base
+def_stdlib_files_write_text_task["Write Text File"]
+def_stdlib_files_write_text_task --> def_stdlib.base
+def_stdlib_files_create_directory_task["Create Directory"]
+def_stdlib_files_create_directory_task --> def_stdlib.base
+def_stdlib_files_write_task["Write Text File (input form)"]
+def_stdlib_files_write_task --> def_stdlib.base
+def_stdlib_git_init_current_workspace_task["Initialize Current Git Workspace"]
+def_stdlib_git_init_current_workspace_task --> def_stdlib.base
+def_stdlib_git_gitignore_python_task["Write Python Gitignore"]
+def_stdlib_git_gitignore_python_task --> def_stdlib.files.write_text.task
+def_stdlib_git_create_github_repository_task["Create GitHub Repository"]
+def_stdlib_git_create_github_repository_task --> def_stdlib.base
+def_stdlib_docs_prune_definition_pages_task["Prune Generated Definition Pages"]
+def_stdlib_docs_prune_definition_pages_task --> def_stdlib.base
 def_stdlib_analysis_base["Analysis Base"]
 def_stdlib_analysis_base --> def_stdlib.base
-def_stdlib_analysis_snapshot["Write Analysis Snapshot"]
-def_stdlib_analysis_snapshot --> def_stdlib.analysis.base
-def_stdlib_analysis_verify_references["Verify Definition References"]
-def_stdlib_analysis_verify_references --> def_stdlib.analysis.base
+def_stdlib_analysis_snapshot_task["Write Analysis Snapshot"]
+def_stdlib_analysis_snapshot_task --> def_stdlib.analysis.base
+def_stdlib_analysis_verify_references_task["Verify Definition References"]
+def_stdlib_analysis_verify_references_task --> def_stdlib.analysis.base
 def_stdlib_python_barrel_template["Python Barrel - __init__.py Template"]
-def_stdlib_python_barrel["Generate Python Barrel"]
-def_stdlib_python_barrel --> def_stdlib.base
+def_stdlib_python_barrel_task["Generate Python Barrel"]
+def_stdlib_python_barrel_task --> def_stdlib.base
 def_command_base["Abstract Command Base"]
 def_command_base --> def_stdlib.base
-def_command_task_run["Run Task"]
-def_command_task_run --> def_command.base
-def_command_service_action["Run a Service Lifecycle Action"]
-def_command_service_action --> def_command.base
-def_command_route["Route an Intent through the Router"]
-def_command_route --> def_command.base
+def_command_task_run_command["Run Task"]
+def_command_task_run_command --> def_command.base
+def_command_service_action_command["Run a Service Lifecycle Action"]
+def_command_service_action_command --> def_command.base
+def_command_route_command["Route an Intent through the Router"]
+def_command_route_command --> def_command.base
 def_folder_base["Folder Scaffold Base"]
 def_folder_base --> def_stdlib.base
 def_dockerfile_mixin["Dockerfile Mixin"]
@@ -786,74 +786,74 @@ def_docker_base["Docker Service (Compose + Dockerfile)"]
 def_docker_base --> def_folder.base
 def_docker_base -.-> def_dockerfile.mixin
 def_docker_base -.-> def_compose.mixin
-def_docker_build["Build Docker Image"]
-def_docker_build --> def_stdlib.run_command
-def_compose_up["Docker Compose Up"]
-def_compose_up --> def_stdlib.run_command
-def_compose_down["Docker Compose Down"]
-def_compose_down --> def_stdlib.run_command
-def_compose_status["Docker Compose Status"]
-def_compose_status --> def_stdlib.run_command
-def_compose_logs["Docker Compose Logs"]
-def_compose_logs --> def_stdlib.run_command
-def_docker_generate_all["Scaffold All Docker Services"]
-def_docker_generate_all --> def_stdlib.base
+def_docker_build_task["Build Docker Image"]
+def_docker_build_task --> def_stdlib.run_command.task
+def_compose_up_task["Docker Compose Up"]
+def_compose_up_task --> def_stdlib.run_command.task
+def_compose_down_task["Docker Compose Down"]
+def_compose_down_task --> def_stdlib.run_command.task
+def_compose_status_task["Docker Compose Status"]
+def_compose_status_task --> def_stdlib.run_command.task
+def_compose_logs_task["Docker Compose Logs"]
+def_compose_logs_task --> def_stdlib.run_command.task
+def_docker_generate_all_workflow["Scaffold All Docker Services"]
+def_docker_generate_all_workflow --> def_stdlib.base
 def_launchd_base["launchd Job Base"]
-def_launchd_generate_plist["Generate launchd Plists"]
-def_launchd_generate_plist --> def_stdlib.base
+def_launchd_generate_plist_workflow["Generate launchd Plists"]
+def_launchd_generate_plist_workflow --> def_stdlib.base
 def_launchd_lifecycle_base["launchd Lifecycle Base"]
-def_launchd_lifecycle_base --> def_stdlib.run_command
-def_launchd_install["Install LaunchAgent"]
-def_launchd_install --> def_launchd.lifecycle.base
-def_launchd_uninstall["Uninstall LaunchAgent"]
-def_launchd_uninstall --> def_launchd.lifecycle.base
-def_launchd_enable["Enable LaunchAgent"]
-def_launchd_enable --> def_launchd.lifecycle.base
-def_launchd_disable["Disable LaunchAgent"]
-def_launchd_disable --> def_launchd.lifecycle.base
-def_launchd_start["Start LaunchAgent"]
-def_launchd_start --> def_launchd.lifecycle.base
-def_launchd_stop["Stop LaunchAgent"]
-def_launchd_stop --> def_launchd.lifecycle.base
-def_launchd_status["Print LaunchAgent Status"]
-def_launchd_status --> def_launchd.lifecycle.base
+def_launchd_lifecycle_base --> def_stdlib.run_command.task
+def_launchd_install_task["Install LaunchAgent"]
+def_launchd_install_task --> def_launchd.lifecycle.base
+def_launchd_uninstall_task["Uninstall LaunchAgent"]
+def_launchd_uninstall_task --> def_launchd.lifecycle.base
+def_launchd_enable_task["Enable LaunchAgent"]
+def_launchd_enable_task --> def_launchd.lifecycle.base
+def_launchd_disable_task["Disable LaunchAgent"]
+def_launchd_disable_task --> def_launchd.lifecycle.base
+def_launchd_start_task["Start LaunchAgent"]
+def_launchd_start_task --> def_launchd.lifecycle.base
+def_launchd_stop_task["Stop LaunchAgent"]
+def_launchd_stop_task --> def_launchd.lifecycle.base
+def_launchd_status_task["Print LaunchAgent Status"]
+def_launchd_status_task --> def_launchd.lifecycle.base
 def_model_base["LLM Model Record"]
 def_model_base --> def_stdlib.base
 def_provider_base["LLM Provider Record"]
 def_provider_base --> def_stdlib.base
 def_route_base["Routable Definition Base"]
 def_route_base --> def_stdlib.base
-def_route_echo["Echo Route (smoke test)"]
-def_route_echo --> def_route.base
+def_route_echo_route["Echo Route (smoke test)"]
+def_route_echo_route --> def_route.base
 def_service_base["Service Abstraction Base"]
 def_service_base --> def_stdlib.base
 def_service_docker_mixin["Docker Backend Action Map"]
 def_service_docker_mixin --> def_stdlib.base
 def_service_launchd_mixin["Launchd Backend Action Map"]
 def_service_launchd_mixin --> def_stdlib.base
-def_service_ollama["Ollama Service (launchd backend)"]
-def_service_ollama --> def_service.base
-def_service_ollama -.-> def_service.launchd.mixin
-def_service_caffeinate["Caffeinate Service (launchd backend)"]
-def_service_caffeinate --> def_service.base
-def_service_caffeinate -.-> def_service.launchd.mixin
-def_service_lm_studio["LM Studio Service (launchd backend)"]
-def_service_lm_studio --> def_service.base
-def_service_lm_studio -.-> def_service.launchd.mixin
-def_service_postgres["Postgres Service (docker backend)"]
-def_service_postgres --> def_service.base
-def_service_postgres -.-> def_service.docker.mixin
-def_service_redis["Redis Service (docker backend)"]
-def_service_redis --> def_service.base
-def_service_redis -.-> def_service.docker.mixin
-def_service_neo4j["Neo4j Service (docker backend)"]
-def_service_neo4j --> def_service.base
-def_service_neo4j -.-> def_service.docker.mixin
+def_service_ollama_service["Ollama Service (launchd backend)"]
+def_service_ollama_service --> def_service.base
+def_service_ollama_service -.-> def_service.launchd.mixin
+def_service_caffeinate_service["Caffeinate Service (launchd backend)"]
+def_service_caffeinate_service --> def_service.base
+def_service_caffeinate_service -.-> def_service.launchd.mixin
+def_service_lm_studio_service["LM Studio Service (launchd backend)"]
+def_service_lm_studio_service --> def_service.base
+def_service_lm_studio_service -.-> def_service.launchd.mixin
+def_service_postgres_service["Postgres Service (docker backend)"]
+def_service_postgres_service --> def_service.base
+def_service_postgres_service -.-> def_service.docker.mixin
+def_service_redis_service["Redis Service (docker backend)"]
+def_service_redis_service --> def_service.base
+def_service_redis_service -.-> def_service.docker.mixin
+def_service_neo4j_service["Neo4j Service (docker backend)"]
+def_service_neo4j_service --> def_service.base
+def_service_neo4j_service -.-> def_service.docker.mixin
 def_task_base["Task base"]
 def_task_base --> def_stdlib.base
 def_schemas_base["JSON Schema Base"]
-def_schemas_generate_json["Generate Schema JSON"]
-def_schemas_generate_json --> def_stdlib.base
+def_schemas_generate_json_workflow["Generate Schema JSON"]
+def_schemas_generate_json_workflow --> def_stdlib.base
 def_audit_classification_finding_schema["Classification Audit Finding"]
 def_audit_classification_finding_schema --> def_schemas.base
 def_dispatch_request_schema["Dispatch Request Envelope"]
@@ -885,16 +885,16 @@ def_cloud_deployer --> def_stdlib.base
 def_cloud_deployer -.-> def_cloud.mixin.timestamp
 def_cloud_deployer -.-> def_cloud.mixin.git_info
 def_git_init["Initialize Git Example"]
-def_git_init -.-> def_stdlib.git.init_current_workspace
-def_git_init -.-> def_stdlib.git.gitignore_python
+def_git_init -.-> def_stdlib.git.init_current_workspace.task
+def_git_init -.-> def_stdlib.git.gitignore_python.task
 def_git_github["GitHub Repository Example"]
-def_git_github -.-> def_stdlib.git.init_current_workspace
-def_git_github -.-> def_stdlib.git.gitignore_python
-def_git_github -.-> def_stdlib.git.create_github_repository
+def_git_github -.-> def_stdlib.git.init_current_workspace.task
+def_git_github -.-> def_stdlib.git.gitignore_python.task
+def_git_github -.-> def_stdlib.git.create_github_repository.task
 def_git_gitignore["Gitignore Template Example"]
-def_git_gitignore --> def_stdlib.git.gitignore_python
+def_git_gitignore --> def_stdlib.git.gitignore_python.task
 def_obsidian_template["Obsidian Daily Note Template"]
-def_obsidian_template --> def_stdlib.files.write_text
+def_obsidian_template --> def_stdlib.files.write_text.task
 def_docs_classification_render_workflow["Render Classification Docs"]
 def_docs_classification_render_workflow --> def_stdlib.base
 def_docs_classification_audit_template["Docs - Classification Audit"]
@@ -1089,20 +1089,20 @@ def_text_title_generate_task["text.title.generate.task"]
 
 ```mermaid
 flowchart LR
-def_stdlib_load_modules["stdlib.load-modules"] --> def_stdlib_load_modules_module_1["stdlib.files.yaml"]
-def_stdlib_load_modules["stdlib.load-modules"] --> def_stdlib_load_modules_module_2["stdlib.git.yaml"]
-def_stdlib_load_modules["stdlib.load-modules"] --> def_stdlib_load_modules_module_3["stdlib.docs.yaml"]
-def_stdlib_load_modules["stdlib.load-modules"] --> def_stdlib_load_modules_module_4["stdlib.analysis.yaml"]
-def_stdlib_load_modules["stdlib.load-modules"] --> def_stdlib_load_modules_module_5["stdlib.python.yaml"]
-def_stdlib_load_modules["stdlib.load-modules"] --> def_stdlib_load_modules_module_6["command.yaml"]
-def_stdlib_load_modules["stdlib.load-modules"] --> def_stdlib_load_modules_module_7["folder.yaml"]
-def_stdlib_load_modules["stdlib.load-modules"] --> def_stdlib_load_modules_module_8["docker.yaml"]
-def_stdlib_load_modules["stdlib.load-modules"] --> def_stdlib_load_modules_module_9["launchd.yaml"]
-def_stdlib_load_modules["stdlib.load-modules"] --> def_stdlib_load_modules_module_10["model.yaml"]
-def_stdlib_load_modules["stdlib.load-modules"] --> def_stdlib_load_modules_module_11["provider.yaml"]
-def_stdlib_load_modules["stdlib.load-modules"] --> def_stdlib_load_modules_module_12["route.yaml"]
-def_stdlib_load_modules["stdlib.load-modules"] --> def_stdlib_load_modules_module_13["service.yaml"]
-def_stdlib_load_modules["stdlib.load-modules"] --> def_stdlib_load_modules_module_14["task.yaml"]
+def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_load_modules_workflow_module_1["stdlib.files.yaml"]
+def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_load_modules_workflow_module_2["stdlib.git.yaml"]
+def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_load_modules_workflow_module_3["stdlib.docs.yaml"]
+def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_load_modules_workflow_module_4["stdlib.analysis.yaml"]
+def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_load_modules_workflow_module_5["stdlib.python.yaml"]
+def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_load_modules_workflow_module_6["command.yaml"]
+def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_load_modules_workflow_module_7["folder.yaml"]
+def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_load_modules_workflow_module_8["docker.yaml"]
+def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_load_modules_workflow_module_9["launchd.yaml"]
+def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_load_modules_workflow_module_10["model.yaml"]
+def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_load_modules_workflow_module_11["provider.yaml"]
+def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_load_modules_workflow_module_12["route.yaml"]
+def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_load_modules_workflow_module_13["service.yaml"]
+def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_load_modules_workflow_module_14["task.yaml"]
 def_docs_api_reference_workflow["docs.api.reference.workflow"] --> def_docs_api_reference_workflow_module_1["docs.catalog.generate.workflow.yaml"]
 def_docs_catalog_generate_workflow["docs.catalog.generate.workflow"] --> def_docs_catalog_generate_workflow_module_1["../14_templates/docs.definition.template.yaml"]
 def_docs_catalog_generate_workflow["docs.catalog.generate.workflow"] --> def_docs_catalog_generate_workflow_module_2["../14_templates/docs.catalog.template.yaml"]
