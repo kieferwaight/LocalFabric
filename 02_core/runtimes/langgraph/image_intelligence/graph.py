@@ -14,7 +14,7 @@ from drivers.sql.session import get_connection
 
 _DB_PATH = data("workspace.db")
 _DEFAULT_CONCURRENCY = 4
-from workflows.langgraph.image_intelligence.nodes import (
+from core.runtimes.langgraph.image_intelligence.nodes import (
     load_asset,
     node_classify,
     node_color,
@@ -25,7 +25,7 @@ from workflows.langgraph.image_intelligence.nodes import (
     node_vision,
     save_report,
 )
-from workflows.langgraph.types import ImageIntelligenceState
+from core.runtimes.langgraph.types import ImageIntelligenceState
 
 # ── Fan-out / fan-in aggregator ───────────────────────────────────────────────
 

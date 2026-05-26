@@ -27,7 +27,7 @@ def ingest_run(
 ) -> None:
     from core.environment import data
     from drivers.sql.session import init_db
-    from workflows.langgraph.ingest.graph import run_ingest
+    from core.runtimes.langgraph.ingest.graph import run_ingest
 
     db_path = data(*_DEFAULT_DB_PATH_PARTS)
     init_db(db_path)

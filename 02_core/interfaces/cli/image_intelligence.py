@@ -56,7 +56,7 @@ def image_intelligence_run(
 ) -> None:
     from core.environment import data
     from drivers.sql.session import init_db
-    from workflows.langgraph.image_intelligence.graph import run_batch
+    from core.runtimes.langgraph.image_intelligence.graph import run_batch
 
     init_db(data(*_DEFAULT_DB_PATH_PARTS))
 
@@ -112,7 +112,7 @@ def image_intelligence_single(
 ) -> None:
     from core.environment import data
     from drivers.sql.session import init_db
-    from workflows.langgraph.image_intelligence.graph import run_image_intelligence
+    from core.runtimes.langgraph.image_intelligence.graph import run_image_intelligence
 
     init_db(data(*_DEFAULT_DB_PATH_PARTS))
 

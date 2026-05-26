@@ -13,7 +13,7 @@ from core.environment import data
 from drivers.sql.schema import assets
 from drivers.sql.session import get_connection
 from drivers.file import copy_asset
-from workflows.langgraph.types import IngestState
+from core.runtimes.langgraph.types import IngestState
 
 _DB_PATH = data("workspace.db")
 _INPUTS_ROOT = data("inputs")

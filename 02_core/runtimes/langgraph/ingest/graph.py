@@ -6,7 +6,7 @@ from typing import Any
 
 from langgraph.graph import END, START, StateGraph
 
-from workflows.langgraph.ingest.nodes import (
+from core.runtimes.langgraph.ingest.nodes import (
     classify,
     copy_assets,
     deduplicate,
@@ -14,7 +14,7 @@ from workflows.langgraph.ingest.nodes import (
     register,
     scan,
 )
-from workflows.langgraph.types import IngestState
+from core.runtimes.langgraph.types import IngestState
 
 # ── Build graph ───────────────────────────────────────────────────────────────
 

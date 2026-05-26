@@ -39,7 +39,7 @@ def markdown_format(
         typer.Option("--model", help="Model to use (default: qwen/qwen3.6-27b)"),
     ] = "qwen/qwen3.6-27b",
 ) -> None:
-    from workflows.langgraph.markdown_format.graph import run_markdown_format_workflow
+    from core.runtimes.langgraph.markdown_format.graph import run_markdown_format_workflow
 
     if os.path.isdir(file):
         files = [
