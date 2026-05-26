@@ -1,6 +1,6 @@
 import tempfile
 from pathlib import Path
-from core.runtimes.langgraph.markdown_format.nodes import format_markdown_with_lmstudio
+from tasks.text.format_markdown import format_markdown_with_lmstudio
 
 def test_format_markdown_with_lmstudio(monkeypatch):
     # Patch LMStudioHarness to avoid real API call

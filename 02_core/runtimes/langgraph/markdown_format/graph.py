@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from drivers.file import write_text_artifact
-from core.runtimes.langgraph.markdown_format import nodes
+from tasks.text import format_markdown as nodes
 
 
 def run_markdown_format_workflow(

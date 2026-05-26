@@ -87,6 +87,7 @@ packages = [
     "tasks.metadata",
     "tasks.pdf",
     "tasks.shell",
+    "tasks.text",
     "tasks.vision",
     "drivers",
     "drivers.cache",

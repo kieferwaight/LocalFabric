@@ -2,7 +2,7 @@ from pathlib import Path
 from harnesses.lmstudio import harness as lmstudio
 from core.runtimes.markdown.frontmatter import parse as parse_frontmatter
 
-PROMPT_PATH = Path(__file__).resolve().parents[3] / "12_prompts" / "tasks.format-markdown.md"
+PROMPT_PATH = Path(__file__).resolve().parents[2] / "12_prompts" / "tasks.format-markdown.md"
 
 
 def load_prompt() -> str:
