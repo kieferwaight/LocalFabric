@@ -52,3 +52,137 @@
       for_each:
         items: "runtime.catalog.definitions | selectattr('has_launchd') | rejectattr('id', 'equalto', 'launchd.base') | list"
         as: definition
+
+# ---------------------------------------------------------------------------
+# Lifecycle commands
+#
+# Every launchd lifecycle wrapper accepts the same two inputs:
+#   - definition: a launchd definition id (e.g. `launchd.caffienate`).
+#                 When provided, `label` is resolved from the catalog's
+#                 `launchd.label` for that definition.
+#   - label:      an explicit job label override (used when `definition`
+#                 is empty, or for ad-hoc invocations against jobs not
+#                 declared in this repo).
+#
+# The `resolved_label` variable normalizes the two cases. Subsequent
+# variables and the run command reference `resolved_label` directly.
+#
+# `install` / `uninstall` additionally need the path to the rendered
+# `.plist`. By default we look under `09_launchd/<definition-id>.plist`,
+# matching `launchd.generate-plist`'s default output layout.
+# ---------------------------------------------------------------------------
+
+- id: launchd.lifecycle.base
+  title: launchd Lifecycle Base
+  description: |
+    Internal abstract base shared by every launchd lifecycle wrapper. Hosts
+    the two-input contract (`definition` or `label`) and the
+    `resolved_label` variable so concrete lifecycle definitions only declare
+    their `command:` payload.
+  tags: [launchd, lifecycle, abstract]
+  extends: stdlib.run-command
+  inputs:
+    definition:
+      type: string
+      required: false
+      default: ""
+      description: launchd definition id (e.g. `launchd.caffienate`). Used to auto-resolve the job label from the catalog.
+    label:
+      type: string
+      required: false
+      default: ""
+      description: Explicit launchd job label. Takes effect when `definition` is empty.
+  variables:
+    resolved_label: "{{ ((runtime.catalog.definitions | selectattr('id', 'equalto', definition) | list | first).launchd.label) if definition else label }}"
+  docs:
+    variables:
+      resolved_label: Effective launchctl label — either looked up from `definition` or copied from `label`.
+
+- id: launchd.install
+  title: Install LaunchAgent
+  description: |
+    Copies the rendered `.plist` into `~/Library/LaunchAgents/` and
+    bootstraps it into the user GUI domain so launchd manages it. Idempotent
+    against a previously installed copy.
+  tags: [launchd, lifecycle]
+  extends: launchd.lifecycle.base
+  inputs:
+    plist_path:
+      type: string
+      required: false
+      default: ""
+      description: Path to the rendered `.plist` file. Defaults to `09_launchd/<definition>.plist`.
+  variables:
+    resolved_plist_path: "{{ plist_path if plist_path else '09_launchd/' ~ definition ~ '.plist' }}"
+    command: |
+      mkdir -p "$HOME/Library/LaunchAgents"
+      cp "{{ resolved_plist_path }}" "$HOME/Library/LaunchAgents/{{ resolved_label }}.plist"
+      launchctl bootout "gui/$UID/{{ resolved_label }}" 2>/dev/null || true
+      launchctl bootstrap "gui/$UID" "$HOME/Library/LaunchAgents/{{ resolved_label }}.plist"
+
+- id: launchd.uninstall
+  title: Uninstall LaunchAgent
+  description: |
+    Boots the job out of the user GUI domain and removes its `.plist` from
+    `~/Library/LaunchAgents/`. Safe to call against a job that is not
+    currently loaded.
+  tags: [launchd, lifecycle]
+  extends: launchd.lifecycle.base
+  variables:
+    command: |
+      launchctl bootout "gui/$UID/{{ resolved_label }}" 2>/dev/null || true
+      rm -f "$HOME/Library/LaunchAgents/{{ resolved_label }}.plist"
+
+- id: launchd.enable
+  title: Enable LaunchAgent
+  description: |
+    Marks the job as enabled in the user GUI domain so it loads at login
+    (and survives `bootout`/`bootstrap` cycles).
+  tags: [launchd, lifecycle]
+  extends: launchd.lifecycle.base
+  variables:
+    command: "launchctl enable gui/$UID/{{ resolved_label }}"
+
+- id: launchd.disable
+  title: Disable LaunchAgent
+  description: |
+    Marks the job as disabled in the user GUI domain. Disabled jobs persist
+    across reboots and bootstraps until `launchd.enable` is invoked.
+  tags: [launchd, lifecycle]
+  extends: launchd.lifecycle.base
+  variables:
+    command: "launchctl disable gui/$UID/{{ resolved_label }}"
+
+- id: launchd.start
+  title: Start LaunchAgent
+  description: |
+    Kickstarts the job immediately. With `-k`, an already-running job is
+    restarted (functions as a "reload"). The job must already be loaded
+    (`launchd.install`) for this to succeed.
+  tags: [launchd, lifecycle]
+  extends: launchd.lifecycle.base
+  variables:
+    command: "launchctl kickstart -k gui/$UID/{{ resolved_label }}"
+
+- id: launchd.stop
+  title: Stop LaunchAgent
+  description: |
+    Sends SIGTERM to the running job. The job remains loaded — use
+    `launchd.uninstall` to fully remove it.
+  tags: [launchd, lifecycle]
+  extends: launchd.lifecycle.base
+  variables:
+    command: "launchctl kill SIGTERM gui/$UID/{{ resolved_label }}"
+
+- id: launchd.status
+  title: Print LaunchAgent Status
+  description: |
+    Prints launchd's view of the job (last exit code, run count, current
+    PID if running). Exits non-zero with a friendly message if the job is
+    not loaded.
+  tags: [launchd, lifecycle]
+  extends: launchd.lifecycle.base
+  variables:
+    command: |
+      launchctl print "gui/$UID/{{ resolved_label }}" 2>/dev/null \
+        || echo "launchd job '{{ resolved_label }}' is not loaded (install with launchd.install)"

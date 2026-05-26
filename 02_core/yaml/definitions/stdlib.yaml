@@ -29,6 +29,7 @@
     - stdlib.python.yaml
     - folder.yaml
     - docker.yaml
+    - launchd.yaml
     - model.yaml
     - provider.yaml
   variables:
@@ -43,8 +44,12 @@
   inputs:
     command:
       type: "string"
-      required: true
-      description: Shell command to execute.
+      required: false
+      default: ""
+      description: |
+        Shell command to execute. Optional so that children can supply the
+        command body via a `variables.command:` Jinja template (variables
+        render after inputs and overwrite this default in scope).
     working_dir:
       type: "string"
       required: false
