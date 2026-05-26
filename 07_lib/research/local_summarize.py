@@ -1,4 +1,17 @@
-"""Local research workflow: acquire text, then summarize through a local harness."""
+"""Local research workflow: acquire text, then summarize through a local harness.
+
+The public entry point is ``local_research_scaffold(topic_or_url)``. It fetches
+readable text via ``lib.browser.fetch_text``, selects an available Ollama model
+(preferring ``qwen2.5:7b``), loads the prompt template from
+``12_prompts/tasks.research-summary.md``, and invokes the model through
+``OllamaHarness``. Stateful pieces — model selection and harness construction —
+happen inside each call; this is intentional (keeps the function simple and
+avoids shared state). Pass an explicit ``harness`` argument to inject a fake
+in tests or to reuse a pre-configured harness across multiple calls.
+
+Returns a plain-text summary string. Graceful fallbacks are built in: if Ollama
+is unreachable, the cleaned raw extract is returned instead of raising.
+"""
 
 from __future__ import annotations
 

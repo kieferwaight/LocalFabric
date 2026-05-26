@@ -1,3 +1,11 @@
+"""Media classification helpers for ingest routing and file-type detection.
+
+Provides two entry points: ``classify_file`` for detailed routing recommendations
+(class, subclass, destination, confidence) and ``media_class_for_path`` for a
+lightweight "image / document / unknown" triage used by the langgraph ingest pipeline.
+Extension sets are defined once here so both functions share a single source of truth.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path

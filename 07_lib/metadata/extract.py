@@ -1,3 +1,11 @@
+"""Lightweight metadata inference from file paths and names.
+
+Two heuristic functions for enriching file records without reading file contents:
+``infer_source_guess`` identifies the data origin (gemini, openai, manual, etc.) from
+path components, and ``infer_doc_type`` classifies a filename as report, prompt,
+specification, draft, or note. Both are pure functions with no I/O side effects.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
