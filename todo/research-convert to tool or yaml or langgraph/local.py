@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-from harnesses.markdown.frontmatter import parse as parse_frontmatter
+from core.runtimes.markdown.frontmatter import parse as parse_frontmatter
 from harnesses.ollama import OllamaHarness
 from tools.browser.fetch_text import fetch_readable_text
 

@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
-from harnesses.markdown import MarkdownCompileError, MarkdownHarness
+from core.runtimes.markdown import MarkdownCompileError, MarkdownHarness
 from core.runtimes.yaml.src import Runtime
 
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
@@ -58,7 +58,7 @@ def test_register_dir_skips_malformed_files(
     harness = MarkdownHarness()
     import logging
 
-    with caplog.at_level(logging.WARNING, logger="harnesses.markdown"):
+    with caplog.at_level(logging.WARNING, logger="core.runtimes.markdown"):
         ids = harness.register_dir(tmp_path)
     assert ids == ["tests.minimal"]
     assert any("Skipping" in rec.message for rec in caplog.records)

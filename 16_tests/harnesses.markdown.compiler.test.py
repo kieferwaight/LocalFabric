@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 
 import pytest
-from harnesses.markdown.compiler import MarkdownCompileError, compile_text
+from core.runtimes.markdown.compiler import MarkdownCompileError, compile_text
 
 
 def test_minimal_file_compiles() -> None:
@@ -112,7 +112,7 @@ def test_unknown_languages_logged_and_dropped(caplog: pytest.LogCaptureFixture) 
         "```ollama\nprompt\n```\n"
         "```bash\necho ok\n```\n"
     )
-    with caplog.at_level(logging.WARNING, logger="harnesses.markdown"):
+    with caplog.at_level(logging.WARNING, logger="core.runtimes.markdown"):
         result = compile_text(source, source_path="t.md")
     assert result["run"] == [{"bash": "echo ok\n"}]
     assert any("ollama" in rec.message for rec in caplog.records)

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import pytest
-from harnesses.markdown.fences import _FenceError, parse
+from core.runtimes.markdown.fences import _FenceError, parse
 
 
 def test_bare_fence_with_language() -> None:

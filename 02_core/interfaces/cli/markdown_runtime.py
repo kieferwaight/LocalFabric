@@ -1,6 +1,6 @@
 """``localfabric-md`` — raw markdown prompt runtime entry.
 
-Translates raw argv into a :class:`harnesses.markdown.MarkdownHarness`
+Translates raw argv into a :class:`core.runtimes.markdown.MarkdownHarness`
 invocation. The entry is intentionally thin — argv parsing,
 ``ShellEnvironment`` construction, and result rendering — while
 compilation, retries, and provider/subprocess concerns live in the
@@ -20,7 +20,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from harnesses.markdown import (
+from core.runtimes.markdown import (
     MarkdownCompileError,
     MarkdownHarness,
     ProviderError,

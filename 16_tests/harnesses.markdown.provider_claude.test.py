@@ -12,7 +12,7 @@ from typing import Any
 
 import pytest
 from harnesses.base import HarnessError
-from harnesses.markdown.providers import ClaudeProvider, ProviderError, ProviderResult
+from core.runtimes.markdown.providers import ClaudeProvider, ProviderError, ProviderResult
 
 
 class _FakeHarness:

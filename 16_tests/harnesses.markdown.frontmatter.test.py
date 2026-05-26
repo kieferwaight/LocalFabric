@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import pytest
-from harnesses.markdown.frontmatter import _FrontmatterError, parse
+from core.runtimes.markdown.frontmatter import _FrontmatterError, parse
 
 
 def test_parses_valid_frontmatter_and_body() -> None:

@@ -13,7 +13,7 @@ from typing import Any
 from . import fences as _fences
 from . import frontmatter as _frontmatter
 
-logger = logging.getLogger("harnesses.markdown")
+logger = logging.getLogger("core.runtimes.markdown")
 
 
 class MarkdownCompileError(ValueError):
@@ -68,7 +68,7 @@ def compile_text(source: str, *, source_path: str = "<string>") -> dict[str, Any
     * **Provider-style**: when frontmatter declares ``provider:`` the body is
       treated as a single Jinja-renderable prompt and stored under the
       ``_markdown_provider`` key. The markdown harness routes these files
-      through ``harnesses.markdown.providers`` instead of the YAML runtime.
+      through ``core.runtimes.markdown.providers`` instead of the YAML runtime.
     """
     try:
         fm = _frontmatter.parse(source, source_path=source_path)
@@ -122,7 +122,7 @@ def _compile_provider_style(
     The body becomes the prompt template; ``inputs``, ``description``, and
     ``title`` are preserved for documentation. The YAML runtime never sees
     this dict — the markdown harness reads ``_markdown_provider`` and
-    dispatches via ``harnesses.markdown.providers`` directly.
+    dispatches via ``core.runtimes.markdown.providers`` directly.
     """
     metadata = fm.metadata
 

@@ -6,7 +6,7 @@ import base64
 from pathlib import Path
 from typing import Any
 
-from harnesses.markdown.frontmatter import parse as parse_frontmatter
+from core.runtimes.markdown.frontmatter import parse as parse_frontmatter
 from harnesses.ollama import OllamaHarness
 
 

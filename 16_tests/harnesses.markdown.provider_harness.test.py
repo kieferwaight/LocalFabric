@@ -14,14 +14,14 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from harnesses.markdown import (
+from core.runtimes.markdown import (
     ClaudeProvider,
     MarkdownHarness,
     MarkdownProvider,
     ProviderError,
     ProviderResult,
 )
-from harnesses.markdown.providers.base import MarkdownProvider as BaseProvider
+from core.runtimes.markdown.providers.base import MarkdownProvider as BaseProvider
 
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
 

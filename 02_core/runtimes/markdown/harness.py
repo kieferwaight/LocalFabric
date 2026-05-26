@@ -19,7 +19,7 @@ from .providers import (
     get_provider,
 )
 
-logger = logging.getLogger("harnesses.markdown")
+logger = logging.getLogger("core.runtimes.markdown")
 
 
 class MarkdownHarness:
@@ -31,7 +31,7 @@ class MarkdownHarness:
     runtime — this class never duplicates them.
 
     For ``provider:`` markdown files the harness routes execution through
-    ``harnesses.markdown.providers`` instead of the YAML runtime: the body
+    ``core.runtimes.markdown.providers`` instead of the YAML runtime: the body
     is treated as a Jinja-renderable prompt template, the declared inputs
     are coerced and rendered into it, and the resulting prompt is sent to
     the provider harness (e.g. ``ClaudeHarness``).

@@ -1,6 +1,6 @@
 from pathlib import Path
 from harnesses.lmstudio import harness as lmstudio
-from harnesses.markdown.frontmatter import parse as parse_frontmatter
+from core.runtimes.markdown.frontmatter import parse as parse_frontmatter
 
 PROMPT_PATH = Path(__file__).resolve().parents[3] / "12_prompts" / "tasks.format-markdown.md"
 

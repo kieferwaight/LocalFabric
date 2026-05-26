@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import pytest
-from harnesses.markdown.compiler import (
+from core.runtimes.markdown.compiler import (
     PROVIDER_MARKER_KEY,
     MarkdownCompileError,
     compile_text,
