@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `cloud.mixin.timestamp` |
-| Source | `15_examples/cloud.yaml` |
+| Source | `15_examples/cloud.mixin.timestamp.yaml` |
 | Tags | mixin, deployment |
 Adds a UTC deployment start timestamp to execution state.
 

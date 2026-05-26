@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `examples.catalog.modules` |
-| Source | `15_examples/examples.catalog.yaml` |
+| Source | `15_examples/examples.catalog.modules.yaml` |
 | Tags | example, modules |
 Imports the shipped runnable compositions used as examples of the YAML workflow API.
 
@@ -16,7 +16,7 @@ Imports the shipped runnable compositions used as examples of the YAML workflow 
 | Mixins | - |
 | Children | - |
 | Mixin consumers | - |
-| Modules | `cloud.yaml`, `git.yaml`, `obsidian.daily-note.example.yaml` |
+| Modules | `cloud.mixin.git-info.yaml`, `cloud.mixin.timestamp.yaml`, `cloud.deployer.example.yaml`, `git.init.example.yaml`, `git.github.example.yaml`, `git.gitignore.example.yaml`, `obsidian.daily-note.example.yaml` |
 ```mermaid
 flowchart LR
   def_examples_catalog_modules["Example Catalog Modules"]

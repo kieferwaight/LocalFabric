@@ -1,0 +1,9 @@
+- id: git.gitignore.example
+  title: Gitignore Template Example
+  description: |
+    Writes the standard Python `.gitignore` template in the active workspace.
+  tags:
+  - example
+  - git
+  - templates
+  extends: stdlib.git.gitignore-python.task

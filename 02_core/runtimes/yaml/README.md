@@ -35,7 +35,7 @@ python interpreter.py <yaml_file> <definition_id> [positional args] [--key=value
 ### Example
 
 ```bash
-python interpreter.py ../../../../15_examples/cloud.yaml cloud.deployer.example \
+python interpreter.py ../../../../15_examples/cloud.deployer.example.yaml cloud.deployer.example \
     --service=billing --replicas=2 --canary=false --debug
 ```
 
@@ -61,7 +61,7 @@ definitions/              # Flat YAML library (one or more definitions per file)
   docs.yaml               # docs.api.reference workflow (entry point)
   docs.catalog.yaml       # source catalog for the generated reference
   docs.definition.template.yaml   # Jinja templates for each generated page
-  examples.catalog.yaml   # catalog of runnable example definitions
+  examples.catalog.modules.yaml   # catalog of runnable example definitions
 docs/                     # Generated YAML API reference (committed)
 ```
 

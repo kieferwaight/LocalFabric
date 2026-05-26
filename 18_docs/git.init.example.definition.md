@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `git.init.example` |
-| Source | `15_examples/git.yaml` |
+| Source | `15_examples/git.init.example.yaml` |
 | Tags | example, git |
 Composes local repository initialization with a reusable Python gitignore.
 

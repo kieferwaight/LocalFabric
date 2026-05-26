@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `cloud.mixin.git-info` |
-| Source | `15_examples/cloud.yaml` |
+| Source | `15_examples/cloud.mixin.git-info.yaml` |
 | Tags | mixin, git, deployment |
 Adds the current short Git commit SHA to execution state.
 

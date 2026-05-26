@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `git.github.example` |
-| Source | `15_examples/git.yaml` |
+| Source | `15_examples/git.github.example.yaml` |
 | Tags | example, git, github |
 Initializes local Git files and creates a matching remote GitHub repository.
 

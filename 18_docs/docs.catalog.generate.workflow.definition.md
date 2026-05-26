@@ -16,7 +16,7 @@ example catalog into the generated YAML API reference.
 | Mixins | - |
 | Children | - |
 | Mixin consumers | - |
-| Modules | `../14_templates/docs.definition.template.yaml`, `../14_templates/docs.catalog.template.yaml`, `../15_examples/examples.catalog.yaml` |
+| Modules | `../14_templates/docs.definition.template.yaml`, `../14_templates/docs.catalog.template.yaml`, `../15_examples/examples.catalog.modules.yaml` |
 ```mermaid
 flowchart LR
   def_docs_catalog_generate_workflow["API Documentation Catalog Sources"]

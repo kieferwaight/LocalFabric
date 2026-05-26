@@ -1,0 +1,12 @@
+- id: git.github.example
+  title: GitHub Repository Example
+  description: |
+    Initializes local Git files and creates a matching remote GitHub repository.
+  tags:
+  - example
+  - git
+  - github
+  mixins:
+  - stdlib.git.init-current-workspace.task
+  - stdlib.git.gitignore-python.task
+  - stdlib.git.create-github-repository.task

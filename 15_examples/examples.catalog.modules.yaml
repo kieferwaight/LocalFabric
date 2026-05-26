@@ -6,6 +6,10 @@
   - example
   - modules
   modules:
-  - cloud.yaml
-  - git.yaml
+  - cloud.mixin.git-info.yaml
+  - cloud.mixin.timestamp.yaml
+  - cloud.deployer.example.yaml
+  - git.init.example.yaml
+  - git.github.example.yaml
+  - git.gitignore.example.yaml
   - obsidian.daily-note.example.yaml

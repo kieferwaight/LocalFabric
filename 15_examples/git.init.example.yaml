@@ -1,0 +1,10 @@
+- id: git.init.example
+  title: Initialize Git Example
+  description: |
+    Composes local repository initialization with a reusable Python gitignore.
+  tags:
+  - example
+  - git
+  mixins:
+  - stdlib.git.init-current-workspace.task
+  - stdlib.git.gitignore-python.task

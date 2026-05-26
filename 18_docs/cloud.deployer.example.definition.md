@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `cloud.deployer.example` |
-| Source | `15_examples/cloud.yaml` |
+| Source | `15_examples/cloud.deployer.example.yaml` |
 | Tags | example, deployment, cloud |
 Demonstrates an inherited, mixin-composed deployment workflow.
 

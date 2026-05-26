@@ -83,13 +83,13 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 | [Docs - Definition Page Template](docs.definition.template.definition.definition.md) | `docs.definition.template.definition` | `14_templates/docs.definition.template.yaml` | documentation, template |
 | [Docs - Index Page Template](docs.catalog.template.index.definition.md) | `docs.catalog.template.index` | `14_templates/docs.catalog.template.yaml` | documentation, template |
 | [Docs - Authoring Schema Page Template](docs.catalog.template.schema.definition.md) | `docs.catalog.template.schema` | `14_templates/docs.catalog.template.yaml` | documentation, template |
-| [Example Catalog Modules](examples.catalog.modules.definition.md) | `examples.catalog.modules` | `15_examples/examples.catalog.yaml` | example, modules |
-| [Git Information](cloud.mixin.git-info.definition.md) | `cloud.mixin.git-info` | `15_examples/cloud.yaml` | mixin, git, deployment |
-| [Timestamp](cloud.mixin.timestamp.definition.md) | `cloud.mixin.timestamp` | `15_examples/cloud.yaml` | mixin, deployment |
-| [Cloud Deployer](cloud.deployer.example.definition.md) | `cloud.deployer.example` | `15_examples/cloud.yaml` | example, deployment, cloud |
-| [Initialize Git Example](git.init.example.definition.md) | `git.init.example` | `15_examples/git.yaml` | example, git |
-| [GitHub Repository Example](git.github.example.definition.md) | `git.github.example` | `15_examples/git.yaml` | example, git, github |
-| [Gitignore Template Example](git.gitignore.example.definition.md) | `git.gitignore.example` | `15_examples/git.yaml` | example, git, templates |
+| [Example Catalog Modules](examples.catalog.modules.definition.md) | `examples.catalog.modules` | `15_examples/examples.catalog.modules.yaml` | example, modules |
+| [Git Information](cloud.mixin.git-info.definition.md) | `cloud.mixin.git-info` | `15_examples/cloud.mixin.git-info.yaml` | mixin, git, deployment |
+| [Timestamp](cloud.mixin.timestamp.definition.md) | `cloud.mixin.timestamp` | `15_examples/cloud.mixin.timestamp.yaml` | mixin, deployment |
+| [Cloud Deployer](cloud.deployer.example.definition.md) | `cloud.deployer.example` | `15_examples/cloud.deployer.example.yaml` | example, deployment, cloud |
+| [Initialize Git Example](git.init.example.definition.md) | `git.init.example` | `15_examples/git.init.example.yaml` | example, git |
+| [GitHub Repository Example](git.github.example.definition.md) | `git.github.example` | `15_examples/git.github.example.yaml` | example, git, github |
+| [Gitignore Template Example](git.gitignore.example.definition.md) | `git.gitignore.example` | `15_examples/git.gitignore.example.yaml` | example, git, templates |
 | [Obsidian Daily Note Template](obsidian.daily-note.example.definition.md) | `obsidian.daily-note.example` | `15_examples/obsidian.daily-note.example.yaml` | example, obsidian, templates |
 | [Render Classification Docs](docs.classification.render.workflow.definition.md) | `docs.classification.render.workflow` | `06_workflows/docs.classification.render.workflow.yaml` | documentation, workflow, classification |
 | [Docs - Classification Audit](docs.classification.audit.template.definition.md) | `docs.classification.audit.template` | `14_templates/docs.classification.template.yaml` | documentation, template, classification |
@@ -983,10 +983,14 @@ def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_
 def_docs_api_reference_workflow["docs.api.reference.workflow"] --> def_docs_api_reference_workflow_module_1["docs.catalog.generate.workflow.yaml"]
 def_docs_catalog_generate_workflow["docs.catalog.generate.workflow"] --> def_docs_catalog_generate_workflow_module_1["../14_templates/docs.definition.template.yaml"]
 def_docs_catalog_generate_workflow["docs.catalog.generate.workflow"] --> def_docs_catalog_generate_workflow_module_2["../14_templates/docs.catalog.template.yaml"]
-def_docs_catalog_generate_workflow["docs.catalog.generate.workflow"] --> def_docs_catalog_generate_workflow_module_3["../15_examples/examples.catalog.yaml"]
-def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_1["cloud.yaml"]
-def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_2["git.yaml"]
-def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_3["obsidian.daily-note.example.yaml"]
+def_docs_catalog_generate_workflow["docs.catalog.generate.workflow"] --> def_docs_catalog_generate_workflow_module_3["../15_examples/examples.catalog.modules.yaml"]
+def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_1["cloud.mixin.git-info.yaml"]
+def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_2["cloud.mixin.timestamp.yaml"]
+def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_3["cloud.deployer.example.yaml"]
+def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_4["git.init.example.yaml"]
+def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_5["git.github.example.yaml"]
+def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_6["git.gitignore.example.yaml"]
+def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_7["obsidian.daily-note.example.yaml"]
 def_docs_classification_render_workflow["docs.classification.render.workflow"] --> def_docs_classification_render_workflow_module_1["../14_templates/docs.classification.template.yaml"]
 def_docs_readme_generate_workflow["docs.readme.generate.workflow"] --> def_docs_readme_generate_workflow_module_1["../14_templates/docs.readme.template.yaml"]
 ```

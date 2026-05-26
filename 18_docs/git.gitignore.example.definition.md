@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `git.gitignore.example` |
-| Source | `15_examples/git.yaml` |
+| Source | `15_examples/git.gitignore.example.yaml` |
 | Tags | example, git, templates |
 Writes the standard Python `.gitignore` template in the active workspace.
 

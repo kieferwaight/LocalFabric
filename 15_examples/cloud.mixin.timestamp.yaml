@@ -1,0 +1,19 @@
+- id: cloud.mixin.timestamp
+  title: Timestamp
+  description: |
+    Adds a UTC deployment start timestamp to execution state.
+  tags:
+  - mixin
+  - deployment
+  variables:
+    deploy_started_at: pending
+  docs:
+    variables:
+      deploy_started_at: UTC start timestamp written during execution.
+    run:
+    - title: Record deployment time
+  run:
+  - python: |
+      import json, os, datetime
+      with open(os.environ["STATE_FILE"], "w") as fh:
+          json.dump({"deploy_started_at": datetime.datetime.utcnow().isoformat() + "Z"}, fh)
