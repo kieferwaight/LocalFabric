@@ -4,12 +4,14 @@ id: image.vision.layout.task
 
 Describe only the page structure and spacing.
 Return exactly this markdown shape:
+
 ## Layout
+
 - Header: <short description>
 - Main area: <short description>
 - Lower area: <short description>
 - Footer: <short description>
-Rules:
+  Rules:
 - Maximum 4 bullets.
 - Do not transcribe any visible text.
 - Do not list navigation items, headings, or button labels one by one.

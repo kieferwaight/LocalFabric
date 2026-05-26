@@ -4,8 +4,6 @@ from __future__ import annotations
 
 from typing import Any
 
-from langgraph.graph import END, START, StateGraph
-
 from core.runtimes.langgraph.ingest.nodes import (
     classify,
     copy_assets,
@@ -15,8 +13,10 @@ from core.runtimes.langgraph.ingest.nodes import (
     scan,
 )
 from core.runtimes.langgraph.types import IngestState
+from langgraph.graph import END, START, StateGraph
 
 # ── Build graph ───────────────────────────────────────────────────────────────
+
 
 def build_ingest_graph() -> Any:
     """Build and compile the ingestion StateGraph."""
@@ -41,6 +41,7 @@ def build_ingest_graph() -> Any:
 
 
 # ── Public runner ─────────────────────────────────────────────────────────────
+
 
 def run_ingest(
     source_dir: str,

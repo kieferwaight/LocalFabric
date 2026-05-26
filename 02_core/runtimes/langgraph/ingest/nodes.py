@@ -6,21 +6,21 @@ import mimetypes
 from datetime import UTC, datetime
 from pathlib import Path
 
-from sqlalchemy import func, insert, select
-
 from core.environment import data
+from core.runtimes.langgraph.types import IngestState
+from drivers.file import copy_asset
 from drivers.sql.schema import assets
 from drivers.sql.session import get_connection
-from drivers.file import copy_asset
-from core.runtimes.langgraph.types import IngestState
 from lib.classify.media import media_class_for_path
 from lib.files import sha256_file
+from sqlalchemy import func, insert, select
 
 _DB_PATH = data("workspace.db")
 _INPUTS_ROOT = data("inputs")
 
 
 # ── Node: scan ────────────────────────────────────────────────────────────────
+
 
 def scan(state: IngestState) -> IngestState:
     """Walk the source directory and collect all file entries."""
@@ -44,6 +44,7 @@ def scan(state: IngestState) -> IngestState:
 
 # ── Node: classify ────────────────────────────────────────────────────────────
 
+
 def classify(state: IngestState) -> IngestState:
     """Assign media_class and mime_type to each scanned file."""
     classified: list[dict] = []
@@ -62,6 +63,7 @@ def classify(state: IngestState) -> IngestState:
 
 
 # ── Node: hash_files ──────────────────────────────────────────────────────────
+
 
 def hash_files(state: IngestState) -> IngestState:
     """Compute SHA-256 and derive asset_id for each file."""
@@ -83,6 +85,7 @@ def hash_files(state: IngestState) -> IngestState:
 
 # ── Node: deduplicate ─────────────────────────────────────────────────────────
 
+
 def deduplicate(state: IngestState) -> IngestState:
     """Flag files that are duplicates of an already-seen SHA-256 in this batch."""
     seen: dict[str, str] = {}  # sha256 -> asset_id of first occurrence
@@ -94,9 +97,7 @@ def deduplicate(state: IngestState) -> IngestState:
             deduplicated.append({**item, "is_duplicate": False, "duplicate_of": None})
             continue
         if sha in seen:
-            deduplicated.append(
-                {**item, "is_duplicate": True, "duplicate_of": seen[sha]}
-            )
+            deduplicated.append({**item, "is_duplicate": True, "duplicate_of": seen[sha]})
         else:
             seen[sha] = item["asset_id"]
             deduplicated.append({**item, "is_duplicate": False, "duplicate_of": None})
@@ -105,6 +106,7 @@ def deduplicate(state: IngestState) -> IngestState:
 
 
 # ── Node: copy_assets ─────────────────────────────────────────────────────────
+
 
 def copy_assets(state: IngestState) -> IngestState:
     """Copy each non-duplicate asset to its destination under data/inputs/."""
@@ -154,6 +156,7 @@ def copy_assets(state: IngestState) -> IngestState:
 
 # ── Node: register ────────────────────────────────────────────────────────────
 
+
 def register(state: IngestState) -> IngestState:
     """Upsert all assets into the SQLite registry."""
     now = datetime.now(UTC)
@@ -194,10 +197,13 @@ def register(state: IngestState) -> IngestState:
                 errors.append(f"DB error for {item.get('filename')}: {exc}")
 
         # Query the actual registered count for this collection from the DB
-        row_count = conn.execute(
-            select(func.count()).select_from(assets).where(
-                assets.c.collection == state["collection"]
-            )
-        ).scalar() or 0
+        row_count = (
+            conn.execute(
+                select(func.count())
+                .select_from(assets)
+                .where(assets.c.collection == state["collection"])
+            ).scalar()
+            or 0
+        )
 
     return {**state, "registered_count": int(row_count), "errors": errors}

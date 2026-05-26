@@ -38,10 +38,9 @@ from __future__ import annotations
 import json
 import os
 from dataclasses import dataclass, field
-from typing import Optional
 
-from router.classifier import Intent, Complexity, TaskProfile
 from router.catalog_loader import RouteEntry, load_routes
+from router.classifier import Complexity, Intent, TaskProfile
 
 _FEEDBACK_PATH = os.path.expanduser("~/.local_router_cache/feedback.json")
 
@@ -50,10 +49,11 @@ _FEEDBACK_PATH = os.path.expanduser("~/.local_router_cache/feedback.json")
 # RouteCandidate
 # ------------------------------------------------------------------
 
+
 @dataclass
 class RouteCandidate:
     route_id: str
-    score: float              # 0.0 – 1.0 (higher = better)
+    score: float  # 0.0 – 1.0 (higher = better)
     tier: Complexity
     description: str
     available: bool = True
@@ -74,18 +74,19 @@ class RouteCandidate:
 # Helpers
 # ------------------------------------------------------------------
 
+
 def _tier_from_str(tier_str: str) -> Complexity:
     """Map a tier string from a RouteEntry to the Complexity enum."""
     mapping = {
-        "LOCAL":    Complexity.LOCAL,
-        "HYBRID":   Complexity.HYBRID,
+        "LOCAL": Complexity.LOCAL,
+        "HYBRID": Complexity.HYBRID,
         "FRONTIER": Complexity.FRONTIER,
-        "AGENT":    Complexity.AGENT,
+        "AGENT": Complexity.AGENT,
         # lower-case aliases (in case someone writes them that way in YAML)
-        "local":    Complexity.LOCAL,
-        "hybrid":   Complexity.HYBRID,
+        "local": Complexity.LOCAL,
+        "hybrid": Complexity.HYBRID,
         "frontier": Complexity.FRONTIER,
-        "agent":    Complexity.AGENT,
+        "agent": Complexity.AGENT,
     }
     return mapping.get(tier_str, Complexity.LOCAL)
 
@@ -111,6 +112,7 @@ def _affinity_score(intent: Intent, entry: RouteEntry) -> float:
 # ------------------------------------------------------------------
 # Scorer
 # ------------------------------------------------------------------
+
 
 class Scorer:
     """
@@ -150,7 +152,7 @@ class Scorer:
     def _load_weights(self) -> dict[str, float]:
         if os.path.exists(self._feedback_path):
             try:
-                with open(self._feedback_path, "r", encoding="utf-8") as fh:
+                with open(self._feedback_path, encoding="utf-8") as fh:
                     data = json.load(fh)
                 return data.get("route_weights", {})
             except (json.JSONDecodeError, OSError):
@@ -164,7 +166,7 @@ class Scorer:
     def score(
         self,
         profile: TaskProfile,
-        available_routes: Optional[set[str]] = None,
+        available_routes: set[str] | None = None,
     ) -> list[RouteCandidate]:
         """
         Return all routes ranked by score for *profile*.
@@ -210,14 +212,16 @@ class Scorer:
             if not is_available:
                 score *= 0.05
 
-            candidates.append(RouteCandidate(
-                route_id=entry.id,
-                score=score,
-                tier=tier,
-                description=entry.description.strip(),
-                available=is_available,
-                score_breakdown=breakdown,
-            ))
+            candidates.append(
+                RouteCandidate(
+                    route_id=entry.id,
+                    score=score,
+                    tier=tier,
+                    description=entry.description.strip(),
+                    available=is_available,
+                    score_breakdown=breakdown,
+                )
+            )
 
         candidates.sort(key=lambda c: c.score, reverse=True)
         return candidates

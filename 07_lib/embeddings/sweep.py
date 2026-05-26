@@ -21,27 +21,45 @@ import os
 
 # Extensions to index (all others skipped)
 INDEXED_EXTENSIONS = {
-    ".py", ".md", ".txt", ".rst", ".yaml", ".yml",
-    ".toml", ".json", ".sh", ".bash", ".env",
+    ".py",
+    ".md",
+    ".txt",
+    ".rst",
+    ".yaml",
+    ".yml",
+    ".toml",
+    ".json",
+    ".sh",
+    ".bash",
+    ".env",
 }
 
 # Directories to always skip
 SKIP_DIRS = {
-    ".git", "__pycache__", ".mypy_cache", ".pytest_cache",
-    "node_modules", ".venv", "venv", "env", ".tox",
-    "*.egg-info", ".DS_Store",
+    ".git",
+    "__pycache__",
+    ".mypy_cache",
+    ".pytest_cache",
+    "node_modules",
+    ".venv",
+    "venv",
+    "env",
+    ".tox",
+    "*.egg-info",
+    ".DS_Store",
 }
 
 # ------------------------------------------------------------------
 # Manifest helpers (dirty-check at file level)
 # ------------------------------------------------------------------
 
+
 def load_manifest(manifest_path: str) -> dict[str, str]:
     """Load the sweep manifest from *manifest_path*, returning {} on missing/corrupt."""
     os.makedirs(os.path.dirname(manifest_path), exist_ok=True)
     if os.path.exists(manifest_path):
         try:
-            with open(manifest_path, "r", encoding="utf-8") as fh:
+            with open(manifest_path, encoding="utf-8") as fh:
                 return json.load(fh)
         except (json.JSONDecodeError, OSError):
             pass
@@ -66,6 +84,7 @@ def file_hash(path: str) -> str:
 # ------------------------------------------------------------------
 # Directory walker
 # ------------------------------------------------------------------
+
 
 def collect_files(root: str) -> list[str]:
     """Return all indexable file paths under *root*, sorted."""

@@ -27,9 +27,7 @@ markdown_app = typer.Typer(
 )
 def markdown_format(
     file: Annotated[str, typer.Argument(help="Path to markdown file or directory.")],
-    in_place: Annotated[
-        bool, typer.Option("--in-place", help="Overwrite files in place.")
-    ] = False,
+    in_place: Annotated[bool, typer.Option("--in-place", help="Overwrite files in place.")] = False,
     output_dir: Annotated[
         str | None,
         typer.Option("--output-dir", help="Directory for formatted output."),
@@ -54,6 +52,4 @@ def markdown_format(
         files = [file]
 
     run_markdown_format_workflow(files, model=model, in_place=in_place, output_dir=output_dir)
-    console.print(
-        f"[green]✓ Markdown formatting complete for {len(files)} file(s).[/green]"
-    )
+    console.print(f"[green]✓ Markdown formatting complete for {len(files)} file(s).[/green]")

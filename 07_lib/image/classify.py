@@ -96,9 +96,7 @@ def classify_image(path: Path) -> dict:
 
     # Infographic: high saturation, tall or square aspect, medium edges
     scores["infographic"] = (
-        mean_sat * 0.5
-        + (0.3 if aspect < 0.9 else 0.05)
-        + min(edge_density * 4, 1.0) * 0.2
+        mean_sat * 0.5 + (0.3 if aspect < 0.9 else 0.05) + min(edge_density * 4, 1.0) * 0.2
     )
 
     # Illustration: high saturation, low edge density
@@ -106,9 +104,7 @@ def classify_image(path: Path) -> dict:
 
     # Document: very low saturation, high edge density (text), tall or near-square
     scores["document"] = (
-        (1.0 - mean_sat) * 0.4
-        + min(edge_density * 6, 1.0) * 0.4
-        + (0.2 if aspect < 1.1 else 0.05)
+        (1.0 - mean_sat) * 0.4 + min(edge_density * 6, 1.0) * 0.4 + (0.2 if aspect < 1.1 else 0.05)
     )
 
     # Blueprint: very high edge density, low saturation, often dark bg

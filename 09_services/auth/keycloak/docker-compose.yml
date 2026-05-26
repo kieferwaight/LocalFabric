@@ -10,6 +10,6 @@ services:
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
     ports:
-      - "${KEYCLOAK_PORT:-8082}:8080"
+    - ${KEYCLOAK_PORT:-8082}:8080
     volumes:
-      - ${DATA_PATH}:/opt/keycloak/data
+    - ${DATA_PATH}:/opt/keycloak/data

@@ -6,10 +6,9 @@ from collections.abc import Generator
 from contextlib import contextmanager
 from pathlib import Path
 
+from drivers.sql.schema import metadata
 from sqlalchemy import Connection, create_engine, text
 from sqlalchemy.engine import Engine
-
-from drivers.sql.schema import metadata
 
 _engine: Engine | None = None
 

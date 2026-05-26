@@ -16,7 +16,6 @@ Usage:
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Optional
 
 from router.classifier import Complexity
 
@@ -26,10 +25,10 @@ class Policy:
     """Cost / latency / capability constraints applied at scoring time."""
 
     # Cost ceiling per task in USD. None = no ceiling.
-    max_cost_usd: Optional[float] = None
+    max_cost_usd: float | None = None
 
     # Latency budget in seconds. None = no budget.
-    max_latency_sec: Optional[float] = None
+    max_latency_sec: float | None = None
 
     # Allowed execution tiers (defaults to all four).
     allowed_tiers: set[Complexity] = field(

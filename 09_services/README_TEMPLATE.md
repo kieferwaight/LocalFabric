@@ -19,14 +19,14 @@ Bind to a data instance under `14_data/<category>/<service>/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `SERVICE_PORT` | `0000` | `0000` | Main endpoint |
+| Host env var   | Default | Container | Use           |
+| -------------- | ------: | --------: | ------------- |
+| `SERVICE_PORT` |  `0000` |    `0000` | Main endpoint |
 
 ## Required Environment
 
-| Var | Description |
-| --- | --- |
+| Var              | Description             |
+| ---------------- | ----------------------- |
 | `EXAMPLE_SECRET` | What this secret is for |
 
 Omit this section when the service has no required environment variables.

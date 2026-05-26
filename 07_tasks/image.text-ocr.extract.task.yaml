@@ -4,7 +4,8 @@
     Run OCR on an image and return full text, word count, per-word
     bounding boxes, and block groupings.
     Wraps lib.image.text_ocr.extract_text.
-  tags: [task]
+  tags:
+  - task
   extends: task.base
   inputs:
     path:
@@ -12,11 +13,10 @@
       required: true
       description: Path to the image file.
   run:
-    - python: |
-        import json, os
-        from pathlib import Path
-        from lib.image.text_ocr import extract_text
-
-        result = extract_text(Path("{{ path }}"))
-        with open(os.environ["STATE_FILE"], "w") as f:
-            json.dump(result, f)
+  - python: |-
+      import json, os
+      from pathlib import Path
+      from lib.image.text_ocr import extract_text
+      result = extract_text(Path("{{ path }}"))
+      with open(os.environ["STATE_FILE"], "w") as f:
+          json.dump(result, f)

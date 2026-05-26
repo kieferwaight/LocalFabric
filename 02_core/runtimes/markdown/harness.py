@@ -156,9 +156,7 @@ class MarkdownHarness:
         assert isinstance(result, ProviderResult)
         return result
 
-    def _stream_to_stdout(
-        self, chunks: ProviderResult | Iterator[str]
-    ) -> Iterator[str]:
+    def _stream_to_stdout(self, chunks: ProviderResult | Iterator[str]) -> Iterator[str]:
         """Yield streaming chunks while echoing them to stdout in real time."""
         if isinstance(chunks, ProviderResult):
             # A provider that doesn't actually stream still goes through here
@@ -206,8 +204,7 @@ class MarkdownHarness:
                     value = default
                 elif required:
                     raise ValueError(
-                        f"Missing required input {name!r} (type={expected_type}) "
-                        f"for {source_path}."
+                        f"Missing required input {name!r} (type={expected_type}) for {source_path}."
                     )
                 else:
                     rendered[name] = None

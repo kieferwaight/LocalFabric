@@ -18,16 +18,16 @@ integration experiments.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `FASTAPI_PORT` | `8000` | `8000` | HTTP API |
+| Host env var   | Default | Container | Use      |
+| -------------- | ------: | --------: | -------- |
+| `FASTAPI_PORT` |  `8000` |    `8000` | HTTP API |
 
 ## Required Environment
 
-| Var | Description |
-| --- | --- |
-| `DATABASE_URL` | Postgres connection string |
-| `NEO4J_PASSWORD` | Neo4j password |
+| Var              | Description                |
+| ---------------- | -------------------------- |
+| `DATABASE_URL`   | Postgres connection string |
+| `NEO4J_PASSWORD` | Neo4j password             |
 
 ## Run
 

@@ -14,27 +14,27 @@ decision.
 Produce a Markdown document with these sections, in order:
 
 1. `# Requirements — <slug>`
-2. `## Functional requirements` — IDs `F1`, `F2`, … each with a short title
+1. `## Functional requirements` — IDs `F1`, `F2`, … each with a short title
    line and 1–3 sentences of detail. Reference the research-stage question
    each one resolves (e.g. "Resolves research Q1").
-3. `## Non-functional requirements` — IDs `N1`, `N2`, … covering
+1. `## Non-functional requirements` — IDs `N1`, `N2`, … covering
    performance, security, observability, classification-audit compliance,
    and path discipline as relevant.
-4. `## Acceptance criteria` — IDs `A1`, `A2`, … each independently verifiable.
+1. `## Acceptance criteria` — IDs `A1`, `A2`, … each independently verifiable.
    At least one criterion must reference
    `python3 17_scripts/audit_classifications.py`.
-5. `## Out of scope` — bulleted list of things deliberately deferred, with a
+1. `## Out of scope` — bulleted list of things deliberately deferred, with a
    one-line reason each.
 
 Return only the Markdown body. No code fences, no preamble.
 
----
+______________________________________________________________________
 
 ## Idea
 
 {{idea}}
 
----
+______________________________________________________________________
 
 ## Research
 

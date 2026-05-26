@@ -18,9 +18,9 @@ Bind to a data instance under `14_data/apps/prometheus/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `PROMETHEUS_PORT` | `9090` | `9090` | Prometheus UI/API |
+| Host env var      | Default | Container | Use               |
+| ----------------- | ------: | --------: | ----------------- |
+| `PROMETHEUS_PORT` |  `9090` |    `9090` | Prometheus UI/API |
 
 ## Run
 

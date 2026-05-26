@@ -2,45 +2,46 @@
   title: Write Text File
   description: |
     Writes rendered UTF-8 text and restores escaped template markers.
-  tags: [files, templates]
+  tags:
+  - files
+  - templates
   extends: stdlib.base
   variables:
-    target_path: ""
-    content: ""
+    target_path: ''
+    content: ''
   docs:
     variables:
       target_path: Output path for the generated text file.
       content: Text content to write.
     run:
-      - title: Write text
-        description: |
-          Creates missing parent directories and writes UTF-8 content.
+    - title: Write text
+      description: |
+        Creates missing parent directories and writes UTF-8 content.
   run:
-    - artifact:
-        action: write_text
-        target_path: "{{ target_path }}"
-        content: "{{ content }}"
-        restore_template_markers: true
-
+  - artifact:
+      action: write_text
+      target_path: '{{ target_path }}'
+      content: '{{ content }}'
+      restore_template_markers: true
 - id: stdlib.files.create-directory.task
   title: Create Directory
   description: |
     Creates a directory and any missing parent directories.
-  tags: [files]
+  tags:
+  - files
   extends: stdlib.base
   inputs:
     directory_path:
-      type: "string"
+      type: string
       required: true
       description: Directory path to create.
   docs:
     run:
-      - title: Create directory tree
+    - title: Create directory tree
   run:
-    - artifact:
-        action: create_directory
-        target_path: "{{ directory_path }}"
-
+  - artifact:
+      action: create_directory
+      target_path: '{{ directory_path }}'
 - id: stdlib.files.write.task
   title: Write Text File (input form)
   description: |
@@ -49,23 +50,25 @@
     iteration (e.g. inside a `for_each` loop). The variable-based
     `write-text` definition cannot receive values through invoke arguments,
     so this exists for dynamic scaffolding workflows.
-  tags: [files, templates]
+  tags:
+  - files
+  - templates
   extends: stdlib.base
   inputs:
     target_path:
-      type: "string"
+      type: string
       required: true
       description: Output path for the generated text file.
     content:
-      type: "string"
+      type: string
       required: true
       description: Text content to write.
   docs:
     run:
-      - title: Write text from inputs
+    - title: Write text from inputs
   run:
-    - artifact:
-        action: write_text
-        target_path: "{{ target_path }}"
-        content: "{{ content }}"
-        restore_template_markers: true
+  - artifact:
+      action: write_text
+      target_path: '{{ target_path }}'
+      content: '{{ content }}'
+      restore_template_markers: true

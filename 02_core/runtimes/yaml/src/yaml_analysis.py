@@ -5,14 +5,16 @@ references through `extends`, `mixins`, `modules`, nested `render`/`invoke`
 blocks, and Jinja `component('<id>', ...)` calls inside string values.
 This module enumerates them all, finds broken refs, and rewrites ids in place.
 """
+
 from __future__ import annotations
 
 import json
 import re
 import subprocess
+from collections.abc import Iterable, Iterator
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Iterable, Iterator
+from typing import Any
 
 import yaml
 
@@ -47,15 +49,18 @@ LIST_ID_KEYS = ("mixins",)
 # Nested operation keys (under `run:`) that target a definition id.
 INVOKE_OP_KEYS = ("render", "invoke")
 # Runtime-injected globals that look like references but aren't.
-RUNTIME_GLOBALS = ("runtime.catalog.definitions", "runtime.catalog.tags",
-                   "runtime.catalog.generated_marker")
+RUNTIME_GLOBALS = (
+    "runtime.catalog.definitions",
+    "runtime.catalog.tags",
+    "runtime.catalog.generated_marker",
+)
 
 
 @dataclass(frozen=True)
 class Relationship:
     source_id: str
     target_id: str
-    kind: str            # "extends" | "mixin" | "invoke" | "render" | "component" | "module"
+    kind: str  # "extends" | "mixin" | "invoke" | "render" | "component" | "module"
     source_file: str
 
     def as_dict(self) -> dict[str, str]:
@@ -77,6 +82,7 @@ class Definition:
 @dataclass(frozen=True)
 class IdOccurrence:
     """An `id:` field encountered anywhere in a YAML doc, not just top-level."""
+
     id: str
     file: str
     parent_key: str  # "definition" for top-level list items, else the enclosing key
@@ -86,11 +92,15 @@ class IdOccurrence:
 # Discovery
 # ---------------------------------------------------------------------------
 
+
 def _git_ls_files(root: Path) -> list[str]:
     """Tracked + untracked paths under `root`, honoring .gitignore."""
     result = subprocess.run(
         ["git", "ls-files", "--cached", "--others", "--exclude-standard", "--", "."],
-        cwd=root, check=True, capture_output=True, text=True,
+        cwd=root,
+        check=True,
+        capture_output=True,
+        text=True,
     )
     return [line for line in result.stdout.splitlines() if line.strip()]
 
@@ -103,7 +113,8 @@ def list_tracked_files(root: Path = REPO_ROOT) -> list[str]:
 def discover_yaml_files(root: Path = REPO_ROOT) -> list[Path]:
     """Tracked + untracked YAML files honoring .gitignore."""
     return [
-        root / line for line in _git_ls_files(root)
+        root / line
+        for line in _git_ls_files(root)
         if line.endswith((".yaml", ".yml")) and (root / line).exists()
     ]
 
@@ -135,6 +146,7 @@ def list_definitions(root: Path = REPO_ROOT) -> list[Definition]:
 # ---------------------------------------------------------------------------
 # Reference extraction
 # ---------------------------------------------------------------------------
+
 
 def _walk_strings(node: Any) -> Iterator[str]:
     if isinstance(node, str):
@@ -201,6 +213,7 @@ def extract_module_includes(definition: Definition) -> list[str]:
 # Relationship listing
 # ---------------------------------------------------------------------------
 
+
 def list_id_relationships(root: Path = REPO_ROOT) -> list[Relationship]:
     out: list[Relationship] = []
     for d in list_definitions(root):
@@ -212,7 +225,8 @@ def list_broken_relationships(root: Path = REPO_ROOT) -> list[Relationship]:
     defs = list_definitions(root)
     known = {d.id for d in defs}
     return [
-        r for r in list_id_relationships(root)
+        r
+        for r in list_id_relationships(root)
         if r.target_id not in known and r.target_id not in RUNTIME_GLOBALS
     ]
 
@@ -239,15 +253,16 @@ def list_broken_module_includes(root: Path = REPO_ROOT) -> list[tuple[str, str, 
 # Snapshot — combined file + id occurrence stream
 # ---------------------------------------------------------------------------
 
-def _walk_id_occurrences(
-    node: Any, file_rel: str, parent_key: str
-) -> Iterator[IdOccurrence]:
+
+def _walk_id_occurrences(node: Any, file_rel: str, parent_key: str) -> Iterator[IdOccurrence]:
     if isinstance(node, dict):
         ident = node.get("id")
         if isinstance(ident, str):
             yield IdOccurrence(id=ident, file=file_rel, parent_key=parent_key)
         for key, value in node.items():
-            yield from _walk_id_occurrences(value, file_rel, key if isinstance(key, str) else parent_key)
+            yield from _walk_id_occurrences(
+                value, file_rel, key if isinstance(key, str) else parent_key
+            )
     elif isinstance(node, list):
         for item in node:
             yield from _walk_id_occurrences(item, file_rel, parent_key)
@@ -300,6 +315,7 @@ def write_snapshot(output_path: Path, root: Path = REPO_ROOT) -> int:
 # Verification — pre-runtime / runtime safety net
 # ---------------------------------------------------------------------------
 
+
 def assert_no_broken_references(root: Path = REPO_ROOT) -> None:
     """Raise `RuntimeError` if any id or module include fails to resolve."""
     broken_ids = list_broken_relationships(root)
@@ -310,9 +326,7 @@ def assert_no_broken_references(root: Path = REPO_ROOT) -> None:
     if broken_ids:
         lines.append(f"{len(broken_ids)} broken id reference(s):")
         for rel in broken_ids:
-            lines.append(
-                f"  {rel.source_id} --{rel.kind}--> {rel.target_id}  ({rel.source_file})"
-            )
+            lines.append(f"  {rel.source_id} --{rel.kind}--> {rel.target_id}  ({rel.source_file})")
     if broken_modules:
         lines.append(f"{len(broken_modules)} broken module include(s):")
         for src_id, inc, src_file in broken_modules:
@@ -323,6 +337,7 @@ def assert_no_broken_references(root: Path = REPO_ROOT) -> None:
 # ---------------------------------------------------------------------------
 # Mutation
 # ---------------------------------------------------------------------------
+
 
 def _rewrite_text_ids(text: str, mapping: dict[str, str]) -> str:
     """Rewrite ids in YAML source while preserving formatting.
@@ -411,6 +426,7 @@ def update_module_paths(mapping: dict[str, str], root: Path = REPO_ROOT) -> dict
 # CLI
 # ---------------------------------------------------------------------------
 
+
 def _print_jsonl(rows: Iterable[dict[str, Any]]) -> None:
     for row in rows:
         print(json.dumps(row, sort_keys=True))
@@ -428,8 +444,9 @@ def _cli() -> None:
     sub.add_parser("broken-modules", help="List module includes whose file is missing")
     sub.add_parser("all-ids", help="List every id occurrence at any depth")
     snap = sub.add_parser("snapshot", help="Write file + id JSONL snapshot")
-    snap.add_argument("--output", default="analysis.jsonl",
-                      help="Output path (default: analysis.jsonl)")
+    snap.add_argument(
+        "--output", default="analysis.jsonl", help="Output path (default: analysis.jsonl)"
+    )
     sub.add_parser("verify", help="Exit nonzero if any reference is broken")
 
     args = p.parse_args()
@@ -464,6 +481,7 @@ def _cli() -> None:
         print(f"wrote {count} records to {out}")
     elif args.cmd == "verify":
         import sys as _sys
+
         try:
             assert_no_broken_references(root)
         except RuntimeError as exc:

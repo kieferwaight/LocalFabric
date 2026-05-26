@@ -75,11 +75,11 @@ prototype the orchestration shape before committing to a workflow placement.
    full chain of upstream artifacts? (Hypothesis: full chain, since the
    chain is short and the model needs the original idea's intent at every
    stage.)
-2. What does `06_final/` contain? (Hypothesis: a single bundled prompt
+1. What does `06_final/` contain? (Hypothesis: a single bundled prompt
    suitable for handing to a coding agent, plus an index linking to the
    per-stage artifacts.)
-3. Is the notebook idempotent — re-running it overwrites stage files, or does
+1. Is the notebook idempotent — re-running it overwrites stage files, or does
    it refuse to clobber? (Hypothesis: overwrite, with a confirmation cell.)
-4. Should the notebook also write a `_meta.yaml` per stage capturing model,
+1. Should the notebook also write a `_meta.yaml` per stage capturing model,
    prompt version, and timestamp? (Hypothesis: yes, minimal — promotion has
    to be auditable for the audit-classification ethos to hold.)

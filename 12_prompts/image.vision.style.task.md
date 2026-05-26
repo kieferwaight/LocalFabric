@@ -4,12 +4,14 @@ id: image.vision.style.task
 
 Describe only the visible visual style.
 Return exactly this markdown shape:
+
 ## Style
+
 - Color: <short description>
 - Typography: <short description>
 - Imagery: <short description>
 - Composition: <short description>
-Rules:
+  Rules:
 - Maximum 4 bullets.
 - Visible facts only.
 - Do not transcribe text.

@@ -27,31 +27,31 @@ Rules:
 Produce a Markdown document with:
 
 1. `# Prompts — <slug>`
-2. One `## Pn — <title>` section per prompt, with a `**Branch:**` line and
+1. One `## Pn — <title>` section per prompt, with a `**Branch:**` line and
    the prompt body. The prompt body uses second person ("You are
    implementing Tn …") and ends with a definition-of-done block.
 
 Return only the Markdown body. No code fences.
 
----
+______________________________________________________________________
 
 ## Idea
 
 {{idea}}
 
----
+______________________________________________________________________
 
 ## Research
 
 {{research}}
 
----
+______________________________________________________________________
 
 ## Requirements
 
 {{requirements}}
 
----
+______________________________________________________________________
 
 ## Tasks
 

@@ -3,22 +3,24 @@
   description: |
     Web chat UI fronting Ollama (or another OpenAI-compatible API). Bound data volume keeps
     user accounts, chat history, and per-user settings between restarts.
-  tags: [docker, ai]
+  tags:
+  - docker
+  - ai
   extends: docker.base
   inputs:
     DATA_PATH:
-      type: "string"
+      type: string
       required: true
       description: Host path for Open WebUI state (binds to /app/backend/data in container)
     OPEN_WEBUI_PORT:
-      type: "string"
+      type: string
       required: false
-      default: "3001"
+      default: '3001'
       description: Host port to expose the Open WebUI HTTP interface (default 3001)
     OLLAMA_BASE_URL:
-      type: "string"
+      type: string
       required: false
-      default: "http://ollama:11434"
+      default: http://ollama:11434
       description: URL of the upstream Ollama API
   variables:
     services:
@@ -27,8 +29,8 @@
         container_name: contentgraph-open-webui
         restart: unless-stopped
         environment:
-          OLLAMA_BASE_URL: "{{ OLLAMA_BASE_URL }}"
+          OLLAMA_BASE_URL: '{{ OLLAMA_BASE_URL }}'
         ports:
-          - "{{ OPEN_WEBUI_PORT }}:8080"
+        - '{{ OPEN_WEBUI_PORT }}:8080'
         volumes:
-          - "{{ DATA_PATH }}:/app/backend/data"
+        - '{{ DATA_PATH }}:/app/backend/data'

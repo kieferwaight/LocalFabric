@@ -4,7 +4,8 @@
     Return the page count of a PDF file using the pdfinfo command-line tool.
     Returns null if pdfinfo is unavailable or fails.
     Wraps lib.pdf.meta.page_count.
-  tags: [task]
+  tags:
+  - task
   extends: task.base
   inputs:
     path:
@@ -12,11 +13,10 @@
       required: true
       description: Path to the PDF file.
   run:
-    - python: |
-        import json, os
-        from pathlib import Path
-        from lib.pdf.meta import page_count
-
-        count = page_count(Path("{{ path }}"))
-        with open(os.environ["STATE_FILE"], "w") as f:
-            json.dump({"page_count": count, "path": "{{ path }}"}, f)
+  - python: |-
+      import json, os
+      from pathlib import Path
+      from lib.pdf.meta import page_count
+      count = page_count(Path("{{ path }}"))
+      with open(os.environ["STATE_FILE"], "w") as f:
+          json.dump({"page_count": count, "path": "{{ path }}"}, f)

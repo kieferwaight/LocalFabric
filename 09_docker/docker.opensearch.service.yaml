@@ -3,26 +3,28 @@
   description: |
     OpenSearch single-node cluster with the security plugin disabled for local
     development. Backs full-text search workloads in the content graph stack.
-  tags: [docker, search]
+  tags:
+  - docker
+  - search
   extends: docker.base
   inputs:
     DATA_PATH:
-      type: "string"
+      type: string
       required: true
       description: Host path for OpenSearch indices (binds to /usr/share/opensearch/data in container)
     OPENSEARCH_INITIAL_ADMIN_PASSWORD:
-      type: "string"
+      type: string
       required: true
       description: Initial password for the OpenSearch admin user
     OPENSEARCH_PORT:
-      type: "string"
+      type: string
       required: false
-      default: "9200"
+      default: '9200'
       description: Host port to expose the OpenSearch HTTP API (default 9200)
     OPENSEARCH_PERF_PORT:
-      type: "string"
+      type: string
       required: false
-      default: "9600"
+      default: '9600'
       description: Host port for the OpenSearch performance analyzer (default 9600)
   variables:
     services:
@@ -32,15 +34,15 @@
         restart: unless-stopped
         environment:
           discovery.type: single-node
-          plugins.security.disabled: "true"
-          OPENSEARCH_INITIAL_ADMIN_PASSWORD: "{{ OPENSEARCH_INITIAL_ADMIN_PASSWORD }}"
+          plugins.security.disabled: 'true'
+          OPENSEARCH_INITIAL_ADMIN_PASSWORD: '{{ OPENSEARCH_INITIAL_ADMIN_PASSWORD }}'
           OPENSEARCH_JAVA_OPTS: -Xms512m -Xmx512m
         ulimits:
           memlock:
             soft: -1
             hard: -1
         ports:
-          - "{{ OPENSEARCH_PORT }}:9200"
-          - "{{ OPENSEARCH_PERF_PORT }}:9600"
+        - '{{ OPENSEARCH_PORT }}:9200'
+        - '{{ OPENSEARCH_PERF_PORT }}:9600'
         volumes:
-          - "{{ DATA_PATH }}:/usr/share/opensearch/data"
+        - '{{ DATA_PATH }}:/usr/share/opensearch/data'

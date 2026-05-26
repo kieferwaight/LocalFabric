@@ -10,8 +10,8 @@ import subprocess
 import time
 import urllib.error
 import urllib.request
-from collections import deque
-from typing import Any, Deque, Dict, Iterator, Mapping, Optional
+from collections.abc import Iterator, Mapping
+from typing import Any
 from urllib.parse import urljoin
 
 from harnesses.base import Harness, HarnessError, HarnessStatus
@@ -33,14 +33,14 @@ class OllamaHarness(Harness):
     name = "ollama"
     DEFAULT_BASE_URL = "http://localhost:11434"
 
-    def __init__(self, config: Optional[Mapping[str, Any]] = None) -> None:
+    def __init__(self, config: Mapping[str, Any] | None = None) -> None:
         super().__init__(config)
         self.base_url: str = self.config.get("base_url", self.DEFAULT_BASE_URL).rstrip("/")
         self.model: str = self.config.get("model", "llama3.2")
         self.timeout: float = float(self.config.get("timeout", 120))
         self.manage_server: bool = bool(self.config.get("manage_server", True))
         self.startup_wait: float = float(self.config.get("startup_wait", 15))
-        self._proc: Optional[subprocess.Popen[bytes]] = None
+        self._proc: subprocess.Popen[bytes] | None = None
 
     # ----------------------------------------------------------------- internals
     def _url(self, path: str) -> str:
@@ -50,8 +50,8 @@ class OllamaHarness(Harness):
         self,
         path: str,
         method: str = "GET",
-        body: Optional[Mapping[str, Any]] = None,
-        timeout: Optional[float] = None,
+        body: Mapping[str, Any] | None = None,
+        timeout: float | None = None,
         stream: bool = False,
     ) -> Any:
         data = None
@@ -96,7 +96,9 @@ class OllamaHarness(Harness):
         if not self.manage_server:
             return self._set_state("error", f"not reachable @ {self.base_url}")
         self._spawn_server()
-        return self._set_state("running", f"spawned ollama serve pid={self._proc.pid if self._proc else '?'}")
+        return self._set_state(
+            "running", f"spawned ollama serve pid={self._proc.pid if self._proc else '?'}"
+        )
 
     def stop(self) -> HarnessStatus:
         if self._proc is not None:
@@ -124,12 +126,11 @@ class OllamaHarness(Harness):
             return HarnessStatus(name=self.name, state="stopped", detail=str(exc))
 
     # ------------------------------------------------------------------ requests
-    def invoke(self, request: Mapping[str, Any]) -> Dict[str, Any]:
+    def invoke(self, request: Mapping[str, Any]) -> dict[str, Any]:
         body = {
             "model": request.get("model", self.model),
-            "messages": request.get("messages") or [
-                {"role": "user", "content": request.get("prompt", "")}
-            ],
+            "messages": request.get("messages")
+            or [{"role": "user", "content": request.get("prompt", "")}],
             "stream": False,
         }
         if "options" in request:
@@ -155,12 +156,11 @@ class OllamaHarness(Harness):
         self._record(f"embed ok model={body['model']}")
         return list(payload.get("embedding", []))
 
-    def stream(self, request: Mapping[str, Any]) -> Iterator[Dict[str, Any]]:
+    def stream(self, request: Mapping[str, Any]) -> Iterator[dict[str, Any]]:
         body = {
             "model": request.get("model", self.model),
-            "messages": request.get("messages") or [
-                {"role": "user", "content": request.get("prompt", "")}
-            ],
+            "messages": request.get("messages")
+            or [{"role": "user", "content": request.get("prompt", "")}],
             "stream": True,
         }
         if "options" in request:

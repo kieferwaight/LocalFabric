@@ -15,9 +15,9 @@ Optional web UI for inspecting Temporal workflows, histories, and task queues.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `TEMPORAL_UI_PORT` | `8084` | `8080` | Temporal UI |
+| Host env var       | Default | Container | Use         |
+| ------------------ | ------: | --------: | ----------- |
+| `TEMPORAL_UI_PORT` |  `8084` |    `8080` | Temporal UI |
 
 ## Run
 

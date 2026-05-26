@@ -52,7 +52,7 @@ def test_crlf_line_endings_handled() -> None:
 
 
 def test_unicode_values_preserved() -> None:
-    source = "---\nid: x\ndescription: \"héllo — 你好\"\n---\nbody\n"
+    source = '---\nid: x\ndescription: "héllo — 你好"\n---\nbody\n'
     result = parse(source)
     assert result.metadata["description"] == "héllo — 你好"
 

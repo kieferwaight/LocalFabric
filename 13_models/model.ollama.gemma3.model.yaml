@@ -3,7 +3,8 @@
   description: >
     Efficient general-purpose chat, multimodal vision tasks, and single-GPU
     local workflows.
-  tags: [model]
+  tags:
+  - model
   extends: model.base
   variables:
     name: gemma3
@@ -13,8 +14,8 @@
         local workflows.
       vendor: Google
     providers:
-      - ollama
+    - ollama
     features:
-      - text
-      - vision
-      - streaming
+    - text
+    - vision
+    - streaming

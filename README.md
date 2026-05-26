@@ -1,7 +1,9 @@
 # LocalFabric
 
 <!-- PROJECT_TAGLINE_START -->
+
 **Local-first AI orchestration for models, tools, workflows, and data services.**
+
 <!-- PROJECT_TAGLINE_END -->
 
 LocalFabric is a modular platform for building private, reproducible AI workflows that run on local infrastructure first and can extend to cloud providers when needed. It brings model routing, reusable tools, workflow execution, service orchestration, storage drivers, prompt assets, and auditability into one responsibility-driven workspace.
@@ -18,15 +20,15 @@ AI applications quickly accumulate provider-specific integrations, disconnected 
 
 ## Platform Capabilities
 
-| Capability | What It Provides |
-| --- | --- |
-| Model execution | Harness-based access to local and cloud model surfaces. |
-| Workflow orchestration | Multi-step workflows implemented through LangGraph, shell, and YAML patterns. |
-| Tool integration | Reusable tools for documents, images, vision, embeddings, research, and related tasks. |
-| Service runtime | Docker Compose-backed execution of local infrastructure services. |
-| Storage and retrieval | Structured data roots and storage drivers for files, databases, and vector stores. |
-| Agent exposure | CLI and MCP surfaces for operators and agent-driven execution. |
-| Architecture governance | JSONL audit findings and remediation workflows for responsibility classification. |
+| Capability              | What It Provides                                                                       |
+| ----------------------- | -------------------------------------------------------------------------------------- |
+| Model execution         | Harness-based access to local and cloud model surfaces.                                |
+| Workflow orchestration  | Multi-step workflows implemented through LangGraph, shell, and YAML patterns.          |
+| Tool integration        | Reusable tools for documents, images, vision, embeddings, research, and related tasks. |
+| Service runtime         | Docker Compose-backed execution of local infrastructure services.                      |
+| Storage and retrieval   | Structured data roots and storage drivers for files, databases, and vector stores.     |
+| Agent exposure          | CLI and MCP surfaces for operators and agent-driven execution.                         |
+| Architecture governance | JSONL audit findings and remediation workflows for responsibility classification.      |
 
 ## Architecture At A Glance
 
@@ -42,44 +44,46 @@ flowchart LR
 
 ## Core Documentation
 
-| Document | Purpose |
-| --- | --- |
-| [Architecture](ARCHITECTURE.md) | System layers, execution flow, contracts, design principles, and extension model. |
-| [Data Model](DATA_MODEL.md) | Persistent data layout, addressing model, service mappings, and driver responsibilities. |
-| [Repository Structure](REPO_STRUCTURE.md) | Canonical numbered classifications, ownership rules, and migration guidance. |
-| [Services](SERVICES.md) | Service runtime design, service categories, state model, and operational interface. |
-| [Collaboration](COLLABORATION.md) | Agent worktrees, branch naming, pull request requirements, and integration rules. |
-| [Classification Audit](18_docs/classification_audit.md) | Automated checks for cross-classification responsibility leaks. |
-| [Remediation Workflow](18_docs/classification_remediation_workflow.md) | Agent workflow for resolving findings safely and iteratively. |
+| Document                                                               | Purpose                                                                                  |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| [Architecture](ARCHITECTURE.md)                                        | System layers, execution flow, contracts, design principles, and extension model.        |
+| [Data Model](DATA_MODEL.md)                                            | Persistent data layout, addressing model, service mappings, and driver responsibilities. |
+| [Repository Structure](REPO_STRUCTURE.md)                              | Canonical numbered classifications, ownership rules, and migration guidance.             |
+| [Services](SERVICES.md)                                                | Service runtime design, service categories, state model, and operational interface.      |
+| [Collaboration](COLLABORATION.md)                                      | Agent worktrees, branch naming, pull request requirements, and integration rules.        |
+| [Classification Audit](18_docs/classification_audit.md)                | Automated checks for cross-classification responsibility leaks.                          |
+| [Remediation Workflow](18_docs/classification_remediation_workflow.md) | Agent workflow for resolving findings safely and iteratively.                            |
 
 ## Repository Layout
 
 Implementation lives directly under the repo root in numeric-prefixed responsibility buckets. Each bucket owns a single concern.
 
 <!-- BUCKETS_TABLE_START -->
-| Bucket | Role | Import name |
-|--------|------|-------------|
-| [`00_specs/`](00_specs/) | Agent-ready specs and task artifacts | — |
-| [`01_interfaces/`](01_interfaces/) | Python Protocol mirrors of the JSON schemas | `interfaces` |
-| [`01_schemas/`](01_schemas/) | Shared JSON schemas used across components | — |
-| [`02_core/`](02_core/) | Shared primitives: config, logging, paths | `core` |
-| [`03_adapters/`](03_adapters/) | Interface translation (CLI, REST, OpenAI-compat, MCP) | `adapters` |
-| [`04_harnesses/`](04_harnesses/) | Execution lifecycle per provider | `harnesses` |
-| [`05_router/`](05_router/) | Classification → scoring → dispatch | `router` |
-| [`06_workflows/`](06_workflows/) | LangGraph, LangChain, shell, YAML workflows | `workflows` |
-| [`07_tasks/`](07_tasks/) | Atomic task implementations (image, pdf, vision, embeddings, …) | `tasks` |
-| [`08_drivers/`](08_drivers/) | Storage/database connectors | `drivers` |
-| [`09_services/`](09_services/) | Docker-Compose service catalog by category | — |
-| [`10_service_runtime/`](10_service_runtime/) | `cmd <service> <path>` runtime | `service_runtime` |
-| [`11_mcp/`](11_mcp/) | MCP servers and exposure shims | `mcp_servers` |
-| [`12_prompts/`](12_prompts/) | Prompt templates | — |
-| [`13_models/`](13_models/) | Per-model YAML registry (providers + features) | — |
-| [`13_providers/`](13_providers/) | Per-provider YAML registry (protocols + endpoints) | — |
-| [`14_data/`](14_data/) | Persistent data (filesystem-backed) | — |
-| [`15_notebooks/`](15_notebooks/) | Exploration notebooks | — |
-| [`16_tests/`](16_tests/) | Integration and contract tests | — |
-| [`18_docs/`](18_docs/) | Supporting docs | — |
-| [`19_archive/`](19_archive/) | Deprecated components | — |
+
+| Bucket                                       | Role                                                            | Import name       |
+| -------------------------------------------- | --------------------------------------------------------------- | ----------------- |
+| [`00_specs/`](00_specs/)                     | Agent-ready specs and task artifacts                            | —                 |
+| [`01_interfaces/`](01_interfaces/)           | Python Protocol mirrors of the JSON schemas                     | `interfaces`      |
+| [`01_schemas/`](01_schemas/)                 | Shared JSON schemas used across components                      | —                 |
+| [`02_core/`](02_core/)                       | Shared primitives: config, logging, paths                       | `core`            |
+| [`03_adapters/`](03_adapters/)               | Interface translation (CLI, REST, OpenAI-compat, MCP)           | `adapters`        |
+| [`04_harnesses/`](04_harnesses/)             | Execution lifecycle per provider                                | `harnesses`       |
+| [`05_router/`](05_router/)                   | Classification → scoring → dispatch                             | `router`          |
+| [`06_workflows/`](06_workflows/)             | LangGraph, LangChain, shell, YAML workflows                     | `workflows`       |
+| [`07_tasks/`](07_tasks/)                     | Atomic task implementations (image, pdf, vision, embeddings, …) | `tasks`           |
+| [`08_drivers/`](08_drivers/)                 | Storage/database connectors                                     | `drivers`         |
+| [`09_services/`](09_services/)               | Docker-Compose service catalog by category                      | —                 |
+| [`10_service_runtime/`](10_service_runtime/) | `cmd <service> <path>` runtime                                  | `service_runtime` |
+| [`11_mcp/`](11_mcp/)                         | MCP servers and exposure shims                                  | `mcp_servers`     |
+| [`12_prompts/`](12_prompts/)                 | Prompt templates                                                | —                 |
+| [`13_models/`](13_models/)                   | Per-model YAML registry (providers + features)                  | —                 |
+| [`13_providers/`](13_providers/)             | Per-provider YAML registry (protocols + endpoints)              | —                 |
+| [`14_data/`](14_data/)                       | Persistent data (filesystem-backed)                             | —                 |
+| [`15_notebooks/`](15_notebooks/)             | Exploration notebooks                                           | —                 |
+| [`16_tests/`](16_tests/)                     | Integration and contract tests                                  | —                 |
+| [`18_docs/`](18_docs/)                       | Supporting docs                                                 | —                 |
+| [`19_archive/`](19_archive/)                 | Deprecated components                                           | —                 |
+
 <!-- BUCKETS_TABLE_END -->
 
 ## Import-name Strategy
@@ -96,11 +100,13 @@ Always import via the clean name (`from drivers.sql.session import init_db`), ne
 ## Console Scripts
 
 <!-- CLI_COMMANDS_START -->
-| Command | Entry point |
-|---------|-------------|
-| `localfabric` | `adapters.cli.main:app` |
-| `localfabric-md` | `adapters.cli.markdown_runtime_adapter:main` |
-| `localfabric-runtime` | `service_runtime.cmd:main` |
+
+| Command               | Entry point                                  |
+| --------------------- | -------------------------------------------- |
+| `localfabric`         | `adapters.cli.main:app`                      |
+| `localfabric-md`      | `adapters.cli.markdown_runtime_adapter:main` |
+| `localfabric-runtime` | `service_runtime.cmd:main`                   |
+
 <!-- CLI_COMMANDS_END -->
 
 ## Getting Started

@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 import pytest
 from core.runtimes.yaml.src import Definition, Runtime, ShellEnvironment
-from core.runtimes.yaml.src.dispatcher import DispatchResult, Dispatcher
+from core.runtimes.yaml.src.dispatcher import Dispatcher, DispatchResult
 
 YAML_ROOT = Path(__file__).resolve().parents[1] / "02_core" / "runtimes" / "yaml"
 
@@ -15,9 +15,9 @@ YAML_ROOT = Path(__file__).resolve().parents[1] / "02_core" / "runtimes" / "yaml
 class RecordingDispatcher(Dispatcher):
     """Dispatcher that records calls without actually running a subprocess."""
 
-    def __init__(self, state_responses: Dict[str, Dict[str, Any]] | None = None):
+    def __init__(self, state_responses: dict[str, dict[str, Any]] | None = None):
         super().__init__()
-        self.calls: List[Dict[str, Any]] = []
+        self.calls: list[dict[str, Any]] = []
         self.state_responses = state_responses or {}
 
     def dispatch(self, language, source, base_env=None, cwd=None):
@@ -137,9 +137,7 @@ def test_documentation_workflow_writes_and_checks_generated_reference(tmp_path: 
     pages = sorted((output / "definitions").rglob("*.md"))
     assert len(pages) == len(definitions)
     assert "```mermaid" in (output / "README.md").read_text(encoding="utf-8")
-    definition_page = (
-        output / "definitions" / "definition-builtin-docs-prune-definition-pages.md"
-    )
+    definition_page = output / "definitions" / "definition-builtin-docs-prune-definition-pages.md"
     assert "## Resolved API" in definition_page.read_text(encoding="utf-8")
 
     runtime.execute("docs/api/reference", {"output_dir": str(output), "mode": "check"})

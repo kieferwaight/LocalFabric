@@ -80,7 +80,9 @@ reset: clean venv install-all
 
 format:
 	.venv/bin/ruff format .
-	.venv/bin/ruff check --fix .
+	# --exit-zero so a remaining unfixable lint doesn't block the rest of
+	# the format pass (yamlfix / mdformat / block scalars).
+	.venv/bin/ruff check --fix --exit-zero .
 	find . -type f \( -name '*.yaml' -o -name '*.yml' \) \
 	    -not -path './.venv/*' -not -path './14_data/*' \
 	    -not -path './18_docs/*' -not -path './node_modules/*' \

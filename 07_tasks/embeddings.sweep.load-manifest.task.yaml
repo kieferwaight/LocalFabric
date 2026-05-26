@@ -3,7 +3,8 @@
   description: |
     Load the sweep manifest JSON from a path, returning an empty dict on
     missing or corrupt file. Wraps lib.embeddings.sweep.load_manifest.
-  tags: [task]
+  tags:
+  - task
   extends: task.base
   inputs:
     manifest_path:
@@ -11,10 +12,9 @@
       required: true
       description: Path to the JSON manifest file.
   run:
-    - python: |
-        import json, os
-        from lib.embeddings.sweep import load_manifest
-
-        manifest = load_manifest("{{ manifest_path }}")
-        with open(os.environ["STATE_FILE"], "w") as f:
-            json.dump({"manifest": manifest, "entry_count": len(manifest)}, f)
+  - python: |-
+      import json, os
+      from lib.embeddings.sweep import load_manifest
+      manifest = load_manifest("{{ manifest_path }}")
+      with open(os.environ["STATE_FILE"], "w") as f:
+          json.dump({"manifest": manifest, "entry_count": len(manifest)}, f)

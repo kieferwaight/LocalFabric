@@ -10,7 +10,7 @@ services:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
     ports:
-      - "${MINIO_API_PORT:-9000}:9000"
-      - "${MINIO_CONSOLE_PORT:-9001}:9001"
+    - ${MINIO_API_PORT:-9000}:9000
+    - ${MINIO_CONSOLE_PORT:-9001}:9001
     volumes:
-      - ${DATA_PATH}:/data
+    - ${DATA_PATH}:/data

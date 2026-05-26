@@ -3,22 +3,24 @@
   description: |
     Qdrant vector database for similarity search and embedding storage. Exposes both
     HTTP and gRPC APIs and persists collections under the bound data volume.
-  tags: [docker, vector]
+  tags:
+  - docker
+  - vector
   extends: docker.base
   inputs:
     DATA_PATH:
-      type: "string"
+      type: string
       required: true
       description: Host path for Qdrant storage (binds to /qdrant/storage in container)
     QDRANT_HTTP_PORT:
-      type: "string"
+      type: string
       required: false
-      default: "6333"
+      default: '6333'
       description: Host port to expose the Qdrant HTTP API (default 6333)
     QDRANT_GRPC_PORT:
-      type: "string"
+      type: string
       required: false
-      default: "6334"
+      default: '6334'
       description: Host port to expose the Qdrant gRPC API (default 6334)
   variables:
     services:
@@ -27,7 +29,7 @@
         container_name: contentgraph-qdrant
         restart: unless-stopped
         ports:
-          - "{{ QDRANT_HTTP_PORT }}:6333"
-          - "{{ QDRANT_GRPC_PORT }}:6334"
+        - '{{ QDRANT_HTTP_PORT }}:6333'
+        - '{{ QDRANT_GRPC_PORT }}:6334'
         volumes:
-          - "{{ DATA_PATH }}:/qdrant/storage"
+        - '{{ DATA_PATH }}:/qdrant/storage'

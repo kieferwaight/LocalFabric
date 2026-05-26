@@ -4,7 +4,8 @@
     Local-first runtime for open-weight LLMs. Pulls model weights on demand and
     serves them through a daemon that ships both a native API and an OpenAI
     Chat Completions-compatible surface.
-  tags: [provider]
+  tags:
+  - provider
   extends: provider.base
   variables:
     name: ollama

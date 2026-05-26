@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB:-contentgraph}
     ports:
-      - "${PGVECTOR_PORT:-5432}:5432"
+    - ${PGVECTOR_PORT:-5432}:5432
     volumes:
-      - ${DATA_PATH}:/var/lib/postgresql/data
-      - ./init:/docker-entrypoint-initdb.d:ro
+    - ${DATA_PATH}:/var/lib/postgresql/data
+    - ./init:/docker-entrypoint-initdb.d:ro

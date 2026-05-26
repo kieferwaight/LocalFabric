@@ -6,54 +6,54 @@
     and Ollama via configurable URLs. Demonstrates a `docker.base` child
     that ships both a generated Dockerfile and additional source files
     (`app/worker.py`) alongside the compose document.
-  tags: [docker, workers]
+  tags:
+  - docker
+  - workers
   extends: docker.base
   inputs:
     DATA_PATH:
-      type: "string"
+      type: string
       required: true
       description: Host path for worker scratch storage (binds to /work in container).
     DATABASE_URL:
-      type: "string"
+      type: string
       required: true
       description: PostgreSQL connection URL for the worker.
     REDIS_URL:
-      type: "string"
+      type: string
       required: false
-      default: "redis://redis:6379/0"
+      default: redis://redis:6379/0
     MINIO_ENDPOINT:
-      type: "string"
+      type: string
       required: false
-      default: "minio:9000"
+      default: minio:9000
     TEMPORAL_ADDRESS:
-      type: "string"
+      type: string
       required: false
-      default: "temporal:7233"
+      default: temporal:7233
     TIKA_URL:
-      type: "string"
+      type: string
       required: false
-      default: "http://tika:9998"
+      default: http://tika:9998
     UNSTRUCTURED_URL:
-      type: "string"
+      type: string
       required: false
-      default: "http://unstructured:8000"
+      default: http://unstructured:8000
     QDRANT_URL:
-      type: "string"
+      type: string
       required: false
-      default: "http://qdrant:6333"
+      default: http://qdrant:6333
     OLLAMA_URL:
-      type: "string"
+      type: string
       required: false
-      default: "http://ollama:11434"
+      default: http://ollama:11434
   variables:
-    image_tag: "contentgraph-worker:local"
+    image_tag: contentgraph-worker:local
     dockerfile_body: |
       FROM python:3.12-slim
-
       WORKDIR /app
       RUN pip install --no-cache-dir redis psycopg[binary] httpx boto3 neo4j temporalio
       COPY app /app
-
       CMD ["python", "worker.py"]
     services:
       contentgraph-worker:
@@ -62,22 +62,20 @@
         container_name: contentgraph-worker
         restart: unless-stopped
         environment:
-          DATABASE_URL: "{{ DATABASE_URL }}"
-          REDIS_URL: "{{ REDIS_URL }}"
-          MINIO_ENDPOINT: "{{ MINIO_ENDPOINT }}"
-          TEMPORAL_ADDRESS: "{{ TEMPORAL_ADDRESS }}"
-          TIKA_URL: "{{ TIKA_URL }}"
-          UNSTRUCTURED_URL: "{{ UNSTRUCTURED_URL }}"
-          QDRANT_URL: "{{ QDRANT_URL }}"
-          OLLAMA_URL: "{{ OLLAMA_URL }}"
+          DATABASE_URL: '{{ DATABASE_URL }}'
+          REDIS_URL: '{{ REDIS_URL }}'
+          MINIO_ENDPOINT: '{{ MINIO_ENDPOINT }}'
+          TEMPORAL_ADDRESS: '{{ TEMPORAL_ADDRESS }}'
+          TIKA_URL: '{{ TIKA_URL }}'
+          UNSTRUCTURED_URL: '{{ UNSTRUCTURED_URL }}'
+          QDRANT_URL: '{{ QDRANT_URL }}'
+          OLLAMA_URL: '{{ OLLAMA_URL }}'
         volumes:
-          - "{{ DATA_PATH }}:/work"
+        - '{{ DATA_PATH }}:/work'
     extra_files:
-      - path: "app/worker.py"
-        content: |
-          import time
-
-
-          print("contentgraph worker started")
-          while True:
-              time.sleep(60)
+    - path: app/worker.py
+      content: |-
+        import time
+        print("contentgraph worker started")
+        while True:
+            time.sleep(60)

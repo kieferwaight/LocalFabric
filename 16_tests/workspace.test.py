@@ -5,6 +5,7 @@ pyproject manifest: every bucket must be either packaged or explicitly
 excluded; the manifest must not reference buckets that no longer exist;
 the MCP sdk override must resolve to a real package.
 """
+
 import tomllib
 from pathlib import Path
 

@@ -10,7 +10,6 @@ from drivers.cache import JsonCache
 from harnesses.base import HarnessError
 from harnesses.ollama import OllamaHarness
 
-
 _DEFAULT_MODEL = "nomic-embed-text"
 _DEFAULT_CACHE = (
     Path(__file__).resolve().parents[2] / "14_data" / "cache" / "embeddings" / "embed_cache.json"

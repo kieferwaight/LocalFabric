@@ -5,7 +5,8 @@
     through the local Ollama harness. Returns a markdown-formatted summary
     or fallback text if Ollama is unavailable.
     Wraps lib.research.local_summarize.local_research_scaffold.
-  tags: [task]
+  tags:
+  - task
   extends: task.base
   inputs:
     topic_or_url:
@@ -13,10 +14,9 @@
       required: true
       description: A URL (starting with http) or a search topic string.
   run:
-    - python: |
-        import json, os
-        from lib.research.local_summarize import local_research_scaffold
-
-        summary = local_research_scaffold("{{ topic_or_url }}")
-        with open(os.environ["STATE_FILE"], "w") as f:
-            json.dump({"summary": summary}, f)
+  - python: |-
+      import json, os
+      from lib.research.local_summarize import local_research_scaffold
+      summary = local_research_scaffold("{{ topic_or_url }}")
+      with open(os.environ["STATE_FILE"], "w") as f:
+          json.dump({"summary": summary}, f)

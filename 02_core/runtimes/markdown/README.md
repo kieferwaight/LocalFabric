@@ -42,11 +42,11 @@ explicitly declares a `body:` under `variables:`.
 
 ### Recognized fence languages
 
-| Markdown fence | Dispatcher language |
-| --- | --- |
-| ` ```bash ` / ` ```sh ` | `bash` / `sh` |
-| ` ```python ` / ` ```py ` | `python` |
-| ` ```js ` / ` ```javascript ` / ` ```node ` | `js` |
+| Markdown fence                                                | Dispatcher language |
+| ------------------------------------------------------------- | ------------------- |
+| ```` ```bash ```` / ```` ```sh ````                           | `bash` / `sh`       |
+| ```` ```python ```` / ```` ```py ````                         | `python`            |
+| ```` ```js ```` / ```` ```javascript ```` / ```` ```node ```` | `js`                |
 
 Other language tokens — `ollama`, `claude`, `mermaid`, plain text, etc. — and
 fences with no language token are recognized but not run; they survive as
@@ -77,7 +77,7 @@ that land in later steps.
 
 ## Documented limitations
 
-- **Nested fences are not supported.** The first line matching `^\s*```\s*$`
+- **Nested fences are not supported.** The first line matching ```` ^\s*```\s*$ ````
   after the opening fence terminates the block. Authors who want to show a
   fence inside documentation should use indentation rather than nesting.
 - **Unknown languages do not execute.** They are preserved as documentation
@@ -153,15 +153,15 @@ You are a senior engineer. Summarize the following code clearly and concisely:
 
 Supported frontmatter fields:
 
-| Field | Type | Purpose |
-| --- | --- | --- |
-| `provider` | string (required) | Provider key registered in `harnesses.markdown.providers.PROVIDERS`. |
-| `model` | string | Model id passed to the provider; per-provider default applies when omitted. |
-| `system` | string | Optional system prompt forwarded to the provider. |
-| `max_tokens` | integer | Upper bound on response tokens. |
-| `temperature` | number | Sampling temperature. |
-| `stream` | boolean | When `true`, the harness streams chunks to stdout and returns an iterator instead of a `ProviderResult`. |
-| `inputs` | mapping | Same shape as fence-style inputs; values are rendered into the prompt body. |
+| Field         | Type              | Purpose                                                                                                  |
+| ------------- | ----------------- | -------------------------------------------------------------------------------------------------------- |
+| `provider`    | string (required) | Provider key registered in `harnesses.markdown.providers.PROVIDERS`.                                     |
+| `model`       | string            | Model id passed to the provider; per-provider default applies when omitted.                              |
+| `system`      | string            | Optional system prompt forwarded to the provider.                                                        |
+| `max_tokens`  | integer           | Upper bound on response tokens.                                                                          |
+| `temperature` | number            | Sampling temperature.                                                                                    |
+| `stream`      | boolean           | When `true`, the harness streams chunks to stdout and returns an iterator instead of a `ProviderResult`. |
+| `inputs`      | mapping           | Same shape as fence-style inputs; values are rendered into the prompt body.                              |
 
 Provider-style files do **not** support fence-style keys (`extends`,
 `mixins`, `modules`, `variables`) — the compiler rejects them with a clear
@@ -169,8 +169,8 @@ error rather than silently no-op.
 
 ### Built-in providers
 
-| Name | Backed by | Default model | Auth |
-| --- | --- | --- | --- |
+| Name     | Backed by                        | Default model       | Auth                        |
+| -------- | -------------------------------- | ------------------- | --------------------------- |
 | `claude` | `harnesses.claude.ClaudeHarness` | `claude-sonnet-4-6` | `ANTHROPIC_API_KEY` env var |
 
 `ClaudeProvider` lazily constructs its underlying harness — importing it

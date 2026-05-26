@@ -5,10 +5,12 @@
     the canonical fields every model declares (`name`, `documentation`,
     `providers`, `features`) so the catalog can iterate them uniformly and
     downstream tooling can rely on the shape. Carries no run blocks.
-  tags: [model, abstract]
+  tags:
+  - model
+  - abstract
   extends: stdlib.base
   variables:
-    name: ""
+    name: ''
     documentation: {}
     providers: []
     features: []

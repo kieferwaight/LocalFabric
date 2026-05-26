@@ -5,10 +5,9 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import Any
 
-from langgraph.graph import END, START, StateGraph
-
-from core.runtimes.yaml.src import Runtime
 from core.runtimes.langgraph.yaml_node import yaml_node
+from core.runtimes.yaml.src import Runtime
+from langgraph.graph import END, START, StateGraph
 
 
 def compile_graph(

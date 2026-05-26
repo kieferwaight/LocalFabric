@@ -22,37 +22,39 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Optional
-
 
 # ------------------------------------------------------------------
 # Enums
 # ------------------------------------------------------------------
 
+
 class Intent(str, Enum):
     """Primary task categories."""
-    RESEARCH     = "research"       # web fetch, summarize, investigate
-    TESTING      = "testing"        # run tests, check failures
-    CODE_FIX     = "code_fix"       # debug, patch, refactor
-    CODE_GEN     = "code_gen"       # write new code / scripts
-    EMBED        = "embed"          # chunk, index, embed files
-    QUERY        = "query"          # semantic search over knowledge base
-    SUMMARIZE    = "summarize"      # condense existing text
-    ROUTE        = "route"          # meta: route to another tool/agent
-    UNKNOWN      = "unknown"        # fallback
+
+    RESEARCH = "research"  # web fetch, summarize, investigate
+    TESTING = "testing"  # run tests, check failures
+    CODE_FIX = "code_fix"  # debug, patch, refactor
+    CODE_GEN = "code_gen"  # write new code / scripts
+    EMBED = "embed"  # chunk, index, embed files
+    QUERY = "query"  # semantic search over knowledge base
+    SUMMARIZE = "summarize"  # condense existing text
+    ROUTE = "route"  # meta: route to another tool/agent
+    UNKNOWN = "unknown"  # fallback
 
 
 class Complexity(str, Enum):
     """Execution tier recommendation."""
-    LOCAL    = "local"     # local Ollama model (fastest, free)
-    HYBRID   = "hybrid"    # local pre-process → frontier for final answer
+
+    LOCAL = "local"  # local Ollama model (fastest, free)
+    HYBRID = "hybrid"  # local pre-process → frontier for final answer
     FRONTIER = "frontier"  # requires a frontier model (Claude / Gemini / GPT)
-    AGENT    = "agent"     # multi-step autonomous agent
+    AGENT = "agent"  # multi-step autonomous agent
 
 
 # ------------------------------------------------------------------
 # Task profile
 # ------------------------------------------------------------------
+
 
 @dataclass
 class TaskProfile:
@@ -62,7 +64,7 @@ class TaskProfile:
     has_url: bool = False
     has_code: bool = False
     estimated_tokens: int = 0
-    confidence: float = 1.0     # classifier self-confidence (0–1)
+    confidence: float = 1.0  # classifier self-confidence (0–1)
     notes: list[str] = field(default_factory=list)
 
     def primary_intent(self) -> Intent:
@@ -88,31 +90,81 @@ _URL_RE = re.compile(r"https?://\S+")
 _CODE_FENCE_RE = re.compile(r"```")
 
 # (pattern, intent, complexity_hint, score)  — higher score = stronger signal
-_INTENT_RULES: list[tuple[re.Pattern, Intent, Optional[Complexity], float]] = [
+_INTENT_RULES: list[tuple[re.Pattern, Intent, Complexity | None, float]] = [
     # Research
-    (re.compile(r"\b(research|fetch|scrape|summarize url|look up|find info|search for|google|browse)\b", re.I), Intent.RESEARCH, Complexity.HYBRID, 0.8),
+    (
+        re.compile(
+            r"\b(research|fetch|scrape|summarize url|look up|find info|search for|google|browse)\b",
+            re.I,
+        ),
+        Intent.RESEARCH,
+        Complexity.HYBRID,
+        0.8,
+    ),
     # Testing
-    (re.compile(r"\b(run tests?|pytest|npm test|failing test|test suite|test runner|ci|check tests?)\b", re.I), Intent.TESTING, Complexity.LOCAL, 0.9),
+    (
+        re.compile(
+            r"\b(run tests?|pytest|npm test|failing test|test suite|test runner|ci|check tests?)\b",
+            re.I,
+        ),
+        Intent.TESTING,
+        Complexity.LOCAL,
+        0.9,
+    ),
     # Code fix
-    (re.compile(r"\b(fix|debug|patch|resolve|error|bug|broken|traceback|exception|failing)\b", re.I), Intent.CODE_FIX, Complexity.FRONTIER, 0.6),
+    (
+        re.compile(
+            r"\b(fix|debug|patch|resolve|error|bug|broken|traceback|exception|failing)\b", re.I
+        ),
+        Intent.CODE_FIX,
+        Complexity.FRONTIER,
+        0.6,
+    ),
     # Code gen
-    (re.compile(r"\b(write|generate|create|implement|build|scaffold|new (script|module|function|class|tool))\b", re.I), Intent.CODE_GEN, Complexity.FRONTIER, 0.7),
+    (
+        re.compile(
+            r"\b(write|generate|create|implement|build|scaffold|new (script|module|function|class|tool))\b",
+            re.I,
+        ),
+        Intent.CODE_GEN,
+        Complexity.FRONTIER,
+        0.7,
+    ),
     # Embedding / indexing
-    (re.compile(r"\b(embed|index|chunk|sweep|vector|lancedb|reindex)\b", re.I), Intent.EMBED, Complexity.LOCAL, 0.9),
+    (
+        re.compile(r"\b(embed|index|chunk|sweep|vector|lancedb|reindex)\b", re.I),
+        Intent.EMBED,
+        Complexity.LOCAL,
+        0.9,
+    ),
     # Query / semantic search
-    (re.compile(r"\b(query|search (my|the) (code|knowledge|docs?|codebase)|find in (code|knowledge))\b", re.I), Intent.QUERY, Complexity.LOCAL, 0.85),
+    (
+        re.compile(
+            r"\b(query|search (my|the) (code|knowledge|docs?|codebase)|find in (code|knowledge))\b",
+            re.I,
+        ),
+        Intent.QUERY,
+        Complexity.LOCAL,
+        0.85,
+    ),
     # Summarize
-    (re.compile(r"\b(summarize|summary|tldr|condense|overview of|brief(ly)?)\b", re.I), Intent.SUMMARIZE, Complexity.HYBRID, 0.7),
+    (
+        re.compile(r"\b(summarize|summary|tldr|condense|overview of|brief(ly)?)\b", re.I),
+        Intent.SUMMARIZE,
+        Complexity.HYBRID,
+        0.7,
+    ),
 ]
 
 # Token-count → complexity thresholds (rough)
-_TOKEN_FRONTIER_THRESHOLD = 1500   # above this → lean frontier
-_TOKEN_AGENT_THRESHOLD    = 4000   # above this → consider agent
+_TOKEN_FRONTIER_THRESHOLD = 1500  # above this → lean frontier
+_TOKEN_AGENT_THRESHOLD = 4000  # above this → consider agent
 
 
 # ------------------------------------------------------------------
 # Classifier
 # ------------------------------------------------------------------
+
 
 class Classifier:
     """
@@ -149,7 +201,9 @@ class Classifier:
 
         # Code blocks suggest frontier for generation/fix
         if has_code:
-            complexity_votes[Complexity.FRONTIER] = complexity_votes.get(Complexity.FRONTIER, 0.0) + 0.4
+            complexity_votes[Complexity.FRONTIER] = (
+                complexity_votes.get(Complexity.FRONTIER, 0.0) + 0.4
+            )
             notes.append("Code block detected — frontier model preferred")
 
         # Token count escalations
@@ -157,7 +211,9 @@ class Classifier:
             complexity_votes[Complexity.AGENT] = complexity_votes.get(Complexity.AGENT, 0.0) + 0.5
             notes.append(f"Large input (~{estimated_tokens} tokens) — agent tier considered")
         elif estimated_tokens > _TOKEN_FRONTIER_THRESHOLD:
-            complexity_votes[Complexity.FRONTIER] = complexity_votes.get(Complexity.FRONTIER, 0.0) + 0.3
+            complexity_votes[Complexity.FRONTIER] = (
+                complexity_votes.get(Complexity.FRONTIER, 0.0) + 0.3
+            )
             notes.append(f"Medium input (~{estimated_tokens} tokens) — frontier preferred")
 
         # Sort intents by score descending

@@ -109,18 +109,13 @@ def test_provider_rejects_non_bool_stream() -> None:
 
 
 def test_provider_rejects_fence_style_keys() -> None:
-    source = (
-        "---\nid: x\nprovider: claude\nextends: stdlib.base\n---\nbody\n"
-    )
+    source = "---\nid: x\nprovider: claude\nextends: stdlib.base\n---\nbody\n"
     with pytest.raises(MarkdownCompileError, match="extends"):
         compile_text(source)
 
 
 def test_fence_style_unchanged_when_provider_absent() -> None:
-    source = (
-        "---\nid: x\n---\n"
-        "```bash {id: a}\necho hi\n```\n"
-    )
+    source = "---\nid: x\n---\n```bash {id: a}\necho hi\n```\n"
     result = compile_text(source)
     assert PROVIDER_MARKER_KEY not in result
     assert result["run"] == [{"bash": "echo hi\n"}]

@@ -3,7 +3,8 @@
   description: >
     Lightweight general chat and local assistant tasks on resource-constrained
     hardware.
-  tags: [model]
+  tags:
+  - model
   extends: model.base
   variables:
     name: llama3.2
@@ -13,8 +14,8 @@
         hardware.
       vendor: Meta
     providers:
-      - ollama
+    - ollama
     features:
-      - text
-      - tool_calling
-      - streaming
+    - text
+    - tool_calling
+    - streaming

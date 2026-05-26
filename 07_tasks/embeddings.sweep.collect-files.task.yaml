@@ -3,19 +3,19 @@
   description: |
     Walk a root directory and return all indexable file paths (sorted).
     Wraps lib.embeddings.sweep.collect_files.
-  tags: [task]
+  tags:
+  - task
   extends: task.base
   inputs:
     root:
       type: string
       required: false
-      default: "{{ env.cwd }}"
+      default: '{{ env.cwd }}'
       description: Root directory to walk.
   run:
-    - python: |
-        import json, os
-        from lib.embeddings.sweep import collect_files
-
-        files = collect_files("{{ root }}")
-        with open(os.environ["STATE_FILE"], "w") as f:
-            json.dump({"files": files, "count": len(files)}, f)
+  - python: |-
+      import json, os
+      from lib.embeddings.sweep import collect_files
+      files = collect_files("{{ root }}")
+      with open(os.environ["STATE_FILE"], "w") as f:
+          json.dump({"files": files, "count": len(files)}, f)

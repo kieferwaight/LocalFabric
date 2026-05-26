@@ -6,4 +6,4 @@ services:
     container_name: contentgraph-casbin-service
     restart: unless-stopped
     ports:
-      - "${CASBIN_PORT:-8090}:8080"
+    - ${CASBIN_PORT:-8090}:8080

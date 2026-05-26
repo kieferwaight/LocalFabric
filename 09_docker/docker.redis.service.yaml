@@ -3,17 +3,19 @@
   description: |
     Redis 7 instance configured with append-only persistence. Used for caching, queues,
     and rate limiting across the content graph services.
-  tags: [docker, database]
+  tags:
+  - docker
+  - database
   extends: docker.base
   inputs:
     DATA_PATH:
-      type: "string"
+      type: string
       required: true
       description: Host path for Redis append-only data (binds to /data in container)
     REDIS_PORT:
-      type: "string"
+      type: string
       required: false
-      default: "6379"
+      default: '6379'
       description: Host port to bind the Redis protocol (default 6379)
   variables:
     services:
@@ -21,8 +23,11 @@
         image: redis:7
         container_name: contentgraph-redis
         restart: unless-stopped
-        command: ["redis-server", "--appendonly", "yes"]
+        command:
+        - redis-server
+        - --appendonly
+        - 'yes'
         ports:
-          - "{{ REDIS_PORT }}:6379"
+        - '{{ REDIS_PORT }}:6379'
         volumes:
-          - "{{ DATA_PATH }}:/data"
+        - '{{ DATA_PATH }}:/data'

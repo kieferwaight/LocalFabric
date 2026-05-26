@@ -3,34 +3,32 @@
   description: |
     Walk a repository root and produce classification, current-state manifest,
     and fingerprint report dicts. Wraps lib.classify.build_manifest.build_classification.
-  tags: [task]
+  tags:
+  - task
   extends: task.base
   inputs:
     root:
       type: string
       required: false
-      default: "{{ env.cwd }}"
+      default: '{{ env.cwd }}'
       description: Repository root to walk.
     output_dir:
       type: string
       required: false
-      default: "14_data/manifests"
+      default: 14_data/manifests
       description: Directory to write the three report JSON files.
   run:
-    - python: |
-        import json, os
-        from pathlib import Path
-        from lib.classify.build_manifest import build_classification
-        from lib.files import write_json
-
-        root = Path("{{ root }}").resolve()
-        output_dir = Path("{{ output_dir }}")
-        output_dir.mkdir(parents=True, exist_ok=True)
-
-        classification_report, current_state_manifest, fingerprint_report = build_classification(root)
-        write_json(output_dir / "classification_report.json", classification_report)
-        write_json(output_dir / "current_state_manifest.json", current_state_manifest)
-        write_json(output_dir / "fingerprint_report.json", fingerprint_report)
-
-        with open(os.environ["STATE_FILE"], "w") as f:
-            json.dump({"output_dir": str(output_dir), "files": list(current_state_manifest.keys())[:5]}, f)
+  - python: |-
+      import json, os
+      from pathlib import Path
+      from lib.classify.build_manifest import build_classification
+      from lib.files import write_json
+      root = Path("{{ root }}").resolve()
+      output_dir = Path("{{ output_dir }}")
+      output_dir.mkdir(parents=True, exist_ok=True)
+      classification_report, current_state_manifest, fingerprint_report = build_classification(root)
+      write_json(output_dir / "classification_report.json", classification_report)
+      write_json(output_dir / "current_state_manifest.json", current_state_manifest)
+      write_json(output_dir / "fingerprint_report.json", fingerprint_report)
+      with open(os.environ["STATE_FILE"], "w") as f:
+          json.dump({"output_dir": str(output_dir), "files": list(current_state_manifest.keys())[:5]}, f)

@@ -6,6 +6,6 @@ services:
     container_name: contentgraph-unstructured
     restart: unless-stopped
     ports:
-      - "${UNSTRUCTURED_PORT:-8001}:8000"
+    - ${UNSTRUCTURED_PORT:-8001}:8000
     volumes:
-      - ${DATA_PATH}:/data
+    - ${DATA_PATH}:/data

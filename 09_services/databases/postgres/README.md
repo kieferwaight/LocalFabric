@@ -18,17 +18,17 @@ Bind to a data instance under `14_data/stores/postgres/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `POSTGRES_PORT` | `5433` | `5432` | PostgreSQL client traffic |
+| Host env var    | Default | Container | Use                       |
+| --------------- | ------: | --------: | ------------------------- |
+| `POSTGRES_PORT` |  `5433` |    `5432` | PostgreSQL client traffic |
 
 ## Required Environment
 
-| Var | Description |
-| --- | --- |
-| `POSTGRES_USER` | Superuser name |
-| `POSTGRES_PASSWORD` | Superuser password |
-| `POSTGRES_DB` | Initial database (default `contentgraph`) |
+| Var                 | Description                               |
+| ------------------- | ----------------------------------------- |
+| `POSTGRES_USER`     | Superuser name                            |
+| `POSTGRES_PASSWORD` | Superuser password                        |
+| `POSTGRES_DB`       | Initial database (default `contentgraph`) |
 
 ## Run
 

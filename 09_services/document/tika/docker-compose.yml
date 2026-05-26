@@ -5,4 +5,4 @@ services:
     container_name: contentgraph-tika
     restart: unless-stopped
     ports:
-      - "${TIKA_PORT:-9998}:9998"
+    - ${TIKA_PORT:-9998}:9998

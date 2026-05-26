@@ -23,27 +23,27 @@ Rules:
 Produce a Markdown document with:
 
 1. `# Tasks — <slug>`
-2. One `## Tn — <title>` section per task, each containing **Bucket:**,
+1. One `## Tn — <title>` section per task, each containing **Bucket:**,
    the task body, and **Acceptance:**.
-3. A trailing `## Suggested branch sequence` section that names each branch
+1. A trailing `## Suggested branch sequence` section that names each branch
    following the `<provider>_<type>_<slug>` convention from `CLAUDE.md` and
    lists the dependencies in order.
 
 Return only the Markdown body. No code fences.
 
----
+______________________________________________________________________
 
 ## Idea
 
 {{idea}}
 
----
+______________________________________________________________________
 
 ## Research
 
 {{research}}
 
----
+______________________________________________________________________
 
 ## Requirements
 

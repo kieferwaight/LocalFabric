@@ -3,16 +3,18 @@
   description: |
     OpenSearch Dashboards UI fronting the local OpenSearch cluster. Security dashboards
     plugin is disabled to match the dev-mode OpenSearch node.
-  tags: [docker, search]
+  tags:
+  - docker
+  - search
   extends: docker.base
   inputs:
     OPENSEARCH_DASHBOARDS_PORT:
-      type: "string"
+      type: string
       required: false
-      default: "5601"
+      default: '5601'
       description: Host port to expose OpenSearch Dashboards (default 5601)
     OPENSEARCH_HOSTS:
-      type: "string"
+      type: string
       required: false
       default: '["http://opensearch:9200"]'
       description: JSON-encoded list of upstream OpenSearch hosts
@@ -23,7 +25,7 @@
         container_name: contentgraph-opensearch-dashboards
         restart: unless-stopped
         environment:
-          OPENSEARCH_HOSTS: "{{ OPENSEARCH_HOSTS }}"
-          DISABLE_SECURITY_DASHBOARDS_PLUGIN: "true"
+          OPENSEARCH_HOSTS: '{{ OPENSEARCH_HOSTS }}'
+          DISABLE_SECURITY_DASHBOARDS_PLUGIN: 'true'
         ports:
-          - "{{ OPENSEARCH_DASHBOARDS_PORT }}:5601"
+        - '{{ OPENSEARCH_DASHBOARDS_PORT }}:5601'

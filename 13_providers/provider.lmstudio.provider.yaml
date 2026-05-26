@@ -3,7 +3,8 @@
   description: >
     Desktop LLM runtime. Loads quantized open-weight models locally and serves
     them through a native HTTP API plus an OpenAI-compatible surface.
-  tags: [provider]
+  tags:
+  - provider
   extends: provider.base
   variables:
     name: lmstudio

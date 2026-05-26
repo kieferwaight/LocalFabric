@@ -5,12 +5,13 @@
     data-driven sections rendered from `pyproject.toml`: the project tagline,
     the bucket table (numeric prefix → role → import alias), and the console
     script table.
-
     Marker pairs (`<!-- NAME_START -->` / `<!-- NAME_END -->`) are preserved
     around the dynamic regions so readers can still locate the generated
     boundaries — the regeneration source of truth is this YAML, not the
     markers.
-  tags: [documentation, template]
+  tags:
+  - documentation
+  - template
   inputs:
     project_tagline:
       type: string
@@ -32,19 +33,15 @@
   template:
     engine: jinja
     output: markdown
-    body: |
+    body: |-
       # LocalFabric
-
       <!-- PROJECT_TAGLINE_START -->
       {{ project_tagline }}
       <!-- PROJECT_TAGLINE_END -->
-
       LocalFabric is a modular platform for building private, reproducible AI workflows that run on local infrastructure first and can extend to cloud providers when needed. It brings model routing, reusable tools, workflow execution, service orchestration, storage drivers, prompt assets, and auditability into one responsibility-driven workspace.
 
       ## Why LocalFabric
-
       AI applications quickly accumulate provider-specific integrations, disconnected scripts, and operational state that is difficult to reproduce. LocalFabric gives teams a structured foundation to:
-
       - Route work across local and remote model providers behind clear interfaces.
       - Operate services such as Ollama, vector stores, and databases from a portable runtime.
       - Compose image, research, retrieval, and document workflows from reusable capabilities.
@@ -52,7 +49,6 @@
       - Audit and remediate architecture boundary violations as the codebase evolves.
 
       ## Platform Capabilities
-
       | Capability | What It Provides |
       | --- | --- |
       | Model execution | Harness-based access to local and cloud model surfaces. |
@@ -64,7 +60,6 @@
       | Architecture governance | JSONL audit findings and remediation workflows for responsibility classification. |
 
       ## Architecture At A Glance
-
       ```mermaid
       flowchart LR
           Interface["CLI / MCP / API"] --> Router
@@ -76,7 +71,6 @@
       ```
 
       ## Core Documentation
-
       | Document | Purpose |
       | --- | --- |
       | [Architecture](ARCHITECTURE.md) | System layers, execution flow, contracts, design principles, and extension model. |
@@ -88,9 +82,7 @@
       | [Remediation Workflow](18_docs/classification_remediation_workflow.md) | Agent workflow for resolving findings safely and iteratively. |
 
       ## Repository Layout
-
       Implementation lives directly under the repo root in numeric-prefixed responsibility buckets. Each bucket owns a single concern.
-
       <!-- BUCKETS_TABLE_START -->
       | Bucket | Role | Import name |
       |--------|------|-------------|
@@ -100,18 +92,13 @@
       <!-- BUCKETS_TABLE_END -->
 
       ## Import-name Strategy
-
       Numeric prefixes are filesystem-only — Python forbids module names that start with a digit. The buckets are registered with clean import names via two synchronized mechanisms:
-
       - **[`pyproject.toml`](pyproject.toml)** — `[tool.setuptools.package-dir]` maps each bucket to its import name. `pip install -e .` writes the aliases into a `.pth` file in site-packages so `from harnesses.base import Harness` resolves naturally.
       - **[`conftest.py`](conftest.py)** — registers the same aliases at pytest startup so the test suite runs without an install step.
-
       `11_mcp/` is intentionally exposed as **`mcp_servers`**, not `mcp`: [`11_mcp/server.py`](11_mcp/server.py) imports `from mcp.server.fastmcp import FastMCP` (the PyPI MCP SDK), so we leave that top-level name unshadowed.
-
       Always import via the clean name (`from drivers.sql.session import init_db`), never via the numeric path.
 
       ## Console Scripts
-
       <!-- CLI_COMMANDS_START -->
       {% if cli_commands -%}
       | Command | Entry point |
@@ -125,34 +112,27 @@
       <!-- CLI_COMMANDS_END -->
 
       ## Getting Started
-
       ```bash
       pip install -e .
       pip install -e ".[dev]"           # adds pytest, ruff, mypy
       pytest
       python -m core.interfaces.cli.main --help
       ```
-
       Run a local service through the service runtime:
-
       ```bash
       python -m service_runtime.cmd up ollama ./14_data/apps/ollama/main
       ```
-
       Expose available integrations through MCP:
-
       ```bash
       python -m mcp_servers.server
       ```
 
       ## Notes for contributors
-
       - Cross-bucket imports use the clean import name (`from drivers.sql.session import init_db`), never the numeric path.
       - [`core.environment.REPO_ROOT`](02_core/environment/paths.py) is the canonical anchor for path resolution — no `os.path.join(__file__, "..", "..")` patterns anywhere else.
       - The classification-boundary audit runs as the `audit.classifications.scan.workflow` YAML workflow — invoke via `make audit` before opening a PR. Findings land at `14_data/runs/classification_audit/`.
 
       ## Design Principles
-
       - **Local-first, hybrid-ready:** Prefer private local execution while allowing cloud provider integrations.
       - **Provider-agnostic orchestration:** Keep workflows independent from specific model or storage implementations.
       - **Clear ownership boundaries:** Classify functionality by responsibility and audit drift automatically.
@@ -160,5 +140,4 @@
       - **Reproducible operation:** Favor explicit contracts, deterministic configuration, and focused validation.
 
       ## Project Status
-
       LocalFabric is an evolving orchestration workspace for local AI applications, service-backed tools, retrieval, and agent integrations. The classification audit and remediation workflow provide a repeatable way to preserve the architecture as new capabilities are added.

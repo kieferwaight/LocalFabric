@@ -8,6 +8,6 @@ services:
     environment:
       OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://ollama:11434}
     ports:
-      - "${OPEN_WEBUI_PORT:-3001}:8080"
+    - ${OPEN_WEBUI_PORT:-3001}:8080
     volumes:
-      - ${DATA_PATH}:/app/backend/data
+    - ${DATA_PATH}:/app/backend/data

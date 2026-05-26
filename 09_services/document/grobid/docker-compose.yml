@@ -6,6 +6,6 @@ services:
     container_name: contentgraph-grobid
     restart: unless-stopped
     ports:
-      - "${GROBID_PORT:-8070}:8070"
+    - ${GROBID_PORT:-8070}:8070
     volumes:
-      - ${DATA_PATH}:/opt/grobid/grobid-home/tmp
+    - ${DATA_PATH}:/opt/grobid/grobid-home/tmp

@@ -5,7 +5,8 @@ from __future__ import annotations
 import os
 import uuid
 from collections import deque
-from typing import Any, Deque, Dict, Iterator, Mapping, Optional
+from collections.abc import Iterator, Mapping
+from typing import Any
 
 from harnesses.base import Harness, HarnessError, HarnessStatus
 
@@ -25,11 +26,11 @@ class GeminiHarness(Harness):
 
     name = "gemini"
 
-    def __init__(self, config: Optional[Mapping[str, Any]] = None) -> None:
+    def __init__(self, config: Mapping[str, Any] | None = None) -> None:
         super().__init__(config)
-        self._genai: Optional[Any] = None
-        self._model_instance: Optional[Any] = None
-        self._request_ids: Deque[str] = deque(maxlen=64)
+        self._genai: Any | None = None
+        self._model_instance: Any | None = None
+        self._request_ids: deque[str] = deque(maxlen=64)
         self.model: str = self.config.get("model", "gemini-1.5-flash")
         self.timeout: float = float(self.config.get("timeout", 60))
 
@@ -52,7 +53,7 @@ class GeminiHarness(Harness):
         genai.configure(api_key=api_key)
         self._genai = genai
 
-        gen_kwargs: Dict[str, Any] = {}
+        gen_kwargs: dict[str, Any] = {}
         if self.config.get("generation_config"):
             gen_kwargs["generation_config"] = self.config["generation_config"]
         if self.config.get("safety_settings"):
@@ -68,7 +69,7 @@ class GeminiHarness(Harness):
         messages = request.get("messages")
         if messages is not None:
             # Translate OpenAI-style messages → Gemini "contents" format.
-            converted: list[Dict[str, Any]] = []
+            converted: list[dict[str, Any]] = []
             for msg in messages:
                 role = "user" if msg.get("role") == "user" else "model"
                 content = msg.get("content", "")
@@ -99,7 +100,7 @@ class GeminiHarness(Harness):
         )
 
     # ------------------------------------------------------------------ requests
-    def invoke(self, request: Mapping[str, Any]) -> Dict[str, Any]:
+    def invoke(self, request: Mapping[str, Any]) -> dict[str, Any]:
         model = self._ensure_model()
         contents = self._coerce_contents(request)
         try:
@@ -124,7 +125,7 @@ class GeminiHarness(Harness):
             else {},
         }
 
-    def stream(self, request: Mapping[str, Any]) -> Iterator[Dict[str, Any]]:
+    def stream(self, request: Mapping[str, Any]) -> Iterator[dict[str, Any]]:
         model = self._ensure_model()
         contents = self._coerce_contents(request)
         try:

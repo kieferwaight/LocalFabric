@@ -1,2 +1,2 @@
 frontend.enableUpdateWorkflowExecution:
-  - value: true
+- value: true

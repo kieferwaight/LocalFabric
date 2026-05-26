@@ -1,11 +1,16 @@
 import tempfile
 from pathlib import Path
+
 from core.runtimes.langgraph.markdown_format.graph import run_markdown_format_workflow
+
 
 def test_run_markdown_format_workflow(monkeypatch):
     # Patch format_markdown_with_lmstudio to avoid real API call
     import core.runtimes.langgraph.markdown_format.nodes as nodes
-    monkeypatch.setattr(nodes, "format_markdown_with_lmstudio", lambda file_path, model=None: "# Fixed\n\nContent.")
+
+    monkeypatch.setattr(
+        nodes, "format_markdown_with_lmstudio", lambda file_path, model=None: "# Fixed\n\nContent."
+    )
 
     with tempfile.TemporaryDirectory() as tmpdir:
         file1 = Path(tmpdir) / "a.md"

@@ -4,54 +4,56 @@
     Abstract base for every macOS LaunchAgent authored in this repository.
     Inheritors declare their own `label`, `program`, and `environment` while
     picking up the common process posture and log layout from this definition.
-
     Friendly snake_case keys map to plist PascalCase at render time (e.g.
     `working_directory` → `WorkingDirectory`); see `_LAUNCHD_KEY_MAP` in the
     runtime for the full table. Unknown keys are passed through unchanged.
-  tags: [launchd, abstract]
+  tags:
+  - launchd
+  - abstract
   variables:
-    user: "{{ env.env.USER }}"
-    log_dir: "/Users/{{ user }}/Library/Logs/LocalFabric"
+    user: '{{ env.env.USER }}'
+    log_dir: /Users/{{ user }}/Library/Logs/LocalFabric
   docs:
     variables:
       user: macOS user under whose LaunchAgents directory the job will install.
       log_dir: Default location for per-job stdout/stderr logs.
   launchd:
-    working_directory: "/Users/{{ user }}"
+    working_directory: /Users/{{ user }}
     process_type: Interactive
     run_at_load: true
     keep_alive: true
-
 - id: launchd.generate-plist.workflow
   title: Generate launchd Plists
   description: |
     Emits one `.plist` file per definition that declares a `launchd:` block, by
     iterating `runtime.catalog.definitions` and filtering on `has_launchd`.
     Defaults write into `09_launchd/` next to the authoring YAML.
-  tags: [launchd, workflow]
+  tags:
+  - launchd
+  - workflow
   extends: stdlib.base
   inputs:
     output_dir:
       type: string
       required: false
-      default: "09_launchd"
+      default: 09_launchd
       description: Directory that receives the generated `.plist` files.
     mode:
       type: string
       required: false
-      default: "write"
+      default: write
       description: Either `write` to regenerate output or `check` to verify it.
   docs:
     run:
-      - title: Emit one `.plist` per launchd definition
+    - title: Emit one `.plist` per launchd definition
   run:
-    - launchd_plist:
-        definition: "{{ definition.id }}"
-        target_path: "{{ output_dir }}/{{ definition.id }}.plist"
-        mode: "{{ mode }}"
-      for_each:
-        items: "runtime.catalog.definitions | selectattr('has_launchd') | rejectattr('id', 'equalto', 'launchd.base') | list"
-        as: definition
+  - launchd_plist:
+      definition: '{{ definition.id }}'
+      target_path: '{{ output_dir }}/{{ definition.id }}.plist'
+      mode: '{{ mode }}'
+    for_each:
+      items: runtime.catalog.definitions | selectattr('has_launchd') | rejectattr('id', 'equalto', 'launchd.base') | list
+      as: definition
 
 # ---------------------------------------------------------------------------
 # Lifecycle commands
@@ -71,7 +73,6 @@
 # `.plist`. By default we look under `09_launchd/<definition-id>.plist`,
 # matching `launchd.generate-plist.workflow`'s default output layout.
 # ---------------------------------------------------------------------------
-
 - id: launchd.lifecycle.base
   title: launchd Lifecycle Base
   description: |
@@ -79,38 +80,42 @@
     the two-input contract (`definition` or `label`) and the
     `resolved_label` variable so concrete lifecycle definitions only declare
     their `command:` payload.
-  tags: [launchd, lifecycle, abstract]
+  tags:
+  - launchd
+  - lifecycle
+  - abstract
   extends: stdlib.run-command.task
   inputs:
     definition:
       type: string
       required: false
-      default: ""
+      default: ''
       description: launchd definition id (e.g. `launchd.caffeinate`). Used to auto-resolve the job label from the catalog.
     label:
       type: string
       required: false
-      default: ""
+      default: ''
       description: Explicit launchd job label. Takes effect when `definition` is empty.
   variables:
     resolved_label: "{{ ((runtime.catalog.definitions | selectattr('id', 'equalto', definition) | list | first).launchd.label) if definition else label }}"
   docs:
     variables:
       resolved_label: Effective launchctl label — either looked up from `definition` or copied from `label`.
-
 - id: launchd.install.task
   title: Install LaunchAgent
   description: |
     Copies the rendered `.plist` into `~/Library/LaunchAgents/` and
     bootstraps it into the user GUI domain so launchd manages it. Idempotent
     against a previously installed copy.
-  tags: [launchd, lifecycle]
+  tags:
+  - launchd
+  - lifecycle
   extends: launchd.lifecycle.base
   inputs:
     plist_path:
       type: string
       required: false
-      default: ""
+      default: ''
       description: Path to the rendered `.plist` file. Defaults to `09_launchd/<definition>.plist`.
   variables:
     resolved_plist_path: "{{ plist_path if plist_path else '09_launchd/' ~ definition ~ '.plist' }}"
@@ -119,70 +124,76 @@
       cp "{{ resolved_plist_path }}" "$HOME/Library/LaunchAgents/{{ resolved_label }}.plist"
       launchctl bootout "gui/$UID/{{ resolved_label }}" 2>/dev/null || true
       launchctl bootstrap "gui/$UID" "$HOME/Library/LaunchAgents/{{ resolved_label }}.plist"
-
 - id: launchd.uninstall.task
   title: Uninstall LaunchAgent
   description: |
     Boots the job out of the user GUI domain and removes its `.plist` from
     `~/Library/LaunchAgents/`. Safe to call against a job that is not
     currently loaded.
-  tags: [launchd, lifecycle]
+  tags:
+  - launchd
+  - lifecycle
   extends: launchd.lifecycle.base
   variables:
     command: |
       launchctl bootout "gui/$UID/{{ resolved_label }}" 2>/dev/null || true
       rm -f "$HOME/Library/LaunchAgents/{{ resolved_label }}.plist"
-
 - id: launchd.enable.task
   title: Enable LaunchAgent
   description: |
     Marks the job as enabled in the user GUI domain so it loads at login
     (and survives `bootout`/`bootstrap` cycles).
-  tags: [launchd, lifecycle]
+  tags:
+  - launchd
+  - lifecycle
   extends: launchd.lifecycle.base
   variables:
-    command: "launchctl enable gui/$UID/{{ resolved_label }}"
-
+    command: launchctl enable gui/$UID/{{ resolved_label }}
 - id: launchd.disable.task
   title: Disable LaunchAgent
   description: |
     Marks the job as disabled in the user GUI domain. Disabled jobs persist
     across reboots and bootstraps until `launchd.enable.task` is invoked.
-  tags: [launchd, lifecycle]
+  tags:
+  - launchd
+  - lifecycle
   extends: launchd.lifecycle.base
   variables:
-    command: "launchctl disable gui/$UID/{{ resolved_label }}"
-
+    command: launchctl disable gui/$UID/{{ resolved_label }}
 - id: launchd.start.task
   title: Start LaunchAgent
   description: |
     Kickstarts the job immediately. With `-k`, an already-running job is
     restarted (functions as a "reload"). The job must already be loaded
     (`launchd.install.task`) for this to succeed.
-  tags: [launchd, lifecycle]
+  tags:
+  - launchd
+  - lifecycle
   extends: launchd.lifecycle.base
   variables:
-    command: "launchctl kickstart -k gui/$UID/{{ resolved_label }}"
-
+    command: launchctl kickstart -k gui/$UID/{{ resolved_label }}
 - id: launchd.stop.task
   title: Stop LaunchAgent
   description: |
     Sends SIGTERM to the running job. The job remains loaded — use
     `launchd.uninstall.task` to fully remove it.
-  tags: [launchd, lifecycle]
+  tags:
+  - launchd
+  - lifecycle
   extends: launchd.lifecycle.base
   variables:
-    command: "launchctl kill SIGTERM gui/$UID/{{ resolved_label }}"
-
+    command: launchctl kill SIGTERM gui/$UID/{{ resolved_label }}
 - id: launchd.status.task
   title: Print LaunchAgent Status
   description: |
     Prints launchd's view of the job (last exit code, run count, current
     PID if running). Exits non-zero with a friendly message if the job is
     not loaded.
-  tags: [launchd, lifecycle]
+  tags:
+  - launchd
+  - lifecycle
   extends: launchd.lifecycle.base
   variables:
-    command: |
+    command: |-
       launchctl print "gui/$UID/{{ resolved_label }}" 2>/dev/null \
         || echo "launchd job '{{ resolved_label }}' is not loaded (install with launchd.install.task)"

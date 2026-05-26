@@ -17,9 +17,9 @@ Bind to a data instance under `14_data/apps/grobid/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `GROBID_PORT` | `8070` | `8070` | GROBID HTTP API |
+| Host env var  | Default | Container | Use             |
+| ------------- | ------: | --------: | --------------- |
+| `GROBID_PORT` |  `8070` |    `8070` | GROBID HTTP API |
 
 ## Run
 

@@ -34,12 +34,7 @@ def test_fence_without_language_is_extracted() -> None:
 
 
 def test_indented_fence_strips_matching_indent() -> None:
-    body = (
-        "- list item:\n"
-        "  ```python\n"
-        "  print('hi')\n"
-        "  ```\n"
-    )
+    body = "- list item:\n  ```python\n  print('hi')\n  ```\n"
     fences = parse(body)
     assert len(fences) == 1
     assert fences[0].language == "python"
@@ -47,12 +42,7 @@ def test_indented_fence_strips_matching_indent() -> None:
 
 
 def test_indented_fence_preserves_extra_indent() -> None:
-    body = (
-        "  ```python\n"
-        "  def f():\n"
-        "      return 1\n"
-        "  ```\n"
-    )
+    body = "  ```python\n  def f():\n      return 1\n  ```\n"
     fences = parse(body)
     assert fences[0].content == "def f():\n    return 1\n"
 

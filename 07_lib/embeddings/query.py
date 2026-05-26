@@ -16,7 +16,7 @@ Or as a standalone CLI:
 """
 
 import os
-from typing import Literal, Optional
+from typing import Literal
 
 from lib.embeddings.embedder import Embedder, EmbedderUnavailable
 
@@ -40,7 +40,7 @@ class LocalKnowledgeQuery:
     def __init__(
         self,
         backend: StoreBackend = "lancedb",
-        store_path: Optional[str] = None,
+        store_path: str | None = None,
         model: str = "nomic-embed-text",
         k: int = 5,
     ) -> None:
@@ -48,12 +48,14 @@ class LocalKnowledgeQuery:
         self._embedder = Embedder(model=model)
         self._store = self._init_store(backend, store_path)
 
-    def _init_store(self, backend: StoreBackend, store_path: Optional[str]):
+    def _init_store(self, backend: StoreBackend, store_path: str | None):
         if backend == "numpy":
             from drivers.vector.numpy_driver import NumpyStore
+
             return NumpyStore()
         else:
             from drivers.vector.lancedb_driver import LanceStore
+
             kwargs = {}
             if store_path:
                 kwargs["db_path"] = store_path
@@ -66,9 +68,9 @@ class LocalKnowledgeQuery:
     def query(
         self,
         query_text: str,
-        k: Optional[int] = None,
-        source_filter: Optional[str] = None,
-        min_score: Optional[float] = None,
+        k: int | None = None,
+        source_filter: str | None = None,
+        min_score: float | None = None,
         as_markdown: bool = True,
     ) -> str | list[dict]:
         """
@@ -106,6 +108,7 @@ class LocalKnowledgeQuery:
         # LanceDB returns distances (lower = better) so the threshold is skipped.
         if min_score is not None:
             from drivers.vector.numpy_driver import NumpyStore
+
             if isinstance(self._store, NumpyStore):
                 results = [r for r in results if r.get("score", 0) >= min_score]
 
@@ -120,11 +123,7 @@ class LocalKnowledgeQuery:
 
     def _format_markdown(self, query: str, results: list[dict]) -> str:
         if not results:
-            return (
-                f"{_CONTEXT_HEADER}\n"
-                f"No relevant context found for: {query!r}\n"
-                f"{_CONTEXT_FOOTER}"
-            )
+            return f"{_CONTEXT_HEADER}\nNo relevant context found for: {query!r}\n{_CONTEXT_FOOTER}"
 
         lines = [_CONTEXT_HEADER, f"Query: {query!r}", ""]
         for i, r in enumerate(results, start=1):

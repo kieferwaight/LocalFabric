@@ -3,7 +3,8 @@
   description: >
     OpenAI's hosted model catalog (GPT-class chat, code, embedding, and vision).
     The canonical owner of the OpenAI Chat Completions wire format.
-  tags: [provider]
+  tags:
+  - provider
   extends: provider.base
   variables:
     name: openai
@@ -23,6 +24,8 @@
         binary: codex
       sdk:
         package: openai
-        languages: [python, typescript]
+        languages:
+        - python
+        - typescript
       openai-api:
         base_url: https://api.openai.com/v1

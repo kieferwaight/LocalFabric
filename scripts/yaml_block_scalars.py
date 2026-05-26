@@ -14,6 +14,7 @@ Usage:
 If no paths are given, walks the repo (excluding .venv, 14_data, 18_docs,
 node_modules).
 """
+
 from __future__ import annotations
 
 import argparse

@@ -142,9 +142,7 @@ def test_provider_dispatch_with_minimal_frontmatter_passes_no_model() -> None:
 
 def test_unknown_provider_name_raises_keyerror(tmp_path: Path) -> None:
     bad = tmp_path / "nope.md"
-    bad.write_text(
-        "---\nid: tests.unknown-provider\nprovider: not-a-real-provider\n---\nhi\n"
-    )
+    bad.write_text("---\nid: tests.unknown-provider\nprovider: not-a-real-provider\n---\nhi\n")
     harness = MarkdownHarness()
     with pytest.raises(KeyError, match="Unknown markdown provider"):
         harness.execute(bad)
@@ -153,6 +151,7 @@ def test_unknown_provider_name_raises_keyerror(tmp_path: Path) -> None:
 def test_provider_error_propagates() -> None:
     class _Failing(BaseProvider):
         name = "claude"
+
         def run(self, prompt: str, **_: Any) -> ProviderResult:  # type: ignore[override]
             raise ProviderError("upstream blew up")
 
@@ -164,6 +163,7 @@ def test_provider_error_propagates() -> None:
 def test_unexpected_exception_wrapped_in_provider_error() -> None:
     class _Boom(BaseProvider):
         name = "claude"
+
         def run(self, prompt: str, **_: Any) -> ProviderResult:  # type: ignore[override]
             raise RuntimeError("uncaught SDK quirk")
 

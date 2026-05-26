@@ -3,7 +3,8 @@
   description: >
     Text embeddings for semantic search, retrieval augmented generation,
     clustering, and similarity matching.
-  tags: [model]
+  tags:
+  - model
   extends: model.base
   variables:
     name: nomic-embed-text
@@ -13,6 +14,6 @@
         clustering, and similarity matching.
       vendor: Nomic
     providers:
-      - ollama
+    - ollama
     features:
-      - embedding
+    - embedding

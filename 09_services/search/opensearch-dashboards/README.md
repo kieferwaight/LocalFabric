@@ -15,9 +15,9 @@ Optional admin and exploration UI for OpenSearch indexes.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `OPENSEARCH_DASHBOARDS_PORT` | `5601` | `5601` | Dashboards UI |
+| Host env var                 | Default | Container | Use           |
+| ---------------------------- | ------: | --------: | ------------- |
+| `OPENSEARCH_DASHBOARDS_PORT` |  `5601` |    `5601` | Dashboards UI |
 
 ## Run
 

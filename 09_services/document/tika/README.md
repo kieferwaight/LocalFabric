@@ -15,9 +15,9 @@ MIME detection, text extraction, and document metadata extraction service.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `TIKA_PORT` | `9998` | `9998` | Tika HTTP API |
+| Host env var | Default | Container | Use           |
+| ------------ | ------: | --------: | ------------- |
+| `TIKA_PORT`  |  `9998` |    `9998` | Tika HTTP API |
 
 ## Run
 

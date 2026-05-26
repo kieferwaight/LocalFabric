@@ -7,7 +7,6 @@ from urllib.parse import quote_plus
 import requests
 from bs4 import BeautifulSoup
 
-
 TEXT_CAP = 8000
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 

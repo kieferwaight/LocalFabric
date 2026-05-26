@@ -15,7 +15,7 @@ Usage:
 
 from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any
 
 from router.classifier import Classifier, TaskProfile
 from router.dispatcher import Dispatcher, DispatchResult
@@ -46,10 +46,10 @@ class Router:
     def __init__(
         self,
         runtime: Any = None,
-        classifier: Optional[Classifier] = None,
-        scorer: Optional[Scorer] = None,
-        dispatcher: Optional[Dispatcher] = None,
-        policy: Optional[Policy] = None,
+        classifier: Classifier | None = None,
+        scorer: Scorer | None = None,
+        dispatcher: Dispatcher | None = None,
+        policy: Policy | None = None,
     ) -> None:
         self.classifier = classifier or Classifier()
         self.scorer = scorer or Scorer(runtime=runtime)
@@ -60,7 +60,7 @@ class Router:
         self,
         task: str,
         context: Any = None,
-        available_routes: Optional[set[str]] = None,
+        available_routes: set[str] | None = None,
     ) -> DispatchResult:
         """
         Classify *task*, score candidate routes, and dispatch the best one.
@@ -90,7 +90,7 @@ class Router:
     def score(
         self,
         profile: TaskProfile,
-        available_routes: Optional[set[str]] = None,
+        available_routes: set[str] | None = None,
     ) -> list[RouteCandidate]:
         """
         Stage 2: rank routes for a TaskProfile, filtered by policy.

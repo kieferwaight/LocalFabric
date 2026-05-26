@@ -13,6 +13,6 @@ services:
       POSTGRES_SEEDS: ${POSTGRES_SEEDS:-pgvector}
       DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/development-sql.yaml
     ports:
-      - "${TEMPORAL_PORT:-7233}:7233"
+    - ${TEMPORAL_PORT:-7233}:7233
     volumes:
-      - ./dynamicconfig:/etc/temporal/config/dynamicconfig
+    - ./dynamicconfig:/etc/temporal/config/dynamicconfig

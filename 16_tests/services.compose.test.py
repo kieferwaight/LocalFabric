@@ -63,9 +63,7 @@ COMPOSE_FILES = _discover_compose_files()
 
 
 def test_service_catalog_is_non_empty():
-    assert COMPOSE_FILES, (
-        f"no service docker-compose.yml files found under {SERVICES_DIR}"
-    )
+    assert COMPOSE_FILES, f"no service docker-compose.yml files found under {SERVICES_DIR}"
 
 
 @pytest.mark.skipif(

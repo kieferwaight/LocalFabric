@@ -18,7 +18,6 @@
 #     variables:
 #       backend: launchd
 #       target: launchd.ollama.service
-
 - id: service.base
   title: Service Abstraction Base
   description: |
@@ -28,29 +27,29 @@
     "docker.ollama.service" or "launchd.ollama.service"). They MUST also extend exactly
     one of the action-mixins (service.docker.mixin or
     service.launchd.mixin) so that `action_to_def` resolves correctly.
-
     The `action` input picks a verb from
     {start, stop, enable, disable, install, uninstall, status}. The base
     looks up `action_to_def[action]` to find the lifecycle definition to
     invoke and `action_arguments[action]` to find the arguments mapping
     to pass through.
-  tags: [service, abstract]
+  tags:
+  - service
+  - abstract
   extends: stdlib.base
   inputs:
     action:
       type: string
       required: true
-      description: "Lifecycle verb: start | stop | enable | disable | install | uninstall | status"
+      description: 'Lifecycle verb: start | stop | enable | disable | install | uninstall | status'
   variables:
-    backend: ""                # set by child: "docker" | "launchd"
-    target: ""                 # set by child: "docker.<id>.service" or "launchd.<id>.service"
-    action_to_def: {}          # set by service.<backend>.mixin
-    action_arguments: {}       # set by service.<backend>.mixin
+    backend: ''                # set by child: "docker" | "launchd"
+    target: ''                 # set by child: "docker.<id>.service" or "launchd.<id>.service"
+    action_to_def: {}  # set by service.<backend>.mixin
+    action_arguments: {}  # set by service.<backend>.mixin
   run:
-    - invoke:
-        definition: "{{ action_to_def[action] }}"
-        arguments: "{{ action_arguments[action] }}"
-
+  - invoke:
+      definition: '{{ action_to_def[action] }}'
+      arguments: '{{ action_arguments[action] }}'
 - id: service.docker.mixin
   title: Docker Backend Action Map
   description: |
@@ -58,31 +57,32 @@
     definitions. `target` (set by the consuming service) is the
     `docker.<id>` definition; lifecycle defs take `target_dir` which we
     derive as `14_data/<target-flat>/`.
-
     Note: docker has no "enable"/"disable" concept (compose services
     are always reachable once their compose file exists), so those verbs
     map to no-ops via a `stdlib.logger.task` invocation that records the no-op.
-  tags: [service, docker, abstract]
+  tags:
+  - service
+  - docker
+  - abstract
   extends: stdlib.base
   variables:
     action_to_def:
-      start:     "compose.up.task"
-      stop:      "compose.down.task"
-      status:    "compose.status.task"
-      install:   "compose.up.task"          # docker "install" == scaffold + bring up
-      uninstall: "compose.down.task"
-      enable:    "stdlib.logger.task"
-      disable:   "stdlib.logger.task"
+      start: compose.up.task
+      stop: compose.down.task
+      status: compose.status.task
+      install: compose.up.task  # docker "install" == scaffold + bring up
+      uninstall: compose.down.task
+      enable: stdlib.logger.task
+      disable: stdlib.logger.task
     # Per-action arguments mapping. `target` resolves at runtime via Jinja.
     action_arguments:
-      start:     {target_dir: "14_data/{{ target | replace('.service', '') | replace('.', '_') }}"}
-      stop:      {target_dir: "14_data/{{ target | replace('.service', '') | replace('.', '_') }}"}
-      status:    {target_dir: "14_data/{{ target | replace('.service', '') | replace('.', '_') }}"}
-      install:   {target_dir: "14_data/{{ target | replace('.service', '') | replace('.', '_') }}"}
+      start: {target_dir: "14_data/{{ target | replace('.service', '') | replace('.', '_') }}"}
+      stop: {target_dir: "14_data/{{ target | replace('.service', '') | replace('.', '_') }}"}
+      status: {target_dir: "14_data/{{ target | replace('.service', '') | replace('.', '_') }}"}
+      install: {target_dir: "14_data/{{ target | replace('.service', '') | replace('.', '_') }}"}
       uninstall: {target_dir: "14_data/{{ target | replace('.service', '') | replace('.', '_') }}"}
-      enable:    {message: "docker backend: enable is a no-op", level: "INFO"}
-      disable:   {message: "docker backend: disable is a no-op", level: "INFO"}
-
+      enable: {message: 'docker backend: enable is a no-op', level: INFO}
+      disable: {message: 'docker backend: disable is a no-op', level: INFO}
 - id: service.launchd.mixin
   title: Launchd Backend Action Map
   description: |
@@ -90,25 +90,28 @@
     lifecycle definitions. `target` (set by the consuming service) is
     the `launchd.<id>` definition; lifecycle defs accept a `definition:`
     input that they resolve to a label via the catalog.
-  tags: [service, launchd, abstract]
+  tags:
+  - service
+  - launchd
+  - abstract
   extends: stdlib.base
   variables:
     action_to_def:
-      start:     "launchd.start.task"
-      stop:      "launchd.stop.task"
-      enable:    "launchd.enable.task"
-      disable:   "launchd.disable.task"
-      install:   "launchd.install.task"
-      uninstall: "launchd.uninstall.task"
-      status:    "launchd.status.task"
+      start: launchd.start.task
+      stop: launchd.stop.task
+      enable: launchd.enable.task
+      disable: launchd.disable.task
+      install: launchd.install.task
+      uninstall: launchd.uninstall.task
+      status: launchd.status.task
     action_arguments:
-      start:     {definition: "{{ target }}"}
-      stop:      {definition: "{{ target }}"}
-      enable:    {definition: "{{ target }}"}
-      disable:   {definition: "{{ target }}"}
-      install:   {definition: "{{ target }}"}
-      uninstall: {definition: "{{ target }}"}
-      status:    {definition: "{{ target }}"}
+      start: {definition: '{{ target }}'}
+      stop: {definition: '{{ target }}'}
+      enable: {definition: '{{ target }}'}
+      disable: {definition: '{{ target }}'}
+      install: {definition: '{{ target }}'}
+      uninstall: {definition: '{{ target }}'}
+      status: {definition: '{{ target }}'}
 
 # ---------------------------------------------------------------------------
 # Concrete service definitions
@@ -121,63 +124,75 @@
 #
 # Launchd-backed services: ollama, caffeinate, lm-studio
 # Docker-backed services:  postgres, redis, neo4j
-
 - id: service.ollama.service
   title: Ollama Service (launchd backend)
   description: Local Ollama model server managed via launchd.
-  tags: [service, launchd]
+  tags:
+  - service
+  - launchd
   extends: service.base
-  mixins: [service.launchd.mixin]
+  mixins:
+  - service.launchd.mixin
   variables:
     backend: launchd
     target: launchd.ollama.service
-
 - id: service.caffeinate.service
   title: Caffeinate Service (launchd backend)
   description: macOS Caffeinate keep-awake daemon managed via launchd.
-  tags: [service, launchd]
+  tags:
+  - service
+  - launchd
   extends: service.base
-  mixins: [service.launchd.mixin]
+  mixins:
+  - service.launchd.mixin
   variables:
     backend: launchd
     target: launchd.caffeinate.service
-
 - id: service.lm-studio.service
   title: LM Studio Service (launchd backend)
   description: LM Studio local inference server managed via launchd.
-  tags: [service, launchd]
+  tags:
+  - service
+  - launchd
   extends: service.base
-  mixins: [service.launchd.mixin]
+  mixins:
+  - service.launchd.mixin
   variables:
     backend: launchd
     target: launchd.lm-studio.service
-
 - id: service.postgres.service
   title: Postgres Service (docker backend)
   description: Local Postgres database managed via docker-compose.
-  tags: [service, docker]
+  tags:
+  - service
+  - docker
   extends: service.base
-  mixins: [service.docker.mixin]
+  mixins:
+  - service.docker.mixin
   variables:
     backend: docker
     target: docker.postgres.service
-
 - id: service.redis.service
   title: Redis Service (docker backend)
   description: Local Redis cache managed via docker-compose.
-  tags: [service, docker]
+  tags:
+  - service
+  - docker
   extends: service.base
-  mixins: [service.docker.mixin]
+  mixins:
+  - service.docker.mixin
   variables:
     backend: docker
     target: docker.redis.service
-
 - id: service.neo4j.service
   title: Neo4j Service (docker backend)
   description: Local Neo4j graph database managed via docker-compose.
-  tags: [service, docker]
+  tags:
+  - service
+  - docker
   extends: service.base
-  mixins: [service.docker.mixin]
+  mixins:
+  - service.docker.mixin
   variables:
     backend: docker
     target: docker.neo4j.service

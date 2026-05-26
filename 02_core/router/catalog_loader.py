@@ -8,7 +8,6 @@ descendant of `route.base`) is exposed to the scorer as a RouteEntry.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any
 
 from core.runtimes.yaml.src import Runtime
 
@@ -16,6 +15,7 @@ from core.runtimes.yaml.src import Runtime
 @dataclass(frozen=True)
 class RouteEntry:
     """A route the scorer can rank."""
+
     id: str
     description: str
     intent_affinity: tuple[str, ...]

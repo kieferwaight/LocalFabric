@@ -4,73 +4,63 @@ Do not edit by hand. Regenerate with:
     python interpreter.py definitions/barrels.yaml barrels.workflows-yaml --mode=write
 """
 
-
 from .compiler import (
     Compiler,
 )
-
 from .definition import (
-    InputConstraint,
     BlockDocumentation,
-    DefinitionDocumentation,
-    TemplateBlock,
     Definition,
+    DefinitionDocumentation,
+    InputConstraint,
+    TemplateBlock,
 )
-
 from .dispatcher import (
     LANGUAGE_BINARIES,
-    DispatchResult,
     Dispatcher,
+    DispatchResult,
 )
-
 from .file_io import (
-    write_text_artifact,
     create_artifact_directory,
     remove_artifact,
+    write_text_artifact,
 )
-
 from .jinja_engine import (
     JinjaEngine,
 )
-
 from .python_packages import (
     ModuleExports,
     discover_modules,
     read_module_exports,
     scan_package,
 )
-
 from .runtime import (
-    VERSION,
     GENERATED_DOC_MARKER,
-    coerce_type,
+    VERSION,
     Runtime,
+    coerce_type,
 )
-
 from .scope_frame import (
     ScopeFrame,
 )
-
 from .shell_environment import (
     ShellEnvironment,
 )
-
 from .yaml_analysis import (
-    Relationship,
     IdOccurrence,
+    Relationship,
+    assert_no_broken_references,
     discover_yaml_files,
-    list_tracked_files,
+    list_all_id_occurrences,
+    list_broken_module_includes,
+    list_broken_relationships,
     list_definitions,
     list_id_relationships,
     list_module_includes,
-    list_all_id_occurrences,
-    list_broken_relationships,
-    list_broken_module_includes,
-    assert_no_broken_references,
+    list_tracked_files,
     snapshot,
-    write_snapshot,
     update_id,
     update_module_paths,
+    write_snapshot,
 )
 
 __all__ = [
@@ -113,4 +103,3 @@ __all__ = [
     "update_id",
     "update_module_paths",
 ]
-

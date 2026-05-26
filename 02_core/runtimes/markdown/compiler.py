@@ -114,9 +114,7 @@ def compile_text(source: str, *, source_path: str = "<string>") -> dict[str, Any
     return definition
 
 
-def _compile_provider_style(
-    fm: _frontmatter.Frontmatter, *, source_path: str
-) -> dict[str, Any]:
+def _compile_provider_style(fm: _frontmatter.Frontmatter, *, source_path: str) -> dict[str, Any]:
     """Build a provider-style definition dict.
 
     The body becomes the prompt template; ``inputs``, ``description``, and
@@ -151,9 +149,7 @@ def _compile_provider_style(
         )
 
     max_tokens = metadata.get("max_tokens")
-    if max_tokens is not None and (
-        isinstance(max_tokens, bool) or not isinstance(max_tokens, int)
-    ):
+    if max_tokens is not None and (isinstance(max_tokens, bool) or not isinstance(max_tokens, int)):
         raise MarkdownCompileError(
             f"{source_path}: frontmatter 'max_tokens' must be an integer when set."
         )
@@ -242,11 +238,7 @@ def _compile_run_blocks(
 
         # Forward-compat: preserve unknown attributes on the block as metadata
         # so step 2/3 can read them without breaking step 1 authors.
-        metadata = {
-            k: v
-            for k, v in fence.attributes.items()
-            if k not in {"id", "skip"}
-        }
+        metadata = {k: v for k, v in fence.attributes.items() if k not in {"id", "skip"}}
         if metadata:
             block["_markdown_attributes"] = metadata
 

@@ -3,7 +3,8 @@
   description: |
     Embed a text string through the local Ollama harness and return the
     vector. Wraps lib.embeddings.embedder.Embedder.embed.
-  tags: [task]
+  tags:
+  - task
   extends: task.base
   inputs:
     text:
@@ -13,14 +14,13 @@
     model:
       type: string
       required: false
-      default: "nomic-embed-text"
+      default: nomic-embed-text
       description: Ollama embedding model name.
   run:
-    - python: |
-        import json, os
-        from lib.embeddings.embedder import Embedder
-
-        embedder = Embedder(model="{{ model }}")
-        vector = embedder.embed("{{ text }}")
-        with open(os.environ["STATE_FILE"], "w") as f:
-            json.dump({"vector": vector, "dimensions": len(vector)}, f)
+  - python: |-
+      import json, os
+      from lib.embeddings.embedder import Embedder
+      embedder = Embedder(model="{{ model }}")
+      vector = embedder.embed("{{ text }}")
+      with open(os.environ["STATE_FILE"], "w") as f:
+          json.dump({"vector": vector, "dimensions": len(vector)}, f)

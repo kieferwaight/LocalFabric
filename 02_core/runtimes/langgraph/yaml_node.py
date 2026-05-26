@@ -44,16 +44,12 @@ def yaml_node(
     def _node(state: dict[str, Any]) -> dict[str, Any]:
         for key in input_keys:
             if key not in state:
-                raise KeyError(
-                    f"yaml_node[{definition_id}]: missing input key {key!r} in state"
-                )
+                raise KeyError(f"yaml_node[{definition_id}]: missing input key {key!r} in state")
         arguments = {key: state[key] for key in input_keys}
         try:
             result = runtime.execute(definition_id, arguments)
         except Exception as exc:
-            raise RuntimeError(
-                f"yaml_node[{definition_id}] failed: {exc}"
-            ) from exc
+            raise RuntimeError(f"yaml_node[{definition_id}] failed: {exc}") from exc
         return {**state, output_key: result}
 
     return _node

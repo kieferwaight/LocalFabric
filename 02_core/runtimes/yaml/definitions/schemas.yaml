@@ -5,30 +5,33 @@
     Inherits the dialect declaration (`$schema`) and the default closed-object
     posture (`type: object`, `additionalProperties: false`) so concrete schemas
     only declare what is specific to themselves.
-  tags: [schema, abstract]
+  tags:
+  - schema
+  - abstract
   schema:
     $schema: https://json-schema.org/draft/2020-12/schema
     type: object
     additionalProperties: false
-
 - id: schemas.generate-json.workflow
   title: Generate Schema JSON
   description: |
     Emits one `.json` file per definition that declares a `schema:` block, by
     iterating `runtime.catalog.definitions` and filtering on `has_schema`.
     Defaults write into `01_schemas/` next to the authoring YAML.
-  tags: [schema, workflow]
+  tags:
+  - schema
+  - workflow
   extends: stdlib.base
   inputs:
     output_dir:
       type: string
       required: false
-      default: "01_schemas"
+      default: 01_schemas
       description: Directory that receives the generated `.json` files.
     mode:
       type: string
       required: false
-      default: "write"
+      default: write
       description: Either `write` to regenerate output or `check` to verify it.
     indent:
       type: number
@@ -37,13 +40,13 @@
       description: JSON indent width.
   docs:
     run:
-      - title: Emit one `.json` per schema definition
+    - title: Emit one `.json` per schema definition
   run:
-    - schema_json:
-        definition: "{{ definition.id }}"
-        target_path: "{{ output_dir }}/{{ definition.id }}.json"
-        mode: "{{ mode }}"
-        indent: "{{ indent }}"
-      for_each:
-        items: "runtime.catalog.definitions | selectattr('has_schema') | rejectattr('id', 'equalto', 'schemas.base') | list"
-        as: definition
+  - schema_json:
+      definition: '{{ definition.id }}'
+      target_path: '{{ output_dir }}/{{ definition.id }}.json'
+      mode: '{{ mode }}'
+      indent: '{{ indent }}'
+    for_each:
+      items: runtime.catalog.definitions | selectattr('has_schema') | rejectattr('id', 'equalto', 'schemas.base') | list
+      as: definition

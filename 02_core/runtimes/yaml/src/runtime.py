@@ -11,11 +11,11 @@ from pathlib import Path
 from typing import Any
 
 import yaml
-from .file_io import create_artifact_directory, remove_artifact, write_text_artifact
 
 from .compiler import Compiler
 from .definition import Definition, InputConstraint, TemplateBlock
 from .dispatcher import Dispatcher
+from .file_io import create_artifact_directory, remove_artifact, write_text_artifact
 from .jinja_engine import JinjaEngine
 from .scope_frame import ScopeFrame
 from .shell_environment import ShellEnvironment
@@ -127,10 +127,10 @@ class Runtime:
 
     def import_repo_wide(
         self,
-        repo_root: "str | Path",
+        repo_root: str | Path,
         *,
         markdown_harness=None,
-    ) -> "dict[str, int]":
+    ) -> dict[str, int]:
         """Import every YAML/markdown definition under the listed repo buckets.
 
         Returns a dict mapping bucket name to count of definitions registered.
@@ -470,15 +470,11 @@ class Runtime:
         scope, _rendered = self._execute(def_id, arguments, parent_scope)
         return dict(scope.local_store)
 
-    def render_definition(
-        self, def_id: str, arguments: dict[str, Any] | None = None
-    ) -> str:
+    def render_definition(self, def_id: str, arguments: dict[str, Any] | None = None) -> str:
         """Execute a template definition and return its rendered body."""
         assembled = self.assemble_definition_frame(def_id)
         if assembled.template is None:
-            raise ValueError(
-                f"Definition {def_id!r} does not declare a 'template' block."
-            )
+            raise ValueError(f"Definition {def_id!r} does not declare a 'template' block.")
         _, rendered = self._execute(def_id, arguments, parent_scope=None)
         if rendered is None:  # pragma: no cover - guarded by template check above
             raise RuntimeError(f"Template definition {def_id!r} produced no output.")
@@ -492,9 +488,7 @@ class Runtime:
         """
         assembled = self.assemble_definition_frame(def_id)
         if not assembled.schema:
-            raise ValueError(
-                f"Definition {def_id!r} does not declare a 'schema' block."
-            )
+            raise ValueError(f"Definition {def_id!r} does not declare a 'schema' block.")
         return dict(assembled.schema)
 
     def render_schema_json(self, def_id: str, indent: int = 2) -> str:
@@ -513,9 +507,7 @@ class Runtime:
         """
         assembled = self.assemble_definition_frame(def_id)
         if not assembled.launchd:
-            raise ValueError(
-                f"Definition {def_id!r} does not declare a 'launchd' block."
-            )
+            raise ValueError(f"Definition {def_id!r} does not declare a 'launchd' block.")
         scope = ScopeFrame()
         scope.set("entity_id", def_id)
         coerced_inputs = self._resolve_inputs(assembled.inputs, dict(arguments or {}), scope)
@@ -527,9 +519,7 @@ class Runtime:
         ctx = self._build_template_context(scope)
         return self.jinja.render_value(dict(assembled.launchd), ctx)
 
-    def render_launchd_plist(
-        self, def_id: str, arguments: dict[str, Any] | None = None
-    ) -> bytes:
+    def render_launchd_plist(self, def_id: str, arguments: dict[str, Any] | None = None) -> bytes:
         """Return the launchd plist bytes (XML) for a launchd definition."""
         spec = self.assemble_launchd(def_id, arguments)
         plist_dict = _launchd_to_plist(spec)
@@ -586,9 +576,7 @@ class Runtime:
     def _component_helper(self, definition_id: str, **arguments: Any) -> str:
         return self.render_definition(definition_id, arguments)
 
-    def _render_template_block(
-        self, template: TemplateBlock, scope: ScopeFrame
-    ) -> str:
+    def _render_template_block(self, template: TemplateBlock, scope: ScopeFrame) -> str:
         ctx = self._build_template_context(scope)
         if template.engine == "jinja":
             return self.jinja.render_template(template.body, ctx)
@@ -695,7 +683,9 @@ class Runtime:
                 invocation_scope.set(alias, item)
             invocation_context = self._build_template_context(invocation_scope)
             target = self.jinja.render_value(invoke["definition"], invocation_context)
-            arguments = self.jinja.resolve_argument(invoke.get("arguments") or {}, invocation_context)
+            arguments = self.jinja.resolve_argument(
+                invoke.get("arguments") or {}, invocation_context
+            )
             if target not in self.registry:
                 raise KeyError(f"Unknown invoked definition id: {target!r}")
             self.execute(str(target), arguments, parent_scope=invocation_scope)
@@ -730,9 +720,7 @@ class Runtime:
             arguments = self.jinja.resolve_argument(
                 render.get("arguments") or {}, invocation_context
             )
-            target_path = str(
-                self.jinja.render_value(render["target_path"], invocation_context)
-            )
+            target_path = str(self.jinja.render_value(render["target_path"], invocation_context))
             mode = str(self.jinja.render_value(render.get("mode", "write"), invocation_context))
             if mode not in {"write", "check"}:
                 raise ValueError("Render mode must be 'write' or 'check'.")
@@ -741,13 +729,8 @@ class Runtime:
             rendered = self.render_definition(target_id, arguments)
             destination = Path(target_path)
             if mode == "check":
-                if (
-                    not destination.exists()
-                    or destination.read_text(encoding="utf-8") != rendered
-                ):
-                    raise RuntimeError(
-                        f"Generated documentation is stale: {destination}"
-                    )
+                if not destination.exists() or destination.read_text(encoding="utf-8") != rendered:
+                    raise RuntimeError(f"Generated documentation is stale: {destination}")
                 continue
             write_text_artifact(destination, rendered)
 
@@ -766,9 +749,7 @@ class Runtime:
                 raise ValueError("A schema_json for_each block requires 'items' and 'as'.")
             evaluated = self.jinja.evaluate(loop["items"], context)
             if not isinstance(evaluated, (list, tuple)):
-                raise ValueError(
-                    "A schema_json for_each expression must evaluate to a collection."
-                )
+                raise ValueError("A schema_json for_each expression must evaluate to a collection.")
             items = list(evaluated)
             alias = str(loop["as"])
         for item in items:
@@ -777,12 +758,8 @@ class Runtime:
                 invocation_scope = ScopeFrame(parent=scope)
                 invocation_scope.set(alias, item)
             invocation_context = self._build_template_context(invocation_scope)
-            target_id = str(
-                self.jinja.render_value(config["definition"], invocation_context)
-            )
-            target_path = str(
-                self.jinja.render_value(config["target_path"], invocation_context)
-            )
+            target_id = str(self.jinja.render_value(config["definition"], invocation_context))
+            target_path = str(self.jinja.render_value(config["target_path"], invocation_context))
             mode = str(self.jinja.render_value(config.get("mode", "write"), invocation_context))
             if mode not in {"write", "check"}:
                 raise ValueError("schema_json mode must be 'write' or 'check'.")
@@ -798,13 +775,8 @@ class Runtime:
             rendered = self.render_schema_json(target_id, indent=indent)
             destination = Path(target_path)
             if mode == "check":
-                if (
-                    not destination.exists()
-                    or destination.read_text(encoding="utf-8") != rendered
-                ):
-                    raise RuntimeError(
-                        f"Generated schema JSON is stale: {destination}"
-                    )
+                if not destination.exists() or destination.read_text(encoding="utf-8") != rendered:
+                    raise RuntimeError(f"Generated schema JSON is stale: {destination}")
                 continue
             write_text_artifact(destination, rendered)
 
@@ -834,12 +806,8 @@ class Runtime:
                 invocation_scope = ScopeFrame(parent=scope)
                 invocation_scope.set(alias, item)
             invocation_context = self._build_template_context(invocation_scope)
-            target_id = str(
-                self.jinja.render_value(config["definition"], invocation_context)
-            )
-            target_path = str(
-                self.jinja.render_value(config["target_path"], invocation_context)
-            )
+            target_id = str(self.jinja.render_value(config["definition"], invocation_context))
+            target_path = str(self.jinja.render_value(config["target_path"], invocation_context))
             mode = str(self.jinja.render_value(config.get("mode", "write"), invocation_context))
             if mode not in {"write", "check"}:
                 raise ValueError("launchd_plist mode must be 'write' or 'check'.")
@@ -849,9 +817,7 @@ class Runtime:
             destination = Path(target_path)
             if mode == "check":
                 if not destination.exists() or destination.read_bytes() != rendered:
-                    raise RuntimeError(
-                        f"Generated launchd plist is stale: {destination}"
-                    )
+                    raise RuntimeError(f"Generated launchd plist is stale: {destination}")
                 continue
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_bytes(rendered)
@@ -883,9 +849,7 @@ class Runtime:
         pattern = str(self.jinja.render_value(raw.get("pattern", "*.md"), context))
         expected_expr = raw.get("expected", "runtime.catalog.definitions")
         definitions = self.jinja.evaluate(expected_expr, context)
-        expected = {
-            directory / Path(definition["page_path"]).name for definition in definitions
-        }
+        expected = {directory / Path(definition["page_path"]).name for definition in definitions}
         if not directory.exists():
             return
         for page in directory.rglob(pattern):
@@ -995,9 +959,7 @@ def _launchd_to_plist(spec: dict[str, Any]) -> dict[str, Any]:
             continue
         plist_key = _LAUNCHD_KEY_MAP.get(key, key)
         if plist_key == "KeepAlive" and isinstance(value, dict):
-            value = {
-                _LAUNCHD_KEEP_ALIVE_KEY_MAP.get(k, k): v for k, v in value.items()
-            }
+            value = {_LAUNCHD_KEEP_ALIVE_KEY_MAP.get(k, k): v for k, v in value.items()}
         out[plist_key] = value
     return out
 

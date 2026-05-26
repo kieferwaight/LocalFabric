@@ -22,25 +22,24 @@ import json
 import os
 import time
 from dataclasses import dataclass
-from typing import Optional
 
 from router.classifier import TaskProfile
 from router.dispatcher import DispatchResult, ResultStatus
 
 _FEEDBACK_PATH = os.path.expanduser("~/.local_router_cache/feedback.json")
-_EMA_ALPHA = 0.2   # smoothing factor: 0 = ignore new data, 1 = use only new data
+_EMA_ALPHA = 0.2  # smoothing factor: 0 = ignore new data, 1 = use only new data
 
 
 @dataclass
 class FeedbackEntry:
     timestamp: float
     route_id: str
-    status: str            # success / failure / deferred
+    status: str  # success / failure / deferred
     elapsed_sec: float
     intent: str
     complexity: str
     estimated_tokens: int
-    error: Optional[str] = None
+    error: str | None = None
 
 
 class FeedbackLogger:
@@ -66,7 +65,7 @@ class FeedbackLogger:
     def _load(self) -> dict:
         if os.path.exists(self._path):
             try:
-                with open(self._path, "r", encoding="utf-8") as fh:
+                with open(self._path, encoding="utf-8") as fh:
                     return json.load(fh)
             except (json.JSONDecodeError, OSError):
                 pass
@@ -113,9 +112,9 @@ class FeedbackLogger:
 
         # Update EMA weight
         success_signal = {
-            ResultStatus.SUCCESS.value:  1.0,
+            ResultStatus.SUCCESS.value: 1.0,
             ResultStatus.DEFERRED.value: 0.5,
-            ResultStatus.FAILURE.value:  0.0,
+            ResultStatus.FAILURE.value: 0.0,
         }.get(result.status.value, 0.0)
 
         weights = self._data.setdefault("route_weights", {})
@@ -128,7 +127,10 @@ class FeedbackLogger:
     def route_stats(self) -> dict:
         """Return a summary of recorded outcomes per route."""
         from collections import defaultdict
-        stats: dict[str, dict] = defaultdict(lambda: {"total": 0, "success": 0, "failure": 0, "deferred": 0})
+
+        stats: dict[str, dict] = defaultdict(
+            lambda: {"total": 0, "success": 0, "failure": 0, "deferred": 0}
+        )
         for entry in self._data.get("log", []):
             rid = entry.get("route_id", "unknown")
             stats[rid]["total"] += 1
@@ -137,10 +139,7 @@ class FeedbackLogger:
                 stats[rid][status] += 1
 
         weights = self._data.get("route_weights", {})
-        return {
-            rid: {**data, "ema_weight": weights.get(rid, 1.0)}
-            for rid, data in stats.items()
-        }
+        return {rid: {**data, "ema_weight": weights.get(rid, 1.0)} for rid, data in stats.items()}
 
     def clear(self) -> None:
         """Reset all feedback data (useful for testing)."""
@@ -150,6 +149,7 @@ class FeedbackLogger:
 
 if __name__ == "__main__":
     import json as _json
+
     logger = FeedbackLogger()
     print("Current route stats:")
     print(_json.dumps(logger.route_stats(), indent=2))

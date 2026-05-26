@@ -3,7 +3,8 @@
   description: >
     Advanced multilingual reasoning, coding, agentic tool use, and general
     assistant tasks. Supports explicit thinking mode.
-  tags: [model]
+  tags:
+  - model
   extends: model.base
   variables:
     name: qwen3
@@ -13,9 +14,9 @@
         assistant tasks. Supports explicit thinking mode.
       vendor: Alibaba
     providers:
-      - ollama
+    - ollama
     features:
-      - text
-      - tool_calling
-      - thinking
-      - streaming
+    - text
+    - tool_calling
+    - thinking
+    - streaming

@@ -2,113 +2,117 @@
   title: Abstract Base
   description: |
     Base execution frame shared by standard-library definitions.
-  tags: [core, abstract]
+  tags:
+  - core
+  - abstract
   variables:
-    system_log_format: "[{{ entity_id }} | {{ runtime.version }}]"
+    system_log_format: '[{{ entity_id }} | {{ runtime.version }}]'
   docs:
     variables:
       system_log_format: Standard execution log prefix.
     run:
-      - title: Announce frame startup
+    - title: Announce frame startup
   run:
-    - python: |
-        import sys
-        print(f"Booting execution frame cascade...")
-
+  - python: |
+      import sys
+      print(f"Booting execution frame cascade...")
 - id: stdlib.load-modules.workflow
   title: Load Standard Library Modules
   description: |
     Declares the namespaced standard-library modules included in every interpreter run.
-  tags: [core, modules]
+  tags:
+  - core
+  - modules
   extends: stdlib.base
   modules:
-    - stdlib.files.yaml
-    - stdlib.git.yaml
-    - stdlib.docs.yaml
-    - stdlib.analysis.yaml
-    - stdlib.python.yaml
-    - command.yaml
-    - folder.yaml
-    - docker.yaml
-    - launchd.yaml
-    - model.yaml
-    - provider.yaml
-    - route.yaml
-    - service.yaml
-    - task.yaml
+  - stdlib.files.yaml
+  - stdlib.git.yaml
+  - stdlib.docs.yaml
+  - stdlib.analysis.yaml
+  - stdlib.python.yaml
+  - command.yaml
+  - folder.yaml
+  - docker.yaml
+  - launchd.yaml
+  - model.yaml
+  - provider.yaml
+  - route.yaml
+  - service.yaml
+  - task.yaml
   variables:
-    module_namespace: "builtin"
-
+    module_namespace: builtin
 - id: stdlib.run-command.task
   title: Run Command
   description: |
     Executes a shell command in a supplied working directory.
-  tags: [shell]
+  tags:
+  - shell
   extends: stdlib.base
   inputs:
     command:
-      type: "string"
+      type: string
       required: false
-      default: ""
+      default: ''
       description: |
         Shell command to execute. Optional so that children can supply the
         command body via a `variables.command:` Jinja template (variables
         render after inputs and overwrite this default in scope).
     working_dir:
-      type: "string"
+      type: string
       required: false
-      default: "{{ env.cwd }}"
+      default: '{{ env.cwd }}'
       description: Directory in which to execute the command.
   docs:
     run:
-      - title: Execute shell command
+    - title: Execute shell command
   run:
-    - bash: |
-        cd "{{ working_dir }}"
-        {{ command }}
-
+  - bash: |
+      cd "{{ working_dir }}"
+      {{ command }}
 - id: stdlib.clean-workspace.task
   title: Clean Workspace
   description: |
     Removes an existing workspace directory when explicitly invoked.
-  tags: [files, destructive]
+  tags:
+  - files
+  - destructive
   extends: stdlib.base
   inputs:
     target_path:
-      type: "string"
+      type: string
       required: true
       description: Workspace directory to remove.
   docs:
     run:
-      - title: Remove directory
+    - title: Remove directory
   run:
-    - bash: |
-        if [ -d "{{ target_path }}" ]; then
-          echo "Safely purging workspace directory: {{ target_path }}"
-          rm -rf "{{ target_path }}"
-        fi
-
+  - bash: |
+      if [ -d "{{ target_path }}" ]; then
+        echo "Safely purging workspace directory: {{ target_path }}"
+        rm -rf "{{ target_path }}"
+      fi
 - id: stdlib.logger.task
   title: Logger
   description: |
     Prints a timestamped log message.
-  tags: [logging]
+  tags:
+  - logging
   extends: stdlib.base
   inputs:
     message:
-      type: "string"
+      type: string
       required: true
       description: Message to log.
     level:
-      type: "string"
+      type: string
       required: false
-      default: "INFO"
+      default: INFO
       description: Severity label shown with the message.
   docs:
     run:
-      - title: Print timestamped message
+    - title: Print timestamped message
   run:
-    - python: |
-        from datetime import datetime
-        ts = datetime.utcnow().isoformat()
-        print(f"[{ts}] [{{ level }}] {{ message }}")
+  - python: |-
+      from datetime import datetime
+      ts = datetime.utcnow().isoformat()
+      print(f"[{ts}] [{{ level }}] {{ message }}")

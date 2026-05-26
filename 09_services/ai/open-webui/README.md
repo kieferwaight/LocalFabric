@@ -17,9 +17,9 @@ Bind to a data instance under `14_data/apps/openwebui/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `OPEN_WEBUI_PORT` | `3001` | `8080` | Web UI |
+| Host env var      | Default | Container | Use    |
+| ----------------- | ------: | --------: | ------ |
+| `OPEN_WEBUI_PORT` |  `3001` |    `8080` | Web UI |
 
 ## Run
 

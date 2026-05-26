@@ -3,29 +3,36 @@
   description: |
     Single event emitted by a harness's stream() method. Modeled loosely on the
     OpenAI/Anthropic streaming shape so adapters can normalize.
-  tags: [schema, harness]
+  tags:
+  - schema
+  - harness
   extends: schemas.base
   schema:
     $id: https://scratch.local/schemas/harness.stream-event.schema.json
     title: StreamEvent
     description: Single event emitted by a harness's stream() method. Modeled loosely on the OpenAI/Anthropic streaming shape so adapters can normalize.
-    required: [type]
+    required:
+    - type
     properties:
       type:
         type: string
         enum:
-          - message_start
-          - content_delta
-          - tool_call_start
-          - tool_call_delta
-          - tool_call_end
-          - message_stop
-          - error
+        - message_start
+        - content_delta
+        - tool_call_start
+        - tool_call_delta
+        - tool_call_end
+        - message_stop
+        - error
       delta:
-        type: [string, "null"]
+        type:
+        - string
+        - 'null'
         description: Text delta for content_delta and tool_call_delta events.
       tool_call:
-        type: [object, "null"]
+        type:
+        - object
+        - 'null'
         description: Set for tool_call_* events.
         properties:
           id:
@@ -33,13 +40,19 @@
           name:
             type: string
           arguments:
-            type: [object, string]
+            type:
+            - object
+            - string
         additionalProperties: true
       stop_reason:
-        type: [string, "null"]
+        type:
+        - string
+        - 'null'
         description: Set on message_stop. e.g. 'end_turn', 'tool_use', 'max_tokens'.
       error:
-        type: [string, "null"]
+        type:
+        - string
+        - 'null'
         description: Set on error events.
       metadata:
         type: object

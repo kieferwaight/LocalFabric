@@ -16,18 +16,18 @@ Durable workflow engine for ingestion and extraction pipelines.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `TEMPORAL_PORT` | `7233` | `7233` | Temporal frontend |
+| Host env var    | Default | Container | Use               |
+| --------------- | ------: | --------: | ----------------- |
+| `TEMPORAL_PORT` |  `7233` |    `7233` | Temporal frontend |
 
 ## Required Environment
 
-| Var | Description |
-| --- | --- |
-| `POSTGRES_USER` | Postgres user for Temporal state |
+| Var                 | Description                          |
+| ------------------- | ------------------------------------ |
+| `POSTGRES_USER`     | Postgres user for Temporal state     |
 | `POSTGRES_PASSWORD` | Postgres password for Temporal state |
-| `POSTGRES_SEEDS` | Postgres host (default `pgvector`) |
-| `DB_PORT` | Postgres port (default `5432`) |
+| `POSTGRES_SEEDS`    | Postgres host (default `pgvector`)   |
+| `DB_PORT`           | Postgres port (default `5432`)       |
 
 ## Run
 

@@ -4,12 +4,14 @@ id: image.vision.overview.task
 
 Describe only the overall visible content.
 Return exactly this markdown shape:
+
 ## Overview
+
 - Subject: <short description>
 - Context: <short description>
 - Visible elements: <short description>
 - Notes: <short description>
-Rules:
+  Rules:
 - Maximum 4 bullets.
 - Visible facts only.
 - Do not transcribe text.

@@ -3,18 +3,19 @@
   description: |
     Playwright browser worker for rendering and scraping web pages as part of the
     document ingestion pipeline. Built from the official Playwright Python image.
-  tags: [docker, document]
+  tags:
+  - docker
+  - document
   extends: docker.base
   inputs:
     DATA_PATH:
-      type: "string"
+      type: string
       required: true
       description: Host path for worker scratch storage (binds to /work in container)
   variables:
-    image_tag: "contentgraph-playwright-worker:local"
+    image_tag: contentgraph-playwright-worker:local
     dockerfile_body: |
       FROM mcr.microsoft.com/playwright/python:v1.46.0-jammy
-
       WORKDIR /app
       COPY app /app
       CMD ["python", "worker.py"]
@@ -25,13 +26,11 @@
         container_name: contentgraph-playwright-worker
         restart: unless-stopped
         volumes:
-          - "{{ DATA_PATH }}:/work"
+        - '{{ DATA_PATH }}:/work'
     extra_files:
-      - path: "app/worker.py"
-        content: |
-          import time
-
-
-          print("playwright browser worker ready")
-          while True:
-              time.sleep(60)
+    - path: app/worker.py
+      content: |-
+        import time
+        print("playwright browser worker ready")
+        while True:
+            time.sleep(60)

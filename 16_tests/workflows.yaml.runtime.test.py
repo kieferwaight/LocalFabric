@@ -3,15 +3,17 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 from unittest.mock import patch
 
 import pytest
-
-from core.runtimes.yaml.src import Definition, InputConstraint, Runtime, ScopeFrame, ShellEnvironment
-from core.runtimes.yaml.src.dispatcher import DispatchResult, Dispatcher
+from core.runtimes.yaml.src import (
+    Runtime,
+    ScopeFrame,
+    ShellEnvironment,
+)
+from core.runtimes.yaml.src.dispatcher import Dispatcher, DispatchResult
 from core.runtimes.yaml.src.runtime import coerce_type
-
 
 YAML_ROOT = Path(__file__).resolve().parents[1] / "02_core" / "runtimes" / "yaml"
 
@@ -19,9 +21,9 @@ YAML_ROOT = Path(__file__).resolve().parents[1] / "02_core" / "runtimes" / "yaml
 class RecordingDispatcher(Dispatcher):
     """Dispatcher that records calls without actually running a subprocess."""
 
-    def __init__(self, state_responses: Dict[str, Dict[str, Any]] | None = None):
+    def __init__(self, state_responses: dict[str, dict[str, Any]] | None = None):
         super().__init__()
-        self.calls: List[Dict[str, Any]] = []
+        self.calls: list[dict[str, Any]] = []
         self.state_responses = state_responses or {}
 
     def dispatch(self, language, source, base_env=None, cwd=None):
@@ -205,7 +207,7 @@ def test_ac_301_1_bash_dispatched_to_bash_binary():
         ]
     )
 
-    captured: Dict[str, Any] = {}
+    captured: dict[str, Any] = {}
 
     def fake_popen(cmd, **kwargs):
         captured["cmd"] = cmd

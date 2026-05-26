@@ -3,7 +3,8 @@
   description: >
     Fast, efficient instruction-following, summarization, chat, and lightweight
     coding support.
-  tags: [model]
+  tags:
+  - model
   extends: model.base
   variables:
     name: mistral
@@ -13,8 +14,8 @@
         coding support.
       vendor: Mistral AI
     providers:
-      - ollama
+    - ollama
     features:
-      - text
-      - tool_calling
-      - streaming
+    - text
+    - tool_calling
+    - streaming

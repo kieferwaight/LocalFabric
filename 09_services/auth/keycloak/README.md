@@ -17,15 +17,15 @@ Bind to a data instance under `14_data/apps/keycloak/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `KEYCLOAK_PORT` | `8082` | `8080` | Keycloak UI/API |
+| Host env var    | Default | Container | Use             |
+| --------------- | ------: | --------: | --------------- |
+| `KEYCLOAK_PORT` |  `8082` |    `8080` | Keycloak UI/API |
 
 ## Required Environment
 
-| Var | Description |
-| --- | --- |
-| `KEYCLOAK_ADMIN` | Initial admin username |
+| Var                       | Description            |
+| ------------------------- | ---------------------- |
+| `KEYCLOAK_ADMIN`          | Initial admin username |
 | `KEYCLOAK_ADMIN_PASSWORD` | Initial admin password |
 
 ## Run

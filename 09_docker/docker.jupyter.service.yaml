@@ -4,28 +4,29 @@
     Jupyter notebook server with the local fabric Python project installed editable. The
     build context is the repo root and the running container mounts the host repo over
     /workspace so notebook edits stay in sync with source files.
-  tags: [docker, dev]
+  tags:
+  - docker
+  - dev
   extends: docker.base
   inputs:
     DATA_PATH:
-      type: "string"
+      type: string
       required: true
       description: Host path for user notebook work (binds to /home/jovyan/work in container)
     JUPYTER_PORT:
-      type: "string"
+      type: string
       required: false
-      default: "8888"
+      default: '8888'
       description: Host port to expose the Jupyter server (default 8888)
     JUPYTER_TOKEN:
-      type: "string"
+      type: string
       required: false
-      default: "localfabric-dev"
+      default: localfabric-dev
       description: Auth token for the Jupyter server
   variables:
-    image_tag: "contentgraph-jupyter:local"
+    image_tag: contentgraph-jupyter:local
     dockerfile_body: |
       FROM jupyter/base-notebook:latest
-
       USER root
 
       # Install the project editably at build time. The build context is the repo
@@ -39,7 +40,6 @@
       COPY . /workspace
       RUN pip install --no-cache-dir -e "/workspace[notebook]" \
           && chown -R ${NB_UID}:${NB_GID} /workspace
-
       USER ${NB_UID}
     services:
       jupyter:
@@ -49,12 +49,12 @@
         container_name: contentgraph-jupyter
         restart: unless-stopped
         ports:
-          - "{{ JUPYTER_PORT }}:8888"
+        - '{{ JUPYTER_PORT }}:8888'
         environment:
-          JUPYTER_TOKEN: "{{ JUPYTER_TOKEN }}"
+          JUPYTER_TOKEN: '{{ JUPYTER_TOKEN }}'
         volumes:
-          - "../../..:/workspace"
-          - "{{ DATA_PATH }}:/home/jovyan/work"
+        - ../../..:/workspace
+        - '{{ DATA_PATH }}:/home/jovyan/work'
         command:
-          - start-notebook.py
-          - --ServerApp.root_dir=/workspace/15_notebooks
+        - start-notebook.py
+        - --ServerApp.root_dir=/workspace/15_notebooks

@@ -10,8 +10,8 @@ then packages everything into a :class:`Command` dataclass for use by
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import Iterator
+from collections.abc import Iterator
+from dataclasses import dataclass
 
 try:
     from core.runtimes.yaml.src.definition import InputConstraint
@@ -62,9 +62,7 @@ class CommandRegistry:
         ``command.base`` is excluded (it is abstract and carries no
         meaningful ``argv_spec`` / inputs of its own).
         """
-        catalog: list[dict] = (
-            self._runtime.globals.get("catalog", {}).get("definitions", [])
-        )
+        catalog: list[dict] = self._runtime.globals.get("catalog", {}).get("definitions", [])
         for entry in catalog:
             if not entry.get("has_command"):
                 continue

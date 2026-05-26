@@ -26,8 +26,8 @@ def ingest_run(
     ] = False,
 ) -> None:
     from core.environment import data
-    from drivers.sql.session import init_db
     from core.runtimes.langgraph.ingest.graph import run_ingest
+    from drivers.sql.session import init_db
 
     db_path = data(*_DEFAULT_DB_PATH_PARTS)
     init_db(db_path)
@@ -71,8 +71,6 @@ def ingest_run(
             console.print(f"  • {e}")
 
     if dry_run:
-        console.print(
-            "\n[yellow]Dry run complete — no files were copied or registered.[/yellow]"
-        )
+        console.print("\n[yellow]Dry run complete — no files were copied or registered.[/yellow]")
     else:
         console.print("\n[green]✓ Ingestion complete.[/green]")

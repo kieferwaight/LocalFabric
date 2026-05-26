@@ -11,16 +11,20 @@ from collections.abc import Iterator, Mapping
 from typing import Any
 
 import pytest
-from harnesses.base import HarnessError
 from core.runtimes.markdown.providers import ClaudeProvider, ProviderError, ProviderResult
+from harnesses.base import HarnessError
 
 
 class _FakeHarness:
     """Minimal stand-in for ClaudeHarness."""
 
-    def __init__(self, *, invoke_response: dict[str, Any] | None = None,
-                 stream_events: list[dict[str, Any]] | None = None,
-                 raises: Exception | None = None) -> None:
+    def __init__(
+        self,
+        *,
+        invoke_response: dict[str, Any] | None = None,
+        stream_events: list[dict[str, Any]] | None = None,
+        raises: Exception | None = None,
+    ) -> None:
         self._invoke_response = invoke_response
         self._stream_events = stream_events or []
         self._raises = raises
@@ -52,14 +56,16 @@ def _text_response(text: str, *, model: str = "claude-sonnet-4-6") -> dict[str, 
 
 
 def test_run_returns_provider_result_with_concatenated_text() -> None:
-    harness = _FakeHarness(invoke_response={
-        "model": "claude-sonnet-4-6",
-        "content": [
-            {"type": "text", "text": "Hello, "},
-            {"type": "text", "text": "world."},
-        ],
-        "usage": {"output_tokens": 12},
-    })
+    harness = _FakeHarness(
+        invoke_response={
+            "model": "claude-sonnet-4-6",
+            "content": [
+                {"type": "text", "text": "Hello, "},
+                {"type": "text", "text": "world."},
+            ],
+            "usage": {"output_tokens": 12},
+        }
+    )
     provider = ClaudeProvider(harness=harness)
     result = provider.run("test prompt")
     assert isinstance(result, ProviderResult)
@@ -94,15 +100,17 @@ def test_run_uses_default_model_when_omitted() -> None:
 
 
 def test_run_ignores_non_text_content_blocks() -> None:
-    harness = _FakeHarness(invoke_response={
-        "model": "claude-sonnet-4-6",
-        "content": [
-            {"type": "tool_use", "id": "tool_1", "name": "x"},
-            {"type": "text", "text": "visible"},
-            {"type": "image", "source": {}},
-        ],
-        "usage": {},
-    })
+    harness = _FakeHarness(
+        invoke_response={
+            "model": "claude-sonnet-4-6",
+            "content": [
+                {"type": "tool_use", "id": "tool_1", "name": "x"},
+                {"type": "text", "text": "visible"},
+                {"type": "image", "source": {}},
+            ],
+            "usage": {},
+        }
+    )
     provider = ClaudeProvider(harness=harness)
     result = provider.run("p")
     assert isinstance(result, ProviderResult)

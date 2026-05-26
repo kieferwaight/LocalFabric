@@ -17,15 +17,15 @@ Bind to a data instance under `14_data/apps/grafana/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `GRAFANA_PORT` | `3002` | `3000` | Grafana UI |
+| Host env var   | Default | Container | Use        |
+| -------------- | ------: | --------: | ---------- |
+| `GRAFANA_PORT` |  `3002` |    `3000` | Grafana UI |
 
 ## Required Environment
 
-| Var | Description |
-| --- | --- |
-| `GF_SECURITY_ADMIN_USER` | Initial admin username |
+| Var                          | Description            |
+| ---------------------------- | ---------------------- |
+| `GF_SECURITY_ADMIN_USER`     | Initial admin username |
 | `GF_SECURITY_ADMIN_PASSWORD` | Initial admin password |
 
 ## Run

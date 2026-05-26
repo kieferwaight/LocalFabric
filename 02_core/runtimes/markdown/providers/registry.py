@@ -15,9 +15,7 @@ PROVIDERS: dict[str, Callable[[], MarkdownProvider]] = {
 }
 
 
-def register_provider(
-    name: str, factory: Callable[[], MarkdownProvider]
-) -> None:
+def register_provider(name: str, factory: Callable[[], MarkdownProvider]) -> None:
     """Register or override a provider by name. Used by tests and plugins."""
     PROVIDERS[name] = factory
 
@@ -35,7 +33,5 @@ def get_provider(
         return overrides[name]
     if name not in PROVIDERS:
         known = ", ".join(sorted(PROVIDERS)) or "<none>"
-        raise KeyError(
-            f"Unknown markdown provider {name!r}; known providers: {known}"
-        )
+        raise KeyError(f"Unknown markdown provider {name!r}; known providers: {known}")
     return PROVIDERS[name]()

@@ -4,7 +4,10 @@
     Mermaid relationship subgraph for a single definition page. Renders the
     target definition with its parent (`extends`), mixins, and children using
     a horizontal layout so wide trees (many children) stay readable.
-  tags: [documentation, template, component]
+  tags:
+  - documentation
+  - template
+  - component
   inputs:
     definition:
       type: object
@@ -32,14 +35,15 @@
         {{ item.mermaid_id }}["{{ item.title }}"] --> {{ definition.mermaid_id }}
       {% endfor -%}
       ```
-
 - id: docs.definition.template.definition
   title: Docs - Definition Page Template
   description: |
     Markdown page describing a single definition: metadata table, relationship
     summary, mermaid relationship-graph component, declared API, and resolved
     API after inheritance and mixin merge.
-  tags: [documentation, template]
+  tags:
+  - documentation
+  - template
   inputs:
     definition:
       type: object
@@ -48,22 +52,18 @@
   template:
     engine: jinja
     output: markdown
-    body: |
+    body: |-
       {{ runtime.catalog.generated_marker }}
       # {{ definition.title }}
-
       [API index]({{ definition.index_link }}) | [Definition schema]({{ definition.schema_link }})
-
       | Field | Value |
       | --- | --- |
       | ID | `{{ definition.id }}` |
       | Source | `{{ definition.source_path }}` |
       | Tags | {{ definition.tags | join(", ") or "-" }} |
-
       {{ definition.description or "_No description provided._" }}
 
       ## Relationships
-
       | Relation | Definitions |
       | --- | --- |
       | Extends | {% if definition.parent %}[{{ definition.parent.title }}]({{ definition.parent.link }}){% else %}-{% endif %} |
@@ -71,13 +71,11 @@
       | Children | {% if definition.child_links %}{% for item in definition.child_links %}[{{ item.title }}]({{ item.link }}){% if not loop.last %}, {% endif %}{% endfor %}{% else %}-{% endif %} |
       | Mixin consumers | {% if definition.consumer_links %}{% for item in definition.consumer_links %}[{{ item.title }}]({{ item.link }}){% if not loop.last %}, {% endif %}{% endfor %}{% else %}-{% endif %} |
       | Modules | {% if definition.modules %}{% for module in definition.modules %}`{{ module }}`{% if not loop.last %}, {% endif %}{% endfor %}{% else %}-{% endif %} |
-
       {{ component('docs.definition.template.component-relationship-graph', definition=definition) }}
 
       ## Declared API
 
       ### Inputs
-
       | Name | Type | Required | Default | Description |
       | --- | --- | --- | --- | --- |
       {% for item in definition.declared.inputs -%}
@@ -87,7 +85,6 @@
       {% endfor %}
 
       ### Variables
-
       | Name | YAML Type | Value / Template | Description |
       | --- | --- | --- | --- |
       {% for item in definition.declared.variables -%}
@@ -97,39 +94,28 @@
       {% endfor %}
 
       ### Run Operations
-
       {% for item in definition.declared.run -%}
       #### {{ item.title or (item.operation | title) }}
-
       {{ item.description or "_No operation description provided._" }}
-
       ```{{ item.operation }}
       {{ item.source }}
       ```
-
       {% else -%}
       _No locally declared run operations._
-
       {% endfor -%}
       ### Teardown Operations
-
       {% for item in definition.declared.teardown -%}
       #### {{ item.title or (item.operation | title) }}
-
       {{ item.description or "_No operation description provided._" }}
-
       ```{{ item.operation }}
       {{ item.source }}
       ```
-
       {% else -%}
       _No locally declared teardown operations._
-
       {% endfor -%}
       ## Resolved API
 
       ### Effective Inputs
-
       | Name | Type | Required | Default | Origin |
       | --- | --- | --- | --- | --- |
       {% for item in definition.resolved.inputs -%}
@@ -139,7 +125,6 @@
       {% endfor %}
 
       ### Effective Variables
-
       | Name | Value / Template | Origin |
       | --- | --- | --- |
       {% for item in definition.resolved.variables -%}
@@ -149,7 +134,6 @@
       {% endfor %}
 
       ### Effective Lifecycle
-
       | Phase | Operation | Origin |
       | --- | --- | --- |
       {% for item in definition.resolved.run -%}

@@ -19,17 +19,17 @@ Bind to a data instance under `14_data/stores/pgvector/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `PGVECTOR_PORT` | `5432` | `5432` | PostgreSQL client traffic |
+| Host env var    | Default | Container | Use                       |
+| --------------- | ------: | --------: | ------------------------- |
+| `PGVECTOR_PORT` |  `5432` |    `5432` | PostgreSQL client traffic |
 
 ## Required Environment
 
-| Var | Description |
-| --- | --- |
-| `POSTGRES_USER` | Superuser name |
-| `POSTGRES_PASSWORD` | Superuser password |
-| `POSTGRES_DB` | Initial database (default `contentgraph`) |
+| Var                 | Description                               |
+| ------------------- | ----------------------------------------- |
+| `POSTGRES_USER`     | Superuser name                            |
+| `POSTGRES_PASSWORD` | Superuser password                        |
+| `POSTGRES_DB`       | Initial database (default `contentgraph`) |
 
 ## Run
 

@@ -5,8 +5,9 @@ from __future__ import annotations
 import abc
 import logging
 from collections import deque
+from collections.abc import Iterator, Mapping
 from dataclasses import dataclass, field
-from typing import Any, Deque, Dict, Iterator, Mapping, Optional
+from typing import Any
 
 
 class HarnessError(RuntimeError):
@@ -20,12 +21,12 @@ class HarnessStatus:
     name: str
     state: str  # "stopped" | "starting" | "running" | "degraded" | "error"
     detail: str = ""
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    metadata: dict[str, Any] = field(default_factory=dict)
 
     def ok(self) -> bool:
         return self.state in {"running", "ready"}
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "name": self.name,
             "state": self.state,
@@ -47,10 +48,10 @@ class Harness(abc.ABC):
     #: How many recent log lines to retain in memory.
     log_buffer_size: int = 256
 
-    def __init__(self, config: Optional[Mapping[str, Any]] = None) -> None:
-        self.config: Dict[str, Any] = dict(config or {})
+    def __init__(self, config: Mapping[str, Any] | None = None) -> None:
+        self.config: dict[str, Any] = dict(config or {})
         self._state: str = "stopped"
-        self._logs: Deque[str] = deque(maxlen=self.log_buffer_size)
+        self._logs: deque[str] = deque(maxlen=self.log_buffer_size)
         self._logger = logging.getLogger(f"harness.{self.name}")
 
     # ------------------------------------------------------------------ helpers
@@ -78,11 +79,11 @@ class Harness(abc.ABC):
         """Return the current lifecycle state without side effects."""
 
     @abc.abstractmethod
-    def invoke(self, request: Mapping[str, Any]) -> Dict[str, Any]:
+    def invoke(self, request: Mapping[str, Any]) -> dict[str, Any]:
         """Execute a single request/response round trip."""
 
     @abc.abstractmethod
-    def stream(self, request: Mapping[str, Any]) -> Iterator[Dict[str, Any]]:
+    def stream(self, request: Mapping[str, Any]) -> Iterator[dict[str, Any]]:
         """Execute a request and yield incremental events."""
 
     @abc.abstractmethod
@@ -94,7 +95,7 @@ class Harness(abc.ABC):
         """Active health probe — may make a network or process check."""
 
     # ----------------------------------------------------------------- ergonomics
-    def __enter__(self) -> "Harness":
+    def __enter__(self) -> Harness:
         self.start()
         return self
 

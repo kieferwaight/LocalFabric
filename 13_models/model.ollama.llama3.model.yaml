@@ -3,7 +3,8 @@
   description: >
     General-purpose chat, content generation, summarization, and
     instruction-following tasks.
-  tags: [model]
+  tags:
+  - model
   extends: model.base
   variables:
     name: llama3
@@ -13,7 +14,7 @@
         instruction-following tasks.
       vendor: Meta
     providers:
-      - ollama
+    - ollama
     features:
-      - text
-      - streaming
+    - text
+    - streaming

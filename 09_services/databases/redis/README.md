@@ -17,9 +17,9 @@ Bind to a data instance under `14_data/stores/redis/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `REDIS_PORT` | `6379` | `6379` | Redis client traffic |
+| Host env var | Default | Container | Use                  |
+| ------------ | ------: | --------: | -------------------- |
+| `REDIS_PORT` |  `6379` |    `6379` | Redis client traffic |
 
 ## Run
 

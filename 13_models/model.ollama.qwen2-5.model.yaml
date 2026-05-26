@@ -3,7 +3,8 @@
   description: >
     Multilingual chat, long-context work, coding assistance, and structured
     instruction following.
-  tags: [model]
+  tags:
+  - model
   extends: model.base
   variables:
     name: qwen2.5
@@ -13,8 +14,8 @@
         instruction following.
       vendor: Alibaba
     providers:
-      - ollama
+    - ollama
     features:
-      - text
-      - tool_calling
-      - streaming
+    - text
+    - tool_calling
+    - streaming

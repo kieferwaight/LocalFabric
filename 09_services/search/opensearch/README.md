@@ -18,15 +18,15 @@ Bind to a data instance under `14_data/stores/opensearch/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `OPENSEARCH_PORT` | `9200` | `9200` | HTTP API |
-| `OPENSEARCH_PERF_PORT` | `9600` | `9600` | Performance analyzer |
+| Host env var           | Default | Container | Use                  |
+| ---------------------- | ------: | --------: | -------------------- |
+| `OPENSEARCH_PORT`      |  `9200` |    `9200` | HTTP API             |
+| `OPENSEARCH_PERF_PORT` |  `9600` |    `9600` | Performance analyzer |
 
 ## Required Environment
 
-| Var | Description |
-| --- | --- |
+| Var                                 | Description                                                       |
+| ----------------------------------- | ----------------------------------------------------------------- |
 | `OPENSEARCH_INITIAL_ADMIN_PASSWORD` | Initial admin password (must satisfy OpenSearch complexity rules) |
 
 ## Run

@@ -14,7 +14,6 @@ Usage:
 """
 
 import os
-from typing import Optional
 
 from drivers.vector.base import VectorStore
 
@@ -47,6 +46,7 @@ class LanceStore(VectorStore):
     ) -> None:
         try:
             import lancedb
+
             self._lancedb = lancedb
         except ImportError:
             raise ImportError("LanceDB is required: pip install lancedb")
@@ -103,15 +103,17 @@ class LanceStore(VectorStore):
             vec = chunk.get("vector")
             if vec is None:
                 continue
-            rows.append({
-                "vector": list(vec),
-                "text": chunk.get("text", ""),
-                "source": chunk.get("source", ""),
-                "chunk_index": int(chunk.get("chunk_index", 0)),
-                "line_start": int(chunk.get("line_start", 0)),
-                "line_end": int(chunk.get("line_end", 0)),
-                "strategy": chunk.get("strategy", ""),
-            })
+            rows.append(
+                {
+                    "vector": list(vec),
+                    "text": chunk.get("text", ""),
+                    "source": chunk.get("source", ""),
+                    "chunk_index": int(chunk.get("chunk_index", 0)),
+                    "line_start": int(chunk.get("line_start", 0)),
+                    "line_end": int(chunk.get("line_end", 0)),
+                    "strategy": chunk.get("strategy", ""),
+                }
+            )
 
         if not rows:
             return 0
@@ -141,7 +143,7 @@ class LanceStore(VectorStore):
         self,
         query_vector: list[float],
         k: int = 5,
-        source_filter: Optional[str] = None,
+        source_filter: str | None = None,
     ) -> list[dict]:
         """
         Return the top-k most similar chunks (cosine / L2 via LanceDB ANN search).

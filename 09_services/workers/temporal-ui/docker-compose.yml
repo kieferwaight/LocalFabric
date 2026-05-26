@@ -8,4 +8,4 @@ services:
       TEMPORAL_ADDRESS: ${TEMPORAL_ADDRESS:-temporal:7233}
       TEMPORAL_CORS_ORIGINS: http://localhost:${TEMPORAL_UI_PORT:-8084}
     ports:
-      - "${TEMPORAL_UI_PORT:-8084}:8080"
+    - ${TEMPORAL_UI_PORT:-8084}:8080

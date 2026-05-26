@@ -3,23 +3,29 @@
   description: |
     Internal shape for invoking a tool (07_lib) or MCP-exposed function
     (11_mcp/tools).
-  tags: [schema, tool]
+  tags:
+  - schema
+  - tool
   extends: schemas.base
   schema:
     $id: https://scratch.local/schemas/tool.invocation.schema.json
     title: ToolInvocation
     description: Internal shape for invoking a tool (07_lib) or MCP-exposed function (11_mcp/tools).
-    required: [tool, arguments]
+    required:
+    - tool
+    - arguments
     properties:
       tool:
         type: string
-        description: "Dotted identifier resolving to a callable. e.g. 'lib.embeddings.query.LocalKnowledgeQuery.query' or 'mcp_servers.tools.local_tools.run_local_tests'."
+        description: Dotted identifier resolving to a callable. e.g. 'lib.embeddings.query.LocalKnowledgeQuery.query' or 'mcp_servers.tools.local_tools.run_local_tests'.
       arguments:
         type: object
         description: Keyword arguments. The tool's own signature is the source of truth for valid keys.
         additionalProperties: true
       timeout_sec:
-        type: [number, "null"]
+        type:
+        - number
+        - 'null'
         minimum: 0
         description: Optional override of the tool's default timeout.
       call_id:

@@ -5,14 +5,16 @@
     Establishes the canonical fields every provider declares (`name`,
     `location`, `endpoint`, `auth`, `env`, `protocols`, `documentation`).
     Carries no run blocks.
-  tags: [provider, abstract]
+  tags:
+  - provider
+  - abstract
   extends: stdlib.base
   variables:
-    name: ""
-    location: ""
+    name: ''
+    location: ''
     documentation: {}
-    endpoint: ""
-    auth: ""
+    endpoint: ''
+    auth: ''
     env: {}
     protocols: {}
   docs:

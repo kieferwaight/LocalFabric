@@ -7,6 +7,7 @@ definition id directly at the root of 18_docs/ as siblings. Flat layout
 keeps cross-document links (parent/mixin/child references emitted by the
 per-definition template) resolvable without ../-walks.
 """
+
 from __future__ import annotations
 
 import argparse

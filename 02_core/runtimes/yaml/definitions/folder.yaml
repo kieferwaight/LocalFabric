@@ -5,18 +5,19 @@
     disk. Children declare a local `files` variable (a list of mappings with
     `path` and `content` keys) and this base scaffolds them into the
     `target_dir` input.
-
     `path` is interpreted relative to `target_dir`. The directory is created
     first; each file is then written via `stdlib.files.write.task` inside a
     `for_each` loop. Children that need to skip a file should omit it from
     the `files` list rather than emit an empty entry.
-  tags: [folder, abstract]
+  tags:
+  - folder
+  - abstract
   extends: stdlib.base
   inputs:
     target_dir:
-      type: "string"
+      type: string
       required: false
-      default: "14_data/{{ entity_id | replace('.', '_') }}"
+      default: 14_data/{{ entity_id | replace('.', '_') }}
       description: |
         Destination directory rooted under the project data tree. Defaults
         to `14_data/<flattened-entity-id>/`.
@@ -24,18 +25,18 @@
     inputs:
       target_dir: Folder that will receive the scaffolded files.
     run:
-      - title: Ensure target directory exists
-      - title: Write each declared file
+    - title: Ensure target directory exists
+    - title: Write each declared file
   run:
-    - invoke:
-        definition: stdlib.files.create-directory.task
-        arguments:
-          directory_path: "{{ target_dir }}"
-    - invoke:
-        definition: stdlib.files.write.task
-        arguments:
-          target_path: "{{ target_dir }}/{{ file.path }}"
-          content: "{{ file.content }}"
-      for_each:
-        items: "(files | default([]) | rejectattr('content', 'equalto', '') | list) + (extra_files | default([]))"
-        as: file
+  - invoke:
+      definition: stdlib.files.create-directory.task
+      arguments:
+        directory_path: '{{ target_dir }}'
+  - invoke:
+      definition: stdlib.files.write.task
+      arguments:
+        target_path: '{{ target_dir }}/{{ file.path }}'
+        content: '{{ file.content }}'
+    for_each:
+      items: (files | default([]) | rejectattr('content', 'equalto', '') | list) + (extra_files | default([]))
+      as: file

@@ -28,10 +28,7 @@ from core.runtimes.markdown import (
 )
 from core.runtimes.yaml.src import Runtime, ShellEnvironment
 
-USAGE = (
-    "Usage: localfabric-md <markdown_file> "
-    "[positional args] [--key=value] [--flag]"
-)
+USAGE = "Usage: localfabric-md <markdown_file> [positional args] [--key=value] [--flag]"
 
 # Default YAML stdlib so authors can `extends: stdlib.*` from frontmatter
 # without an explicit import. The path resolves the repo root from this

@@ -15,4 +15,4 @@ services:
       MINIO_ENDPOINT: ${MINIO_ENDPOINT:-minio:9000}
       TIKA_URL: ${TIKA_URL:-http://tika:9998}
     ports:
-      - "${FASTAPI_PORT:-8000}:8000"
+    - ${FASTAPI_PORT:-8000}:8000

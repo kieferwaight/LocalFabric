@@ -1,4 +1,3 @@
-
 - id: docs.readme.generate.workflow
   title: Build Repo README
   description: |
@@ -8,18 +7,19 @@
     buckets) and `[tool.localfabric.workspace_manifest].excluded_buckets`,
     ordered alphabetically; descriptions come from
     `[tool.localfabric.workspace_descriptions]`.
-
     Honors `mode: check` so CI can detect drift — identical contract to
     `docs.api.reference`.
-  tags: [documentation, workflow]
+  tags:
+  - documentation
+  - workflow
   extends: stdlib.base
   modules:
-    - ../14_templates/docs.readme.template.yaml
+  - ../14_templates/docs.readme.template.yaml
   inputs:
     repo_root:
       type: string
       required: false
-      default: "{{ env.cwd }}"
+      default: '{{ env.cwd }}'
       description: Absolute path to the repository root (cwd by default).
     mode:
       type: string
@@ -28,58 +28,53 @@
       description: Either `write` to regenerate README.md or `check` to verify.
   docs:
     run:
-      - title: Parse pyproject.toml and stash context
-      - title: Render README.md
+    - title: Parse pyproject.toml and stash context
+    - title: Render README.md
   run:
-    - python: |
-        import json
-        import os
-        import sys
-        import tomllib
-        from pathlib import Path
-
-        repo_root = Path("{{ repo_root }}").resolve()
-        cfg = tomllib.loads((repo_root / "pyproject.toml").read_text(encoding="utf-8"))
-
-        project_tagline = f"**{cfg['project']['description']}**"
-
-        package_dir = cfg["tool"]["setuptools"]["package-dir"]
-        manifest = cfg["tool"]["localfabric"]["workspace_manifest"]
-        descriptions = cfg["tool"]["localfabric"]["workspace_descriptions"]
-        bucket_to_import = {path.split("/", 1)[0]: alias for alias, path in package_dir.items()}
-        all_buckets = sorted(set(bucket_to_import) | set(manifest["excluded_buckets"]))
-        missing = [b for b in all_buckets if b not in descriptions]
-        if missing:
-            raise SystemExit(
-                f"[tool.localfabric.workspace_descriptions] missing entries for: {missing}"
-            )
-        buckets = [
-            {
-                "bucket": b,
-                "description": descriptions[b],
-                "import_name": bucket_to_import.get(b, ""),
-            }
-            for b in all_buckets
-        ]
-
-        scripts = cfg.get("project", {}).get("scripts", {})
-        cli_commands = [
-            {"name": name, "entry_point": scripts[name]} for name in sorted(scripts)
-        ]
-
-        state_file = os.environ["STATE_FILE"]
-        with open(state_file, "w", encoding="utf-8") as fh:
-            json.dump({
-                "readme_tagline": project_tagline,
-                "readme_buckets": buckets,
-                "readme_cli_commands": cli_commands,
-                "readme_target": str(repo_root / "README.md"),
-            }, fh)
-    - render:
-        definition: docs.readme.template
-        arguments:
-          project_tagline: "{{ readme_tagline }}"
-          buckets: "{{ readme_buckets }}"
-          cli_commands: "{{ readme_cli_commands }}"
-        target_path: "{{ readme_target }}"
-        mode: "{{ mode }}"
+  - python: |
+      import json
+      import os
+      import sys
+      import tomllib
+      from pathlib import Path
+      repo_root = Path("{{ repo_root }}").resolve()
+      cfg = tomllib.loads((repo_root / "pyproject.toml").read_text(encoding="utf-8"))
+      project_tagline = f"**{cfg['project']['description']}**"
+      package_dir = cfg["tool"]["setuptools"]["package-dir"]
+      manifest = cfg["tool"]["localfabric"]["workspace_manifest"]
+      descriptions = cfg["tool"]["localfabric"]["workspace_descriptions"]
+      bucket_to_import = {path.split("/", 1)[0]: alias for alias, path in package_dir.items()}
+      all_buckets = sorted(set(bucket_to_import) | set(manifest["excluded_buckets"]))
+      missing = [b for b in all_buckets if b not in descriptions]
+      if missing:
+          raise SystemExit(
+              f"[tool.localfabric.workspace_descriptions] missing entries for: {missing}"
+          )
+      buckets = [
+          {
+              "bucket": b,
+              "description": descriptions[b],
+              "import_name": bucket_to_import.get(b, ""),
+          }
+          for b in all_buckets
+      ]
+      scripts = cfg.get("project", {}).get("scripts", {})
+      cli_commands = [
+          {"name": name, "entry_point": scripts[name]} for name in sorted(scripts)
+      ]
+      state_file = os.environ["STATE_FILE"]
+      with open(state_file, "w", encoding="utf-8") as fh:
+          json.dump({
+              "readme_tagline": project_tagline,
+              "readme_buckets": buckets,
+              "readme_cli_commands": cli_commands,
+              "readme_target": str(repo_root / "README.md"),
+          }, fh)
+  - render:
+      definition: docs.readme.template
+      arguments:
+        project_tagline: '{{ readme_tagline }}'
+        buckets: '{{ readme_buckets }}'
+        cli_commands: '{{ readme_cli_commands }}'
+      target_path: '{{ readme_target }}'
+      mode: '{{ mode }}'

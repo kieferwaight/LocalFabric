@@ -11,7 +11,6 @@
 # Children override these dicts entirely; individual fields within a dict
 # can be selectively overridden because dict variables are deep-merged
 # through the inheritance chain by the YAML runtime.
-
 - id: command.base
   title: Abstract Command Base
   description: |
@@ -19,7 +18,9 @@
     three variable slots (argv_spec, http_spec, mcp_spec) that
     interfaces/commands/binder.py reads to wire CLI / API / MCP handlers.
     This definition is never executed directly; it is only an ancestor.
-  tags: [command, abstract]
+  tags:
+  - command
+  - abstract
   extends: stdlib.base
   variables:
     argv_spec: {}
@@ -37,14 +38,14 @@
       mcp_spec: >
         FastMCP exposure flag consumed by binder.bind_fastmcp() (Phase C4).
         Shape: {expose: bool}.
-
 - id: command.task.run.command
   title: Run Task
   description: |
     Invoke a task definition by id, passing an optional arguments mapping.
     Wired as `localfabric task run <task_id>` on the CLI and as
     POST /v1/task/run on the API surface (Phase C3).
-  tags: [command]
+  tags:
+  - command
   extends: command.base
   inputs:
     task_id:
@@ -60,18 +61,19 @@
     argv_spec:
       group: task
       verb: run
-      positional: [task_id]
-      options: [arguments]
+      positional:
+      - task_id
+      options:
+      - arguments
     http_spec:
       method: POST
       path: /v1/task/run
     mcp_spec:
       expose: true
   run:
-    - invoke:
-        definition: "{{ task_id }}"
-        arguments: "{{ arguments }}"
-
+  - invoke:
+      definition: '{{ task_id }}'
+      arguments: '{{ arguments }}'
 - id: command.service.action.command
   title: Run a Service Lifecycle Action
   description: |
@@ -81,7 +83,8 @@
     start/stop/...).
     Wired as `localfabric service action <service_id> <action>` on the CLI
     and as POST /v1/service/action on the API surface (Phase C3).
-  tags: [command]
+  tags:
+  - command
   extends: command.base
   inputs:
     service_id:
@@ -96,7 +99,9 @@
     argv_spec:
       group: service
       verb: action
-      positional: [service_id, action]
+      positional:
+      - service_id
+      - action
       options: []
     http_spec:
       method: POST
@@ -104,11 +109,10 @@
     mcp_spec:
       expose: true
   run:
-    - invoke:
-        definition: "{{ service_id }}"
-        arguments:
-          action: "{{ action }}"
-
+  - invoke:
+      definition: '{{ service_id }}'
+      arguments:
+        action: '{{ action }}'
 - id: command.route.command
   title: Route an Intent through the Router
   description: |
@@ -116,7 +120,8 @@
     the winner via the YAML runtime.
     Wired as `localfabric route run <task>` on the CLI and as
     POST /v1/route on the API surface (Phase C3).
-  tags: [command]
+  tags:
+  - command
   extends: command.base
   inputs:
     task:
@@ -132,26 +137,28 @@
     argv_spec:
       group: route
       verb: run
-      positional: [task]
-      options: [context]
+      positional:
+      - task
+      options:
+      - context
     http_spec:
       method: POST
       path: /v1/route
     mcp_spec:
       expose: false
   run:
-    - python: |
-        # Bridge: invoke the Python router from inside the YAML runtime.
-        import json, os, sys
-        sys.path.insert(0, "02_core")
-        from core.router.router import Router  # noqa
-        from core.runtimes.yaml.src import Runtime  # noqa: F401
-        # Note: the bridge approach is intentional — `command.route.command` is
-        # the user-facing wrapper; the Router class composes
-        # classifier/scorer/dispatcher and itself calls runtime.execute
-        # on the chosen route. We pass a fresh Runtime instance the Router
-        # constructs internally rather than threading the current scope.
-        router = Router()
-        result = router.route(task="{{ task }}", context={{ context | tojson }})
-        with open(os.environ["STATE_FILE"], "w") as f:
-            json.dump({"dispatch_result": str(result)}, f, default=str)
+  - python: |-
+      # Bridge: invoke the Python router from inside the YAML runtime.
+      import json, os, sys
+      sys.path.insert(0, "02_core")
+      from core.router.router import Router  # noqa
+      from core.runtimes.yaml.src import Runtime  # noqa: F401
+      # Note: the bridge approach is intentional — `command.route.command` is
+      # the user-facing wrapper; the Router class composes
+      # classifier/scorer/dispatcher and itself calls runtime.execute
+      # on the chosen route. We pass a fresh Runtime instance the Router
+      # constructs internally rather than threading the current scope.
+      router = Router()
+      result = router.route(task="{{ task }}", context={{ context | tojson }})
+      with open(os.environ["STATE_FILE"], "w") as f:
+          json.dump({"dispatch_result": str(result)}, f, default=str)

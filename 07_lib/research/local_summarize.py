@@ -22,8 +22,9 @@ from core.runtimes.markdown.frontmatter import parse as parse_frontmatter
 from harnesses.ollama import OllamaHarness
 from lib.browser.fetch_text import fetch_readable_text
 
-
-_PROMPT_PATH = Path(__file__).resolve().parents[2] / "12_prompts" / "research.local.summarize.task.md"
+_PROMPT_PATH = (
+    Path(__file__).resolve().parents[2] / "12_prompts" / "research.local.summarize.task.md"
+)
 _MODEL_PREFERENCE = ("qwen2.5:7b", "qwen2.5", "llama3", "llama3.2", "llama3.1")
 
 

@@ -17,18 +17,16 @@ from typing import Any
 
 import yaml
 
-_FENCE_OPEN_RE = re.compile(
-    r"^(?P<indent>[ \t]*)```(?P<info>[^\n]*)$"
-)
+_FENCE_OPEN_RE = re.compile(r"^(?P<indent>[ \t]*)```(?P<info>[^\n]*)$")
 
 
 @dataclass(frozen=True)
 class Fence:
-    language: str           # lowercased fence info word; "" if no language token
+    language: str  # lowercased fence info word; "" if no language token
     attributes: dict[str, Any] = field(default_factory=dict)
     content: str = ""
-    start_line: int = 0     # 1-indexed line number of the opening fence
-    raw_info: str = ""      # raw info string after the opening backticks, trimmed
+    start_line: int = 0  # 1-indexed line number of the opening fence
+    raw_info: str = ""  # raw info string after the opening backticks, trimmed
 
 
 def parse(body: str, *, body_start_line: int = 1, source_path: str = "<string>") -> list[Fence]:

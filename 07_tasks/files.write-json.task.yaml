@@ -3,7 +3,8 @@
   description: |
     Write a data object as indented JSON to a file, creating parent
     directories as needed. Wraps lib.files.write_json.
-  tags: [task]
+  tags:
+  - task
   extends: task.base
   inputs:
     path:
@@ -15,12 +16,11 @@
       required: true
       description: Data object to serialize as JSON.
   run:
-    - python: |
-        import json, os
-        from pathlib import Path
-        from lib.files import write_json
-
-        data = {{ data | tojson }}
-        write_json(Path("{{ path }}"), data)
-        with open(os.environ["STATE_FILE"], "w") as f:
-            json.dump({"path": "{{ path }}"}, f)
+  - python: |-
+      import json, os
+      from pathlib import Path
+      from lib.files import write_json
+      data = {{ data | tojson }}
+      write_json(Path("{{ path }}"), data)
+      with open(os.environ["STATE_FILE"], "w") as f:
+          json.dump({"path": "{{ path }}"}, f)

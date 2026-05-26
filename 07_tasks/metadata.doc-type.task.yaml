@@ -4,7 +4,8 @@
     Infer a document type label ("report", "prompt", "specification",
     "draft", or "note") from a filename string.
     Wraps lib.metadata.extract.infer_doc_type.
-  tags: [task]
+  tags:
+  - task
   extends: task.base
   inputs:
     name:
@@ -12,10 +13,9 @@
       required: true
       description: Filename (or any string) to classify.
   run:
-    - python: |
-        import json, os
-        from lib.metadata.extract import infer_doc_type
-
-        doc_type = infer_doc_type("{{ name }}")
-        with open(os.environ["STATE_FILE"], "w") as f:
-            json.dump({"doc_type": doc_type}, f)
+  - python: |-
+      import json, os
+      from lib.metadata.extract import infer_doc_type
+      doc_type = infer_doc_type("{{ name }}")
+      with open(os.environ["STATE_FILE"], "w") as f:
+          json.dump({"doc_type": doc_type}, f)

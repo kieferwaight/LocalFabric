@@ -12,14 +12,15 @@ from pathlib import Path
 
 from fastapi import FastAPI
 
-_CLI_DIR = Path(__file__).resolve().parent          # 02_core/interfaces/api/
-_REPO_ROOT = _CLI_DIR.parents[2]                    # ~/src/LocalFabric/
+_CLI_DIR = Path(__file__).resolve().parent  # 02_core/interfaces/api/
+_REPO_ROOT = _CLI_DIR.parents[2]  # ~/src/LocalFabric/
 _YAML_RUNTIME_DIR = _REPO_ROOT / "02_core" / "runtimes" / "yaml"
 _STDLIB_YAML = _YAML_RUNTIME_DIR / "definitions" / "stdlib.yaml"
 
 
 def _load_runtime():
     from core.runtimes.yaml.src import Runtime
+
     r = Runtime(workflow_dir=str(_YAML_RUNTIME_DIR))
     r.import_yaml(str(_STDLIB_YAML))
     r.execute("stdlib.load-modules.workflow", {})
@@ -49,6 +50,7 @@ def build_app() -> FastAPI:
 def cli_main() -> None:
     """Uvicorn entry for the localfabric-api console script."""
     import uvicorn
+
     host = os.environ.get("LOCALFABRIC_API_HOST", "127.0.0.1")
     port = int(os.environ.get("LOCALFABRIC_API_PORT", "8765"))
     uvicorn.run(

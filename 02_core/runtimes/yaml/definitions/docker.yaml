@@ -6,22 +6,23 @@
     tag to use when building), and `build_context` (the directory passed to
     `docker build`). This mixin is typically composed into `docker.base`
     alongside `compose.mixin`; it does not add run blocks of its own.
-
     Children that do not need a Dockerfile leave `dockerfile_body` empty;
     the scaffolding loop in `folder.base` rejects empty entries via
     `rejectattr`, so no empty file is written.
-  tags: [docker, dockerfile, abstract]
+  tags:
+  - docker
+  - dockerfile
+  - abstract
   extends: stdlib.base
   variables:
-    dockerfile_body: ""
+    dockerfile_body: ''
     image_tag: "{{ entity_id | replace('docker.', '') | replace('.service', '') }}:local"
-    build_context: "{{ target_dir }}"
+    build_context: '{{ target_dir }}'
   docs:
     variables:
       dockerfile_body: Rendered Dockerfile contents (empty to skip the file).
       image_tag: Tag applied when building the image.
       build_context: Directory passed to `docker build` as the context.
-
 - id: compose.mixin
   title: Docker Compose Mixin
   description: |
@@ -30,10 +31,12 @@
     `compose_yaml` rendered document (JSON form, which is valid YAML for
     Docker Compose). This mixin is typically composed into `docker.base`
     alongside `dockerfile.mixin`; it does not add run blocks of its own.
-
     Children populate `services` (and optionally `networks`/`volumes`); the
     `compose_yaml` template assembles them into a single document.
-  tags: [docker, compose, abstract]
+  tags:
+  - docker
+  - compose
+  - abstract
   extends: stdlib.base
   variables:
     services: {}
@@ -47,7 +50,6 @@
       networks: Compose `networks` mapping (empty by default).
       volumes: Compose `volumes` mapping (empty by default).
       compose_yaml: Rendered compose document (JSON-form valid YAML).
-
 - id: docker.base
   title: Docker Service (Compose + Dockerfile)
   description: |
@@ -56,110 +58,121 @@
     `folder.base` scaffolding loop, so children only declare the data
     (services, dockerfile_body, extra_files) and the inherited run blocks
     materialize the directory under `target_dir`.
-
     The `files` list is built from a Dockerfile entry, a docker-compose.yml
     entry, and any `extra_files` the child appends. Empty-content entries
     (e.g. when `dockerfile_body` is unset) are rejected by the
     `folder.base` scaffolding loop and are not written.
-  tags: [docker, abstract]
+  tags:
+  - docker
+  - abstract
   extends: folder.base
-  mixins: [dockerfile.mixin, compose.mixin]
+  mixins:
+  - dockerfile.mixin
+  - compose.mixin
   variables:
     extra_files: []
     files:
-      - path: "Dockerfile"
-        content: "{{ dockerfile_body }}"
-      - path: "docker-compose.yml"
-        content: "{{ compose_yaml }}"
+    - path: Dockerfile
+      content: '{{ dockerfile_body }}'
+    - path: docker-compose.yml
+      content: '{{ compose_yaml }}'
   docs:
     variables:
       extra_files: Additional files to scaffold beside Dockerfile and compose.
       files: Combined Dockerfile + compose entries (extra_files concat happens in the loop).
-
 - id: docker.build.task
   title: Build Docker Image
   description: |
     Builds the docker image for a `docker.base` child. Reads `image_tag`
     and `build_context` from the child's variables (or accepts overrides
     via inputs). Wraps `stdlib.run-command.task`.
-  tags: [docker, build]
+  tags:
+  - docker
+  - build
   extends: stdlib.run-command.task
   inputs:
     image_tag:
-      type: "string"
+      type: string
       required: true
       description: Image tag to build (e.g. `worker:local`).
     build_context:
-      type: "string"
+      type: string
       required: true
       description: Directory passed to `docker build` as the context.
   variables:
-    command: "docker build -t {{ image_tag }} {{ build_context }}"
-
+    command: docker build -t {{ image_tag }} {{ build_context }}
 - id: compose.up.task
   title: Docker Compose Up
   description: |
     Starts a scaffolded docker compose project in detached mode. The
     `target_dir` input must point at a folder containing a generated
     `docker-compose.yml`.
-  tags: [docker, compose, lifecycle]
+  tags:
+  - docker
+  - compose
+  - lifecycle
   extends: stdlib.run-command.task
   inputs:
     target_dir:
-      type: "string"
+      type: string
       required: true
       description: Folder that contains the rendered docker-compose.yml.
   variables:
-    command: "docker compose -f {{ target_dir }}/docker-compose.yml up -d"
-
+    command: docker compose -f {{ target_dir }}/docker-compose.yml up -d
 - id: compose.down.task
   title: Docker Compose Down
   description: |
     Stops a scaffolded docker compose project and removes its containers
     and default networks. Volumes are preserved.
-  tags: [docker, compose, lifecycle]
+  tags:
+  - docker
+  - compose
+  - lifecycle
   extends: stdlib.run-command.task
   inputs:
     target_dir:
-      type: "string"
+      type: string
       required: true
       description: Folder that contains the rendered docker-compose.yml.
   variables:
-    command: "docker compose -f {{ target_dir }}/docker-compose.yml down"
-
+    command: docker compose -f {{ target_dir }}/docker-compose.yml down
 - id: compose.status.task
   title: Docker Compose Status
   description: |
     Lists the running containers for a scaffolded docker compose project.
-  tags: [docker, compose, lifecycle]
+  tags:
+  - docker
+  - compose
+  - lifecycle
   extends: stdlib.run-command.task
   inputs:
     target_dir:
-      type: "string"
+      type: string
       required: true
       description: Folder that contains the rendered docker-compose.yml.
   variables:
-    command: "docker compose -f {{ target_dir }}/docker-compose.yml ps"
-
+    command: docker compose -f {{ target_dir }}/docker-compose.yml ps
 - id: compose.logs.task
   title: Docker Compose Logs
   description: |
     Tails the most recent logs for a scaffolded docker compose project.
-  tags: [docker, compose, lifecycle]
+  tags:
+  - docker
+  - compose
+  - lifecycle
   extends: stdlib.run-command.task
   inputs:
     target_dir:
-      type: "string"
+      type: string
       required: true
       description: Folder that contains the rendered docker-compose.yml.
     tail:
-      type: "string"
+      type: string
       required: false
-      default: "200"
+      default: '200'
       description: Number of recent log lines to print per service.
   variables:
-    command: "docker compose -f {{ target_dir }}/docker-compose.yml logs --tail {{ tail }}"
-
+    command: docker compose -f {{ target_dir }}/docker-compose.yml logs --tail {{ tail }}
 - id: docker.generate-all.workflow
   title: Scaffold All Docker Services
   description: |
@@ -167,22 +180,24 @@
     service (any definition tagged `docker` but not `abstract`) and
     invokes it, scaffolding the per-service files under `output_root`.
     Mirrors the `launchd.generate-plist.workflow` workflow.
-  tags: [docker, workflow]
+  tags:
+  - docker
+  - workflow
   extends: stdlib.base
   inputs:
     output_root:
-      type: "string"
+      type: string
       required: false
-      default: "14_data"
+      default: 14_data
       description: Root directory under which each service's folder is written.
   docs:
     run:
-      - title: Invoke every concrete docker service
+    - title: Invoke every concrete docker service
   run:
-    - invoke:
-        definition: "{{ definition.id }}"
-        arguments:
-          target_dir: "{{ output_root }}/{{ definition.id | replace('docker.', '') | replace('.service', '') }}"
-      for_each:
-        items: "runtime.catalog.definitions | selectattr('has_docker') | list"
-        as: definition
+  - invoke:
+      definition: '{{ definition.id }}'
+      arguments:
+        target_dir: "{{ output_root }}/{{ definition.id | replace('docker.', '') | replace('.service', '') }}"
+    for_each:
+      items: runtime.catalog.definitions | selectattr('has_docker') | list
+      as: definition

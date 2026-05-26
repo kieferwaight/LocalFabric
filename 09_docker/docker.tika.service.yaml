@@ -3,13 +3,15 @@
   description: |
     Apache Tika full server for content extraction and metadata detection across a
     wide range of document formats. Stateless; no data volume required.
-  tags: [docker, document]
+  tags:
+  - docker
+  - document
   extends: docker.base
   inputs:
     TIKA_PORT:
-      type: "string"
+      type: string
       required: false
-      default: "9998"
+      default: '9998'
       description: Host port to expose the Tika HTTP API (default 9998)
   variables:
     services:
@@ -18,4 +20,4 @@
         container_name: contentgraph-tika
         restart: unless-stopped
         ports:
-          - "{{ TIKA_PORT }}:9998"
+        - '{{ TIKA_PORT }}:9998'

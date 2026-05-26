@@ -3,7 +3,8 @@
   description: >
     Fast, low-latency Haiku-tier Claude model. Tool use, vision, and extended
     thinking.
-  tags: [model]
+  tags:
+  - model
   extends: model.base
   variables:
     name: claude-haiku-4-5
@@ -13,10 +14,10 @@
         thinking.
       vendor: Anthropic
     providers:
-      - claude
+    - claude
     features:
-      - text
-      - tool_calling
-      - thinking
-      - vision
-      - streaming
+    - text
+    - tool_calling
+    - thinking
+    - vision
+    - streaming

@@ -45,7 +45,7 @@ placeholders. Prompts are provider-agnostic per
 (Resolves research Q2.) `06_final/<slug>.md` contains:
 
 1. A frozen, agent-ready prompt suitable for `claude_<type>_<slug>` work.
-2. An index section linking each upstream stage artifact by relative path.
+1. An index section linking each upstream stage artifact by relative path.
 
 The frozen prompt is what a coding agent receives — it should reference the
 upstream artifacts rather than inlining them, because the upstream artifacts
@@ -97,21 +97,21 @@ to run; both should be in the `dev` extra of
 ## Acceptance criteria
 
 A1. Running the notebook end-to-end with `SLUG = "build-the-promotion-workflow"`
-    against this very spec produces files identical-in-shape to the ones
-    Claude wrote by hand (content will differ — that is expected).
+against this very spec produces files identical-in-shape to the ones
+Claude wrote by hand (content will differ — that is expected).
 
 A2. Listing `find 00_specs -name "build-the-promotion-workflow*"`
-    after a successful run shows: one Markdown file in each of
-    `01_ideas/` through `06_final/`, plus one `.meta.yaml` in each of
-    `02_research/` through `06_final/`.
+after a successful run shows: one Markdown file in each of
+`01_ideas/` through `06_final/`, plus one `.meta.yaml` in each of
+`02_research/` through `06_final/`.
 
 A3. Re-running a stage without uncommenting `CONFIRM_OVERWRITE` raises.
 
 A4. `python3 17_scripts/audit_classifications.py` reports no new findings.
 
 A5. The frozen prompt in `06_final/<slug>.md` is self-contained enough that
-    pasting it into a fresh agent session, plus the linked upstream
-    artifacts, is sufficient to start the implementation branch.
+pasting it into a fresh agent session, plus the linked upstream
+artifacts, is sufficient to start the implementation branch.
 
 ## Out of scope
 

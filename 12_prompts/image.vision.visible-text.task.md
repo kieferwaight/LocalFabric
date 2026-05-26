@@ -4,11 +4,13 @@ id: image.vision.visible-text.task
 
 Extract only the exact visible text from the image.
 Return exactly this markdown shape:
+
 ## Text
-- <exact visible text line 1>
-- <exact visible text line 2>
-- <exact visible text line 3>
-Rules:
+
+- \<exact visible text line 1>
+- \<exact visible text line 2>
+- \<exact visible text line 3>
+  Rules:
 - Maximum 8 bullets.
 - Preserve exact wording and line breaks as much as possible.
 - Do not summarize.

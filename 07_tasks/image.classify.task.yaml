@@ -4,7 +4,8 @@
     Classify an image into one of 10 semantic types (photograph, screenshot,
     diagram, chart, infographic, illustration, document, blueprint, logo, other)
     with a confidence score. Wraps lib.image.classify.classify_image.
-  tags: [task]
+  tags:
+  - task
   extends: task.base
   inputs:
     path:
@@ -12,11 +13,10 @@
       required: true
       description: Path to the image file.
   run:
-    - python: |
-        import json, os
-        from pathlib import Path
-        from lib.image.classify import classify_image
-
-        result = classify_image(Path("{{ path }}"))
-        with open(os.environ["STATE_FILE"], "w") as f:
-            json.dump(result, f)
+  - python: |-
+      import json, os
+      from pathlib import Path
+      from lib.image.classify import classify_image
+      result = classify_image(Path("{{ path }}"))
+      with open(os.environ["STATE_FILE"], "w") as f:
+          json.dump(result, f)

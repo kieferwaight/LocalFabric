@@ -9,7 +9,6 @@
 # The classifier produces a TaskProfile; the scorer ranks every definition
 # with `has_route=True`; the dispatcher invokes the winner via
 # runtime.execute(route_id, arguments={"task": <text>, "context": <ctx>}).
-
 - id: route.base
   title: Routable Definition Base
   description: |
@@ -25,13 +24,15 @@
     whose `has_route` catalog flag is True; the dispatcher invokes the
     winner via `runtime.execute(route_id, arguments={"task": <text>,
     "context": <ctx>})`.
-  tags: [route, abstract]
+  tags:
+  - route
+  - abstract
   extends: stdlib.base
   variables:
     intent_affinity: []
-    tier: "LOCAL"
+    tier: LOCAL
     cost: 0
-    deferred_model: ""
+    deferred_model: ''
   docs:
     variables:
       intent_affinity: >
@@ -47,14 +48,14 @@
         Optional model id (e.g. "claude-sonnet-4-6"). When set and tier is
         FRONTIER, the dispatcher returns a DEFERRED result with this model
         so the calling agent can invoke it directly.
-
 - id: route.echo.route
   title: Echo Route (smoke test)
   description: |
     Trivial route that echoes its task input — exists so the router can
     be exercised end-to-end without external dependencies. Replace or
     delete once real routes are authored.
-  tags: [route]
+  tags:
+  - route
   extends: route.base
   inputs:
     task:
@@ -67,16 +68,17 @@
       default: {}
       description: Optional structured context for the route.
   variables:
-    intent_affinity: ["UNKNOWN"]
-    tier: "LOCAL"
+    intent_affinity:
+    - UNKNOWN
+    tier: LOCAL
     cost: 0
   run:
-    - python: |
-        import json, os
-        context_val = {{ context | tojson }}
-        payload = {
-            "echoed": "{{ task }}",
-            "context_keys": list(context_val.keys()) if isinstance(context_val, dict) else [],
-        }
-        with open(os.environ["STATE_FILE"], "w") as f:
-            json.dump(payload, f)
+  - python: |-
+      import json, os
+      context_val = {{ context | tojson }}
+      payload = {
+          "echoed": "{{ task }}",
+          "context_keys": list(context_val.keys()) if isinstance(context_val, dict) else [],
+      }
+      with open(os.environ["STATE_FILE"], "w") as f:
+          json.dump(payload, f)

@@ -15,12 +15,12 @@ Example: `image.vision.overview.task.md` has `id: image.vision.overview.task`.
 
 Current domains:
 
-| Prefix | Purpose |
-| --- | --- |
-| `image.vision.*.task` | Vision sub-task prompts consumed by the image-intelligence workflow. |
-| `spec.promotion.*.task` | Stage prompts for the spec promotion workflow (research → final). |
-| `text.markdown.format.task` | Markdown formatter prompt consumed by `lib.text.format_markdown`. |
-| `text.title.generate.task` | Title generation prompt. |
+| Prefix                          | Purpose                                                                         |
+| ------------------------------- | ------------------------------------------------------------------------------- |
+| `image.vision.*.task`           | Vision sub-task prompts consumed by the image-intelligence workflow.            |
+| `spec.promotion.*.task`         | Stage prompts for the spec promotion workflow (research → final).               |
+| `text.markdown.format.task`     | Markdown formatter prompt consumed by `lib.text.format_markdown`.               |
+| `text.title.generate.task`      | Title generation prompt.                                                        |
 | `research.local.summarize.task` | Local research summarization prompt consumed by `lib.research.local_summarize`. |
 
 Runnable demos and example prompts live in `15_examples/` instead.

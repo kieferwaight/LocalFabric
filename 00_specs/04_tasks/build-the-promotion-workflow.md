@@ -48,17 +48,17 @@ works inside the notebook.
 Implement the notebook per F1–F7 of the requirements. Cell layout:
 
 1. Constants (`SLUG`, `START_STAGE`, `MODEL`, `LMSTUDIO_HOST`).
-2. Path resolution via `core.paths.REPO_ROOT`.
-3. Stage definitions (ordered list of `(folder, prompt_path, output_var)`).
-4. Helper: `read_chain(slug)` — returns dict of upstream artifacts present.
-5. Helper: `render_prompt(template_path, chain)` — Jinja render.
-6. Helper: `call_llm(prompt, model, host)` — OpenAI-compatible chat call.
-7. Helper: `write_stage(slug, stage, content, meta)` — writes
+1. Path resolution via `core.paths.REPO_ROOT`.
+1. Stage definitions (ordered list of `(folder, prompt_path, output_var)`).
+1. Helper: `read_chain(slug)` — returns dict of upstream artifacts present.
+1. Helper: `render_prompt(template_path, chain)` — Jinja render.
+1. Helper: `call_llm(prompt, model, host)` — OpenAI-compatible chat call.
+1. Helper: `write_stage(slug, stage, content, meta)` — writes
    `<slug>.md` and `<slug>.meta.yaml`, raises on existing unless
    `CONFIRM_OVERWRITE` truthy.
-8. One **prompt-preview cell + run cell** per stage from `START_STAGE`
+1. One **prompt-preview cell + run cell** per stage from `START_STAGE`
    onward.
-9. Final cell that prints the resulting `06_final/<slug>.md` for the user
+1. Final cell that prints the resulting `06_final/<slug>.md` for the user
    to inspect.
 
 **Acceptance:** A1, A2, A3 from the requirements.
@@ -92,6 +92,6 @@ tool. The notebook stays as the *exploratory* surface.
 ## Suggested branch sequence
 
 1. `claude_feature_spec-promotion-prompts` — T1, T2.
-2. `claude_feature_spec-promotion-notebook` — T3 (depends on 1).
-3. `claude_chore_register-lmstudio-model` — T4 (optional, parallel).
-4. Follow-up idea for T5 dropped after notebook is observed working.
+1. `claude_feature_spec-promotion-notebook` — T3 (depends on 1).
+1. `claude_chore_register-lmstudio-model` — T4 (optional, parallel).
+1. Follow-up idea for T5 dropped after notebook is observed working.

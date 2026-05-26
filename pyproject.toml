@@ -162,7 +162,7 @@ addopts = "--import-mode=importlib"
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-extend-exclude = [".venv", "18_docs", "14_data"]
+extend-exclude = [".venv", "18_docs", "14_data", "15_notebooks", "00_specs"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP"]

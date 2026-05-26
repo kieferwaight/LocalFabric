@@ -5,5 +5,7 @@
     pure-ish operation: takes inputs, returns output, no orchestration,
     no lifecycle state. Children declare inputs and a `run:` block that
     typically wraps a Python function in `lib.*`.
-  tags: [task, abstract]
+  tags:
+  - task
+  - abstract
   extends: stdlib.base

@@ -168,7 +168,9 @@ def bind_fastapi(api: Any, command: Command, runtime: Any) -> None:
     # Register against the appropriate HTTP method.
     route_registrar = getattr(api, method.lower(), None)
     if route_registrar is None:
-        raise ValueError(f"FastAPI app has no method '{method.lower()}' for command {command.id!r}.")
+        raise ValueError(
+            f"FastAPI app has no method '{method.lower()}' for command {command.id!r}."
+        )
     route_registrar(path, summary=command.description or command.id)(handler)
 
 
@@ -217,7 +219,9 @@ def bind_fastmcp(mcp: Any, command: Command, runtime: Any) -> None:
             default = constraint.default
         elif not constraint.required:
             # Optional with no stated default — use the zero value for the type.
-            default = [] if constraint.type == "array" else ({} if constraint.type == "object" else None)
+            default = (
+                [] if constraint.type == "array" else ({} if constraint.type == "object" else None)
+            )
         else:
             default = inspect.Parameter.empty
 

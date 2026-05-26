@@ -18,16 +18,16 @@ Bind to a data instance under `14_data/apps/minio/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `MINIO_API_PORT` | `9000` | `9000` | S3-compatible API |
-| `MINIO_CONSOLE_PORT` | `9001` | `9001` | MinIO console |
+| Host env var         | Default | Container | Use               |
+| -------------------- | ------: | --------: | ----------------- |
+| `MINIO_API_PORT`     |  `9000` |    `9000` | S3-compatible API |
+| `MINIO_CONSOLE_PORT` |  `9001` |    `9001` | MinIO console     |
 
 ## Required Environment
 
-| Var | Description |
-| --- | --- |
-| `MINIO_ROOT_USER` | Root username |
+| Var                   | Description   |
+| --------------------- | ------------- |
+| `MINIO_ROOT_USER`     | Root username |
 | `MINIO_ROOT_PASSWORD` | Root password |
 
 ## Run

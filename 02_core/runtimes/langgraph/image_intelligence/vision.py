@@ -9,7 +9,6 @@ from typing import Any
 from core.runtimes.markdown.frontmatter import parse as parse_frontmatter
 from harnesses.ollama import OllamaHarness
 
-
 _PROMPTS_DIR = Path(__file__).resolve().parents[3] / "12_prompts"
 _TASKS = ("overview", "layout", "style")
 _DEFAULT_VISION_MODEL = "llama3.2-vision"

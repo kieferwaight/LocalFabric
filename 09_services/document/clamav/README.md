@@ -17,9 +17,9 @@ Bind to a data instance under `14_data/apps/clamav/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `CLAMAV_PORT` | `3310` | `3310` | clamd TCP service |
+| Host env var  | Default | Container | Use               |
+| ------------- | ------: | --------: | ----------------- |
+| `CLAMAV_PORT` |  `3310` |    `3310` | clamd TCP service |
 
 ## Run
 

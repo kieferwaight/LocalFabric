@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     environment:
       discovery.type: single-node
-      plugins.security.disabled: "true"
+      plugins.security.disabled: 'true'
       OPENSEARCH_INITIAL_ADMIN_PASSWORD: ${OPENSEARCH_INITIAL_ADMIN_PASSWORD}
       OPENSEARCH_JAVA_OPTS: -Xms512m -Xmx512m
     ulimits:
@@ -15,7 +15,7 @@ services:
         soft: -1
         hard: -1
     ports:
-      - "${OPENSEARCH_PORT:-9200}:9200"
-      - "${OPENSEARCH_PERF_PORT:-9600}:9600"
+    - ${OPENSEARCH_PORT:-9200}:9200
+    - ${OPENSEARCH_PERF_PORT:-9600}:9600
     volumes:
-      - ${DATA_PATH}:/usr/share/opensearch/data
+    - ${DATA_PATH}:/usr/share/opensearch/data

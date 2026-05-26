@@ -36,19 +36,19 @@ from __future__ import annotations
 import time
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Optional
+from typing import Any
 
-from router.scorer import RouteCandidate, Complexity
-
+from router.scorer import Complexity, RouteCandidate
 
 # ------------------------------------------------------------------
 # Dispatch result
 # ------------------------------------------------------------------
 
+
 class ResultStatus(str, Enum):
-    SUCCESS  = "success"
-    FAILURE  = "failure"
-    DEFERRED = "deferred"   # frontier route — caller must invoke the model
+    SUCCESS = "success"
+    FAILURE = "failure"
+    DEFERRED = "deferred"  # frontier route — caller must invoke the model
 
 
 @dataclass
@@ -57,9 +57,9 @@ class DispatchResult:
     status: ResultStatus
     output: str
     elapsed_sec: float = 0.0
-    deferred_model: Optional[str] = None   # set when status == DEFERRED
-    deferred_prompt: Optional[str] = None  # set when status == DEFERRED
-    error: Optional[str] = None
+    deferred_model: str | None = None  # set when status == DEFERRED
+    deferred_prompt: str | None = None  # set when status == DEFERRED
+    error: str | None = None
 
     def to_dict(self) -> dict:
         return {
@@ -75,6 +75,7 @@ class DispatchResult:
 # ------------------------------------------------------------------
 # Dispatcher
 # ------------------------------------------------------------------
+
 
 class Dispatcher:
     """
@@ -100,7 +101,7 @@ class Dispatcher:
         self,
         task: str,
         candidates: list[RouteCandidate],
-        context: Optional[str] = None,
+        context: str | None = None,
         max_fallbacks: int = 2,
     ) -> DispatchResult:
         """
@@ -125,8 +126,8 @@ class Dispatcher:
                 error="all routes unavailable",
             )
 
-        attempts = available[:max_fallbacks + 1]
-        last_result: Optional[DispatchResult] = None
+        attempts = available[: max_fallbacks + 1]
+        last_result: DispatchResult | None = None
 
         for candidate in attempts:
             t0 = time.time()
@@ -155,7 +156,7 @@ class Dispatcher:
         self,
         task: str,
         candidate: RouteCandidate,
-        context: Optional[str],
+        context: str | None,
     ) -> DispatchResult:
         """Invoke the route via runtime.execute, or defer for frontier routes."""
         rid = candidate.route_id
@@ -188,6 +189,7 @@ class Dispatcher:
                 arguments={"task": task, "context": ctx_arg},
             )
             import json as _json
+
             output = _json.dumps(scope, default=str)
             return DispatchResult(
                 route_id=rid,
@@ -202,7 +204,7 @@ class Dispatcher:
                 error=str(exc),
             )
 
-    def _get_deferred_model(self, route_id: str) -> Optional[str]:
+    def _get_deferred_model(self, route_id: str) -> str | None:
         """Look up the deferred_model variable for a route from the catalog."""
         if self._runtime is None:
             return None
@@ -221,7 +223,7 @@ class Dispatcher:
         self,
         task: str,
         candidate: RouteCandidate,
-        context: Optional[str],
+        context: str | None,
         deferred_model: str,
     ) -> DispatchResult:
         """
@@ -238,7 +240,7 @@ class Dispatcher:
         )
 
     @staticmethod
-    def _build_frontier_prompt(task: str, context: Optional[str]) -> str:
+    def _build_frontier_prompt(task: str, context: str | None) -> str:
         parts = []
         if context:
             parts.append(f"## Local Context\n\n{context}\n")

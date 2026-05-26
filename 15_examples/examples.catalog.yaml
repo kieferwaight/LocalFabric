@@ -2,8 +2,10 @@
   title: Example Catalog Modules
   description: |
     Imports the shipped runnable compositions used as examples of the YAML workflow API.
-  tags: [example, modules]
+  tags:
+  - example
+  - modules
   modules:
-    - cloud.yaml
-    - git.yaml
-    - obsidian.daily-note.example.yaml
+  - cloud.yaml
+  - git.yaml
+  - obsidian.daily-note.example.yaml

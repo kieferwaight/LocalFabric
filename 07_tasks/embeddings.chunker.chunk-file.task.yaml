@@ -3,7 +3,8 @@
   description: |
     Read a file and return a list of chunk dicts with text, source, chunk_index,
     line_start, line_end, and strategy fields. Wraps lib.embeddings.chunker.chunk_file.
-  tags: [task]
+  tags:
+  - task
   extends: task.base
   inputs:
     path:
@@ -11,10 +12,9 @@
       required: true
       description: Absolute or relative path to the file to chunk.
   run:
-    - python: |
-        import json, os
-        from lib.embeddings.chunker import chunk_file
-
-        chunks = chunk_file("{{ path }}")
-        with open(os.environ["STATE_FILE"], "w") as f:
-            json.dump({"chunks": chunks, "count": len(chunks)}, f)
+  - python: |-
+      import json, os
+      from lib.embeddings.chunker import chunk_file
+      chunks = chunk_file("{{ path }}")
+      with open(os.environ["STATE_FILE"], "w") as f:
+          json.dump({"chunks": chunks, "count": len(chunks)}, f)

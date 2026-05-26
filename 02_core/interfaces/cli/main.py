@@ -15,7 +15,6 @@ from __future__ import annotations
 from pathlib import Path
 
 import typer
-
 from core.interfaces.cli.db import db_app
 from core.interfaces.cli.image_intelligence import image_intelligence_app
 from core.interfaces.cli.ingest import ingest_app
@@ -30,8 +29,8 @@ SUB_APPS: list[tuple[typer.Typer, str]] = [
 ]
 
 # Path helpers — resolved relative to this file so they work regardless of cwd.
-_CLI_DIR = Path(__file__).resolve().parent          # 02_core/interfaces/cli/
-_REPO_ROOT = _CLI_DIR.parents[2]                    # ~/src/LocalFabric/
+_CLI_DIR = Path(__file__).resolve().parent  # 02_core/interfaces/cli/
+_REPO_ROOT = _CLI_DIR.parents[2]  # ~/src/LocalFabric/
 _YAML_RUNTIME_DIR = _REPO_ROOT / "02_core" / "runtimes" / "yaml"
 _STDLIB_YAML = _YAML_RUNTIME_DIR / "definitions" / "stdlib.yaml"
 

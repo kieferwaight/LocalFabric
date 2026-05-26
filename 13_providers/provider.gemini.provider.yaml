@@ -3,7 +3,8 @@
   description: >
     Google's hosted Gemini models. Accessed via the Google GenAI API, the
     google-genai SDK, or the Gemini CLI.
-  tags: [provider]
+  tags:
+  - provider
   extends: provider.base
   variables:
     name: gemini
@@ -23,6 +24,8 @@
         binary: gemini
       sdk:
         package: google-genai
-        languages: [python, typescript]
+        languages:
+        - python
+        - typescript
       google-api:
         base_url: https://generativelanguage.googleapis.com

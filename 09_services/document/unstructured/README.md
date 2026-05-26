@@ -17,9 +17,9 @@ Bind to a data instance under `14_data/apps/unstructured/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `UNSTRUCTURED_PORT` | `8001` | `8000` | Unstructured API |
+| Host env var        | Default | Container | Use              |
+| ------------------- | ------: | --------: | ---------------- |
+| `UNSTRUCTURED_PORT` |  `8001` |    `8000` | Unstructured API |
 
 ## Run
 

@@ -74,9 +74,7 @@ def extract_regions(path: Path, max_contours: int = 20) -> dict:
         if area < min_area:
             break
         cx, cy, cw, ch = cv2.boundingRect(c)
-        contour_dicts.append(
-            {**_bbox_to_dict(cx, cy, cw, ch), "area": round(float(area), 1)}
-        )
+        contour_dicts.append({**_bbox_to_dict(cx, cy, cw, ch), "area": round(float(area), 1)})
 
     return {
         "content_bbox": content_bbox,

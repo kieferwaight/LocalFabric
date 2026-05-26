@@ -16,11 +16,11 @@ Reverse proxy scaffold for routing, TLS termination, and local service fronting.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `TRAEFIK_HTTP_PORT` | `80` | `80` | HTTP entrypoint |
-| `TRAEFIK_HTTPS_PORT` | `443` | `443` | HTTPS entrypoint |
-| `TRAEFIK_DASHBOARD_PORT` | `8080` | `8080` | Dashboard |
+| Host env var             | Default | Container | Use              |
+| ------------------------ | ------: | --------: | ---------------- |
+| `TRAEFIK_HTTP_PORT`      |    `80` |      `80` | HTTP entrypoint  |
+| `TRAEFIK_HTTPS_PORT`     |   `443` |     `443` | HTTPS entrypoint |
+| `TRAEFIK_DASHBOARD_PORT` |  `8080` |    `8080` | Dashboard        |
 
 ## Run
 

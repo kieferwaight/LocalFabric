@@ -4,8 +4,7 @@
 
 Notebook host for LocalFabric's research and development workflow. Notebooks
 in [`15_notebooks/`](../../../15_notebooks/) run against this container with
-the project installed editably, so cells like `from harnesses.markdown import
-MarkdownHarness` work without bootstrap ceremony.
+the project installed editably, so cells like `from harnesses.markdown import MarkdownHarness` work without bootstrap ceremony.
 
 ## Container
 
@@ -17,18 +16,18 @@ MarkdownHarness` work without bootstrap ceremony.
 
 ## Mounts
 
-| Host | Container | Purpose |
-| --- | --- | --- |
-| repo root | `/workspace` | Live source — edits flow both ways. The editable install's `.pth` points here. |
-| `${DATA_PATH}` | `/home/jovyan/work` | Per-instance scratch / output directory. |
+| Host           | Container           | Purpose                                                                        |
+| -------------- | ------------------- | ------------------------------------------------------------------------------ |
+| repo root      | `/workspace`        | Live source — edits flow both ways. The editable install's `.pth` points here. |
+| `${DATA_PATH}` | `/home/jovyan/work` | Per-instance scratch / output directory.                                       |
 
 Bind `${DATA_PATH}` to `14_data/apps/jupyter/<name>/` per the data convention.
 
 ## Ports & Auth
 
-| Host env var | Default | Use |
-| --- | ---: | --- |
-| `JUPYTER_PORT` | `8888` | Jupyter UI port. |
+| Host env var    |           Default | Use                                                    |
+| --------------- | ----------------: | ------------------------------------------------------ |
+| `JUPYTER_PORT`  |            `8888` | Jupyter UI port.                                       |
 | `JUPYTER_TOKEN` | `localfabric-dev` | Fixed dev token. Override if you need a different one. |
 
 Open: `http://localhost:8888/?token=localfabric-dev`

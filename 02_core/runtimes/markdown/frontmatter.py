@@ -60,9 +60,7 @@ def parse(source: str, *, source_path: str = "<string>") -> Frontmatter:
             raise _FrontmatterError(
                 f"{source_path}:{line_no}: malformed YAML frontmatter: {exc}"
             ) from exc
-        raise _FrontmatterError(
-            f"{source_path}: malformed YAML frontmatter: {exc}"
-        ) from exc
+        raise _FrontmatterError(f"{source_path}: malformed YAML frontmatter: {exc}") from exc
 
     if metadata is None:
         raise _FrontmatterError(

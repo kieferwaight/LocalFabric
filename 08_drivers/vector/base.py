@@ -14,7 +14,6 @@ Concrete drivers in this package implement this ABC:
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Optional
 
 
 class VectorStore(ABC):
@@ -60,7 +59,7 @@ class VectorStore(ABC):
         self,
         query_vector: list[float],
         k: int = 5,
-        source_filter: Optional[str] = None,
+        source_filter: str | None = None,
     ) -> list[dict]:
         """
         Return up to ``k`` chunk dicts most similar to ``query_vector``.

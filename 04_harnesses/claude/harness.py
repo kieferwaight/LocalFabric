@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import os
 from collections import deque
-from typing import Any, Deque, Dict, Iterator, Mapping, Optional
+from collections.abc import Iterator, Mapping
+from typing import Any
 
 from harnesses.base import Harness, HarnessError, HarnessStatus
 
@@ -25,10 +26,10 @@ class ClaudeHarness(Harness):
 
     name = "claude"
 
-    def __init__(self, config: Optional[Mapping[str, Any]] = None) -> None:
+    def __init__(self, config: Mapping[str, Any] | None = None) -> None:
         super().__init__(config)
-        self._client: Optional[Any] = None
-        self._request_ids: Deque[str] = deque(maxlen=64)
+        self._client: Any | None = None
+        self._request_ids: deque[str] = deque(maxlen=64)
         self.model: str = self.config.get("model", "claude-sonnet-4-5")
         self.timeout: float = float(self.config.get("timeout", 60))
         self.max_tokens: int = int(self.config.get("max_tokens", 1024))
@@ -46,18 +47,18 @@ class ClaudeHarness(Harness):
         if not api_key:
             raise HarnessError("ANTHROPIC_API_KEY is not set")
 
-        kwargs: Dict[str, Any] = {"api_key": api_key, "timeout": self.timeout}
+        kwargs: dict[str, Any] = {"api_key": api_key, "timeout": self.timeout}
         if self.config.get("base_url"):
             kwargs["base_url"] = self.config["base_url"]
         self._client = anthropic.Anthropic(**kwargs)
         return self._client
 
-    def _build_messages_kwargs(self, request: Mapping[str, Any]) -> Dict[str, Any]:
+    def _build_messages_kwargs(self, request: Mapping[str, Any]) -> dict[str, Any]:
         messages = request.get("messages")
         if messages is None:
             prompt = request.get("prompt", "")
             messages = [{"role": "user", "content": prompt}]
-        kwargs: Dict[str, Any] = {
+        kwargs: dict[str, Any] = {
             "model": request.get("model", self.model),
             "messages": list(messages),
             "max_tokens": int(request.get("max_tokens", self.max_tokens)),
@@ -88,7 +89,7 @@ class ClaudeHarness(Harness):
         )
 
     # ------------------------------------------------------------------ requests
-    def invoke(self, request: Mapping[str, Any]) -> Dict[str, Any]:
+    def invoke(self, request: Mapping[str, Any]) -> dict[str, Any]:
         client = self._ensure_client()
         kwargs = self._build_messages_kwargs(request)
         try:
@@ -109,7 +110,7 @@ class ClaudeHarness(Harness):
             "usage": getattr(getattr(response, "usage", None), "model_dump", lambda: {})(),
         }
 
-    def stream(self, request: Mapping[str, Any]) -> Iterator[Dict[str, Any]]:
+    def stream(self, request: Mapping[str, Any]) -> Iterator[dict[str, Any]]:
         client = self._ensure_client()
         kwargs = self._build_messages_kwargs(request)
         try:

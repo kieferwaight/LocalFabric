@@ -3,7 +3,8 @@
   description: |
     Classify a file (by relative path) into a media class with routing
     recommendation. Wraps lib.classify.media.classify_file.
-  tags: [task]
+  tags:
+  - task
   extends: task.base
   inputs:
     rel_path:
@@ -11,11 +12,10 @@
       required: true
       description: Relative path to the file from the repository root.
   run:
-    - python: |
-        import json, os
-        from pathlib import Path
-        from lib.classify.media import classify_file
-
-        result = classify_file(Path("{{ rel_path }}"))
-        with open(os.environ["STATE_FILE"], "w") as f:
-            json.dump(result, f)
+  - python: |-
+      import json, os
+      from pathlib import Path
+      from lib.classify.media import classify_file
+      result = classify_file(Path("{{ rel_path }}"))
+      with open(os.environ["STATE_FILE"], "w") as f:
+          json.dump(result, f)

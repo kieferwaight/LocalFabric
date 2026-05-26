@@ -20,16 +20,16 @@ Recommended data path: `14_data/apps/n8n/<instance>/` (e.g.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `N8N_PORT` | `5678` | `5678` | n8n editor and webhook endpoint |
+| Host env var | Default | Container | Use                             |
+| ------------ | ------: | --------: | ------------------------------- |
+| `N8N_PORT`   |  `5678` |    `5678` | n8n editor and webhook endpoint |
 
 ## Optional Environment
 
-| Var | Description |
-| --- | --- |
-| `N8N_HOST` | Hostname used in webhook URLs (default `localhost`) |
-| `GENERIC_TIMEZONE` | Timezone for cron triggers (default `UTC`) |
+| Var                | Description                                         |
+| ------------------ | --------------------------------------------------- |
+| `N8N_HOST`         | Hostname used in webhook URLs (default `localhost`) |
+| `GENERIC_TIMEZONE` | Timezone for cron triggers (default `UTC`)          |
 
 ## Run
 

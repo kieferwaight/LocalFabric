@@ -5,27 +5,27 @@ from __future__ import annotations
 import os
 import sys
 from dataclasses import dataclass, field
-from typing import Any, Dict, List
+from typing import Any
 
 
 @dataclass(frozen=True)
 class ShellEnvironment:
     cwd: str = field(default_factory=os.getcwd)
     cmd: str = field(default_factory=lambda: os.path.abspath(sys.argv[0]) if sys.argv else "")
-    env: Dict[str, str] = field(default_factory=lambda: dict(os.environ))
-    args: List[str] = field(default_factory=list)
-    options: Dict[str, str] = field(default_factory=dict)
-    flags: Dict[str, bool] = field(default_factory=dict)
+    env: dict[str, str] = field(default_factory=lambda: dict(os.environ))
+    args: list[str] = field(default_factory=list)
+    options: dict[str, str] = field(default_factory=dict)
+    flags: dict[str, bool] = field(default_factory=dict)
 
     @classmethod
-    def from_argv(cls, argv: List[str]) -> "ShellEnvironment":
+    def from_argv(cls, argv: list[str]) -> ShellEnvironment:
         """Parse `argv` (positional args, --key=value options, --flag/-f flags).
 
         `argv` should be the slice AFTER yaml_file and definition_id are stripped.
         """
-        args: List[str] = []
-        options: Dict[str, str] = {}
-        flags: Dict[str, bool] = {}
+        args: list[str] = []
+        options: dict[str, str] = {}
+        flags: dict[str, bool] = {}
         for tok in argv:
             if tok.startswith("--") and "=" in tok:
                 key, _, val = tok[2:].partition("=")
@@ -45,7 +45,7 @@ class ShellEnvironment:
             flags=flags,
         )
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "cwd": self.cwd,
             "cmd": self.cmd,

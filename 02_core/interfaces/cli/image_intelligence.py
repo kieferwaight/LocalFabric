@@ -55,8 +55,8 @@ def image_intelligence_run(
     ] = None,
 ) -> None:
     from core.environment import data
-    from drivers.sql.session import init_db
     from core.runtimes.langgraph.image_intelligence.graph import run_batch
+    from drivers.sql.session import init_db
 
     init_db(data(*_DEFAULT_DB_PATH_PARTS))
 
@@ -94,10 +94,7 @@ def image_intelligence_run(
             console.print(f"  • {r.get('asset_id')} — {r.get('error')}")
 
     outputs_root = data(*_DEFAULT_OUTPUTS_PARTS)
-    console.print(
-        f"\n[green]✓ Done. Reports saved to: "
-        f"{outputs_root}/images/{collection}/[/green]"
-    )
+    console.print(f"\n[green]✓ Done. Reports saved to: {outputs_root}/images/{collection}/[/green]")
 
 
 @image_intelligence_app.command(
@@ -111,8 +108,8 @@ def image_intelligence_single(
     ] = "default",
 ) -> None:
     from core.environment import data
-    from drivers.sql.session import init_db
     from core.runtimes.langgraph.image_intelligence.graph import run_image_intelligence
+    from drivers.sql.session import init_db
 
     init_db(data(*_DEFAULT_DB_PATH_PARTS))
 

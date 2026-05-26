@@ -5,12 +5,11 @@ from __future__ import annotations
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any
 
-from langgraph.graph import END, START, StateGraph
-from sqlalchemy import select
-
 from core.environment import data
 from drivers.sql.schema import assets
 from drivers.sql.session import get_connection
+from langgraph.graph import END, START, StateGraph
+from sqlalchemy import select
 
 _DB_PATH = data("workspace.db")
 _DEFAULT_CONCURRENCY = 4
@@ -28,6 +27,7 @@ from core.runtimes.langgraph.image_intelligence.nodes import (
 from core.runtimes.langgraph.types import ImageIntelligenceState
 
 # ── Fan-out / fan-in aggregator ───────────────────────────────────────────────
+
 
 def run_signals_parallel(state: ImageIntelligenceState) -> ImageIntelligenceState:
     """
@@ -59,6 +59,7 @@ def run_signals_parallel(state: ImageIntelligenceState) -> ImageIntelligenceStat
 
 # ── Build graph ───────────────────────────────────────────────────────────────
 
+
 def build_image_intelligence_graph() -> Any:
     """Build and compile the image intelligence StateGraph."""
     g = StateGraph(ImageIntelligenceState)
@@ -78,6 +79,7 @@ def build_image_intelligence_graph() -> Any:
 
 
 # ── Single-image runner ───────────────────────────────────────────────────────
+
 
 def run_image_intelligence(
     image_path: str,
@@ -106,6 +108,7 @@ def run_image_intelligence(
 
 
 # ── Batch runner ──────────────────────────────────────────────────────────────
+
 
 def run_batch(
     collection: str,

@@ -21,17 +21,17 @@ Bind to a data instance under `14_data/stores/neo4j/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `NEO4J_HTTP_PORT` | `7474` | `7474` | Browser/admin UI |
-| `NEO4J_BOLT_PORT` | `7687` | `7687` | Bolt driver traffic |
+| Host env var      | Default | Container | Use                 |
+| ----------------- | ------: | --------: | ------------------- |
+| `NEO4J_HTTP_PORT` |  `7474` |    `7474` | Browser/admin UI    |
+| `NEO4J_BOLT_PORT` |  `7687` |    `7687` | Bolt driver traffic |
 
 ## Required Environment
 
-| Var | Description |
-| --- | --- |
-| `NEO4J_USER` | Neo4j user (default `neo4j`) |
-| `NEO4J_PASSWORD` | Neo4j password |
+| Var              | Description                  |
+| ---------------- | ---------------------------- |
+| `NEO4J_USER`     | Neo4j user (default `neo4j`) |
+| `NEO4J_PASSWORD` | Neo4j password               |
 
 ## Run
 

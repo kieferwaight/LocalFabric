@@ -17,10 +17,10 @@ Bind to a data instance under `14_data/apps/gitea/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `GITEA_HTTP_PORT` | `3000` | `3000` | Web UI |
-| `GITEA_SSH_PORT` | `2222` | `22` | SSH git access |
+| Host env var      | Default | Container | Use            |
+| ----------------- | ------: | --------: | -------------- |
+| `GITEA_HTTP_PORT` |  `3000` |    `3000` | Web UI         |
+| `GITEA_SSH_PORT`  |  `2222` |      `22` | SSH git access |
 
 ## Run
 

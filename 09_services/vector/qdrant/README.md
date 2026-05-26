@@ -17,10 +17,10 @@ Bind to a data instance under `14_data/stores/qdrant/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `QDRANT_HTTP_PORT` | `6333` | `6333` | HTTP API |
-| `QDRANT_GRPC_PORT` | `6334` | `6334` | gRPC API |
+| Host env var       | Default | Container | Use      |
+| ------------------ | ------: | --------: | -------- |
+| `QDRANT_HTTP_PORT` |  `6333` |    `6333` | HTTP API |
+| `QDRANT_GRPC_PORT` |  `6334` |    `6334` | gRPC API |
 
 ## Run
 

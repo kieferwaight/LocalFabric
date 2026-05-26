@@ -14,12 +14,11 @@ Usage:
     store.load("my_store.npz")     # reload
 """
 
-from typing import Optional
-
 from drivers.vector.base import VectorStore
 
 try:
     import numpy as np
+
     _NUMPY_OK = True
 except ImportError:
     _NUMPY_OK = False
@@ -88,7 +87,7 @@ class NumpyStore(VectorStore):
         self,
         query_vector: list[float],
         k: int = 5,
-        source_filter: Optional[str] = None,
+        source_filter: str | None = None,
     ) -> list[dict]:
         """
         Return the top-k most similar records to *query_vector* (cosine similarity).
@@ -105,8 +104,8 @@ class NumpyStore(VectorStore):
         if q_norm == 0:
             return []
 
-        matrix = np.stack(self._vectors)               # (N, D)
-        norms = np.linalg.norm(matrix, axis=1)         # (N,)
+        matrix = np.stack(self._vectors)  # (N, D)
+        norms = np.linalg.norm(matrix, axis=1)  # (N,)
         # Avoid division by zero
         safe_norms = np.where(norms == 0, 1e-10, norms)
         scores = (matrix @ q) / (safe_norms * q_norm)  # cosine similarity
@@ -133,6 +132,7 @@ class NumpyStore(VectorStore):
             return
         matrix = np.stack(self._vectors).astype(np.float32)
         import json
+
         records_json = json.dumps(self._records)
         np.savez_compressed(path, vectors=matrix, records=np.array([records_json]))
         print(f"[NumpyStore] Saved {len(self._vectors)} entries → {path}")
@@ -140,6 +140,7 @@ class NumpyStore(VectorStore):
     def load(self, path: str) -> None:
         """Load a previously saved .npz store."""
         import json
+
         data = np.load(path, allow_pickle=True)
         matrix = data["vectors"]
         records_json = str(data["records"][0])

@@ -6,20 +6,20 @@ import uuid
 from datetime import UTC, datetime
 from pathlib import Path
 
-from sqlalchemy import insert, update
-
 from core.environment import data
+from core.runtimes.langgraph.image_intelligence.vision import describe_image
+from core.runtimes.langgraph.types import ImageIntelligenceState
+from drivers.file import write_json_artifact
 from drivers.sql.schema import workflow_runs
 from drivers.sql.session import get_connection
-from drivers.file import write_json_artifact
 from lib.image import classify, color, meta, quality, regions, text_ocr
-from core.runtimes.langgraph.types import ImageIntelligenceState
-from core.runtimes.langgraph.image_intelligence.vision import describe_image
+from sqlalchemy import insert, update
 
 _DB_PATH = data("workspace.db")
 _OUTPUTS_ROOT = data("outputs")
 
 # ── Node: load_asset ──────────────────────────────────────────────────────────
+
 
 def load_asset(state: ImageIntelligenceState) -> ImageIntelligenceState:
     """Validate the image path and log the workflow run as 'running'."""
@@ -47,6 +47,7 @@ def load_asset(state: ImageIntelligenceState) -> ImageIntelligenceState:
 
 
 # ── Signal nodes (called in parallel via Send) ────────────────────────────────
+
 
 def node_classify(state: ImageIntelligenceState) -> ImageIntelligenceState:
     path = Path(state["image_path"])
@@ -98,6 +99,7 @@ def node_text(state: ImageIntelligenceState) -> ImageIntelligenceState:
 
 # ── Node: vision ──────────────────────────────────────────────────────────────
 
+
 def node_vision(state: ImageIntelligenceState) -> ImageIntelligenceState:
     """Run all three vision tasks sequentially through the Ollama harness."""
     path = Path(state["image_path"])
@@ -120,6 +122,7 @@ def node_vision(state: ImageIntelligenceState) -> ImageIntelligenceState:
 
 
 # ── Node: save_report ─────────────────────────────────────────────────────────
+
 
 def save_report(state: ImageIntelligenceState) -> ImageIntelligenceState:
     """Merge all signals into a JSON report and update the workflow run record."""

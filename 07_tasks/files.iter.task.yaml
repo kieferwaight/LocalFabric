@@ -4,20 +4,20 @@
     Yield file paths under a root, skipping excluded dirs, protected inboxes,
     and backup directories. Returns paths as strings.
     Wraps lib.files.iter_files.
-  tags: [task]
+  tags:
+  - task
   extends: task.base
   inputs:
     root:
       type: string
       required: false
-      default: "{{ env.cwd }}"
+      default: '{{ env.cwd }}'
       description: Root directory to walk.
   run:
-    - python: |
-        import json, os
-        from pathlib import Path
-        from lib.files import iter_files
-
-        files = [str(p) for p in iter_files(Path("{{ root }}"))]
-        with open(os.environ["STATE_FILE"], "w") as f:
-            json.dump({"files": files, "count": len(files)}, f)
+  - python: |-
+      import json, os
+      from pathlib import Path
+      from lib.files import iter_files
+      files = [str(p) for p in iter_files(Path("{{ root }}"))]
+      with open(os.environ["STATE_FILE"], "w") as f:
+          json.dump({"files": files, "count": len(files)}, f)

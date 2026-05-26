@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections import Counter
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from lib.classify.media import classify_file
@@ -41,7 +41,7 @@ def build_classification(root: Path) -> tuple[dict, dict, dict]:
             "filename": rel.name,
             "extension": rel.suffix.lower(),
             "size_bytes": stat.st_size,
-            "modified_at": datetime.fromtimestamp(stat.st_mtime, timezone.utc).isoformat(),
+            "modified_at": datetime.fromtimestamp(stat.st_mtime, UTC).isoformat(),
             "hash_sha256": file_hash,
             "source_guess": infer_source_guess(rel),
             "class": info["class"],
@@ -56,13 +56,15 @@ def build_classification(root: Path) -> tuple[dict, dict, dict]:
     duplicates = []
     for file_hash, paths in fingerprint_map.items():
         if len(paths) > 1:
-            duplicates.append({"hash_sha256": file_hash, "paths": sorted(paths), "count": len(paths)})
+            duplicates.append(
+                {"hash_sha256": file_hash, "paths": sorted(paths), "count": len(paths)}
+            )
 
     items.sort(key=lambda x: x["source_path"])
     duplicates.sort(key=lambda x: (-x["count"], x["paths"][0]))
 
     classification_report = {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "generated_at": datetime.now(UTC).isoformat(),
         "root": root.as_posix(),
         "review_threshold": CONFIDENCE_REVIEW_THRESHOLD,
         "total_files": len(items),
@@ -71,7 +73,7 @@ def build_classification(root: Path) -> tuple[dict, dict, dict]:
     }
 
     current_state_manifest = {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "generated_at": datetime.now(UTC).isoformat(),
         "root": root.as_posix(),
         "total_files": len(items),
         "files": [
@@ -89,7 +91,7 @@ def build_classification(root: Path) -> tuple[dict, dict, dict]:
     }
 
     fingerprint_report = {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "generated_at": datetime.now(UTC).isoformat(),
         "root": root.as_posix(),
         "duplicate_sets": duplicates,
         "total_duplicate_sets": len(duplicates),

@@ -7,20 +7,20 @@ this file may be regenerated.
 
 ## Stage index
 
-| Stage | Artifact |
-|---|---|
-| Idea | [01_ideas/build-the-promotion-workflow.md](20_workspaces/00_specs/01_ideas/build-the-promotion-workflow.md) |
-| Research | [02_research/build-the-promotion-workflow.md](20_workspaces/00_specs/02_research/build-the-promotion-workflow.md) |
+| Stage        | Artifact                                                                                                                  |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| Idea         | [01_ideas/build-the-promotion-workflow.md](20_workspaces/00_specs/01_ideas/build-the-promotion-workflow.md)               |
+| Research     | [02_research/build-the-promotion-workflow.md](20_workspaces/00_specs/02_research/build-the-promotion-workflow.md)         |
 | Requirements | [03_requirements/build-the-promotion-workflow.md](20_workspaces/00_specs/03_requirements/build-the-promotion-workflow.md) |
-| Tasks | [04_tasks/build-the-promotion-workflow.md](20_workspaces/00_specs/04_tasks/build-the-promotion-workflow.md) |
-| Prompts | [05_prompts/build-the-promotion-workflow.md](20_workspaces/00_specs/05_prompts/build-the-promotion-workflow.md) |
+| Tasks        | [04_tasks/build-the-promotion-workflow.md](20_workspaces/00_specs/04_tasks/build-the-promotion-workflow.md)               |
+| Prompts      | [05_prompts/build-the-promotion-workflow.md](20_workspaces/00_specs/05_prompts/build-the-promotion-workflow.md)           |
 
 ## Frozen handoff prompt
 
 Paste the block below into a fresh agent session. The agent must read the
 linked upstream artifacts before doing anything else.
 
----
+______________________________________________________________________
 
 > You are working in the `~/agents/claude/LocalFabric` worktree. Read
 > [CLAUDE.md](CLAUDE.md) for repository conventions and
@@ -32,8 +32,7 @@ linked upstream artifacts before doing anything else.
 > refined in the artifacts indexed at the top of this file. The first
 > trigger of this capability is a Jupyter notebook —
 > `20_workspaces/15_notebooks/promote_spec.ipynb` — that promotes a spec
-> through `01_ideas/ → 02_research/ → 03_requirements/ → 04_tasks/ →
-> 05_prompts/ → 06_final/` by calling a local OpenAI-compatible chat model
+> through `01_ideas/ → 02_research/ → 03_requirements/ → 04_tasks/ → 05_prompts/ → 06_final/` by calling a local OpenAI-compatible chat model
 > at each stage.
 >
 > Implement the three branchable units in this order:
@@ -45,17 +44,16 @@ linked upstream artifacts before doing anything else.
 >    very spec as worked examples — the prompts should produce artifacts
 >    of the same shape.
 >
-> 2. `claude_feature_spec-promotion-notebook` — implement
+> 1. `claude_feature_spec-promotion-notebook` — implement
 >    `20_workspaces/15_notebooks/promote_spec.ipynb` per the cell layout in
 >    T3 of the tasks stage, satisfying acceptance criteria A1–A5 of the
 >    requirements stage. Path resolution must go through
 >    `core.paths.WORKSPACES_ROOT`. Provider is LM Studio by default
 >    (`http://localhost:1234/v1`); model is a top-of-notebook constant.
 >
-> 3. Validate by promoting a fresh dummy spec (drop a short idea in
+> 1. Validate by promoting a fresh dummy spec (drop a short idea in
 >    `01_ideas/demo-spec.md`, run the notebook with `SLUG = "demo-spec"`)
->    and pasting the resulting `find 20_workspaces/00_specs -name
->    "demo-spec*"` output into the PR description.
+>    and pasting the resulting `find 20_workspaces/00_specs -name "demo-spec*"` output into the PR description.
 >
 > Constraints that override defaults:
 >
@@ -81,7 +79,7 @@ linked upstream artifacts before doing anything else.
 >   fields, with the Assigned Prompt set to the contents of this file's
 >   "Frozen handoff prompt" section.
 
----
+______________________________________________________________________
 
 ## Follow-up ideas to drop into `01_ideas/` after this ships
 

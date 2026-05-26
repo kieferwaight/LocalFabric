@@ -8,10 +8,9 @@ import subprocess
 import sys
 import tempfile
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional
+from typing import Any
 
-
-LANGUAGE_BINARIES: Dict[str, List[str]] = {
+LANGUAGE_BINARIES: dict[str, list[str]] = {
     "bash": ["/usr/bin/env", "bash"],
     "sh": ["/usr/bin/env", "sh"],
     "js": ["/usr/bin/env", "node"],
@@ -27,13 +26,13 @@ class DispatchResult:
     exit_code: int
     stdout: str
     stderr: str
-    state_updates: Dict[str, Any]
+    state_updates: dict[str, Any]
 
 
 class Dispatcher:
     """Executes a block by writing the rendered source to a temp file and shelling out."""
 
-    def __init__(self, language_binaries: Optional[Dict[str, List[str]]] = None) -> None:
+    def __init__(self, language_binaries: dict[str, list[str]] | None = None) -> None:
         self.language_binaries = dict(LANGUAGE_BINARIES)
         if language_binaries:
             self.language_binaries.update(language_binaries)
@@ -45,8 +44,8 @@ class Dispatcher:
         self,
         language: str,
         source: str,
-        base_env: Optional[Dict[str, str]] = None,
-        cwd: Optional[str] = None,
+        base_env: dict[str, str] | None = None,
+        cwd: str | None = None,
     ) -> DispatchResult:
         if language not in self.language_binaries:
             raise ValueError(f"Unsupported language: {language!r}")
@@ -85,8 +84,8 @@ class Dispatcher:
                 text=True,
                 bufsize=1,
             )
-            stdout_chunks: List[str] = []
-            stderr_chunks: List[str] = []
+            stdout_chunks: list[str] = []
+            stderr_chunks: list[str] = []
             # Stream stderr live; capture stdout to a buffer.
             assert proc.stdout is not None and proc.stderr is not None
             try:
@@ -116,10 +115,10 @@ class Dispatcher:
             stderr = "".join(stderr_chunks)
             exit_code = proc.returncode if proc.returncode is not None else -1
 
-            state_updates: Dict[str, Any] = {}
+            state_updates: dict[str, Any] = {}
             # First check the state file (preferred channel).
             try:
-                with open(state_path, "r", encoding="utf-8") as fh:
+                with open(state_path, encoding="utf-8") as fh:
                     text = fh.read().strip()
                 if text:
                     parsed = json.loads(text)

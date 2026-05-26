@@ -38,6 +38,7 @@ EMBED_CACHE_PATH = str(Path.home() / ".local_router_cache" / "embed_cache.json")
 # Claude Desktop config snippet
 # ------------------------------------------------------------------
 
+
 def _python_executable() -> str:
     """Return the current Python interpreter path."""
     return sys.executable
@@ -61,6 +62,7 @@ def _config_path() -> str:
         return str(Path.home() / "Library/Application Support/Claude/claude_desktop_config.json")
     elif sys.platform == "win32":
         import os
+
         return str(Path(os.environ.get("APPDATA", "")) / "Claude" / "claude_desktop_config.json")
     else:
         return str(Path.home() / ".config" / "claude" / "claude_desktop_config.json")

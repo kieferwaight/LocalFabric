@@ -3,18 +3,20 @@
   description: |
     Web UI for the Temporal cluster. Talks to the Temporal frontend service and exposes
     workflow inspection, search, and signaling through the browser.
-  tags: [docker, workers]
+  tags:
+  - docker
+  - workers
   extends: docker.base
   inputs:
     TEMPORAL_UI_PORT:
-      type: "string"
+      type: string
       required: false
-      default: "8084"
+      default: '8084'
       description: Host port to expose the Temporal UI (default 8084)
     TEMPORAL_ADDRESS:
-      type: "string"
+      type: string
       required: false
-      default: "temporal:7233"
+      default: temporal:7233
       description: Address of the Temporal frontend service
   variables:
     services:
@@ -23,7 +25,7 @@
         container_name: contentgraph-temporal-ui
         restart: unless-stopped
         environment:
-          TEMPORAL_ADDRESS: "{{ TEMPORAL_ADDRESS }}"
-          TEMPORAL_CORS_ORIGINS: "http://localhost:{{ TEMPORAL_UI_PORT }}"
+          TEMPORAL_ADDRESS: '{{ TEMPORAL_ADDRESS }}'
+          TEMPORAL_CORS_ORIGINS: http://localhost:{{ TEMPORAL_UI_PORT }}
         ports:
-          - "{{ TEMPORAL_UI_PORT }}:8080"
+        - '{{ TEMPORAL_UI_PORT }}:8080'

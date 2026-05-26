@@ -20,19 +20,31 @@ Each chunk is returned as a dict:
 
 import ast
 import os
-from typing import Generator
+from collections.abc import Generator
 
-WINDOW_TOKENS = 512       # approximate tokens per sliding-window chunk
-OVERLAP_RATIO = 0.10      # 10 % overlap between consecutive windows
-CHARS_PER_TOKEN = 4       # rough heuristic: 1 token ≈ 4 characters
+WINDOW_TOKENS = 512  # approximate tokens per sliding-window chunk
+OVERLAP_RATIO = 0.10  # 10 % overlap between consecutive windows
+CHARS_PER_TOKEN = 4  # rough heuristic: 1 token ≈ 4 characters
 
 WINDOW_CHARS = WINDOW_TOKENS * CHARS_PER_TOKEN
 STEP_CHARS = int(WINDOW_CHARS * (1 - OVERLAP_RATIO))
 
 # File extensions that use the sliding-window strategy
 SLIDING_WINDOW_EXTS = {
-    ".md", ".txt", ".rst", ".yaml", ".yml", ".toml", ".json",
-    ".sh", ".bash", ".zsh", ".env", ".cfg", ".ini", ".conf",
+    ".md",
+    ".txt",
+    ".rst",
+    ".yaml",
+    ".yml",
+    ".toml",
+    ".json",
+    ".sh",
+    ".bash",
+    ".zsh",
+    ".env",
+    ".cfg",
+    ".ini",
+    ".conf",
 }
 
 
@@ -100,7 +112,8 @@ def _ast_chunks(text: str, source: str) -> Generator[dict, None, None]:
     idx = 0
 
     top_level_nodes = [
-        node for node in ast.walk(tree)
+        node
+        for node in ast.walk(tree)
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
         and isinstance(getattr(node, "col_offset", None), int)
         and node.col_offset == 0  # truly top-level (not nested)
@@ -109,8 +122,8 @@ def _ast_chunks(text: str, source: str) -> Generator[dict, None, None]:
     top_level_nodes.sort(key=lambda n: n.lineno)
 
     for node in top_level_nodes:
-        start_line = node.lineno          # 1-based
-        end_line = node.end_lineno        # 1-based, inclusive
+        start_line = node.lineno  # 1-based
+        end_line = node.end_lineno  # 1-based, inclusive
         chunk_lines = lines[start_line - 1 : end_line]
         chunk_text = "\n".join(chunk_lines).strip()
 
@@ -140,11 +153,7 @@ def _ast_chunks(text: str, source: str) -> Generator[dict, None, None]:
         covered_lines.update(range(start_line, end_line + 1))
 
     # Emit module-level code not inside any top-level def/class
-    module_lines = [
-        (i + 1, line)
-        for i, line in enumerate(lines)
-        if (i + 1) not in covered_lines
-    ]
+    module_lines = [(i + 1, line) for i, line in enumerate(lines) if (i + 1) not in covered_lines]
     if module_lines:
         module_text = "\n".join(line for _, line in module_lines).strip()
         if module_text:
@@ -174,7 +183,7 @@ def chunk_file(path: str) -> list[dict]:
     Returns an empty list if the file cannot be read or yields no content.
     """
     try:
-        with open(path, "r", encoding="utf-8", errors="replace") as fh:
+        with open(path, encoding="utf-8", errors="replace") as fh:
             text = fh.read()
     except OSError:
         return []
@@ -206,4 +215,6 @@ if __name__ == "__main__":
     print(f"File: {target}  →  {len(results)} chunks")
     for c in results[:3]:
         preview = c["text"][:80].replace("\n", " ")
-        print(f"  [{c['chunk_index']}] L{c['line_start']}-{c['line_end']} ({c['strategy']}): {preview}…")
+        print(
+            f"  [{c['chunk_index']}] L{c['line_start']}-{c['line_end']} ({c['strategy']}): {preview}…"
+        )

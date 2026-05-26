@@ -5,7 +5,7 @@ Agent-ready prompts, one per task in
 Each prompt assumes the agent has read the linked upstream artifacts before
 starting and is prepared to follow [CLAUDE.md](CLAUDE.md)'s branch/PR rules.
 
----
+______________________________________________________________________
 
 ## P1 — Write per-stage promotion prompts
 
@@ -42,7 +42,7 @@ and [13_models/registry.yaml](13_models/registry.yaml).
 
 Do not modify any code in `02_core` through `11_mcp` for this branch.
 
----
+______________________________________________________________________
 
 ## P2 — Confirm dev dependencies
 
@@ -58,7 +58,7 @@ governs versions).
 Validate by running `pip install -e ".[dev]"` from the repo root and
 `python -c "import openai, yaml"`.
 
----
+______________________________________________________________________
 
 ## P3 — Build `promote_spec.ipynb`
 
@@ -87,7 +87,7 @@ by running the `find` command and pasting the output into the PR description.
 Reminder: you are operating in the `~/agents/claude/LocalFabric` worktree
 only.
 
----
+______________________________________________________________________
 
 ## P4 — (Deferred) Register LM Studio model
 
@@ -98,7 +98,7 @@ entry in [13_models/registry.yaml](13_models/registry.yaml),
 flip `provider` to `lmstudio`, add a stub README under `13_models/local/`.
 Confirm the classification audit stays clean.
 
----
+______________________________________________________________________
 
 ## P5 — (Deferred) Workflow + MCP exposure
 

@@ -5,7 +5,10 @@
     the top-level `06_workflows/__init__.py` (subpackage-exposing barrel),
     then the per-subpackage barrels via `barrels.regenerate.yaml-runtime.workflow`. Run this
     from anywhere — paths anchor on `runtime.workflow_dir`, not shell cwd.
-  tags: [python, generator, workflow]
+  tags:
+  - python
+  - generator
+  - workflow
   extends: stdlib.base
   inputs:
     mode:
@@ -15,21 +18,20 @@
       description: Either `write` to regenerate barrels or `check` to verify them.
   docs:
     run:
-      - title: Regenerate top-level 06_workflows package barrel
-      - title: Regenerate workflows.yaml bucket barrels
+    - title: Regenerate top-level 06_workflows package barrel
+    - title: Regenerate workflows.yaml bucket barrels
   run:
-    - invoke:
-        definition: stdlib.python.barrel.task
-        arguments:
-          package_dir: "{{ runtime.workflow_dir }}/.."
-          package_doc: "Workflows namespace — orchestration entry points across LangGraph, research, and the YAML polyglot runtime."
-          mode: "{{ mode }}"
-          flatten: false
-    - invoke:
-        definition: barrels.regenerate.yaml-runtime.workflow
-        arguments:
-          mode: "{{ mode }}"
-
+  - invoke:
+      definition: stdlib.python.barrel.task
+      arguments:
+        package_dir: '{{ runtime.workflow_dir }}/..'
+        package_doc: Workflows namespace — orchestration entry points across LangGraph, research, and the YAML polyglot runtime.
+        mode: '{{ mode }}'
+        flatten: false
+  - invoke:
+      definition: barrels.regenerate.yaml-runtime.workflow
+      arguments:
+        mode: '{{ mode }}'
 - id: barrels.regenerate.yaml-runtime.workflow
   title: Regenerate workflows.yaml Bucket Barrels
   description: |
@@ -37,7 +39,10 @@
     the runtime VM under `src/`, and the top-level `workflows.yaml` package
     that re-exports it. Mirrors `docs.api.reference`: pass `--mode=write` to
     regenerate, `--mode=check` to assert the committed files match.
-  tags: [python, generator, workflow]
+  tags:
+  - python
+  - generator
+  - workflow
   extends: stdlib.base
   inputs:
     mode:
@@ -47,19 +52,20 @@
       description: Either `write` to regenerate barrels or `check` to verify them.
   docs:
     run:
-      - title: Regenerate src/ runtime barrel
-      - title: Regenerate top-level workflows.yaml barrel
+    - title: Regenerate src/ runtime barrel
+    - title: Regenerate top-level workflows.yaml barrel
   run:
-    - invoke:
-        definition: stdlib.python.barrel.task
-        arguments:
-          package_dir: "{{ runtime.workflow_dir }}/src"
-          package_doc: "YAML-driven polyglot abstract state machine runtime."
-          mode: "{{ mode }}"
-    - invoke:
-        definition: stdlib.python.barrel.task
-        arguments:
-          package_dir: "{{ runtime.workflow_dir }}"
-          package_doc: "YAML polyglot runtime — public surface for `workflows.yaml`."
-          mode: "{{ mode }}"
-          exclude: ["interpreter"]
+  - invoke:
+      definition: stdlib.python.barrel.task
+      arguments:
+        package_dir: '{{ runtime.workflow_dir }}/src'
+        package_doc: YAML-driven polyglot abstract state machine runtime.
+        mode: '{{ mode }}'
+  - invoke:
+      definition: stdlib.python.barrel.task
+      arguments:
+        package_dir: '{{ runtime.workflow_dir }}'
+        package_doc: YAML polyglot runtime — public surface for `workflows.yaml`.
+        mode: '{{ mode }}'
+        exclude:
+        - interpreter

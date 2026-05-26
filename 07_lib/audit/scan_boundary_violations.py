@@ -12,10 +12,10 @@ import argparse
 import hashlib
 import json
 from collections import Counter
-from datetime import datetime, timezone
+from collections.abc import Iterable
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Iterable
-
+from typing import Any
 
 AUDITED_SUFFIXES = {".py", ".sh", ".yaml", ".yml", ".json", ".md"}
 EXCLUDED_PARTS = {"__pycache__", ".pytest_cache", ".venv"}
@@ -59,7 +59,7 @@ def _finding(
     related_files: list[Path] | None = None,
     confidence: float = 0.9,
 ) -> dict[str, Any]:
-    identity = f"{path.resolve()}::{rule}".encode("utf-8")
+    identity = f"{path.resolve()}::{rule}".encode()
     finding_id = "CAF-" + hashlib.sha256(identity).hexdigest()[:12].upper()
     return {
         "schema_version": "1.0",
@@ -156,7 +156,10 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
     if rel.startswith("07_lib/") and any(marker in text for marker in provider_markers):
         evidence = _lines_with(text, provider_markers + ["_PROMPT", "prompt ="])
         extra_targets: list[dict[str, str]] = []
-        if any(marker in text for marker in ["_PROMPT", "system_prompt", "user_prompt", "prompt = (", "prompt = \"\"\""]):
+        if any(
+            marker in text
+            for marker in ["_PROMPT", "system_prompt", "user_prompt", "prompt = (", 'prompt = """']
+        ):
             extra_targets.append(
                 _target(
                     "12_prompts",
@@ -237,8 +240,10 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
             )
         )
 
-    if rel.startswith("11_mcp/tools/") and path.suffix == ".py" and (
-        "ollama." in text or "import ollama" in text
+    if (
+        rel.startswith("11_mcp/tools/")
+        and path.suffix == ".py"
+        and ("ollama." in text or "import ollama" in text)
     ):
         findings.append(
             _finding(
@@ -248,7 +253,16 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
                 "mcp_tool_combines_provider_prompt_and_fetch_execution",
                 "high",
                 "MCP-facing tool combines web acquisition, embedded prompts, model selection, provider execution, and subprocess work.",
-                _lines_with(text, ["import ollama", "requests.get", "system_prompt", "ollama.generate(", "subprocess.run"]),
+                _lines_with(
+                    text,
+                    [
+                        "import ollama",
+                        "requests.get",
+                        "system_prompt",
+                        "ollama.generate(",
+                        "subprocess.run",
+                    ],
+                ),
                 [
                     _target(
                         "11_mcp",
@@ -291,7 +305,15 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
                 "workflow_executes_prompt_bucket_as_scripts",
                 "high",
                 "Workflow executes Python programs from the prompt-template bucket, preserving a legacy ownership boundary.",
-                _lines_with(text, ["12_prompts/", "extract-visible-overview", "extract-visible-layout", "extract-visible-style"]),
+                _lines_with(
+                    text,
+                    [
+                        "12_prompts/",
+                        "extract-visible-overview",
+                        "extract-visible-layout",
+                        "extract-visible-style",
+                    ],
+                ),
                 [
                     _target(
                         "06_workflows",
@@ -319,11 +341,15 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
             )
         )
 
-    if rel.startswith("06_workflows/") and path.suffix != ".md" and (
-        ".write_text(" in text
-        or "shutil.copy2(" in text
-        or ".mkdir(" in text
-        or ("open(" in text and ".write(" in text and "tempfile.mkstemp" not in text)
+    if (
+        rel.startswith("06_workflows/")
+        and path.suffix != ".md"
+        and (
+            ".write_text(" in text
+            or "shutil.copy2(" in text
+            or ".mkdir(" in text
+            or ("open(" in text and ".write(" in text and "tempfile.mkstemp" not in text)
+        )
     ):
         findings.append(
             _finding(
@@ -415,7 +441,10 @@ def audit_cross_file(workspace: Path, generated_at: str) -> list[dict[str, Any]]
                 "duplicate_docker_service_lifecycle_paths",
                 "medium",
                 "Service runtime and Docker service harness independently execute Docker Compose lifecycle commands.",
-                _lines_with(runtime.read_text(encoding="utf-8"), ["docker", "_action_up", "_action_down", "_action_status"]),
+                _lines_with(
+                    runtime.read_text(encoding="utf-8"),
+                    ["docker", "_action_up", "_action_down", "_action_status"],
+                ),
                 [
                     _target(
                         "10_service_runtime",
@@ -442,7 +471,7 @@ def audit_cross_file(workspace: Path, generated_at: str) -> list[dict[str, Any]]
 
 
 def run_audit(workspace: Path, output_dir: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
-    generated_at = datetime.now(timezone.utc).isoformat()
+    generated_at = datetime.now(UTC).isoformat()
     scanned_files = iter_audited_files(workspace, output_dir)
     findings: list[dict[str, Any]] = []
     for path in scanned_files:
@@ -465,7 +494,9 @@ def run_audit(workspace: Path, output_dir: Path) -> tuple[list[dict[str, Any]], 
         "findings_by_severity": dict(Counter(item["violation"]["severity"] for item in findings)),
         "findings_by_rule": dict(Counter(item["violation"]["code"] for item in findings)),
         "jsonl_file": str((output_dir / "findings.jsonl").resolve()),
-        "schema_file": str((workspace / "01_schemas/audit.classification-finding.schema.yaml").resolve()),
+        "schema_file": str(
+            (workspace / "01_schemas/audit.classification-finding.schema.yaml").resolve()
+        ),
     }
     return findings, summary
 

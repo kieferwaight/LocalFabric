@@ -4,7 +4,8 @@
     Embed a query and retrieve the top-k most relevant chunks from the
     local vector store, returning a formatted markdown context block.
     Wraps lib.embeddings.query.LocalKnowledgeQuery.query.
-  tags: [task]
+  tags:
+  - task
   extends: task.base
   inputs:
     query_text:
@@ -19,7 +20,7 @@
     model:
       type: string
       required: false
-      default: "nomic-embed-text"
+      default: nomic-embed-text
       description: Ollama embedding model name.
     as_markdown:
       type: boolean
@@ -27,11 +28,10 @@
       default: true
       description: Return formatted markdown context block (true) or raw result list (false).
   run:
-    - python: |
-        import json, os
-        from lib.embeddings.query import LocalKnowledgeQuery
-
-        lkq = LocalKnowledgeQuery(model="{{ model }}", k={{ k }})
-        result = lkq.query("{{ query_text }}", as_markdown={{ as_markdown }})
-        with open(os.environ["STATE_FILE"], "w") as f:
-            json.dump({"result": result}, f)
+  - python: |-
+      import json, os
+      from lib.embeddings.query import LocalKnowledgeQuery
+      lkq = LocalKnowledgeQuery(model="{{ model }}", k={{ k }})
+      result = lkq.query("{{ query_text }}", as_markdown={{ as_markdown }})
+      with open(os.environ["STATE_FILE"], "w") as f:
+          json.dump({"result": result}, f)

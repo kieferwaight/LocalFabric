@@ -7,51 +7,54 @@
 # This file now contains only the live configuration that the Python modules
 # read at startup: scoring weights, complexity thresholds, default policy,
 # and feedback EMA settings.
-
 version: 1
-
 # ------------------------------------------------------------------
 # Scoring weights (used by scorer.py composite formula)
 # ------------------------------------------------------------------
 scoring:
   intent_affinity_weight: 0.5
-  tier_match_weight:      0.3
-  confidence_boost:       0.1
+  tier_match_weight: 0.3
+  confidence_boost: 0.1
   # Tier-distance table: exact, 1-off, 2-off, 3-off
-  tier_distance: [1.0, 0.6, 0.3, 0.1]
+  tier_distance:
+  - 1.0
+  - 0.6
+  - 0.3
+  - 0.1
   # Affinity falloff per rank position in the route's intent_affinity list
   affinity_falloff: 0.25
   # Non-preferred routes still receive this minimum affinity
   affinity_floor: 0.1
   # Unavailable routes are scaled down rather than excluded
   unavailable_penalty: 0.05
-
 # ------------------------------------------------------------------
 # Complexity thresholds (used by classifier.py)
 # ------------------------------------------------------------------
 complexity_thresholds:
   frontier_tokens: 1500
-  agent_tokens:    4000
-
+  agent_tokens: 4000
 # ------------------------------------------------------------------
 # Default policy (cost / latency / tier constraints)
 # ------------------------------------------------------------------
 policy:
-  max_cost_usd:    null
-  max_latency_sec: null
-  allowed_tiers:   [local, hybrid, frontier, agent]
-  prefer_local:    true
-  max_fallbacks:   2
-
+  max_cost_usd:
+  max_latency_sec:
+  allowed_tiers:
+  - local
+  - hybrid
+  - frontier
+  - agent
+  prefer_local: true
+  max_fallbacks: 2
 # ------------------------------------------------------------------
 # Feedback (historical weights via EMA)
 # ------------------------------------------------------------------
 feedback:
-  path:         "~/.local_router_cache/feedback.json"
-  ema_alpha:    0.2
-  weight_min:   0.1
-  weight_max:   2.0
+  path: ~/.local_router_cache/feedback.json
+  ema_alpha: 0.2
+  weight_min: 0.1
+  weight_max: 2.0
   success_signals:
-    success:  1.0
+    success: 1.0
     deferred: 0.5
-    failure:  0.0
+    failure: 0.0

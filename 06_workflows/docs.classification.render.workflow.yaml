@@ -5,10 +5,13 @@
     from their static template definitions into `output_dir`. The templates are
     the source of truth; `--mode=check` detects drift in the committed `.md`
     files so manual edits don't silently overwrite the canonical content.
-  tags: [documentation, workflow, classification]
+  tags:
+  - documentation
+  - workflow
+  - classification
   extends: stdlib.base
   modules:
-    - ../14_templates/docs.classification.template.yaml
+  - ../14_templates/docs.classification.template.yaml
   inputs:
     output_dir:
       type: string
@@ -22,14 +25,14 @@
       description: Either `write` to regenerate output or `check` to verify it.
   docs:
     run:
-      - title: Render classification_audit.md
-      - title: Render classification_remediation_workflow.md
+    - title: Render classification_audit.md
+    - title: Render classification_remediation_workflow.md
   run:
-    - render:
-        definition: docs.classification.audit.template
-        target_path: "{{ output_dir }}/classification_audit.md"
-        mode: "{{ mode }}"
-    - render:
-        definition: docs.classification.remediation-workflow.template
-        target_path: "{{ output_dir }}/classification_remediation_workflow.md"
-        mode: "{{ mode }}"
+  - render:
+      definition: docs.classification.audit.template
+      target_path: '{{ output_dir }}/classification_audit.md'
+      mode: '{{ mode }}'
+  - render:
+      definition: docs.classification.remediation-workflow.template
+      target_path: '{{ output_dir }}/classification_remediation_workflow.md'
+      mode: '{{ mode }}'

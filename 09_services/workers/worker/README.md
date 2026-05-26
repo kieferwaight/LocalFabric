@@ -20,14 +20,14 @@ Bind to a data instance under `14_data/runs/workers/contentgraph/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| none | n/a | n/a | Worker has no exposed port |
+| Host env var | Default | Container | Use                        |
+| ------------ | ------: | --------: | -------------------------- |
+| none         |     n/a |       n/a | Worker has no exposed port |
 
 ## Required Environment
 
-| Var | Description |
-| --- | --- |
+| Var            | Description                                                                           |
+| -------------- | ------------------------------------------------------------------------------------- |
 | `DATABASE_URL` | Postgres connection string (e.g. `postgresql://user:pass@pgvector:5432/contentgraph`) |
 
 ## Run

@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 """CLI entry point for the YAML-driven polyglot runtime interpreter."""
+
 from __future__ import annotations
 
 import json
-import os
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from src import Runtime, ShellEnvironment  # noqa: E402
-
 
 USAGE = (
     "Usage: python interpreter.py <yaml_file> <definition_id> "

@@ -4,7 +4,8 @@
     Return quality metrics for an image: blur score, edge density,
     blank detection, mean brightness, and brightness std deviation.
     Wraps lib.image.quality.extract_quality.
-  tags: [task]
+  tags:
+  - task
   extends: task.base
   inputs:
     path:
@@ -12,11 +13,10 @@
       required: true
       description: Path to the image file.
   run:
-    - python: |
-        import json, os
-        from pathlib import Path
-        from lib.image.quality import extract_quality
-
-        result = extract_quality(Path("{{ path }}"))
-        with open(os.environ["STATE_FILE"], "w") as f:
-            json.dump(result, f)
+  - python: |-
+      import json, os
+      from pathlib import Path
+      from lib.image.quality import extract_quality
+      result = extract_quality(Path("{{ path }}"))
+      with open(os.environ["STATE_FILE"], "w") as f:
+          json.dump(result, f)

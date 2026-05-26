@@ -43,9 +43,7 @@ def test_tool_provider_execution_includes_harness_destination(tmp_path: Path) ->
     findings = AUDIT.audit_file(tool, workspace, "2026-05-23T00:00:00+00:00")
 
     assert findings[0]["violation"]["code"] == "provider_execution_in_tool_bucket"
-    assert "04_harnesses" in {
-        target["class"] for target in findings[0]["decomposition_classes"]
-    }
+    assert "04_harnesses" in {target["class"] for target in findings[0]["decomposition_classes"]}
 
 
 def test_rescan_preserves_review_status(tmp_path: Path) -> None:

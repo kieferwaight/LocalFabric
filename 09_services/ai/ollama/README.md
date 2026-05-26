@@ -17,9 +17,9 @@ Bind to a data instance under `14_data/apps/ollama/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `OLLAMA_PORT` | `11434` | `11434` | Ollama API |
+| Host env var  | Default | Container | Use        |
+| ------------- | ------: | --------: | ---------- |
+| `OLLAMA_PORT` | `11434` |   `11434` | Ollama API |
 
 ## Run
 

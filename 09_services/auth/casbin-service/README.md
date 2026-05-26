@@ -17,9 +17,9 @@ Simple authorization service scaffold for Casbin-based policy checks.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `CASBIN_PORT` | `8090` | `8080` | HTTP API |
+| Host env var  | Default | Container | Use      |
+| ------------- | ------: | --------: | -------- |
+| `CASBIN_PORT` |  `8090` |    `8080` | HTTP API |
 
 ## Run
 

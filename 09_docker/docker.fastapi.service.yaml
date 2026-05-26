@@ -3,56 +3,56 @@
   description: |
     Content graph FastAPI service built locally. Provides the HTTP control plane and
     integrates with Postgres, Neo4j, Redis, MinIO, and Tika via environment URLs.
-  tags: [docker, workers]
+  tags:
+  - docker
+  - workers
   extends: docker.base
   inputs:
     DATABASE_URL:
-      type: "string"
+      type: string
       required: true
       description: PostgreSQL connection URL for the API
     NEO4J_PASSWORD:
-      type: "string"
+      type: string
       required: true
       description: Password for the Neo4j user
     FASTAPI_PORT:
-      type: "string"
+      type: string
       required: false
-      default: "8000"
+      default: '8000'
       description: Host port to expose the FastAPI service (default 8000)
     NEO4J_URI:
-      type: "string"
+      type: string
       required: false
-      default: "bolt://neo4j:7687"
+      default: bolt://neo4j:7687
       description: Bolt URI for the Neo4j server
     NEO4J_USER:
-      type: "string"
+      type: string
       required: false
-      default: "neo4j"
+      default: neo4j
       description: Neo4j username
     REDIS_URL:
-      type: "string"
+      type: string
       required: false
-      default: "redis://redis:6379/0"
+      default: redis://redis:6379/0
       description: Redis connection URL
     MINIO_ENDPOINT:
-      type: "string"
+      type: string
       required: false
-      default: "minio:9000"
+      default: minio:9000
       description: MinIO endpoint host:port
     TIKA_URL:
-      type: "string"
+      type: string
       required: false
-      default: "http://tika:9998"
+      default: http://tika:9998
       description: Apache Tika base URL
   variables:
-    image_tag: "contentgraph-api:local"
+    image_tag: contentgraph-api:local
     dockerfile_body: |
       FROM python:3.12-slim
-
       WORKDIR /app
       RUN pip install --no-cache-dir fastapi uvicorn[standard] psycopg[binary] redis neo4j boto3 httpx
       COPY app /app
-
       EXPOSE 8000
       CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
     services:
@@ -62,23 +62,20 @@
         container_name: contentgraph-api
         restart: unless-stopped
         environment:
-          DATABASE_URL: "{{ DATABASE_URL }}"
-          NEO4J_URI: "{{ NEO4J_URI }}"
-          NEO4J_USER: "{{ NEO4J_USER }}"
-          NEO4J_PASSWORD: "{{ NEO4J_PASSWORD }}"
-          REDIS_URL: "{{ REDIS_URL }}"
-          MINIO_ENDPOINT: "{{ MINIO_ENDPOINT }}"
-          TIKA_URL: "{{ TIKA_URL }}"
+          DATABASE_URL: '{{ DATABASE_URL }}'
+          NEO4J_URI: '{{ NEO4J_URI }}'
+          NEO4J_USER: '{{ NEO4J_USER }}'
+          NEO4J_PASSWORD: '{{ NEO4J_PASSWORD }}'
+          REDIS_URL: '{{ REDIS_URL }}'
+          MINIO_ENDPOINT: '{{ MINIO_ENDPOINT }}'
+          TIKA_URL: '{{ TIKA_URL }}'
         ports:
-          - "{{ FASTAPI_PORT }}:8000"
+        - '{{ FASTAPI_PORT }}:8000'
     extra_files:
-      - path: "app/main.py"
-        content: |
-          from fastapi import FastAPI
-
-          app = FastAPI(title="Content Graph API")
-
-
-          @app.get("/health")
-          def health() -> dict[str, str]:
-              return {"status": "ok"}
+    - path: app/main.py
+      content: |-
+        from fastapi import FastAPI
+        app = FastAPI(title="Content Graph API")
+        @app.get("/health")
+        def health() -> dict[str, str]:
+            return {"status": "ok"}

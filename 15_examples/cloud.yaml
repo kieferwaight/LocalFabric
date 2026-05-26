@@ -2,100 +2,106 @@
   title: Git Information
   description: |
     Adds the current short Git commit SHA to execution state.
-  tags: [mixin, git, deployment]
+  tags:
+  - mixin
+  - git
+  - deployment
   variables:
-    git_short_sha: "unknown"
+    git_short_sha: unknown
   docs:
     variables:
       git_short_sha: Current abbreviated Git revision, or `unknown`.
     run:
-      - title: Resolve Git revision
+    - title: Resolve Git revision
   run:
-    - bash: |
-        sha=$(git -C "{{ env.cwd }}" rev-parse --short HEAD 2>/dev/null || echo "unknown")
-        printf '{"git_short_sha": "%s"}' "$sha" > "$STATE_FILE"
-
+  - bash: |
+      sha=$(git -C "{{ env.cwd }}" rev-parse --short HEAD 2>/dev/null || echo "unknown")
+      printf '{"git_short_sha": "%s"}' "$sha" > "$STATE_FILE"
 - id: cloud.mixin.timestamp
   title: Timestamp
   description: |
     Adds a UTC deployment start timestamp to execution state.
-  tags: [mixin, deployment]
+  tags:
+  - mixin
+  - deployment
   variables:
-    deploy_started_at: "pending"
+    deploy_started_at: pending
   docs:
     variables:
       deploy_started_at: UTC start timestamp written during execution.
     run:
-      - title: Record deployment time
+    - title: Record deployment time
   run:
-    - python: |
-        import json, os, datetime
-        with open(os.environ["STATE_FILE"], "w") as fh:
-            json.dump({"deploy_started_at": datetime.datetime.utcnow().isoformat() + "Z"}, fh)
-
+  - python: |
+      import json, os, datetime
+      with open(os.environ["STATE_FILE"], "w") as fh:
+          json.dump({"deploy_started_at": datetime.datetime.utcnow().isoformat() + "Z"}, fh)
 - id: cloud.deployer.example
   title: Cloud Deployer
   description: |
     Demonstrates an inherited, mixin-composed deployment workflow.
-  tags: [example, deployment, cloud]
+  tags:
+  - example
+  - deployment
+  - cloud
   extends: stdlib.base
   mixins:
-    - cloud.mixin.timestamp
-    - cloud.mixin.git-info
+  - cloud.mixin.timestamp
+  - cloud.mixin.git-info
   inputs:
     service:
-      type: "string"
+      type: string
       required: true
-      description: "Name of the service to deploy."
+      description: Name of the service to deploy.
     replicas:
-      type: "number"
+      type: number
       required: false
       default: 3
       description: Number of application replicas to deploy.
     canary:
-      type: "boolean"
+      type: boolean
       required: false
-      default: "false"
+      default: 'false'
       description: Whether to run a canary deployment.
     regions:
-      type: "array"
+      type: array
       required: false
-      default: "us-east-1,us-west-2"
+      default: us-east-1,us-west-2
       description: Comma-separated deployment regions.
   variables:
-    workspace: "{{ env.cwd }}"
-    banner: "[deploy v{{ runtime.version }}] {{ service }} -> {{ regions }}"
+    workspace: '{{ env.cwd }}'
+    banner: '[deploy v{{ runtime.version }}] {{ service }} -> {{ regions }}'
   docs:
     variables:
       workspace: Directory from which the deployment workflow executes.
       banner: Rendered deployment summary header.
     run:
-      - title: Display deployment plan
-      - title: Write deployment result
+    - title: Display deployment plan
+    - title: Write deployment result
     teardown:
-      - title: Report teardown
+    - title: Report teardown
   run:
-    - bash: |
-        echo "=========================================="
-        echo "{{ banner }}"
-        echo "workspace: {{ workspace }}"
-        echo "replicas:  {{ replicas }}"
-        echo "canary:    {{ canary }}"
-        echo "started:   {{ deploy_started_at }}"
-        echo "git sha:   {{ git_short_sha }}"
-        echo "=========================================="
-    - python: |
-        import json, os
-        service = "{{ service }}"
-        replicas = int("{{ replicas }}")
-        plan = {
-            "deployed_service": service,
-            "deployed_replicas": replicas,
-            "status": "ok",
-        }
-        with open(os.environ["STATE_FILE"], "w") as fh:
-            json.dump(plan, fh)
-        print(json.dumps(plan))
+  - bash: |
+      echo "=========================================="
+      echo "{{ banner }}"
+      echo "workspace: {{ workspace }}"
+      echo "replicas:  {{ replicas }}"
+      echo "canary:    {{ canary }}"
+      echo "started:   {{ deploy_started_at }}"
+      echo "git sha:   {{ git_short_sha }}"
+      echo "=========================================="
+  - python: |
+      import json, os
+      service = "{{ service }}"
+      replicas = int("{{ replicas }}")
+      plan = {
+          "deployed_service": service,
+          "deployed_replicas": replicas,
+          "status": "ok",
+      }
+      with open(os.environ["STATE_FILE"], "w") as fh:
+          json.dump(plan, fh)
+      print(json.dumps(plan))
   teardown:
-    - bash: |
-        echo "tearing down deploy frame for {{ service }}"
+  - bash: |-
+      echo "tearing down deploy frame for {{ service }}"

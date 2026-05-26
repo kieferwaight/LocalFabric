@@ -19,9 +19,9 @@ Bind to a data instance under `14_data/runs/workers/libreoffice/<name>/`.
 
 ## Ports
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| none | n/a | n/a | Worker has no exposed port |
+| Host env var | Default | Container | Use                        |
+| ------------ | ------: | --------: | -------------------------- |
+| none         |     n/a |       n/a | Worker has no exposed port |
 
 ## Run
 

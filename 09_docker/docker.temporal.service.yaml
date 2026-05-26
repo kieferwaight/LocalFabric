@@ -3,30 +3,32 @@
   description: |
     Temporal auto-setup server backed by PostgreSQL. Provides durable workflow execution
     for the worker services. Dynamic config is mounted from ./dynamicconfig.
-  tags: [docker, workers]
+  tags:
+  - docker
+  - workers
   extends: docker.base
   inputs:
     POSTGRES_USER:
-      type: "string"
+      type: string
       required: true
       description: PostgreSQL user used by Temporal
     POSTGRES_PASSWORD:
-      type: "string"
+      type: string
       required: true
       description: PostgreSQL password used by Temporal
     POSTGRES_SEEDS:
-      type: "string"
+      type: string
       required: true
       description: Comma-separated PostgreSQL host seeds (default pgvector)
     TEMPORAL_PORT:
-      type: "string"
+      type: string
       required: false
-      default: "7233"
+      default: '7233'
       description: Host port to expose the Temporal frontend gRPC API (default 7233)
     DB_PORT:
-      type: "string"
+      type: string
       required: false
-      default: "5432"
+      default: '5432'
       description: PostgreSQL port Temporal connects to (default 5432)
   variables:
     services:
@@ -36,17 +38,17 @@
         restart: unless-stopped
         environment:
           DB: postgresql
-          DB_PORT: "{{ DB_PORT }}"
-          POSTGRES_USER: "{{ POSTGRES_USER }}"
-          POSTGRES_PWD: "{{ POSTGRES_PASSWORD }}"
-          POSTGRES_SEEDS: "{{ POSTGRES_SEEDS }}"
+          DB_PORT: '{{ DB_PORT }}'
+          POSTGRES_USER: '{{ POSTGRES_USER }}'
+          POSTGRES_PWD: '{{ POSTGRES_PASSWORD }}'
+          POSTGRES_SEEDS: '{{ POSTGRES_SEEDS }}'
           DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/development-sql.yaml
         ports:
-          - "{{ TEMPORAL_PORT }}:7233"
+        - '{{ TEMPORAL_PORT }}:7233'
         volumes:
-          - "./dynamicconfig:/etc/temporal/config/dynamicconfig"
+        - ./dynamicconfig:/etc/temporal/config/dynamicconfig
     extra_files:
-      - path: "dynamicconfig/development-sql.yaml"
-        content: |
-          frontend.enableUpdateWorkflowExecution:
-            - value: true
+    - path: dynamicconfig/development-sql.yaml
+      content: |-
+        frontend.enableUpdateWorkflowExecution:
+          - value: true

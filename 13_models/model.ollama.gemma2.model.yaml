@@ -3,7 +3,8 @@
   description: >
     Efficient general chat, summarization, question answering, and everyday
     local assistant use.
-  tags: [model]
+  tags:
+  - model
   extends: model.base
   variables:
     name: gemma2
@@ -13,7 +14,7 @@
         local assistant use.
       vendor: Google
     providers:
-      - ollama
+    - ollama
     features:
-      - text
-      - streaming
+    - text
+    - streaming

@@ -3,17 +3,19 @@
   description: |
     GROBID PDF parsing service used to extract structured metadata, references, and
     full-text from scholarly PDFs in the document ingestion pipeline.
-  tags: [docker, document]
+  tags:
+  - docker
+  - document
   extends: docker.base
   inputs:
     DATA_PATH:
-      type: "string"
+      type: string
       required: true
       description: Host path for GROBID scratch storage (binds to /opt/grobid/grobid-home/tmp in container)
     GROBID_PORT:
-      type: "string"
+      type: string
       required: false
-      default: "8070"
+      default: '8070'
       description: Host port to expose the GROBID HTTP API (default 8070)
   variables:
     services:
@@ -22,6 +24,6 @@
         container_name: contentgraph-grobid
         restart: unless-stopped
         ports:
-          - "{{ GROBID_PORT }}:8070"
+        - '{{ GROBID_PORT }}:8070'
         volumes:
-          - "{{ DATA_PATH }}:/opt/grobid/grobid-home/tmp"
+        - '{{ DATA_PATH }}:/opt/grobid/grobid-home/tmp'

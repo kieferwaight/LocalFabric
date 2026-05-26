@@ -9,16 +9,7 @@ from core.runtimes.markdown.compiler import MarkdownCompileError, compile_text
 
 
 def test_minimal_file_compiles() -> None:
-    source = (
-        "---\n"
-        "id: x.y\n"
-        "---\n"
-        "# Hi\n"
-        "\n"
-        "```bash {id: greet}\n"
-        "echo hello\n"
-        "```\n"
-    )
+    source = "---\nid: x.y\n---\n# Hi\n\n```bash {id: greet}\necho hello\n```\n"
     result = compile_text(source)
     assert result["id"] == "x.y"
     assert result["run"] == [{"bash": "echo hello\n"}]
@@ -28,30 +19,14 @@ def test_minimal_file_compiles() -> None:
 
 
 def test_frontmatter_extends_and_mixins_pass_through() -> None:
-    source = (
-        "---\n"
-        "id: a.b\n"
-        "extends: stdlib.base\n"
-        "mixins: [m.one, m.two]\n"
-        "---\n"
-        "body\n"
-    )
+    source = "---\nid: a.b\nextends: stdlib.base\nmixins: [m.one, m.two]\n---\nbody\n"
     result = compile_text(source)
     assert result["extends"] == "stdlib.base"
     assert result["mixins"] == ["m.one", "m.two"]
 
 
 def test_body_variable_bound_to_full_body() -> None:
-    source = (
-        "---\n"
-        "id: x\n"
-        "---\n"
-        "first body line\n"
-        "```bash\n"
-        "echo hi\n"
-        "```\n"
-        "trailing line\n"
-    )
+    source = "---\nid: x\n---\nfirst body line\n```bash\necho hi\n```\ntrailing line\n"
     result = compile_text(source)
     body = result["variables"]["body"]
     assert "first body line" in body
@@ -60,24 +35,13 @@ def test_body_variable_bound_to_full_body() -> None:
 
 
 def test_author_declared_body_wins() -> None:
-    source = (
-        "---\n"
-        "id: x\n"
-        "variables:\n"
-        "  body: \"explicit\"\n"
-        "---\n"
-        "implicit body\n"
-    )
+    source = '---\nid: x\nvariables:\n  body: "explicit"\n---\nimplicit body\n'
     result = compile_text(source)
     assert result["variables"]["body"] == "explicit"
 
 
 def test_duplicate_block_ids_rejected() -> None:
-    source = (
-        "---\nid: x\n---\n"
-        "```bash {id: dup}\necho a\n```\n"
-        "```bash {id: dup}\necho b\n```\n"
-    )
+    source = "---\nid: x\n---\n```bash {id: dup}\necho a\n```\n```bash {id: dup}\necho b\n```\n"
     with pytest.raises(MarkdownCompileError, match="duplicate block id"):
         compile_text(source)
 
@@ -98,20 +62,14 @@ def test_skip_drops_block_from_run() -> None:
 
 def test_skipped_block_id_still_counted_for_uniqueness() -> None:
     source = (
-        "---\nid: x\n---\n"
-        "```bash {id: same, skip: true}\n```\n"
-        "```bash {id: same}\necho hi\n```\n"
+        "---\nid: x\n---\n```bash {id: same, skip: true}\n```\n```bash {id: same}\necho hi\n```\n"
     )
     with pytest.raises(MarkdownCompileError, match="duplicate block id"):
         compile_text(source)
 
 
 def test_unknown_languages_logged_and_dropped(caplog: pytest.LogCaptureFixture) -> None:
-    source = (
-        "---\nid: x\n---\n"
-        "```ollama\nprompt\n```\n"
-        "```bash\necho ok\n```\n"
-    )
+    source = "---\nid: x\n---\n```ollama\nprompt\n```\n```bash\necho ok\n```\n"
     with caplog.at_level(logging.WARNING, logger="core.runtimes.markdown"):
         result = compile_text(source, source_path="t.md")
     assert result["run"] == [{"bash": "echo ok\n"}]
@@ -119,11 +77,7 @@ def test_unknown_languages_logged_and_dropped(caplog: pytest.LogCaptureFixture) 
 
 
 def test_bare_fence_without_language_is_skipped() -> None:
-    source = (
-        "---\nid: x\n---\n"
-        "```\nnot runnable\n```\n"
-        "```bash\necho runnable\n```\n"
-    )
+    source = "---\nid: x\n---\n```\nnot runnable\n```\n```bash\necho runnable\n```\n"
     result = compile_text(source)
     assert result["run"] == [{"bash": "echo runnable\n"}]
 
@@ -140,10 +94,7 @@ def test_run_block_order_matches_source() -> None:
 
 
 def test_working_dir_attribute_preserved_in_metadata() -> None:
-    source = (
-        "---\nid: x\n---\n"
-        "```bash {id: a, working_dir: /tmp}\necho hi\n```\n"
-    )
+    source = "---\nid: x\n---\n```bash {id: a, working_dir: /tmp}\necho hi\n```\n"
     result = compile_text(source)
     block = result["run"][0]
     assert block["bash"] == "echo hi\n"
@@ -169,15 +120,6 @@ def test_missing_frontmatter_raises_compile_error() -> None:
 
 
 def test_inputs_passthrough_keeps_constraint_shape() -> None:
-    source = (
-        "---\n"
-        "id: x\n"
-        "inputs:\n"
-        "  name:\n"
-        "    type: string\n"
-        "    required: true\n"
-        "---\n"
-        "body\n"
-    )
+    source = "---\nid: x\ninputs:\n  name:\n    type: string\n    required: true\n---\nbody\n"
     result = compile_text(source)
     assert result["inputs"] == {"name": {"type": "string", "required": True}}

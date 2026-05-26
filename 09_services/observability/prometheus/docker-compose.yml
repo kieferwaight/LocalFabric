@@ -6,10 +6,10 @@ services:
     container_name: contentgraph-prometheus
     restart: unless-stopped
     command:
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
+    - --config.file=/etc/prometheus/prometheus.yml
+    - --storage.tsdb.path=/prometheus
     ports:
-      - "${PROMETHEUS_PORT:-9090}:9090"
+    - ${PROMETHEUS_PORT:-9090}:9090
     volumes:
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - ${DATA_PATH}:/prometheus
+    - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    - ${DATA_PATH}:/prometheus

@@ -3,23 +3,23 @@
   description: |
     Local Casbin authorization service built from the bundled FastAPI app. Provides a
     minimal HTTP surface for policy enforcement decisions in the content graph stack.
-  tags: [docker, auth]
+  tags:
+  - docker
+  - auth
   extends: docker.base
   inputs:
     CASBIN_PORT:
-      type: "string"
+      type: string
       required: false
-      default: "8090"
+      default: '8090'
       description: Host port to expose the Casbin service HTTP API (default 8090)
   variables:
-    image_tag: "contentgraph-casbin-service:local"
+    image_tag: contentgraph-casbin-service:local
     dockerfile_body: |
       FROM python:3.12-slim
-
       WORKDIR /app
       RUN pip install --no-cache-dir fastapi uvicorn[standard] casbin
       COPY app /app
-
       EXPOSE 8080
       CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
     services:
@@ -29,15 +29,12 @@
         container_name: contentgraph-casbin-service
         restart: unless-stopped
         ports:
-          - "{{ CASBIN_PORT }}:8080"
+        - '{{ CASBIN_PORT }}:8080'
     extra_files:
-      - path: "app/main.py"
-        content: |
-          from fastapi import FastAPI
-
-          app = FastAPI(title="Casbin Authorization Service")
-
-
-          @app.get("/health")
-          def health() -> dict[str, str]:
-              return {"status": "ok"}
+    - path: app/main.py
+      content: |-
+        from fastapi import FastAPI
+        app = FastAPI(title="Casbin Authorization Service")
+        @app.get("/health")
+        def health() -> dict[str, str]:
+            return {"status": "ok"}

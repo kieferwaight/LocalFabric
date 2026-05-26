@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import os
 from collections import deque
-from typing import Any, Deque, Dict, Iterator, Mapping, Optional
+from collections.abc import Iterator, Mapping
+from typing import Any
 
 from harnesses.base import Harness, HarnessError, HarnessStatus
 
@@ -22,13 +23,13 @@ class OpenAIHarness(Harness):
 
     name = "openai"
     _default_model = "gpt-4o-mini"
-    _default_base_url: Optional[str] = None  # SDK default
+    _default_base_url: str | None = None  # SDK default
     _api_key_env = "OPENAI_API_KEY"
 
-    def __init__(self, config: Optional[Mapping[str, Any]] = None) -> None:
+    def __init__(self, config: Mapping[str, Any] | None = None) -> None:
         super().__init__(config)
-        self._client: Optional[Any] = None
-        self._request_ids: Deque[str] = deque(maxlen=64)
+        self._client: Any | None = None
+        self._request_ids: deque[str] = deque(maxlen=64)
         self.model: str = self.config.get("model", self._default_model)
         self.timeout: float = float(self.config.get("timeout", 60))
 
@@ -45,7 +46,7 @@ class OpenAIHarness(Harness):
         if not api_key and not self.config.get("allow_anonymous"):
             raise HarnessError(f"{self._api_key_env} is not set")
 
-        kwargs: Dict[str, Any] = {"api_key": api_key or "missing", "timeout": self.timeout}
+        kwargs: dict[str, Any] = {"api_key": api_key or "missing", "timeout": self.timeout}
         base_url = self.config.get("base_url", self._default_base_url)
         if base_url:
             kwargs["base_url"] = base_url
@@ -57,16 +58,24 @@ class OpenAIHarness(Harness):
         self._client = OpenAI(**kwargs)
         return self._client
 
-    def _build_chat_kwargs(self, request: Mapping[str, Any]) -> Dict[str, Any]:
+    def _build_chat_kwargs(self, request: Mapping[str, Any]) -> dict[str, Any]:
         messages = request.get("messages")
         if messages is None:
             messages = [{"role": "user", "content": request.get("prompt", "")}]
-        kwargs: Dict[str, Any] = {
+        kwargs: dict[str, Any] = {
             "model": request.get("model", self.model),
             "messages": list(messages),
         }
-        for key in ("temperature", "top_p", "max_tokens", "tools", "tool_choice",
-                    "response_format", "seed", "stop"):
+        for key in (
+            "temperature",
+            "top_p",
+            "max_tokens",
+            "tools",
+            "tool_choice",
+            "response_format",
+            "seed",
+            "stop",
+        ):
             if key in request:
                 kwargs[key] = request[key]
         return kwargs
@@ -89,7 +98,7 @@ class OpenAIHarness(Harness):
         )
 
     # ------------------------------------------------------------------ requests
-    def invoke(self, request: Mapping[str, Any]) -> Dict[str, Any]:
+    def invoke(self, request: Mapping[str, Any]) -> dict[str, Any]:
         client = self._ensure_client()
         kwargs = self._build_chat_kwargs(request)
         try:
@@ -109,7 +118,7 @@ class OpenAIHarness(Harness):
             "usage": getattr(getattr(response, "usage", None), "model_dump", lambda: {})(),
         }
 
-    def stream(self, request: Mapping[str, Any]) -> Iterator[Dict[str, Any]]:
+    def stream(self, request: Mapping[str, Any]) -> Iterator[dict[str, Any]]:
         client = self._ensure_client()
         kwargs = self._build_chat_kwargs(request)
         kwargs["stream"] = True

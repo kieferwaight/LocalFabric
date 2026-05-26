@@ -8,6 +8,7 @@ We use `ast.parse` rather than importing the modules: imports would execute
 module-level code (including circular ones) and require the target package to
 be installed, which a generator must not assume.
 """
+
 from __future__ import annotations
 
 import ast
@@ -17,10 +18,10 @@ from pathlib import Path
 
 @dataclass(frozen=True)
 class ModuleExports:
-    name: str               # `.compiler` or `.src` — sibling module name
-    is_subpackage: bool     # True for subdirs containing __init__.py
-    docstring: str          # First line of the module docstring (or "")
-    exports: list[str]      # Names from the module's `__all__`
+    name: str  # `.compiler` or `.src` — sibling module name
+    is_subpackage: bool  # True for subdirs containing __init__.py
+    docstring: str  # First line of the module docstring (or "")
+    exports: list[str]  # Names from the module's `__all__`
 
 
 def discover_modules(package_dir: Path) -> list[Path]:
@@ -132,9 +133,7 @@ def read_module_exports(module_path: Path) -> ModuleExports:
     )
 
 
-def scan_package(
-    package_dir: Path, exclude: list[str] | None = None
-) -> list[dict[str, object]]:
+def scan_package(package_dir: Path, exclude: list[str] | None = None) -> list[dict[str, object]]:
     """Return one entry per barrel-relevant child of `package_dir`.
 
     Entries with an empty `exports` list are dropped — re-exporting nothing is
@@ -154,10 +153,12 @@ def scan_package(
         # re-exporting nothing from it is just noise, so skip.
         if not meta.is_subpackage and not meta.exports:
             continue
-        out.append({
-            "name": meta.name,
-            "is_subpackage": meta.is_subpackage,
-            "docstring": meta.docstring,
-            "exports": list(meta.exports),
-        })
+        out.append(
+            {
+                "name": meta.name,
+                "is_subpackage": meta.is_subpackage,
+                "docstring": meta.docstring,
+                "exports": list(meta.exports),
+            }
+        )
     return out

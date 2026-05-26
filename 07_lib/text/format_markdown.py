@@ -49,14 +49,19 @@ def format_markdown_with_lmstudio(
 
     if executor is None:
         from harnesses.lmstudio import harness as lmstudio
-        executor = lmstudio.LMStudioHarness({
-            "base_url": "http://localhost:1234/v1",
-            "model": model,
-            "api_key": "lm-studio",
-        })
 
-    response = executor.invoke({
-        "model": model,
-        "messages": [{"role": "user", "content": prompt}],
-    })
+        executor = lmstudio.LMStudioHarness(
+            {
+                "base_url": "http://localhost:1234/v1",
+                "model": model,
+                "api_key": "lm-studio",
+            }
+        )
+
+    response = executor.invoke(
+        {
+            "model": model,
+            "messages": [{"role": "user", "content": prompt}],
+        }
+    )
     return response["choices"][0]["message"]["content"]

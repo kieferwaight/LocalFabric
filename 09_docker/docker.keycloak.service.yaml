@@ -3,25 +3,27 @@
   description: |
     Keycloak identity provider running in dev mode. Hosts realms, users, and OIDC/SAML
     clients for the local content graph stack; bound data volume persists realm state.
-  tags: [docker, auth]
+  tags:
+  - docker
+  - auth
   extends: docker.base
   inputs:
     DATA_PATH:
-      type: "string"
+      type: string
       required: true
       description: Host path for Keycloak data (binds to /opt/keycloak/data in container)
     KEYCLOAK_ADMIN:
-      type: "string"
+      type: string
       required: true
       description: Keycloak admin user
     KEYCLOAK_ADMIN_PASSWORD:
-      type: "string"
+      type: string
       required: true
       description: Keycloak admin password
     KEYCLOAK_PORT:
-      type: "string"
+      type: string
       required: false
-      default: "8082"
+      default: '8082'
       description: Host port to expose the Keycloak HTTP interface (default 8082)
   variables:
     services:
@@ -31,9 +33,9 @@
         restart: unless-stopped
         command: start-dev
         environment:
-          KEYCLOAK_ADMIN: "{{ KEYCLOAK_ADMIN }}"
-          KEYCLOAK_ADMIN_PASSWORD: "{{ KEYCLOAK_ADMIN_PASSWORD }}"
+          KEYCLOAK_ADMIN: '{{ KEYCLOAK_ADMIN }}'
+          KEYCLOAK_ADMIN_PASSWORD: '{{ KEYCLOAK_ADMIN_PASSWORD }}'
         ports:
-          - "{{ KEYCLOAK_PORT }}:8080"
+        - '{{ KEYCLOAK_PORT }}:8080'
         volumes:
-          - "{{ DATA_PATH }}:/opt/keycloak/data"
+        - '{{ DATA_PATH }}:/opt/keycloak/data'

@@ -3,29 +3,31 @@
   description: |
     Vanilla PostgreSQL 16 instance for relational storage. Used when no vector workload
     is required; the pgvector image is preferred for the content graph MVP.
-  tags: [docker, database]
+  tags:
+  - docker
+  - database
   extends: docker.base
   inputs:
     DATA_PATH:
-      type: "string"
+      type: string
       required: true
       description: Host path for PostgreSQL data storage (binds to /var/lib/postgresql/data in container)
     POSTGRES_USER:
-      type: "string"
+      type: string
       required: true
       description: PostgreSQL superuser name
     POSTGRES_PASSWORD:
-      type: "string"
+      type: string
       required: true
       description: PostgreSQL superuser password
     POSTGRES_DB:
-      type: "string"
+      type: string
       required: true
       description: Initial PostgreSQL database name (default contentgraph)
     POSTGRES_PORT:
-      type: "string"
+      type: string
       required: false
-      default: "5433"
+      default: '5433'
       description: Host port to bind PostgreSQL client traffic (default 5433)
   variables:
     services:
@@ -34,10 +36,10 @@
         container_name: contentgraph-postgres
         restart: unless-stopped
         environment:
-          POSTGRES_USER: "{{ POSTGRES_USER }}"
-          POSTGRES_PASSWORD: "{{ POSTGRES_PASSWORD }}"
-          POSTGRES_DB: "{{ POSTGRES_DB }}"
+          POSTGRES_USER: '{{ POSTGRES_USER }}'
+          POSTGRES_PASSWORD: '{{ POSTGRES_PASSWORD }}'
+          POSTGRES_DB: '{{ POSTGRES_DB }}'
         ports:
-          - "{{ POSTGRES_PORT }}:5432"
+        - '{{ POSTGRES_PORT }}:5432'
         volumes:
-          - "{{ DATA_PATH }}:/var/lib/postgresql/data"
+        - '{{ DATA_PATH }}:/var/lib/postgresql/data'

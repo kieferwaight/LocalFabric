@@ -6,6 +6,6 @@ services:
     container_name: contentgraph-clamav
     restart: unless-stopped
     ports:
-      - "${CLAMAV_PORT:-3310}:3310"
+    - ${CLAMAV_PORT:-3310}:3310
     volumes:
-      - ${DATA_PATH}:/var/lib/clamav
+    - ${DATA_PATH}:/var/lib/clamav

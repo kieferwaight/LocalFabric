@@ -10,6 +10,6 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB:-contentgraph}
     ports:
-      - "${POSTGRES_PORT:-5433}:5432"
+    - ${POSTGRES_PORT:-5433}:5432
     volumes:
-      - ${DATA_PATH}:/var/lib/postgresql/data
+    - ${DATA_PATH}:/var/lib/postgresql/data
