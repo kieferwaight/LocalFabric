@@ -1,4 +1,4 @@
-- id: docs.classification.render
+- id: docs.classification.render.workflow
   title: Render Classification Docs
   description: |
     Renders `classification_audit.md` and `classification_remediation_workflow.md`

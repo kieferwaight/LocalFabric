@@ -1,4 +1,4 @@
-- id: audit-classifications
+- id: audit.classifications.scan.workflow
   title: Audit classification boundaries and ownership
   description: |-
     Audit classification boundaries and ownership. This workflow analyzes files

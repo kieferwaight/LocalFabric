@@ -1,9 +1,9 @@
-- id: barrels.workflows
+- id: barrels.regenerate.workflow
   title: Regenerate All Workflows Barrels
   description: |
     Regenerates `__init__.py` files across the whole `workflows` namespace:
     the top-level `06_workflows/__init__.py` (subpackage-exposing barrel),
-    then the per-subpackage barrels via `barrels.workflows-yaml`. Run this
+    then the per-subpackage barrels via `barrels.regenerate.yaml-runtime`. Run this
     from anywhere — paths anchor on `runtime.workflow_dir`, not shell cwd.
   tags: [python, generator, workflow]
   extends: stdlib.base
@@ -26,11 +26,11 @@
           mode: "{{ mode }}"
           flatten: false
     - invoke:
-        definition: barrels.workflows-yaml
+        definition: barrels.regenerate.yaml-runtime
         arguments:
           mode: "{{ mode }}"
 
-- id: barrels.workflows-yaml
+- id: barrels.regenerate.yaml-runtime
   title: Regenerate workflows.yaml Bucket Barrels
   description: |
     Generates `__init__.py` files for the two Python packages in this bucket:

@@ -8,7 +8,7 @@ Public surface:
     save_manifest(manifest_path, m)  — write the sweep manifest JSON
 
 The orchestration loop (collect → chunk → embed → upsert → persist manifest) lives
-in ``06_workflows/embeddings-sweep.yaml``.
+in ``06_workflows/embeddings.sweep.workflow.yaml``.
 """
 
 import hashlib

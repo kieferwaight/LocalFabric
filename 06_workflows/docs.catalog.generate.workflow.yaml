@@ -1,4 +1,4 @@
-- id: docs.catalog.modules
+- id: docs.catalog.generate.workflow
   title: API Documentation Catalog Sources
   description: |-
     Imports template definitions used by the docs workflow and the runnable

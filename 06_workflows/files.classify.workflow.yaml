@@ -1,4 +1,4 @@
-- id: classify-files
+- id: files.classify.workflow
   title: Classify files for audit and remediation
   description: |-
     Classify files for audit and remediation. This workflow is designed to

@@ -1,4 +1,4 @@
-- id: embeddings.sweep
+- id: embeddings.sweep.workflow
   title: Sweep and embed project files into the vector store
   description: |-
     Walk *source_dir*, chunk every indexable file, generate embeddings via the

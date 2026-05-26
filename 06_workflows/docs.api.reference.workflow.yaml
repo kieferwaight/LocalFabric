@@ -1,4 +1,4 @@
-- id: docs.api.reference
+- id: docs.api.reference.workflow
   title: YAML API Reference Build
   description: 'Public documentation workflow. Renders the index, authoring schema, and one
 
@@ -12,7 +12,7 @@
   - workflow
   extends: stdlib.base
   modules:
-  - docs.catalog.yaml
+  - docs.catalog.generate.workflow.yaml
   inputs:
     output_dir:
       type: string
