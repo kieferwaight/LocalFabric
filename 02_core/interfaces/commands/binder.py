@@ -85,13 +85,91 @@ def bind_typer(
     sub_app.command(name=verb, help=command.description or f"{group} {verb}")(handler)
 
 
-def bind_fastapi(parent: Any, command: Command, runtime: Any) -> None:
-    """Register *command* as a FastAPI route on *parent*.
+def bind_fastapi(api: Any, command: Command, runtime: Any) -> None:
+    """Register *command* as a FastAPI route on *api*.
 
-    .. note::
-        Not implemented. Phase C3 will fill this in.
+    Route method: ``command.http_spec["method"]`` (default ``"POST"``).
+    Route path:   ``command.http_spec["path"]`` (required; skip if missing).
+    Request body: pydantic ``BaseModel`` built from ``command.inputs``:
+        ``string`` → ``str``, ``number`` → ``float``, ``boolean`` → ``bool``,
+        ``array`` → ``list``, ``object`` → ``dict``.
+    Handler: calls ``runtime.execute(command.definition_id, arguments=body.model_dump())``
+        and returns ``{"status": "ok", "command_id": ..., "result": <scope dict>}``.
+    All routes require the ``require_token`` dependency (loopback is always allowed).
+
+    fastapi and pydantic are imported lazily here to keep CLI-only environments
+    from pulling in the full FastAPI dependency tree.
     """
-    raise NotImplementedError("Phase C3 will implement bind_fastapi.")
+    from fastapi import Depends, HTTPException
+    from pydantic import Field, create_model
+
+    try:
+        from core.interfaces.api.auth import require_token
+    except ModuleNotFoundError:
+        from interfaces.api.auth import require_token  # type: ignore[no-redef]
+
+    path: str = command.http_spec.get("path", "")
+    if not path:
+        return
+
+    method: str = (command.http_spec.get("method") or "POST").upper()
+
+    # Build pydantic request model from command.inputs.
+    _API_TYPE_MAP: dict[str, type] = {
+        "string": str,
+        "number": float,
+        "boolean": bool,
+        "array": list,
+        "object": dict,
+    }
+
+    fields: dict[str, Any] = {}
+    for name, c in command.inputs.items():
+        pytype = _API_TYPE_MAP.get(c.type, str)
+        if c.required:
+            default = ...  # Ellipsis sentinel — pydantic v2 required field
+        else:
+            default = c.default if c.default is not None else None
+        fields[name] = (pytype, Field(default, description=c.description or ""))
+
+    RequestModel = create_model(  # noqa: N806
+        f"{command.id.replace('.', '_')}_Request", **fields
+    )
+
+    # Capture loop variables in the closure.
+    _cmd_id = command.definition_id
+
+    async def handler(
+        body: RequestModel,  # type: ignore[valid-type]
+        _: None = Depends(require_token),
+    ) -> dict:
+        try:
+            result = runtime.execute(_cmd_id, arguments=body.model_dump())
+        except Exception as exc:
+            raise HTTPException(status_code=500, detail=f"{type(exc).__name__}: {exc}") from exc
+        return {"status": "ok", "command_id": _cmd_id, "result": result}
+
+    # Give the handler a unique name so FastAPI's OpenAPI schema doesn't collide.
+    handler.__name__ = f"{command.id.replace('.', '_')}_handler"
+    handler.__qualname__ = handler.__name__
+
+    # `from __future__ import annotations` at the top of this module causes all
+    # annotations to be stored as strings (PEP 563). FastAPI resolves them via
+    # get_type_hints(), which uses the handler's __globals__. Since RequestModel is
+    # a local variable (not in __globals__), FastAPI can't find it and falls back
+    # to treating `body` as a query parameter. Fix: overwrite __annotations__ with
+    # the actual resolved types.
+    handler.__annotations__ = {
+        "body": RequestModel,
+        "_": type(None),
+        "return": dict,
+    }
+
+    # Register against the appropriate HTTP method.
+    route_registrar = getattr(api, method.lower(), None)
+    if route_registrar is None:
+        raise ValueError(f"FastAPI app has no method '{method.lower()}' for command {command.id!r}.")
+    route_registrar(path, summary=command.description or command.id)(handler)
 
 
 def bind_fastmcp(mcp: Any, command: Command, runtime: Any) -> None:

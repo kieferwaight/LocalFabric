@@ -24,6 +24,8 @@ dependencies = [
     "beautifulsoup4>=4.12",
     "langgraph>=0.2",
     "mcp>=1.0",
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.27",
 ]
 
 [project.optional-dependencies]
@@ -38,6 +40,7 @@ notebook = ["openai>=1.0", "ipykernel>=6.0"]
 localfabric = "core.interfaces.cli.main:app"
 localfabric-md = "core.interfaces.cli.markdown_runtime:main"
 localfabric-mcp = "core.interfaces.mcp.server:main"
+localfabric-api = "core.interfaces.api.app:cli_main"
 
 [tool.setuptools]
 # Map clean import names to the numbered on-disk buckets. Only five
@@ -64,6 +67,7 @@ packages = [
     "core.interfaces.commands",
     "core.interfaces.cli",
     "core.interfaces.mcp",
+    "core.interfaces.api",
     "interfaces",
     "harnesses",
     "harnesses.claude",
