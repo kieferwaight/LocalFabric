@@ -18,7 +18,7 @@ Writes rendered UTF-8 text and restores escaped template markers.
 | --- | --- |
 | Extends | [Abstract Base](stdlib.base.definition.md) |
 | Mixins | - |
-| Children | [Write Python Gitignore](stdlib.git.gitignore-python.task.definition.md), [Obsidian Daily Note Template](obsidian.template.definition.md) |
+| Children | [Write Python Gitignore](stdlib.git.gitignore-python.task.definition.md), [Obsidian Daily Note Template](obsidian.daily-note.example.definition.md) |
 | Mixin consumers | - |
 | Modules | - |
 
@@ -27,7 +27,7 @@ flowchart LR
   def_stdlib_files_write_text_task["Write Text File"]
 def_stdlib_files_write_text_task --> def_stdlib_base["Abstract Base"]
 def_stdlib_git_gitignore_python_task["Write Python Gitignore"] --> def_stdlib_files_write_text_task
-def_obsidian_template["Obsidian Daily Note Template"] --> def_stdlib_files_write_text_task
+def_obsidian_daily_note_example["Obsidian Daily Note Template"] --> def_stdlib_files_write_text_task
 ```
 
 

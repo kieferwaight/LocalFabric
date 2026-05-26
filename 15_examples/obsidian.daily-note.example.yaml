@@ -1,4 +1,4 @@
-- id: obsidian.template
+- id: obsidian.daily-note.example
   title: Obsidian Daily Note Template
   description: |
     Creates a starter daily-note Markdown template beneath an Obsidian folder.

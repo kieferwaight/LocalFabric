@@ -1,12 +1,29 @@
 # 15_examples/
 
-Example and demo YAML definitions showing how to compose the YAML runtime. These files
-are NOT auto-loaded by `stdlib.load-modules.workflow`; load them explicitly via `modules:` or
-`runtime.import_yaml(...)` when exercising examples.
+Runnable example compositions for the YAML and markdown runtimes. Holds
+both:
 
-| File | What it shows |
-|------|---------------|
-| `cloud.yaml` | Mixin-composed deployment workflow with `cloud.deployer` |
-| `git.yaml` | Git workspace initialization examples |
-| `obsidian.yaml` | Obsidian daily-note template example |
-| `examples.catalog.yaml` | Module catalog that imports all example definitions |
+- **YAML examples** (`*.yaml`) — multi-step compositions exercising mixins,
+  inputs, and templated outputs.
+- **Markdown examples** (`*.example.md`) — single-prompt fixtures for the
+  markdown runtime harness; loaded by the same harness that registers
+  `12_prompts/`.
+
+Examples are NOT auto-loaded by `stdlib.load-modules.workflow`. The YAML
+runtime picks them up via `import_repo_wide` (which scans this bucket),
+and the markdown harness picks up the `.example.md` files the same way.
+
+Naming follows the platform-wide pattern: every concrete id ends with
+`.example` (or `.mixin` when the def is a reusable mixin supporting an
+example).
+
+| File | Id(s) |
+|------|-------|
+| `cloud.yaml` | `cloud.mixin.git-info`, `cloud.mixin.timestamp`, `cloud.deployer.example` |
+| `git.yaml` | `git.init.example`, `git.github.example`, `git.gitignore.example` |
+| `obsidian.daily-note.example.yaml` | `obsidian.daily-note.example` |
+| `examples.catalog.yaml` | `examples.catalog.modules` (manifest, loads all of the above) |
+| `code.summarize.example.md` | `code.summarize.example` (provider-style: Claude) |
+| `polyglot.hello.example.md` | `polyglot.hello.example` (fence-style demo) |
+| `python.hello.example.md` | `python.hello.example` (fence-style demo) |
+| `shell.hello.example.md` | `shell.hello.example` (fence-style demo, used by `16_tests/harnesses.markdown.cli.test.py`) |

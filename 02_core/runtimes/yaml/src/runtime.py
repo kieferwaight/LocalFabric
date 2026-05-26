@@ -123,7 +123,7 @@ class Runtime:
         "14_templates",
         "15_examples",
     ]
-    _REPO_WIDE_MARKDOWN_BUCKETS = ["12_prompts"]
+    _REPO_WIDE_MARKDOWN_BUCKETS = ["12_prompts", "15_examples"]
 
     def import_repo_wide(
         self,
@@ -135,7 +135,7 @@ class Runtime:
 
         Returns a dict mapping bucket name to count of definitions registered.
         If markdown_harness is provided, compiles and registers every .md file
-        under 12_prompts/.
+        under the listed markdown buckets.
         """
         import logging
         import warnings

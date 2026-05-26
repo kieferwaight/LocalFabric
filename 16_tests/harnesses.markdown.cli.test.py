@@ -8,18 +8,18 @@ from pathlib import Path
 import pytest
 from core.interfaces.cli.markdown_runtime import main
 
-PROMPTS = Path(__file__).resolve().parents[1] / "12_prompts"
+EXAMPLES = Path(__file__).resolve().parents[1] / "15_examples"
 
 
 def test_cli_runs_hello_shell_example() -> None:
-    rc = main([str(PROMPTS / "shell.hello.example.md")])
+    rc = main([str(EXAMPLES / "shell.hello.example.md")])
     assert rc == 0
 
 
 def test_cli_runs_polyglot_example_with_debug(capsys: pytest.CaptureFixture[str]) -> None:
     rc = main(
         [
-            str(PROMPTS / "polyglot.hello.example.md"),
+            str(EXAMPLES / "polyglot.hello.example.md"),
             "--name=World",
             "--debug",
         ]

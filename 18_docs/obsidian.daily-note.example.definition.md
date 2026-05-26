@@ -5,8 +5,8 @@
 
 | Field | Value |
 | --- | --- |
-| ID | `obsidian.template` |
-| Source | `15_examples/obsidian.yaml` |
+| ID | `obsidian.daily-note.example` |
+| Source | `15_examples/obsidian.daily-note.example.yaml` |
 | Tags | example, obsidian, templates |
 
 Creates a starter daily-note Markdown template beneath an Obsidian folder.
@@ -24,8 +24,8 @@ Creates a starter daily-note Markdown template beneath an Obsidian folder.
 
 ```mermaid
 flowchart LR
-  def_obsidian_template["Obsidian Daily Note Template"]
-def_obsidian_template --> def_stdlib_files_write_text_task["Write Text File"]
+  def_obsidian_daily_note_example["Obsidian Daily Note Template"]
+def_obsidian_daily_note_example --> def_stdlib_files_write_text_task["Write Text File"]
 ```
 
 
@@ -61,8 +61,8 @@ _No locally declared teardown operations._
 
 | Name | Type | Required | Default | Origin |
 | --- | --- | --- | --- | --- |
-| `obsidian_folder` | `string` | yes | `-` | [Obsidian Daily Note Template](obsidian.template.definition.md) |
-| `template_name` | `string` | no | `daily-note.md` | [Obsidian Daily Note Template](obsidian.template.definition.md) |
+| `obsidian_folder` | `string` | yes | `-` | [Obsidian Daily Note Template](obsidian.daily-note.example.definition.md) |
+| `template_name` | `string` | no | `daily-note.md` | [Obsidian Daily Note Template](obsidian.daily-note.example.definition.md) |
 
 
 ### Effective Variables
@@ -70,8 +70,8 @@ _No locally declared teardown operations._
 | Name | Value / Template | Origin |
 | --- | --- | --- |
 | `system_log_format` | `[{{ entity_id }} \| {{ runtime.version }}]` | [Abstract Base](stdlib.base.definition.md) |
-| `target_path` | `{{ obsidian_folder }}/Templates/{{ template_name }}` | [Obsidian Daily Note Template](obsidian.template.definition.md) |
-| `content` | `--- created: "[[OPEN_TEMPLATE]]date:YYYY-MM-DD[[CLOSE_TEMPLATE]]" tags:   - daily-note ---  # [[OPEN_TEMPLATE]]date:dddd, MMMM D, YYYY[[CLOSE_TEMPLATE]]  ## Focus  -  ## Notes  - ` | [Obsidian Daily Note Template](obsidian.template.definition.md) |
+| `target_path` | `{{ obsidian_folder }}/Templates/{{ template_name }}` | [Obsidian Daily Note Template](obsidian.daily-note.example.definition.md) |
+| `content` | `--- created: "[[OPEN_TEMPLATE]]date:YYYY-MM-DD[[CLOSE_TEMPLATE]]" tags:   - daily-note ---  # [[OPEN_TEMPLATE]]date:dddd, MMMM D, YYYY[[CLOSE_TEMPLATE]]  ## Focus  -  ## Notes  - ` | [Obsidian Daily Note Template](obsidian.daily-note.example.definition.md) |
 
 
 ### Effective Lifecycle

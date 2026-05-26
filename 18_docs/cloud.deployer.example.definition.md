@@ -5,7 +5,7 @@
 
 | Field | Value |
 | --- | --- |
-| ID | `cloud.deployer` |
+| ID | `cloud.deployer.example` |
 | Source | `15_examples/cloud.yaml` |
 | Tags | example, deployment, cloud |
 
@@ -24,10 +24,10 @@ Demonstrates an inherited, mixin-composed deployment workflow.
 
 ```mermaid
 flowchart LR
-  def_cloud_deployer["Cloud Deployer"]
-def_cloud_deployer --> def_stdlib_base["Abstract Base"]
-def_cloud_deployer -.-> def_cloud_mixin_timestamp["Timestamp"]
-def_cloud_deployer -.-> def_cloud_mixin_git_info["Git Information"]
+  def_cloud_deployer_example["Cloud Deployer"]
+def_cloud_deployer_example --> def_stdlib_base["Abstract Base"]
+def_cloud_deployer_example -.-> def_cloud_mixin_timestamp["Timestamp"]
+def_cloud_deployer_example -.-> def_cloud_mixin_git_info["Git Information"]
 ```
 
 
@@ -105,10 +105,10 @@ echo "tearing down deploy frame for {{ service }}"
 
 | Name | Type | Required | Default | Origin |
 | --- | --- | --- | --- | --- |
-| `service` | `string` | yes | `-` | [Cloud Deployer](cloud.deployer.definition.md) |
-| `replicas` | `number` | no | `3` | [Cloud Deployer](cloud.deployer.definition.md) |
-| `canary` | `boolean` | no | `false` | [Cloud Deployer](cloud.deployer.definition.md) |
-| `regions` | `array` | no | `us-east-1,us-west-2` | [Cloud Deployer](cloud.deployer.definition.md) |
+| `service` | `string` | yes | `-` | [Cloud Deployer](cloud.deployer.example.definition.md) |
+| `replicas` | `number` | no | `3` | [Cloud Deployer](cloud.deployer.example.definition.md) |
+| `canary` | `boolean` | no | `false` | [Cloud Deployer](cloud.deployer.example.definition.md) |
+| `regions` | `array` | no | `us-east-1,us-west-2` | [Cloud Deployer](cloud.deployer.example.definition.md) |
 
 
 ### Effective Variables
@@ -118,14 +118,14 @@ echo "tearing down deploy frame for {{ service }}"
 | `system_log_format` | `[{{ entity_id }} \| {{ runtime.version }}]` | [Abstract Base](stdlib.base.definition.md) |
 | `deploy_started_at` | `pending` | [Timestamp](cloud.mixin.timestamp.definition.md) |
 | `git_short_sha` | `unknown` | [Git Information](cloud.mixin.git-info.definition.md) |
-| `workspace` | `{{ env.cwd }}` | [Cloud Deployer](cloud.deployer.definition.md) |
-| `banner` | `[deploy v{{ runtime.version }}] {{ service }} -> {{ regions }}` | [Cloud Deployer](cloud.deployer.definition.md) |
+| `workspace` | `{{ env.cwd }}` | [Cloud Deployer](cloud.deployer.example.definition.md) |
+| `banner` | `[deploy v{{ runtime.version }}] {{ service }} -> {{ regions }}` | [Cloud Deployer](cloud.deployer.example.definition.md) |
 
 
 ### Effective Lifecycle
 
 | Phase | Operation | Origin |
 | --- | --- | --- |
-| Run | `bash` | [Cloud Deployer](cloud.deployer.definition.md) |
-| Run | `python` | [Cloud Deployer](cloud.deployer.definition.md) |
-| Teardown | `bash` | [Cloud Deployer](cloud.deployer.definition.md) |
+| Run | `bash` | [Cloud Deployer](cloud.deployer.example.definition.md) |
+| Run | `python` | [Cloud Deployer](cloud.deployer.example.definition.md) |
+| Teardown | `bash` | [Cloud Deployer](cloud.deployer.example.definition.md) |

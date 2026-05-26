@@ -18,15 +18,15 @@ Writes a Python-oriented `.gitignore` into the current workspace.
 | --- | --- |
 | Extends | [Write Text File](stdlib.files.write-text.task.definition.md) |
 | Mixins | - |
-| Children | [Gitignore Template Example](git.gitignore.definition.md) |
-| Mixin consumers | [Initialize Git Example](git.init.definition.md), [GitHub Repository Example](git.github.definition.md) |
+| Children | [Gitignore Template Example](git.gitignore.example.definition.md) |
+| Mixin consumers | [Initialize Git Example](git.init.example.definition.md), [GitHub Repository Example](git.github.example.definition.md) |
 | Modules | - |
 
 ```mermaid
 flowchart LR
   def_stdlib_git_gitignore_python_task["Write Python Gitignore"]
 def_stdlib_git_gitignore_python_task --> def_stdlib_files_write_text_task["Write Text File"]
-def_git_gitignore["Gitignore Template Example"] --> def_stdlib_git_gitignore_python_task
+def_git_gitignore_example["Gitignore Template Example"] --> def_stdlib_git_gitignore_python_task
 ```
 
 

@@ -19,7 +19,7 @@ Creates an `origin` GitHub repository through an authenticated GitHub CLI.
 | Extends | [Abstract Base](stdlib.base.definition.md) |
 | Mixins | - |
 | Children | - |
-| Mixin consumers | [GitHub Repository Example](git.github.definition.md) |
+| Mixin consumers | [GitHub Repository Example](git.github.example.definition.md) |
 | Modules | - |
 
 ```mermaid

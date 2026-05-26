@@ -35,7 +35,7 @@ python interpreter.py <yaml_file> <definition_id> [positional args] [--key=value
 ### Example
 
 ```bash
-python interpreter.py definitions/cloud.yaml cloud.deployer \
+python interpreter.py ../../../../15_examples/cloud.yaml cloud.deployer.example \
     --service=billing --replicas=2 --canary=false --debug
 ```
 
@@ -62,9 +62,6 @@ definitions/              # Flat YAML library (one or more definitions per file)
   docs.catalog.yaml       # source catalog for the generated reference
   docs.definition.template.yaml   # Jinja templates for each generated page
   examples.catalog.yaml   # catalog of runnable example definitions
-  cloud.yaml              # cloud.deployer example + mixins
-  git.yaml                # git.* example compositions
-  obsidian.yaml           # obsidian.template example
 docs/                     # Generated YAML API reference (committed)
 ```
 

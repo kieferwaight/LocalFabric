@@ -91,11 +91,11 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 | [Example Catalog Modules](examples.catalog.modules.definition.md) | `examples.catalog.modules` | `15_examples/examples.catalog.yaml` | example, modules |
 | [Git Information](cloud.mixin.git-info.definition.md) | `cloud.mixin.git-info` | `15_examples/cloud.yaml` | mixin, git, deployment |
 | [Timestamp](cloud.mixin.timestamp.definition.md) | `cloud.mixin.timestamp` | `15_examples/cloud.yaml` | mixin, deployment |
-| [Cloud Deployer](cloud.deployer.definition.md) | `cloud.deployer` | `15_examples/cloud.yaml` | example, deployment, cloud |
-| [Initialize Git Example](git.init.definition.md) | `git.init` | `15_examples/git.yaml` | example, git |
-| [GitHub Repository Example](git.github.definition.md) | `git.github` | `15_examples/git.yaml` | example, git, github |
-| [Gitignore Template Example](git.gitignore.definition.md) | `git.gitignore` | `15_examples/git.yaml` | example, git, templates |
-| [Obsidian Daily Note Template](obsidian.template.definition.md) | `obsidian.template` | `15_examples/obsidian.yaml` | example, obsidian, templates |
+| [Cloud Deployer](cloud.deployer.example.definition.md) | `cloud.deployer.example` | `15_examples/cloud.yaml` | example, deployment, cloud |
+| [Initialize Git Example](git.init.example.definition.md) | `git.init.example` | `15_examples/git.yaml` | example, git |
+| [GitHub Repository Example](git.github.example.definition.md) | `git.github.example` | `15_examples/git.yaml` | example, git, github |
+| [Gitignore Template Example](git.gitignore.example.definition.md) | `git.gitignore.example` | `15_examples/git.yaml` | example, git, templates |
+| [Obsidian Daily Note Template](obsidian.daily-note.example.definition.md) | `obsidian.daily-note.example` | `15_examples/obsidian.daily-note.example.yaml` | example, obsidian, templates |
 | [Render Classification Docs](docs.classification.render.workflow.definition.md) | `docs.classification.render.workflow` | `06_workflows/docs.classification.render.workflow.yaml` | documentation, workflow, classification |
 | [Docs - Classification Audit](docs.classification.audit.template.definition.md) | `docs.classification.audit.template` | `14_templates/docs.classification.template.yaml` | documentation, template, classification |
 | [Docs - Classification Remediation Workflow](docs.classification.remediation-workflow.template.definition.md) | `docs.classification.remediation-workflow.template` | `14_templates/docs.classification.template.yaml` | documentation, template, classification |
@@ -190,15 +190,15 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 | [image.vision.overview.task](image.vision.overview.task.definition.md) | `image.vision.overview.task` | `<raw>` | - |
 | [image.vision.style.task](image.vision.style.task.definition.md) | `image.vision.style.task` | `<raw>` | - |
 | [image.vision.visible-text.task](image.vision.visible-text.task.definition.md) | `image.vision.visible-text.task` | `<raw>` | - |
-| [Hello Polyglot](polyglot.hello.example.definition.md) | `polyglot.hello.example` | `<raw>` | - |
-| [Hello Python](python.hello.example.definition.md) | `python.hello.example` | `<raw>` | - |
-| [Hello Shell](shell.hello.example.definition.md) | `shell.hello.example` | `<raw>` | - |
 | [Spec promotion — Final stage](spec.promotion.final.task.definition.md) | `spec.promotion.final.task` | `<raw>` | - |
 | [Spec promotion — Prompts stage](spec.promotion.prompts.task.definition.md) | `spec.promotion.prompts.task` | `<raw>` | - |
 | [Spec promotion — Requirements stage](spec.promotion.requirements.task.definition.md) | `spec.promotion.requirements.task` | `<raw>` | - |
 | [Spec promotion — Research stage](spec.promotion.research.task.definition.md) | `spec.promotion.research.task` | `<raw>` | - |
 | [Spec promotion — Tasks stage](spec.promotion.tasks.task.definition.md) | `spec.promotion.tasks.task` | `<raw>` | - |
 | [text.title.generate.task](text.title.generate.task.definition.md) | `text.title.generate.task` | `<raw>` | - |
+| [Hello Polyglot](polyglot.hello.example.definition.md) | `polyglot.hello.example` | `<raw>` | - |
+| [Hello Python](python.hello.example.definition.md) | `python.hello.example` | `<raw>` | - |
+| [Hello Shell](shell.hello.example.definition.md) | `shell.hello.example` | `<raw>` | - |
 
 
 ## Tags
@@ -265,7 +265,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### cloud
 
-- [Cloud Deployer](cloud.deployer.definition.md) (`cloud.deployer`)
+- [Cloud Deployer](cloud.deployer.example.definition.md) (`cloud.deployer.example`)
 
 
 ### command
@@ -307,7 +307,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 - [Git Information](cloud.mixin.git-info.definition.md) (`cloud.mixin.git-info`)
 - [Timestamp](cloud.mixin.timestamp.definition.md) (`cloud.mixin.timestamp`)
-- [Cloud Deployer](cloud.deployer.definition.md) (`cloud.deployer`)
+- [Cloud Deployer](cloud.deployer.example.definition.md) (`cloud.deployer.example`)
 
 
 ### destructive
@@ -411,11 +411,11 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 ### example
 
 - [Example Catalog Modules](examples.catalog.modules.definition.md) (`examples.catalog.modules`)
-- [Cloud Deployer](cloud.deployer.definition.md) (`cloud.deployer`)
-- [Initialize Git Example](git.init.definition.md) (`git.init`)
-- [GitHub Repository Example](git.github.definition.md) (`git.github`)
-- [Gitignore Template Example](git.gitignore.definition.md) (`git.gitignore`)
-- [Obsidian Daily Note Template](obsidian.template.definition.md) (`obsidian.template`)
+- [Cloud Deployer](cloud.deployer.example.definition.md) (`cloud.deployer.example`)
+- [Initialize Git Example](git.init.example.definition.md) (`git.init.example`)
+- [GitHub Repository Example](git.github.example.definition.md) (`git.github.example`)
+- [Gitignore Template Example](git.gitignore.example.definition.md) (`git.gitignore.example`)
+- [Obsidian Daily Note Template](obsidian.daily-note.example.definition.md) (`obsidian.daily-note.example`)
 
 
 ### files
@@ -446,15 +446,15 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 - [Write Python Gitignore](stdlib.git.gitignore-python.task.definition.md) (`stdlib.git.gitignore-python.task`)
 - [Create GitHub Repository](stdlib.git.create-github-repository.task.definition.md) (`stdlib.git.create-github-repository.task`)
 - [Git Information](cloud.mixin.git-info.definition.md) (`cloud.mixin.git-info`)
-- [Initialize Git Example](git.init.definition.md) (`git.init`)
-- [GitHub Repository Example](git.github.definition.md) (`git.github`)
-- [Gitignore Template Example](git.gitignore.definition.md) (`git.gitignore`)
+- [Initialize Git Example](git.init.example.definition.md) (`git.init.example`)
+- [GitHub Repository Example](git.github.example.definition.md) (`git.github.example`)
+- [Gitignore Template Example](git.gitignore.example.definition.md) (`git.gitignore.example`)
 
 
 ### github
 
 - [Create GitHub Repository](stdlib.git.create-github-repository.task.definition.md) (`stdlib.git.create-github-repository.task`)
-- [GitHub Repository Example](git.github.definition.md) (`git.github`)
+- [GitHub Repository Example](git.github.example.definition.md) (`git.github.example`)
 
 
 ### graph
@@ -556,7 +556,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 ### obsidian
 
-- [Obsidian Daily Note Template](obsidian.template.definition.md) (`obsidian.template`)
+- [Obsidian Daily Note Template](obsidian.daily-note.example.definition.md) (`obsidian.daily-note.example`)
 
 
 ### provider
@@ -685,8 +685,8 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 - [Write Text File](stdlib.files.write-text.task.definition.md) (`stdlib.files.write-text.task`)
 - [Write Text File (input form)](stdlib.files.write.task.definition.md) (`stdlib.files.write.task`)
 - [Write Python Gitignore](stdlib.git.gitignore-python.task.definition.md) (`stdlib.git.gitignore-python.task`)
-- [Gitignore Template Example](git.gitignore.definition.md) (`git.gitignore`)
-- [Obsidian Daily Note Template](obsidian.template.definition.md) (`obsidian.template`)
+- [Gitignore Template Example](git.gitignore.example.definition.md) (`git.gitignore.example`)
+- [Obsidian Daily Note Template](obsidian.daily-note.example.definition.md) (`obsidian.daily-note.example`)
 
 
 ### tool
@@ -880,21 +880,21 @@ def_docs_catalog_template_schema["Docs - Authoring Schema Page Template"]
 def_examples_catalog_modules["Example Catalog Modules"]
 def_cloud_mixin_git_info["Git Information"]
 def_cloud_mixin_timestamp["Timestamp"]
-def_cloud_deployer["Cloud Deployer"]
-def_cloud_deployer --> def_stdlib.base
-def_cloud_deployer -.-> def_cloud.mixin.timestamp
-def_cloud_deployer -.-> def_cloud.mixin.git_info
-def_git_init["Initialize Git Example"]
-def_git_init -.-> def_stdlib.git.init_current_workspace.task
-def_git_init -.-> def_stdlib.git.gitignore_python.task
-def_git_github["GitHub Repository Example"]
-def_git_github -.-> def_stdlib.git.init_current_workspace.task
-def_git_github -.-> def_stdlib.git.gitignore_python.task
-def_git_github -.-> def_stdlib.git.create_github_repository.task
-def_git_gitignore["Gitignore Template Example"]
-def_git_gitignore --> def_stdlib.git.gitignore_python.task
-def_obsidian_template["Obsidian Daily Note Template"]
-def_obsidian_template --> def_stdlib.files.write_text.task
+def_cloud_deployer_example["Cloud Deployer"]
+def_cloud_deployer_example --> def_stdlib.base
+def_cloud_deployer_example -.-> def_cloud.mixin.timestamp
+def_cloud_deployer_example -.-> def_cloud.mixin.git_info
+def_git_init_example["Initialize Git Example"]
+def_git_init_example -.-> def_stdlib.git.init_current_workspace.task
+def_git_init_example -.-> def_stdlib.git.gitignore_python.task
+def_git_github_example["GitHub Repository Example"]
+def_git_github_example -.-> def_stdlib.git.init_current_workspace.task
+def_git_github_example -.-> def_stdlib.git.gitignore_python.task
+def_git_github_example -.-> def_stdlib.git.create_github_repository.task
+def_git_gitignore_example["Gitignore Template Example"]
+def_git_gitignore_example --> def_stdlib.git.gitignore_python.task
+def_obsidian_daily_note_example["Obsidian Daily Note Template"]
+def_obsidian_daily_note_example --> def_stdlib.files.write_text.task
 def_docs_classification_render_workflow["Render Classification Docs"]
 def_docs_classification_render_workflow --> def_stdlib.base
 def_docs_classification_audit_template["Docs - Classification Audit"]
@@ -1074,15 +1074,15 @@ def_image_vision_layout_task["image.vision.layout.task"]
 def_image_vision_overview_task["image.vision.overview.task"]
 def_image_vision_style_task["image.vision.style.task"]
 def_image_vision_visible_text_task["image.vision.visible-text.task"]
-def_polyglot_hello_example["Hello Polyglot"]
-def_python_hello_example["Hello Python"]
-def_shell_hello_example["Hello Shell"]
 def_spec_promotion_final_task["Spec promotion — Final stage"]
 def_spec_promotion_prompts_task["Spec promotion — Prompts stage"]
 def_spec_promotion_requirements_task["Spec promotion — Requirements stage"]
 def_spec_promotion_research_task["Spec promotion — Research stage"]
 def_spec_promotion_tasks_task["Spec promotion — Tasks stage"]
 def_text_title_generate_task["text.title.generate.task"]
+def_polyglot_hello_example["Hello Polyglot"]
+def_python_hello_example["Hello Python"]
+def_shell_hello_example["Hello Shell"]
 ```
 
 ## Module Imports
@@ -1109,8 +1109,7 @@ def_docs_catalog_generate_workflow["docs.catalog.generate.workflow"] --> def_doc
 def_docs_catalog_generate_workflow["docs.catalog.generate.workflow"] --> def_docs_catalog_generate_workflow_module_3["../15_examples/examples.catalog.yaml"]
 def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_1["cloud.yaml"]
 def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_2["git.yaml"]
-def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_3["git.yaml"]
-def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_4["obsidian.yaml"]
+def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_3["obsidian.daily-note.example.yaml"]
 def_docs_classification_render_workflow["docs.classification.render.workflow"] --> def_docs_classification_render_workflow_module_1["../14_templates/docs.classification.template.yaml"]
 def_docs_readme_generate_workflow["docs.readme.generate.workflow"] --> def_docs_readme_generate_workflow_module_1["../14_templates/docs.readme.template.yaml"]
 ```

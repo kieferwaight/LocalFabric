@@ -20,7 +20,7 @@ Imports the shipped runnable compositions used as examples of the YAML workflow 
 | Mixins | - |
 | Children | - |
 | Mixin consumers | - |
-| Modules | `cloud.yaml`, `git.yaml`, `git.yaml`, `obsidian.yaml` |
+| Modules | `cloud.yaml`, `git.yaml`, `obsidian.daily-note.example.yaml` |
 
 ```mermaid
 flowchart LR

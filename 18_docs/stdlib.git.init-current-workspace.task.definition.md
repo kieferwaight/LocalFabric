@@ -19,7 +19,7 @@ Initializes the current working directory as a Git repository when needed.
 | Extends | [Abstract Base](stdlib.base.definition.md) |
 | Mixins | - |
 | Children | - |
-| Mixin consumers | [Initialize Git Example](git.init.definition.md), [GitHub Repository Example](git.github.definition.md) |
+| Mixin consumers | [Initialize Git Example](git.init.example.definition.md), [GitHub Repository Example](git.github.example.definition.md) |
 | Modules | - |
 
 ```mermaid

@@ -6,5 +6,4 @@
   modules:
     - cloud.yaml
     - git.yaml
-    - git.yaml
-    - obsidian.yaml
+    - obsidian.daily-note.example.yaml

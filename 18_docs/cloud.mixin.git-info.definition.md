@@ -19,7 +19,7 @@ Adds the current short Git commit SHA to execution state.
 | Extends | - |
 | Mixins | - |
 | Children | - |
-| Mixin consumers | [Cloud Deployer](cloud.deployer.definition.md) |
+| Mixin consumers | [Cloud Deployer](cloud.deployer.example.definition.md) |
 | Modules | - |
 
 ```mermaid

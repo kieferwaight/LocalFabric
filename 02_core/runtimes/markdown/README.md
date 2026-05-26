@@ -123,7 +123,7 @@ file. Pass `--debug` to dump the final scope as JSON.
 Example:
 
 ```
-python -m adapters.cli.markdown_runtime_adapter 12_prompts/polyglot.hello.example.md \
+python -m adapters.cli.markdown_runtime_adapter 15_examples/polyglot.hello.example.md \
     --name=World --debug
 ```
 

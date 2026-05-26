@@ -1,4 +1,4 @@
-- id: git.init
+- id: git.init.example
   title: Initialize Git Example
   description: |
     Composes local repository initialization with a reusable Python gitignore.
@@ -7,7 +7,7 @@
     - stdlib.git.init-current-workspace.task
     - stdlib.git.gitignore-python.task
 
-- id: git.github
+- id: git.github.example
   title: GitHub Repository Example
   description: |
     Initializes local Git files and creates a matching remote GitHub repository.
@@ -17,7 +17,7 @@
     - stdlib.git.gitignore-python.task
     - stdlib.git.create-github-repository.task
 
-- id: git.gitignore
+- id: git.gitignore.example
   title: Gitignore Template Example
   description: |
     Writes the standard Python `.gitignore` template in the active workspace.

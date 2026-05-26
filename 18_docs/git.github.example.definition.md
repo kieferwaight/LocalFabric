@@ -5,7 +5,7 @@
 
 | Field | Value |
 | --- | --- |
-| ID | `git.github` |
+| ID | `git.github.example` |
 | Source | `15_examples/git.yaml` |
 | Tags | example, git, github |
 
@@ -24,10 +24,10 @@ Initializes local Git files and creates a matching remote GitHub repository.
 
 ```mermaid
 flowchart LR
-  def_git_github["GitHub Repository Example"]
-def_git_github -.-> def_stdlib_git_init_current_workspace_task["Initialize Current Git Workspace"]
-def_git_github -.-> def_stdlib_git_gitignore_python_task["Write Python Gitignore"]
-def_git_github -.-> def_stdlib_git_create_github_repository_task["Create GitHub Repository"]
+  def_git_github_example["GitHub Repository Example"]
+def_git_github_example -.-> def_stdlib_git_init_current_workspace_task["Initialize Current Git Workspace"]
+def_git_github_example -.-> def_stdlib_git_gitignore_python_task["Write Python Gitignore"]
+def_git_github_example -.-> def_stdlib_git_create_github_repository_task["Create GitHub Repository"]
 ```
 
 

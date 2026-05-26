@@ -33,7 +33,7 @@
         with open(os.environ["STATE_FILE"], "w") as fh:
             json.dump({"deploy_started_at": datetime.datetime.utcnow().isoformat() + "Z"}, fh)
 
-- id: cloud.deployer
+- id: cloud.deployer.example
   title: Cloud Deployer
   description: |
     Demonstrates an inherited, mixin-composed deployment workflow.
