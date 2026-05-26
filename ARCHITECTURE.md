@@ -13,12 +13,12 @@ The architecture is composed of modular layers:
 ```mermaid
 flowchart TD
     Interfaces["User / CLI / MCP"] --> Router
-    Router --> Workflows[Workflows (optional)]
-    Workflows --> Harness[Harness Layer]
-    Harness --> Adapter[Adapter Layer]
+    Router --> Workflows["Workflows (optional)"]
+    Workflows --> Harness["Harness Layer"]
+    Harness --> Adapter["Adapter Layer"]
     Adapter --> Provider["Provider / Service / Tool"]
     Provider --> Drivers
-    Drivers --> DataLayer[Data Layer]
+    Drivers --> DataLayer["Data Layer"]
 ```
 
 ## Core Layers
