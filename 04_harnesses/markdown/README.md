@@ -17,7 +17,7 @@ workflow definitions *or* provider prompts:
 Every `.md` file processed by the harness begins with a YAML frontmatter
 block (delimited by `---`) and is followed by a body of arbitrary markdown.
 
-```markdown
+````markdown
 ---
 id: examples.hello
 title: Hello example
@@ -32,7 +32,7 @@ inputs:
 ```bash {id: greet}
 echo "Hello, {{ name }}!"
 ```
-```
+````
 
 Frontmatter fields mirror the YAML definition schema: `id` (required),
 `title`, `description`, `tags`, `extends`, `mixins`, `modules`, `inputs`,
