@@ -8,8 +8,8 @@ from collections.abc import Iterator, Mapping
 from pathlib import Path
 from typing import Any, TextIO
 
-from workflows.yaml.src import Runtime
-from workflows.yaml.src.jinja_engine import JinjaEngine
+from core.runtimes.yaml.src import Runtime
+from core.runtimes.yaml.src.jinja_engine import JinjaEngine
 
 from .compiler import PROVIDER_MARKER_KEY, MarkdownCompileError, compile_text
 from .providers import (
@@ -191,7 +191,7 @@ class MarkdownHarness:
         *,
         source_path: str,
     ) -> dict[str, Any]:
-        from workflows.yaml.src.runtime import coerce_type
+        from core.runtimes.yaml.src.runtime import coerce_type
 
         rendered: dict[str, Any] = dict(arguments)
         for name, raw_constraint in (inputs or {}).items():

@@ -8,7 +8,7 @@ This script just forwards to the interpreter so existing entry points
   - README.md is rendered from `docs.readme` (see `docs.readme.yaml`),
     reading `pyproject.toml` for the dynamic sections.
   - The YAML API reference (index, schema, per-definition pages) lands
-    flat in `18_docs/` with the `workflows.yaml.` prefix, driven by
+    flat in `18_docs/` with the `core.runtimes.yaml.` prefix, driven by
     `docs.api.reference` (see `docs.yaml`).
   - The classification audit + remediation workflow docs are emitted from
     static template definitions in `docs.classification.yaml` so manual

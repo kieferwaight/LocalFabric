@@ -14,7 +14,7 @@ Available harnesses:
 
 Docker service lifecycle is no longer a Python harness — the
 docker.base / compose.up / compose.down YAML definitions own that role
-(see 02_core/yaml/definitions/docker.yaml).
+(see 02_core/runtimes/yaml/definitions/docker.yaml).
 """
 
 from harnesses.base import Harness, HarnessError, HarnessStatus

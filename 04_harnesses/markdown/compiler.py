@@ -1,7 +1,7 @@
 """Markdown source → YAML runtime definition dict.
 
 Pure function: takes a string of markdown and returns a definition dict that
-`workflows.yaml.src.Runtime.import_yaml_raw([dict])` accepts. No I/O. No
+`core.runtimes.yaml.src.Runtime.import_yaml_raw([dict])` accepts. No I/O. No
 runtime side effects. Identical input produces identical output.
 """
 
@@ -63,7 +63,7 @@ def compile_text(source: str, *, source_path: str = "<string>") -> dict[str, Any
 
     * **Fence-style** (default): frontmatter declares a workflow definition
       and fenced code blocks in the body become entries on its ``run`` list.
-      Output is consumed by ``workflows.yaml.src.Runtime.import_yaml_raw``.
+      Output is consumed by ``core.runtimes.yaml.src.Runtime.import_yaml_raw``.
 
     * **Provider-style**: when frontmatter declares ``provider:`` the body is
       treated as a single Jinja-renderable prompt and stored under the

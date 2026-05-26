@@ -26,7 +26,7 @@ from harnesses.markdown import (
     ProviderError,
     ProviderResult,
 )
-from workflows.yaml.src import Runtime, ShellEnvironment
+from core.runtimes.yaml.src import Runtime, ShellEnvironment
 
 USAGE = (
     "Usage: localfabric-md <markdown_file> "
@@ -34,10 +34,13 @@ USAGE = (
 )
 
 # Default YAML stdlib so authors can `extends: stdlib.*` from frontmatter
-# without an explicit import.
+# without an explicit import. The path resolves the repo root from this
+# file's location (02_core/interfaces/cli/markdown_runtime.py → repo root
+# is parents[3]).
 _YAML_STDLIB = (
     Path(__file__).resolve().parents[3]
     / "02_core"
+    / "runtimes"
     / "yaml"
     / "definitions"
     / "stdlib.yaml"

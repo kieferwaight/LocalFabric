@@ -50,9 +50,9 @@ def main(argv: list[str] | None = None) -> int:
         env=env,
         system_debug=debug,
         workflow_dir=WORKFLOW_DIR,
-        definition_page_format="workflows.yaml.definition.{flat_id}.md",
-        index_page="workflows.yaml.api.md",
-        schema_page="workflows.yaml.schema.md",
+        definition_page_format="core.runtimes.yaml.definition.{flat_id}.md",
+        index_page="core.runtimes.yaml.api.md",
+        schema_page="core.runtimes.yaml.schema.md",
     )
     if STDLIB_PATH.exists():
         runtime.import_yaml(str(STDLIB_PATH))

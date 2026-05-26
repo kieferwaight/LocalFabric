@@ -6,10 +6,10 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 import pytest
-from workflows.yaml.runtime import Definition, Runtime, ShellEnvironment
-from workflows.yaml.runtime.dispatcher import DispatchResult, Dispatcher
+from core.runtimes.yaml.src import Definition, Runtime, ShellEnvironment
+from core.runtimes.yaml.src.dispatcher import DispatchResult, Dispatcher
 
-YAML_ROOT = Path(__file__).resolve().parents[1] / "06_workflows" / "yaml"
+YAML_ROOT = Path(__file__).resolve().parents[1] / "02_core" / "runtimes" / "yaml"
 
 
 class RecordingDispatcher(Dispatcher):

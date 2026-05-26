@@ -6,12 +6,13 @@ from pathlib import Path
 
 import pytest
 from harnesses.markdown import MarkdownCompileError, MarkdownHarness
-from workflows.yaml.src import Runtime
+from core.runtimes.yaml.src import Runtime
 
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
 STDLIB = (
     Path(__file__).resolve().parents[1]
-    / "06_workflows"
+    / "02_core"
+    / "runtimes"
     / "yaml"
     / "definitions"
     / "stdlib.yaml"

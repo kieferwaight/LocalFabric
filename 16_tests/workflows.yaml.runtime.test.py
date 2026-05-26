@@ -8,12 +8,12 @@ from unittest.mock import patch
 
 import pytest
 
-from workflows.yaml.runtime import Definition, InputConstraint, Runtime, ScopeFrame, ShellEnvironment
-from workflows.yaml.runtime.dispatcher import DispatchResult, Dispatcher
-from workflows.yaml.runtime.runtime import coerce_type
+from core.runtimes.yaml.src import Definition, InputConstraint, Runtime, ScopeFrame, ShellEnvironment
+from core.runtimes.yaml.src.dispatcher import DispatchResult, Dispatcher
+from core.runtimes.yaml.src.runtime import coerce_type
 
 
-YAML_ROOT = Path(__file__).resolve().parents[1] / "06_workflows" / "yaml"
+YAML_ROOT = Path(__file__).resolve().parents[1] / "02_core" / "runtimes" / "yaml"
 
 
 class RecordingDispatcher(Dispatcher):
@@ -227,7 +227,7 @@ def test_ac_301_1_bash_dispatched_to_bash_binary():
 
         return _Proc()
 
-    with patch("workflows.yaml.runtime.dispatcher.subprocess.Popen", side_effect=fake_popen):
+    with patch("core.runtimes.yaml.src.dispatcher.subprocess.Popen", side_effect=fake_popen):
         runtime.execute("demo", {})
 
     assert captured["cmd"][0:2] == ["/usr/bin/env", "bash"]
