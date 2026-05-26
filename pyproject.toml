@@ -35,16 +35,18 @@ dev = ["pytest>=8.0", "ruff>=0.4", "mypy>=1.10"]
 notebook = ["openai>=1.0", "ipykernel>=6.0"]
 
 [project.scripts]
-localfabric = "adapters.cli.main:app"
-localfabric-md = "adapters.cli.markdown_runtime_adapter:main"
+localfabric = "core.interfaces.cli.main:app"
+localfabric-md = "core.interfaces.cli.markdown_runtime:main"
 
 [tool.setuptools]
 package-dir = { "interfaces" = "01_interfaces", "core" = "02_core", "adapters" = "03_adapters", "harnesses" = "04_harnesses", "router" = "05_router", "workflows" = "06_workflows", "tools" = "07_tools", "drivers" = "08_drivers", "mcp_servers" = "11_mcp" }
 packages = [
     "core",
+    "core.environment",
+    "core.interfaces",
+    "core.interfaces.cli",
     "interfaces",
     "adapters",
-    "adapters.cli",
     "harnesses",
     "harnesses.claude",
     "harnesses.codex",

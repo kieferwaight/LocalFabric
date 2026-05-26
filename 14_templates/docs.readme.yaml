@@ -130,7 +130,7 @@
       pip install -e .
       pip install -e ".[dev]"           # adds pytest, ruff, mypy
       pytest
-      python -m adapters.cli.main --help
+      python -m core.interfaces.cli.main --help
       ```
 
       Run a local service through the service runtime:

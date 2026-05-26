@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 import pytest
-from adapters.cli.markdown_runtime_adapter import main
+from core.interfaces.cli.markdown_runtime import main
 
 PROMPTS = Path(__file__).resolve().parents[1] / "12_prompts"
 
