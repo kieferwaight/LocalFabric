@@ -77,11 +77,56 @@ notebook = [
 #                                        `mcp.server.fastmcp` in our server.py)
 
 [tool.setuptools]
+# Top-level import aliases. The buckets have numeric prefixes that aren't
+# valid Python identifiers, so we map each clean name onto its bucket dir.
 package-dir = { "core" = "02_core/src/core", "adapters" = "03_adapters", "harnesses" = "04_harnesses", "router" = "05_router", "workflows" = "06_workflows", "tools" = "07_tools", "drivers" = "08_drivers", "service_runtime" = "10_service_runtime", "mcp_servers" = "11_mcp" }
-
-[tool.setuptools.packages.find]
-where = ["02_core/src", "03_adapters", "04_harnesses", "05_router", "06_workflows", "07_tools", "08_drivers", "10_service_runtime", "11_mcp"]
-namespaces = true
+# Subpackages must be enumerated explicitly. `packages.find` with a `where`
+# list pointed at the bucket dirs picks up the *children* as top-level
+# packages (`cli` instead of `adapters.cli`), which breaks every documented
+# `python -m <alias>.<sub>` invocation. Keep this list in sync with new
+# subpackages — see also `conftest.py`, which mirrors the top-level aliases
+# for pytest in-process.
+packages = [
+    "core",
+    "adapters",
+    "adapters.cli",
+    "harnesses",
+    "harnesses.claude",
+    "harnesses.codex",
+    "harnesses.docker_service",
+    "harnesses.gemini",
+    "harnesses.lmstudio",
+    "harnesses.markdown",
+    "harnesses.markdown.providers",
+    "harnesses.ollama",
+    "harnesses.openai",
+    "router",
+    "workflows",
+    "workflows.langgraph",
+    "workflows.langgraph.image_intelligence",
+    "workflows.langgraph.ingest",
+    "workflows.research",
+    "workflows.yaml",
+    "workflows.yaml.src",
+    "tools",
+    "tools.browser",
+    "tools.classify",
+    "tools.docx",
+    "tools.embeddings",
+    "tools.image",
+    "tools.metadata",
+    "tools.pdf",
+    "tools.shell",
+    "tools.vision",
+    "drivers",
+    "drivers.cache",
+    "drivers.file",
+    "drivers.sql",
+    "drivers.vector",
+    "service_runtime",
+    "mcp_servers",
+    "mcp_servers.tools",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["16_tests"]
