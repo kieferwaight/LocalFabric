@@ -32,11 +32,11 @@
     - title: Prune stale definition pages
   run:
   - render:
-      definition: docs.definition.template.index
+      definition: docs.catalog.template.index
       target_path: '{{ output_dir }}/workflows.yaml.api.md'
       mode: '{{ mode }}'
   - render:
-      definition: docs.definition.template.schema
+      definition: docs.catalog.template.schema
       target_path: '{{ output_dir }}/workflows.yaml.schema.md'
       mode: '{{ mode }}'
   - render:
