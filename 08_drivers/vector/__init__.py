@@ -3,7 +3,7 @@ drivers.vector — storage-layer drivers for embedded chunks.
 
 Each driver implements the ``VectorStore`` ABC defined in ``base``.
 Drivers contain only storage logic; chunking, embedding, and query
-orchestration live in ``tools.embeddings``.
+orchestration live in ``tasks.embeddings``.
 
 Available drivers:
     lancedb_driver.LanceStore  — Tier 2, persistent (LanceDB embedded files)

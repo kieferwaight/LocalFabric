@@ -31,7 +31,7 @@ class VectorStore(ABC):
         strategy     : str        ("ast" | "sliding_window")
 
     Optional capabilities (``delete_source``, ``list_sources``) ship as
-    no-op defaults so callers like ``tools.embeddings.sweep`` can call them
+    no-op defaults so callers like ``tasks.embeddings.sweep`` can call them
     unconditionally; drivers should override when they can do better.
     """
 

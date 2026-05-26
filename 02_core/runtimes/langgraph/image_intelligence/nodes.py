@@ -12,7 +12,7 @@ from core.environment import data
 from drivers.sql.schema import workflow_runs
 from drivers.sql.session import get_connection
 from drivers.file import write_json_artifact
-from tools.image import classify, color, meta, quality, regions, text_ocr
+from tasks.image import classify, color, meta, quality, regions, text_ocr
 from core.runtimes.langgraph.types import ImageIntelligenceState
 from core.runtimes.langgraph.image_intelligence.vision import describe_image
 

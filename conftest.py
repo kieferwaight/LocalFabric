@@ -25,7 +25,7 @@ _BUCKETS: dict[str, str] = {
     "01_interfaces": "interfaces",
     "02_core": "core",
     "04_harnesses": "harnesses",
-    "07_tools": "tools",
+    "07_tasks": "tasks",
     "08_drivers": "drivers",
 }
 

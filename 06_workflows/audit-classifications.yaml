@@ -159,7 +159,7 @@ run:
                 )
 
         provider_markers = ["ChatOllama", "import ollama", ".embeddings(", "ollama.generate("]
-        if rel.startswith("07_tools/") and any(marker in text for marker in provider_markers):
+        if rel.startswith("07_tasks/") and any(marker in text for marker in provider_markers):
             evidence = _lines_with(text, provider_markers + ["_PROMPT", "prompt ="])
             extra_targets: list[dict[str, str]] = []
             if any(marker in text for marker in ["_PROMPT", "system_prompt", "user_prompt", "prompt = (", "prompt = \"\"\""]):
@@ -191,7 +191,7 @@ run:
                     evidence,
                     [
                         _target(
-                            "07_tools",
+                            "07_tasks",
                             str(Path(rel).parent / "analyze.py"),
                             "Keep provider-neutral task operations and typed input/output handling.",
                             "Use capability names such as analyze.py or embed.py, not provider client names.",
@@ -263,8 +263,8 @@ run:
                             "Keep exported MCP functions small and orchestration-free.",
                         ),
                         _target(
-                            "07_tools",
-                            "07_tools/browser/fetch_text.py",
+                            "07_tasks",
+                            "07_tasks/browser/fetch_text.py",
                             "Fetch and clean source text as a reusable functional unit.",
                             "Use a capability-oriented module name independent of MCP.",
                         ),
@@ -380,8 +380,8 @@ run:
                             "Router implementations import tools, workflows, or harness contracts.",
                         ),
                         _target(
-                            "07_tools",
-                            "07_tools/research/",
+                            "07_tasks",
+                            "07_tasks/research/",
                             "Host reusable local research and local test capability implementations.",
                             "Name modules for capabilities exposed by MCP and routing.",
                         ),

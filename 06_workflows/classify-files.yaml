@@ -15,9 +15,9 @@ run:
     import sys
 
     from core.environment import REPO_ROOT, data
-    from tools.classify.media import classify_file
-    from tools.files import iter_files, sha256_file, write_json
-    from tools.metadata.extract import infer_source_guess
+    from tasks.classify.media import classify_file
+    from tasks.files import iter_files, sha256_file, write_json
+    from tasks.metadata.extract import infer_source_guess
 
     MANIFESTS_DIR = data("manifests")
     CONFIDENCE_REVIEW_THRESHOLD = 0.80

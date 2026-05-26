@@ -34,7 +34,7 @@ existing `status` value for findings that remain present.
 | Rule | Boundary Being Enforced |
 | --- | --- |
 | `executable_provider_wrapper_in_prompt_bucket` | `12_prompts` stores templates, not API clients |
-| `provider_execution_in_tool_bucket` | `07_tools` exposes reusable capabilities, not provider invocation |
+| `provider_execution_in_tool_bucket` | `07_tasks` exposes reusable capabilities, not provider invocation |
 | `provider_health_probe_in_adapter` | `03_adapters` translates/presents input and output, while harnesses query providers |
 | `mcp_tool_combines_provider_prompt_and_fetch_execution` | `11_mcp` exposes tools without becoming the implementation layer |
 | `workflow_executes_prompt_bucket_as_scripts` | `06_workflows` orchestrates named prompt tasks without running prompt assets as programs |

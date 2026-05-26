@@ -67,7 +67,7 @@ Implementation lives directly under the repo root in numeric-prefixed responsibi
 | [`04_harnesses/`](04_harnesses/) | Execution lifecycle per provider | `harnesses` |
 | [`05_router/`](05_router/) | Classification → scoring → dispatch | `router` |
 | [`06_workflows/`](06_workflows/) | LangGraph, LangChain, shell, YAML workflows | `workflows` |
-| [`07_tools/`](07_tools/) | Reusable functional units (image, pdf, vision, embeddings, …) | `tools` |
+| [`07_tasks/`](07_tasks/) | Atomic task implementations (image, pdf, vision, embeddings, …) | `tasks` |
 | [`08_drivers/`](08_drivers/) | Storage/database connectors | `drivers` |
 | [`09_services/`](09_services/) | Docker-Compose service catalog by category | — |
 | [`10_service_runtime/`](10_service_runtime/) | `cmd <service> <path>` runtime | `service_runtime` |
