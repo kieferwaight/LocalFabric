@@ -79,6 +79,7 @@ packages = [
     "tasks",
     "tasks.browser",
     "tasks.classify",
+    "tasks.research",
     "tasks.docx",
     "tasks.embeddings",
     "tasks.image",
