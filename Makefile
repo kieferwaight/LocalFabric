@@ -51,6 +51,6 @@ install-all:
 	uv sync --all-extras
 
 docs:
-	uv run 17_scripts/generate_docs.py
+	.venv/bin/python 02_core/runtimes/yaml/interpreter.py 06_workflows/generate-docs.yaml generate-docs
 
 reset: clean venv install-all
