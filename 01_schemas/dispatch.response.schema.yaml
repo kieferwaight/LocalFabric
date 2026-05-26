@@ -1,0 +1,38 @@
+- id: dispatch.response.schema
+  title: Dispatch Response Envelope
+  description: |
+    Internal response envelope returned by a harness or the dispatcher.
+  tags: [schema, dispatch]
+  extends: schemas.base
+  schema:
+    $id: https://scratch.local/schemas/dispatch.response.schema.json
+    title: Response
+    description: Internal response envelope returned by a harness or the dispatcher.
+    required: [route_id, status, output]
+    properties:
+      route_id:
+        type: string
+        description: Identifier of the route that produced this result (e.g. local_query, frontier_claude).
+      status:
+        type: string
+        enum: [success, failure, deferred]
+        description: deferred = local pre-processing complete; caller must invoke the named frontier model.
+      output:
+        type: string
+        description: Primary textual output, or a deferred prompt when status=deferred.
+      elapsed_sec:
+        type: number
+        minimum: 0
+      deferred_model:
+        type: [string, "null"]
+        description: Set only when status=deferred. Names the frontier model the caller must invoke.
+      deferred_prompt:
+        type: [string, "null"]
+        description: Set only when status=deferred. The prompt to send to deferred_model.
+      error:
+        type: [string, "null"]
+        description: Set only when status=failure.
+      metadata:
+        type: object
+        description: Free-form per-call metadata (token counts, request ids, etc.).
+        additionalProperties: true

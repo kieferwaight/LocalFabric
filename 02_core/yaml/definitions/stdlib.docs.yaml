@@ -1,0 +1,25 @@
+- id: stdlib.docs.prune-definition-pages
+  title: Prune Generated Definition Pages
+  description: |
+    Removes obsolete generated definition pages in write mode and rejects them in check mode.
+  tags: [documentation, files]
+  extends: stdlib.base
+  inputs:
+    output_dir:
+      type: string
+      required: true
+      description: Documentation output directory.
+    mode:
+      type: string
+      required: false
+      default: write
+      description: Either `write` or `check`.
+  run:
+    - generated_pages:
+        directory: "{{ output_dir }}"
+        pattern: "workflows.yaml.definition.*.md"
+        expected: runtime.catalog.definitions
+        mode: "{{ mode }}"
+  docs:
+    run:
+      - title: Reconcile generated pages

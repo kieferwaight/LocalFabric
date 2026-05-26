@@ -1,0 +1,102 @@
+- id: audit.classification_finding.schema
+  title: Classification Audit Finding
+  description: |
+    A planning record for source functionality that crosses the numeric bucket
+    ownership model.
+  tags: [schema, audit]
+  extends: schemas.base
+  schema:
+    $id: audit.classification_finding.schema.json
+    title: Classification Audit Finding
+    description: A planning record for source functionality that crosses the numeric bucket ownership model.
+    required:
+      - schema_version
+      - finding_id
+      - generated_at
+      - file
+      - source_bucket
+      - violation
+      - decomposition_classes
+      - remediation_guidance
+      - status
+      - detector
+    properties:
+      schema_version:
+        const: "1.0"
+      finding_id:
+        type: string
+        pattern: "^CAF-[A-F0-9]{12}$"
+      generated_at:
+        type: string
+        format: date-time
+      file:
+        type: string
+        description: Absolute path of the source file requiring review.
+      source_bucket:
+        type: string
+        pattern: "^[0-9]{2}_[a-z_]+$"
+      violation:
+        type: object
+        required: [code, severity, summary, evidence, confidence]
+        properties:
+          code:
+            type: string
+          severity:
+            enum: [high, medium, low]
+          summary:
+            type: string
+          evidence:
+            type: array
+            minItems: 1
+            items:
+              type: object
+              required: [line, excerpt]
+              properties:
+                line:
+                  type: integer
+                  minimum: 1
+                excerpt:
+                  type: string
+              additionalProperties: false
+          confidence:
+            type: number
+            minimum: 0
+            maximum: 1
+        additionalProperties: false
+      decomposition_classes:
+        type: array
+        minItems: 1
+        items:
+          type: object
+          required: [class, destination, responsibility, naming_guidance]
+          properties:
+            class:
+              type: string
+              pattern: "^[0-9]{2}_[a-z_]+$"
+            destination:
+              type: string
+            responsibility:
+              type: string
+            naming_guidance:
+              type: string
+          additionalProperties: false
+      related_files:
+        type: array
+        items:
+          type: string
+      remediation_guidance:
+        type: array
+        minItems: 1
+        items:
+          type: string
+      status:
+        enum: [open, accepted, in_progress, resolved, dismissed]
+      detector:
+        type: object
+        required: [rule, scan_scope]
+        properties:
+          rule:
+            type: string
+          scan_scope:
+            type: string
+        additionalProperties: false

@@ -1,0 +1,20 @@
+# Model: qwen2.5
+#
+# Alibaba's Qwen 2.5 instruct model. Multilingual chat, long-context work, and
+# coding assistance.
+
+name: qwen2.5
+
+documentation:
+  summary: |
+    Multilingual chat, long-context work, coding assistance, and structured
+    instruction following.
+  vendor: Alibaba
+
+providers:
+  - ollama
+
+features:
+  - text
+  - tool_calling
+  - streaming

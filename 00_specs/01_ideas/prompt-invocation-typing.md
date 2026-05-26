@@ -46,7 +46,7 @@ For any prompt template, a caller (notebook, workflow, MCP tool) can say:
 
 ```python
 invocation = Invocation(
-    prompt=Prompt.load("tasks/spec_promotion/03_requirements.md"),
+    prompt=Prompt.load("tasks.spec-promotion.requirements.md"),
     model=registry["qwen3"],
     runtime=Runtime(temperature=0.2),
 )
@@ -60,9 +60,11 @@ typed result. Loose kwargs and silent empties go away.
 ## Unknowns
 
 - Where do `Invocation` / `Runtime` / `Prompt` types live —
-  [`01_contracts/`](01_contracts) (just schemas) or
-  [`02_core/`](02_core) (runtime helpers too)? Probably both:
-  schemas in contracts, builders/validators in core.
+  [`01_schemas/`](01_schemas) (just JSON schemas),
+  [`01_interfaces/`](01_interfaces) (Protocol mirrors), or
+  [`02_core/`](02_core) (runtime helpers too)? Probably split:
+  schemas in `01_schemas`, Protocols in `01_interfaces`, builders/validators
+  in core.
 - Is `lms load` (LM Studio) + Ollama's REST `load` endpoint enough for a
   cross-provider `lifecycle.ensure_loaded()`, or do we need a fallback that
   prompts the user when automation isn't available (e.g., cloud providers)?

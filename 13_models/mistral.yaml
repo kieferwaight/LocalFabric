@@ -1,0 +1,19 @@
+# Model: mistral
+#
+# Mistral's open base chat model. Fast, efficient instruction-following.
+
+name: mistral
+
+documentation:
+  summary: |
+    Fast, efficient instruction-following, summarization, chat, and lightweight
+    coding support.
+  vendor: Mistral AI
+
+providers:
+  - ollama
+
+features:
+  - text
+  - tool_calling
+  - streaming

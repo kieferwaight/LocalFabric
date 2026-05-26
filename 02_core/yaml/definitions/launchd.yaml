@@ -1,0 +1,54 @@
+- id: launchd.base
+  title: launchd Job Base
+  description: |
+    Abstract base for every macOS LaunchAgent authored in this repository.
+    Inheritors declare their own `label`, `program`, and `environment` while
+    picking up the common process posture and log layout from this definition.
+
+    Friendly snake_case keys map to plist PascalCase at render time (e.g.
+    `working_directory` → `WorkingDirectory`); see `_LAUNCHD_KEY_MAP` in the
+    runtime for the full table. Unknown keys are passed through unchanged.
+  tags: [launchd, abstract]
+  variables:
+    user: "{{ env.env.USER }}"
+    log_dir: "/Users/{{ user }}/Library/Logs/LocalFabric"
+  docs:
+    variables:
+      user: macOS user under whose LaunchAgents directory the job will install.
+      log_dir: Default location for per-job stdout/stderr logs.
+  launchd:
+    working_directory: "/Users/{{ user }}"
+    process_type: Interactive
+    run_at_load: true
+    keep_alive: true
+
+- id: launchd.generate-plist
+  title: Generate launchd Plists
+  description: |
+    Emits one `.plist` file per definition that declares a `launchd:` block, by
+    iterating `runtime.catalog.definitions` and filtering on `has_launchd`.
+    Defaults write into `09_launchd/` next to the authoring YAML.
+  tags: [launchd, workflow]
+  extends: stdlib.base
+  inputs:
+    output_dir:
+      type: string
+      required: false
+      default: "09_launchd"
+      description: Directory that receives the generated `.plist` files.
+    mode:
+      type: string
+      required: false
+      default: "write"
+      description: Either `write` to regenerate output or `check` to verify it.
+  docs:
+    run:
+      - title: Emit one `.plist` per launchd definition
+  run:
+    - launchd_plist:
+        definition: "{{ definition.id }}"
+        target_path: "{{ output_dir }}/{{ definition.id }}.plist"
+        mode: "{{ mode }}"
+      for_each:
+        items: "runtime.catalog.definitions | selectattr('has_launchd') | rejectattr('id', 'equalto', 'launchd.base') | list"
+        as: definition

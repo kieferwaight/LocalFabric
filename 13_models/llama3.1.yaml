@@ -1,0 +1,21 @@
+# Model: llama3.1
+#
+# Meta's flagship Llama 3.1 instruct model. General-purpose chat, instruction
+# following, tool use, and long-context local assistant workflows. Available
+# locally through Ollama.
+
+name: llama3.1
+
+documentation:
+  summary: |
+    General-purpose chat, instruction following, tool use, and long-context
+    local assistant workflows.
+  vendor: Meta
+
+providers:
+  - ollama
+
+features:
+  - text
+  - tool_calling
+  - streaming

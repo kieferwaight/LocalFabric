@@ -1,0 +1,61 @@
+- id: stdlib.analysis.base
+  title: Analysis Base
+  description: |
+    Shared scaffolding for analysis definitions. Pins the path to the
+    `yaml_analysis` Python module so subprocess `python:` blocks can import it.
+  tags: [analysis, abstract]
+  extends: stdlib.base
+  variables:
+    yaml_analysis_src: "{{ runtime.workflow_dir }}/src"
+  docs:
+    variables:
+      yaml_analysis_src: |
+        Absolute path to the directory containing `yaml_analysis.py`. Defaults
+        to the workflow's own `src/` (resolved via the runtime's
+        `workflow_dir` anchor, so it's independent of shell cwd).
+
+- id: stdlib.analysis.snapshot
+  title: Write Analysis Snapshot
+  description: |
+    Walks every tracked/untracked file in this workflow and emits a JSONL
+    snapshot with one record per file plus one record per YAML `id:` at any
+    depth. Replaces the legacy `_analyze_ids.py` script.
+  tags: [analysis, intelligence]
+  extends: stdlib.analysis.base
+  inputs:
+    output_path:
+      type: string
+      required: false
+      default: "{{ env.cwd }}/analysis.jsonl"
+      description: Absolute path to write the JSONL snapshot to.
+  docs:
+    run:
+      - title: Emit JSONL snapshot
+  run:
+    - python: |
+        import sys
+        sys.path.insert(0, "{{ yaml_analysis_src }}")
+        from pathlib import Path
+        from yaml_analysis import write_snapshot
+        count = write_snapshot(Path("{{ output_path }}"))
+        print(f"wrote {count} records to {{ output_path }}")
+
+- id: stdlib.analysis.verify-references
+  title: Verify Definition References
+  description: |
+    Pre-runtime safety net: fails the workflow if any `extends`, `mixins`,
+    `invoke`, `render`, `component(...)`, or `modules:` entry points at an id
+    or filename that does not resolve. Run before any definition execution to
+    surface graph breakage early.
+  tags: [analysis, validation]
+  extends: stdlib.analysis.base
+  docs:
+    run:
+      - title: Assert zero broken references
+  run:
+    - python: |
+        import sys
+        sys.path.insert(0, "{{ yaml_analysis_src }}")
+        from yaml_analysis import assert_no_broken_references
+        assert_no_broken_references()
+        print("OK: zero broken references")

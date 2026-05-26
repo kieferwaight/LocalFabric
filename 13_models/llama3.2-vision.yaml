@@ -1,0 +1,20 @@
+# Model: llama3.2-vision
+#
+# Llama 3.2 with vision encoder. Used by the image intelligence workflow for
+# visible overview, layout, style, and text extraction tasks.
+
+name: llama3.2-vision
+
+documentation:
+  summary: |
+    Local vision-capable model used by the image intelligence workflow for
+    visible overview, layout, style, and text extraction tasks.
+  vendor: Meta
+
+providers:
+  - ollama
+
+features:
+  - text
+  - vision
+  - streaming

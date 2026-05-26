@@ -26,15 +26,15 @@ Each stage prompt receives the *full chain* of upstream artifacts as context,
 not just the immediately prior stage. (Resolves research Q1.) The chain is
 short enough (≤6 stages × ~2 KB) to fit in any local model's context.
 
-### F4 — Stage prompts live in `12_prompts/tasks/spec_promotion/`
+### F4 — Stage prompts live under the `tasks.spec-promotion.*` namespace
 
-One prompt file per stage:
+One prompt file per stage, in the flat `12_prompts/` directory:
 
-- `12_prompts/tasks/spec_promotion/02_research.md`
-- `12_prompts/tasks/spec_promotion/03_requirements.md`
-- `12_prompts/tasks/spec_promotion/04_tasks.md`
-- `12_prompts/tasks/spec_promotion/05_prompts.md`
-- `12_prompts/tasks/spec_promotion/06_final.md`
+- `12_prompts/tasks.spec-promotion.research.md`
+- `12_prompts/tasks.spec-promotion.requirements.md`
+- `12_prompts/tasks.spec-promotion.tasks.md`
+- `12_prompts/tasks.spec-promotion.prompts.md`
+- `12_prompts/tasks.spec-promotion.final.md`
 
 Each is a Jinja-style template with `{{idea}}`, `{{research}}`, etc.
 placeholders. Prompts are provider-agnostic per

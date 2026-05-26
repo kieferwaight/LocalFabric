@@ -10,3 +10,15 @@ Modules:
 Storage backends live in ``drivers.vector`` (numpy_driver, lancedb_driver, …);
 they implement the ``VectorStore`` ABC and are called by this package.
 """
+
+from .chunker import chunk_file
+from .embedder import Embedder, EmbedderUnavailable, EmbeddingExecutor
+from .query import LocalKnowledgeQuery
+
+__all__ = [
+    "chunk_file",
+    "Embedder",
+    "EmbedderUnavailable",
+    "EmbeddingExecutor",
+    "LocalKnowledgeQuery",
+]

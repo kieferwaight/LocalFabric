@@ -14,9 +14,11 @@ starting and is prepared to follow [CLAUDE.md](CLAUDE.md)'s branch/PR rules.
 You are implementing T1 from
 `00_specs/04_tasks/build-the-promotion-workflow.md`.
 
-Create five files under `12_prompts/tasks/spec_promotion/`:
-`02_research.md`, `03_requirements.md`, `04_tasks.md`, `05_prompts.md`,
-`06_final.md`.
+Create five files in the flat `12_prompts/` directory using the
+`tasks.spec-promotion.*` namespace: `tasks.spec-promotion.research.md`,
+`tasks.spec-promotion.requirements.md`, `tasks.spec-promotion.tasks.md`,
+`tasks.spec-promotion.prompts.md`, `tasks.spec-promotion.final.md`. Each
+file declares an `id:` in YAML frontmatter that matches its filename stem.
 
 Each prompt:
 

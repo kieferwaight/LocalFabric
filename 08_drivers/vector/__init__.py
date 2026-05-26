@@ -11,5 +11,7 @@ Available drivers:
 """
 
 from drivers.vector.base import VectorStore
+from drivers.vector.lancedb_driver import LanceStore
+from drivers.vector.numpy_driver import NumpyStore
 
-__all__ = ["VectorStore"]
+__all__ = ["LanceStore", "NumpyStore", "VectorStore"]

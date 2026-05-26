@@ -102,7 +102,7 @@ final_scope = harness.execute(path, arguments={"name": "world"})
 
 # Provider-style files return a ProviderResult — or an iterator of text
 # chunks when the file requests streaming.
-result = harness.execute("summarize-code.md", arguments={"input": "def f(): ..."})
+result = harness.execute("examples.summarize-code.md", arguments={"input": "def f(): ..."})
 print(result.text)
 ```
 
@@ -113,7 +113,7 @@ attributes). Runtime errors propagate unchanged from `workflows.yaml`.
 ## CLI
 
 ```
-python -m adapters.cli.markdown <markdown_file> [--key=value] [--flag]
+python -m adapters.cli.markdown_runtime_adapter <markdown_file> [--key=value] [--flag]
 ```
 
 The adapter parses argv via the YAML runtime's `ShellEnvironment.from_argv`,
@@ -123,7 +123,7 @@ file. Pass `--debug` to dump the final scope as JSON.
 Example:
 
 ```
-python -m adapters.cli.markdown 12_prompts/markdown/examples/hello-polyglot.md \
+python -m adapters.cli.markdown_runtime_adapter 12_prompts/examples.hello-polyglot.md \
     --name=World --debug
 ```
 

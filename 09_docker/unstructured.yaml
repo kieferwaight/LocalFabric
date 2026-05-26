@@ -1,0 +1,27 @@
+id: docker.unstructured
+name: unstructured
+category: document
+purpose: |
+  Unstructured.io API for partitioning documents into normalized elements. Used in the
+  ingestion pipeline as an alternative or complement to Tika for layout-aware parsing.
+
+inputs:
+  DATA_PATH:
+    description: Host path for shared data (binds to /data in container)
+    required: true
+  UNSTRUCTURED_PORT:
+    default: 8001
+    description: Host port to expose the Unstructured API (default 8001)
+    required: false
+
+services:
+  unstructured:
+    image: downloads.unstructured.io/unstructured-io/unstructured-api:latest
+    container_name: contentgraph-unstructured
+    restart: unless-stopped
+    ports:
+      - map: "{{ UNSTRUCTURED_PORT }}:8000"
+        description: Unstructured HTTP API
+    volumes:
+      - map: {{ DATA_PATH }}:/data
+        description: Shared data directory for input documents and outputs

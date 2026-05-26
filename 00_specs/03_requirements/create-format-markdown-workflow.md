@@ -2,7 +2,7 @@
 model: qwen/qwen3.6-27b
 provider: lmstudio
 endpoint: http://localhost:1234/v1
-prompt_path: 12_prompts/tasks/spec_promotion/03_requirements.md
+prompt_path: 12_prompts/tasks.spec-promotion.requirements.md
 prompt_sha256: 29953859f29d53befb6e5e0e2e446563cdc00e7e597945f8be16b10280772175
 promoted_at: '2026-05-23T21:40:17Z'
 ---
@@ -12,7 +12,7 @@ promoted_at: '2026-05-23T21:40:17Z'
 ## Functional requirements
 
 **F1: Prompt Artifact Loading**  
-The notebook must load `12_prompts/tasks/format-markdown.md` using the standardized prompt registry/loader from `02_core`, treating it as an immutable input artifact without inline templating or fallback logic. Resolves research Q1.
+The notebook must load `12_prompts/tasks.format-markdown.md` using the standardized prompt registry/loader from `02_core`, treating it as an immutable input artifact without inline templating or fallback logic. Resolves research Q1.
 
 **F2: LM Studio API Communication**  
 All model requests must route through the existing OpenAI-compatible driver in `08_drivers` (or `03_adapters`), initialized via core configuration patterns rather than direct HTTP calls or raw `requests` usage. Resolves research Q2.
@@ -50,7 +50,7 @@ All driver calls, token counts, heuristic evaluation results, and execution time
 Every formatted output must be tagged with a classification label (e.g., `clean`, `needs_review`, `failed`) and recorded in the audit trail to satisfy automated scanning by `17_scripts/audit_classifications.py`.
 
 **N5: Path Discipline**  
-All file references must use relative paths anchored to the repository root, and the notebook must validate that `12_prompts/tasks/format-markdown.md` exists and is readable before execution begins.
+All file references must use relative paths anchored to the repository root, and the notebook must validate that `12_prompts/tasks.format-markdown.md` exists and is readable before execution begins.
 
 ## Acceptance criteria
 

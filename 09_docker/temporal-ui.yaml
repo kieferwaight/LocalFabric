@@ -1,0 +1,30 @@
+id: docker.temporal-ui
+name: temporal-ui
+category: workers
+purpose: |
+  Web UI for the Temporal cluster. Talks to the Temporal frontend service and exposes
+  workflow inspection, search, and signaling through the browser.
+
+inputs:
+  TEMPORAL_UI_PORT:
+    default: 8084
+    description: Host port to expose the Temporal UI (default 8084)
+    required: false
+  TEMPORAL_ADDRESS:
+    default: temporal:7233
+    description: Address of the Temporal frontend service
+    required: false
+
+services:
+  temporal-ui:
+    image: temporalio/ui
+    container_name: contentgraph-temporal-ui
+    restart: unless-stopped
+    environment:
+      - map: TEMPORAL_ADDRESS: {{ TEMPORAL_ADDRESS }}
+        description: Address of the Temporal frontend service
+      - map: TEMPORAL_CORS_ORIGINS: http://localhost:{{ TEMPORAL_UI_PORT }}
+        description: Allowed CORS origins for the Temporal UI
+    ports:
+      - map: "{{ TEMPORAL_UI_PORT }}:8080"
+        description: Temporal UI HTTP interface

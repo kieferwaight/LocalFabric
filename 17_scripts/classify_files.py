@@ -7,13 +7,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 import sys
 
-from core.config import get_settings
-from core.file_utils import iter_files, sha256_file, write_json
-from core.paths import MANIFESTS_DIR, ROOT
+from core.paths import REPO_ROOT, data
 from tools.classify.media import classify_file
+from tools.files import iter_files, sha256_file, write_json
 from tools.metadata.extract import infer_source_guess
 
-settings = get_settings()
+MANIFESTS_DIR = data("manifests")
+CONFIDENCE_REVIEW_THRESHOLD = 0.80
 
 
 def build_classification(root: Path) -> tuple[dict, dict, dict]:
@@ -28,7 +28,7 @@ def build_classification(root: Path) -> tuple[dict, dict, dict]:
         file_hash = sha256_file(abs_path)
         fingerprint_map.setdefault(file_hash, []).append(rel.as_posix())
 
-        if info["confidence"] < settings.confidence_review_threshold and info["class"] != "needs_review":
+        if info["confidence"] < CONFIDENCE_REVIEW_THRESHOLD and info["class"] != "needs_review":
             info["class"] = "needs_review"
             info["subclass"] = "low_confidence"
             info["recommended_destination"] = "00_todo/pending/"
@@ -62,7 +62,7 @@ def build_classification(root: Path) -> tuple[dict, dict, dict]:
     classification_report = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "root": root.as_posix(),
-        "review_threshold": settings.confidence_review_threshold,
+        "review_threshold": CONFIDENCE_REVIEW_THRESHOLD,
         "total_files": len(items),
         "counts_by_class": dict(sorted(class_counter.items(), key=lambda kv: kv[0])),
         "items": items,
@@ -98,7 +98,7 @@ def build_classification(root: Path) -> tuple[dict, dict, dict]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Classify files and generate baseline manifests")
-    parser.add_argument("--root", default=str(ROOT), help="Repository root")
+    parser.add_argument("--root", default=str(REPO_ROOT), help="Repository root")
     args = parser.parse_args()
 
     root = Path(args.root).resolve()

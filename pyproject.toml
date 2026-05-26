@@ -3,91 +3,47 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "scratch-workspaces"
+name = "localfabric"
 version = "0.1.0"
-description = "Workspace-level package; maps numeric-prefixed buckets to importable Python names."
+description = "Local-first AI orchestration for models, tools, workflows, and data services."
+readme = "README.md"
 requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Kiefer Waight" }]
 
 dependencies = [
-    # core
     "pydantic>=2.6",
-    "pydantic-settings>=2.2",
-    "python-dotenv>=1.0",
     "pyyaml>=6.0",
     "rich>=13.0",
-    # adapters / cli
     "typer>=0.12",
-    # harnesses
     "requests>=2.31",
-    "anthropic>=0.40",
-    # drivers / workflows / tools
     "sqlalchemy>=2.0",
     "jinja2>=3.1",
     "numpy>=1.26",
     "pillow>=10.0",
     "beautifulsoup4>=4.12",
-    # langgraph workflows
     "langgraph>=0.2",
-    # mcp servers
     "mcp>=1.0",
 ]
 
 [project.optional-dependencies]
-vision = [
-    "opencv-python>=4.8",
-    "pytesseract>=0.3",
-]
-pdf = [
-    "pymupdf>=1.24",
-    "pdfminer.six>=20221105",
-    "pdf2image>=1.16",
-]
-vector = [
-    "qdrant-client>=1.9",
-    "lancedb>=0.6",
-]
-dev = [
-    "pytest>=8.0",
-    "pytest-asyncio>=0.23",
-    "ruff>=0.4",
-    "mypy>=1.10",
-]
-notebook = [
-    "openai>=1.0",
-    "ipykernel>=6.0",
-]
+llm = ["anthropic>=0.40", "openai>=1.0", "google-generativeai>=0.5"]
+vision = ["opencv-python>=4.8", "pytesseract>=0.3"]
+pdf = ["pymupdf>=1.24", "pdfminer.six>=20221105", "pdf2image>=1.16"]
+vector = ["lancedb>=0.6"]
+dev = ["pytest>=8.0", "ruff>=0.4", "mypy>=1.10"]
+notebook = ["openai>=1.0", "ipykernel>=6.0"]
 
-# ─── Import-name strategy ─────────────────────────────────────────────────────
-# Numeric-prefixed bucket dirs (02_core, 04_harnesses, ...) aren't valid Python
-# identifiers. We register clean import names via setuptools `package-dir`,
-# and pytest picks the same map up through `conftest.py` (so no-install dev
-# also works).
-#
-# Bucket dir         →  import name
-#   02_core/src/core →  core
-#   03_adapters      →  adapters
-#   04_harnesses     →  harnesses
-#   05_router        →  router
-#   06_workflows     →  workflows
-#   07_tools         →  tools
-#   08_drivers       →  drivers
-#   10_service_runtime → service_runtime
-#   11_mcp           →  mcp_servers     (NOT `mcp` — the PyPI MCP SDK owns
-#                                        that namespace and is imported as
-#                                        `mcp.server.fastmcp` in our server.py)
+[project.scripts]
+localfabric = "adapters.cli.main:app"
+localfabric-md = "adapters.cli.markdown_runtime_adapter:main"
+localfabric-runtime = "service_runtime.cmd:main"
 
 [tool.setuptools]
-# Top-level import aliases. The buckets have numeric prefixes that aren't
-# valid Python identifiers, so we map each clean name onto its bucket dir.
-package-dir = { "core" = "02_core/src/core", "adapters" = "03_adapters", "harnesses" = "04_harnesses", "router" = "05_router", "workflows" = "06_workflows", "tools" = "07_tools", "drivers" = "08_drivers", "service_runtime" = "10_service_runtime", "mcp_servers" = "11_mcp" }
-# Subpackages must be enumerated explicitly. `packages.find` with a `where`
-# list pointed at the bucket dirs picks up the *children* as top-level
-# packages (`cli` instead of `adapters.cli`), which breaks every documented
-# `python -m <alias>.<sub>` invocation. Keep this list in sync with new
-# subpackages — see also `conftest.py`, which mirrors the top-level aliases
-# for pytest in-process.
+package-dir = { "interfaces" = "01_interfaces", "core" = "02_core", "adapters" = "03_adapters", "harnesses" = "04_harnesses", "router" = "05_router", "workflows" = "06_workflows", "tools" = "07_tools", "drivers" = "08_drivers", "service_runtime" = "10_service_runtime", "mcp_servers" = "11_mcp" }
 packages = [
     "core",
+    "interfaces",
     "adapters",
     "adapters.cli",
     "harnesses",
@@ -128,8 +84,53 @@ packages = [
     "mcp_servers.tools",
 ]
 
+[tool.localfabric.workspace_manifest]
+excluded_buckets = [
+    "00_specs",
+    "01_schemas",
+    "09_services",
+    "12_prompts",
+    "13_models",
+    "13_providers",
+    "14_data",
+    "15_notebooks",
+    "16_tests",
+    "17_scripts",
+    "18_docs",
+    "19_archive",
+]
+
+[tool.localfabric.mcp_mapping]
+system_sdk_override = "mcp_servers"
+
+[tool.localfabric.workspace_descriptions]
+"00_specs" = "Agent-ready specs and task artifacts"
+"01_interfaces" = "Python Protocol mirrors of the JSON schemas"
+"01_schemas" = "Shared JSON schemas used across components"
+"02_core" = "Cross-cutting primitives (currently just paths)"
+"03_adapters" = "Interface translation (CLI, REST, OpenAI-compat, MCP)"
+"04_harnesses" = "Execution lifecycle per provider"
+"05_router" = "Classification → scoring → dispatch"
+"06_workflows" = "LangGraph, LangChain, shell, YAML workflows"
+"07_tools" = "Reusable functional units (image, pdf, vision, embeddings, …)"
+"08_drivers" = "Storage/database connectors"
+"09_services" = "Docker-Compose service catalog by category"
+"10_service_runtime" = "`cmd <service> <path>` runtime"
+"11_mcp" = "MCP servers and exposure shims"
+"12_prompts" = "Prompt templates"
+"13_models" = "Per-model YAML registry (one file per model; declares providers and features)"
+"13_providers" = "Per-provider YAML registry (one file per provider; declares protocols and endpoints)"
+"14_data" = "Persistent data (filesystem-backed)"
+"15_notebooks" = "Exploration notebooks"
+"16_tests" = "Integration and contract tests"
+"17_scripts" = "Utility and maintenance scripts"
+"18_docs" = "Supporting docs"
+"19_archive" = "Deprecated components"
+
 [tool.pytest.ini_options]
 testpaths = ["16_tests"]
+python_files = ["*.test.py"]
+addopts = "--import-mode=importlib"
 
 [tool.ruff]
 line-length = 100

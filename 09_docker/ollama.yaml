@@ -1,0 +1,27 @@
+id: docker.ollama
+name: ollama
+category: ai
+purpose: |
+  Local LLM runtime serving the Ollama API. Hosts model weights on the bound data volume and
+  exposes the HTTP API for chat completions, embeddings, and model management.
+
+inputs:
+  DATA_PATH:
+    description: Host path for Ollama model storage (binds to /root/.ollama in container)
+    required: true
+  OLLAMA_PORT:
+    default: 11434
+    description: Host port to bind the Ollama HTTP API (default 11434)
+    required: false
+
+services:
+  ollama:
+    image: ollama/ollama
+    container_name: contentgraph-ollama
+    restart: unless-stopped
+    ports:
+      - map: "{{ OLLAMA_PORT }}:11434"
+        description: Ollama HTTP API
+    volumes:
+      - map: {{ DATA_PATH }}:/root/.ollama
+        description: Ollama model and metadata storage

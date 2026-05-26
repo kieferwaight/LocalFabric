@@ -20,7 +20,8 @@ _ROOT = Path(__file__).resolve().parent
 # bucket-dir → import name. Keep in sync with [tool.setuptools.package-dir]
 # in pyproject.toml.
 _BUCKETS: dict[str, str] = {
-    "02_core/src/core": "core",
+    "01_interfaces": "interfaces",
+    "02_core": "core",
     "03_adapters": "adapters",
     "04_harnesses": "harnesses",
     "05_router": "router",

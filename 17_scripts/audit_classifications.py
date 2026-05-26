@@ -127,9 +127,9 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
                     [
                         _target(
                             "12_prompts",
-                            f"12_prompts/tasks/vision/{prompt_name}.md",
+                            f"12_prompts/{prompt_name}.md",
                             "Retain only task instructions and expected output format as a template.",
-                            "Use one kebab-case Markdown or Jinja template per task.",
+                            "Use flat dot-notation filenames (e.g. tasks.vision.overview.md) with an 'id' in frontmatter matching the stem.",
                         ),
                         _target(
                             "04_harnesses",
@@ -160,7 +160,7 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
             extra_targets.append(
                 _target(
                     "12_prompts",
-                    "12_prompts/tasks/",
+                    "12_prompts/",
                     "Extract task instructions or output formatting embedded in the tool.",
                     "Use task-purpose template names rather than provider names.",
                 )
@@ -264,7 +264,7 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
                     ),
                     _target(
                         "12_prompts",
-                        "12_prompts/tasks/research-summary.md",
+                        "12_prompts/tasks.research-summary.md",
                         "Store local research summarization instructions.",
                         "Use provider-agnostic task templates.",
                     ),
@@ -282,7 +282,7 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
             )
         )
 
-    if rel.startswith("06_workflows/") and "12_prompts/tasks" in text and ".py" in text:
+    if rel.startswith("06_workflows/") and "12_prompts/" in text and ".py" in text:
         findings.append(
             _finding(
                 path,
@@ -291,7 +291,7 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
                 "workflow_executes_prompt_bucket_as_scripts",
                 "high",
                 "Workflow executes Python programs from the prompt-template bucket, preserving a legacy ownership boundary.",
-                _lines_with(text, ["12_prompts/tasks", "extract-visible-overview", "extract-visible-layout", "extract-visible-style"]),
+                _lines_with(text, ["12_prompts/", "extract-visible-overview", "extract-visible-layout", "extract-visible-style"]),
                 [
                     _target(
                         "06_workflows",
@@ -301,7 +301,7 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
                     ),
                     _target(
                         "12_prompts",
-                        "12_prompts/tasks/vision/",
+                        "12_prompts/",
                         "Provide prompt assets loaded by the supported runtime.",
                         "Use .md or template files rather than executable Python wrappers.",
                     ),
@@ -356,37 +356,6 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
             )
         )
 
-    if rel == "02_core/src/core/file_utils.py" and "pdfinfo" in text and "subprocess.run" in text:
-        findings.append(
-            _finding(
-                path,
-                workspace,
-                generated_at,
-                "external_document_tool_execution_in_core",
-                "medium",
-                "Core utility code shells out to a document-specific extraction executable.",
-                _lines_with(text, ["subprocess.run", "pdfinfo"]),
-                [
-                    _target(
-                        "02_core",
-                        rel,
-                        "Retain generic file hashing and JSON/path primitives.",
-                        "Core helpers remain domain-neutral.",
-                    ),
-                    _target(
-                        "07_tools",
-                        "07_tools/pdf/meta.py",
-                        "Run PDF-specific metadata extraction and parse its output.",
-                        "Name modules by document capability.",
-                    ),
-                ],
-                [
-                    "Move only PDF-specific execution; leave generic filesystem helpers intact.",
-                    "Update callers to use a PDF tool API for PDF metadata.",
-                ],
-            )
-        )
-
     if rel.startswith("05_router/") and "from mcp_servers.tools" in text:
         findings.append(
             _finding(
@@ -429,42 +398,6 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
 
 def audit_cross_file(workspace: Path, generated_at: str) -> list[dict[str, Any]]:
     findings: list[dict[str, Any]] = []
-    config = workspace / "02_core/src/core/config.py"
-    registry = workspace / "13_models/registry.yaml"
-    if config.exists() and registry.exists():
-        config_text = config.read_text(encoding="utf-8")
-        registry_text = registry.read_text(encoding="utf-8")
-        if 'vision_model: str = "llama3.2-vision"' in config_text and "llama3.2-vision" not in registry_text:
-            findings.append(
-                _finding(
-                    config,
-                    workspace,
-                    generated_at,
-                    "configured_model_missing_from_registry",
-                    "medium",
-                    "Core configuration selects a vision model that is absent from the model registry.",
-                    _lines_with(config_text, ["vision_model"]),
-                    [
-                        _target(
-                            "13_models",
-                            "13_models/registry.yaml",
-                            "Register the vision model and its capabilities/provider ownership.",
-                            "Use the provider canonical model name and a local model README.",
-                        ),
-                        _target(
-                            "02_core",
-                            "02_core/src/core/config.py",
-                            "Read a named vision default or profile rather than introducing an untracked model.",
-                            "Keep environment overrides; resolve defaults through model configuration.",
-                        ),
-                    ],
-                    [
-                        "Register `llama3.2-vision` before migrating invocation code.",
-                        "Decide whether defaults belong in a dedicated vision profile or in application settings.",
-                    ],
-                    related_files=[registry],
-                )
-            )
 
     runtime = workspace / "10_service_runtime/cmd.py"
     docker_harness = workspace / "04_harnesses/docker_service/harness.py"
@@ -532,7 +465,7 @@ def run_audit(workspace: Path, output_dir: Path) -> tuple[list[dict[str, Any]], 
         "findings_by_severity": dict(Counter(item["violation"]["severity"] for item in findings)),
         "findings_by_rule": dict(Counter(item["violation"]["code"] for item in findings)),
         "jsonl_file": str((output_dir / "findings.jsonl").resolve()),
-        "schema_file": str((workspace / "01_contracts/classification_audit_finding.schema.json").resolve()),
+        "schema_file": str((workspace / "01_schemas/audit.classification_finding.schema.yaml").resolve()),
     }
     return findings, summary
 

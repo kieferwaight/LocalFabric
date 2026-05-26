@@ -1,0 +1,27 @@
+id: docker.clamav
+name: clamav
+category: document
+purpose: |
+  ClamAV antivirus daemon used to scan ingested documents and uploaded artifacts. The
+  bound data volume holds virus signature databases between restarts.
+
+inputs:
+  DATA_PATH:
+    description: Host path for ClamAV signature databases (binds to /var/lib/clamav in container)
+    required: true
+  CLAMAV_PORT:
+    default: 3310
+    description: Host port to bind clamd (default 3310)
+    required: false
+
+services:
+  clamav:
+    image: clamav/clamav
+    container_name: contentgraph-clamav
+    restart: unless-stopped
+    ports:
+      - map: "{{ CLAMAV_PORT }}:3310"
+        description: clamd protocol
+    volumes:
+      - map: {{ DATA_PATH }}:/var/lib/clamav
+        description: ClamAV signature databases

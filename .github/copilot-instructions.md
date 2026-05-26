@@ -41,5 +41,5 @@
 ## Additional Notes
 
 - No other AI assistant config files (Claude, Cursor, etc.) are present.
-- If you need to validate service compose configs, use `bash 20_workspaces/17_scripts/test-compose-configs.sh`.
+- If you need to validate service compose configs, use `python3 -m pytest 20_workspaces/16_tests/test_compose_configs.py`.
 - For further details, consult `README.md` and workspace documentation.

@@ -1,0 +1,49 @@
+id: docker.opensearch
+name: opensearch
+category: search
+purpose: |
+  OpenSearch single-node cluster with the security plugin disabled for local
+  development. Backs full-text search workloads in the content graph stack.
+
+inputs:
+  DATA_PATH:
+    description: Host path for OpenSearch indices (binds to /usr/share/opensearch/data in container)
+    required: true
+  OPENSEARCH_INITIAL_ADMIN_PASSWORD:
+    description: Initial password for the OpenSearch admin user
+    required: true
+  OPENSEARCH_PORT:
+    default: 9200
+    description: Host port to expose the OpenSearch HTTP API (default 9200)
+    required: false
+  OPENSEARCH_PERF_PORT:
+    default: 9600
+    description: Host port for the OpenSearch performance analyzer (default 9600)
+    required: false
+
+services:
+  opensearch:
+    image: opensearchproject/opensearch:2
+    container_name: contentgraph-opensearch
+    restart: unless-stopped
+    environment:
+      - map: discovery.type: single-node
+        description: Run OpenSearch in single-node mode
+      - map: plugins.security.disabled: "true"
+        description: Disable the security plugin for local development
+      - map: OPENSEARCH_INITIAL_ADMIN_PASSWORD: {{ OPENSEARCH_INITIAL_ADMIN_PASSWORD }}
+        description: Initial password for the admin user
+      - map: OPENSEARCH_JAVA_OPTS: -Xms512m -Xmx512m
+        description: JVM heap sizing for OpenSearch
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - map: "{{ OPENSEARCH_PORT }}:9200"
+        description: OpenSearch HTTP API
+      - map: "{{ OPENSEARCH_PERF_PORT }}:9600"
+        description: OpenSearch performance analyzer
+    volumes:
+      - map: {{ DATA_PATH }}:/usr/share/opensearch/data
+        description: OpenSearch index data directory

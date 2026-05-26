@@ -1,0 +1,101 @@
+- id: stdlib.base
+  title: Abstract Base
+  description: |
+    Base execution frame shared by standard-library definitions.
+  tags: [core, abstract]
+  variables:
+    system_log_format: "[{{ entity_id }} | {{ runtime.version }}]"
+  docs:
+    variables:
+      system_log_format: Standard execution log prefix.
+    run:
+      - title: Announce frame startup
+  run:
+    - python: |
+        import sys
+        print(f"Booting execution frame cascade...")
+
+- id: stdlib.load-modules
+  title: Load Standard Library Modules
+  description: |
+    Declares the namespaced standard-library modules included in every interpreter run.
+  tags: [core, modules]
+  extends: stdlib.base
+  modules:
+    - stdlib.files.yaml
+    - stdlib.git.yaml
+    - stdlib.docs.yaml
+    - stdlib.analysis.yaml
+    - stdlib.python.yaml
+  variables:
+    module_namespace: "builtin"
+
+- id: stdlib.run-command
+  title: Run Command
+  description: |
+    Executes a shell command in a supplied working directory.
+  tags: [shell]
+  extends: stdlib.base
+  inputs:
+    command:
+      type: "string"
+      required: true
+      description: Shell command to execute.
+    working_dir:
+      type: "string"
+      required: false
+      default: "{{ env.cwd }}"
+      description: Directory in which to execute the command.
+  docs:
+    run:
+      - title: Execute shell command
+  run:
+    - bash: |
+        cd "{{ working_dir }}"
+        {{ command }}
+
+- id: stdlib.clean-workspace
+  title: Clean Workspace
+  description: |
+    Removes an existing workspace directory when explicitly invoked.
+  tags: [files, destructive]
+  extends: stdlib.base
+  inputs:
+    target_path:
+      type: "string"
+      required: true
+      description: Workspace directory to remove.
+  docs:
+    run:
+      - title: Remove directory
+  run:
+    - bash: |
+        if [ -d "{{ target_path }}" ]; then
+          echo "Safely purging workspace directory: {{ target_path }}"
+          rm -rf "{{ target_path }}"
+        fi
+
+- id: stdlib.logger
+  title: Logger
+  description: |
+    Prints a timestamped log message.
+  tags: [logging]
+  extends: stdlib.base
+  inputs:
+    message:
+      type: "string"
+      required: true
+      description: Message to log.
+    level:
+      type: "string"
+      required: false
+      default: "INFO"
+      description: Severity label shown with the message.
+  docs:
+    run:
+      - title: Print timestamped message
+  run:
+    - python: |
+        from datetime import datetime
+        ts = datetime.utcnow().isoformat()
+        print(f"[{ts}] [{{ level }}] {{ message }}")

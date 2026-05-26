@@ -1,0 +1,27 @@
+id: docker.grobid
+name: grobid
+category: document
+purpose: |
+  GROBID PDF parsing service used to extract structured metadata, references, and
+  full-text from scholarly PDFs in the document ingestion pipeline.
+
+inputs:
+  DATA_PATH:
+    description: Host path for GROBID scratch storage (binds to /opt/grobid/grobid-home/tmp in container)
+    required: true
+  GROBID_PORT:
+    default: 8070
+    description: Host port to expose the GROBID HTTP API (default 8070)
+    required: false
+
+services:
+  grobid:
+    image: lfoppiano/grobid:0.8.0
+    container_name: contentgraph-grobid
+    restart: unless-stopped
+    ports:
+      - map: "{{ GROBID_PORT }}:8070"
+        description: GROBID HTTP API
+    volumes:
+      - map: {{ DATA_PATH }}:/opt/grobid/grobid-home/tmp
+        description: GROBID temporary working directory

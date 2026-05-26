@@ -1,0 +1,30 @@
+# Provider: claude
+#
+# Anthropic's cloud-hosted Claude model family. Speaks the native Anthropic
+# Messages API (not OpenAI-compatible), is wrapped by first-party SDKs, and is
+# also reachable through the Claude Code CLI.
+
+name: claude
+location: cloud
+
+documentation:
+  summary: |
+    Anthropic's hosted Claude models. Accessed via the Anthropic Messages API
+    (no OpenAI-compatible endpoint), the official Anthropic SDKs, or the Claude
+    Code CLI.
+  homepage: https://www.anthropic.com
+  vendor: Anthropic
+
+endpoint: https://api.anthropic.com
+auth: api_key
+env:
+  api_key: ANTHROPIC_API_KEY
+
+protocols:
+  cli:
+    binary: claude
+  sdk:
+    package: anthropic
+    languages: [python, typescript]
+  anthropic-api:
+    base_url: https://api.anthropic.com

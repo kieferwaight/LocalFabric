@@ -1,0 +1,49 @@
+- id: dispatch.request.schema
+  title: Dispatch Request Envelope
+  description: |
+    Internal request envelope passed from an adapter to the router or a harness.
+  tags: [schema, dispatch]
+  extends: schemas.base
+  schema:
+    $id: https://scratch.local/schemas/dispatch.request.schema.json
+    title: Request
+    description: Internal request envelope passed from an adapter to the router or a harness.
+    required: [task, interface]
+    properties:
+      task:
+        type: string
+        description: Free-text task description, prompt, or query.
+      interface:
+        type: string
+        enum: [cli, mcp, rest, openai, shell, internal]
+        description: Entry point that produced this request.
+      context:
+        type: [string, "null"]
+        description: Optional pre-retrieved context (RAG hits, file excerpts, etc.).
+      constraints:
+        type: object
+        description: Routing constraints. See policy schema in routing_rules.yaml.
+        properties:
+          max_cost_usd:
+            type: number
+            minimum: 0
+          max_latency_sec:
+            type: number
+            minimum: 0
+          allowed_tiers:
+            type: array
+            items:
+              type: string
+              enum: [local, hybrid, frontier, agent]
+          required_capabilities:
+            type: array
+            items:
+              type: string
+          prefer_local:
+            type: boolean
+            default: true
+        additionalProperties: false
+      metadata:
+        type: object
+        description: Free-form per-call metadata (trace IDs, user info, etc.).
+        additionalProperties: true

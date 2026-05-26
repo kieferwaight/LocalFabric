@@ -1,0 +1,51 @@
+id: docker.pgvector
+name: pgvector
+category: database
+purpose: |
+  PostgreSQL with pgvector extension for vector similarity search. Used as the relational
+  database scaffold for the content graph MVP, providing both structured data storage and
+  vector search capabilities in a single system.
+
+inputs:
+  DATA_PATH:
+    description: Host path for PostgreSQL data storage (binds to /var/lib/postgresql/data in container)
+    required: true
+  POSTGRES_USER:
+    description: PostgreSQL superuser name
+    required: true
+  POSTGRES_PASSWORD:
+    description: PostgreSQL superuser password
+    required: true
+  POSTGRES_DB:
+    description: Initial PostgreSQL database name (default contentgraph)
+    required: true
+  PGVECTOR_PORT:
+    default: 5432
+    description: Host port to bind PostgreSQL client traffic (default 5432)
+    required: false
+
+services:
+  pgvector:
+    image: pgvector/pgvector:pg16
+    container_name: contentgraph-pgvector
+    restart: unless-stopped
+    environment:
+      - map: POSTGRES_USER: {{ POSTGRES_USER }}
+        description: PostgreSQL superuser name
+      - map: POSTGRES_PASSWORD: {{ POSTGRES_PASSWORD }}
+        description: PostgreSQL superuser password
+      - map: POSTGRES_DB: {{ POSTGRES_DB }}
+        description: Initial PostgreSQL database name
+    ports:
+      - map: "{{ PGVECTOR_PORT }}:5432"
+        description: PostgreSQL client traffic
+    volumes:
+      - map: {{ DATA_PATH }}:/var/lib/postgresql/data
+        description: PostgreSQL data directory
+      - map: ./init:/docker-entrypoint-initdb.d:ro
+        description: Initialization SQL, including `CREATE EXTENSION vector`
+
+files:
+  - path: ./init/01-init.sql
+    content: |
+      CREATE EXTENSION IF NOT EXISTS vector;

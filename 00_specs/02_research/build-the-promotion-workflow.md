@@ -27,11 +27,11 @@ criteria belong inside requirements").
 
 ## Existing assets to reuse
 
-- **Prompt library** — [12_prompts/](12_prompts) already
-  separates `roles/`, `tasks/`, `agents/`, `templates/`. The per-stage
-  promotion prompts belong in `12_prompts/tasks/spec_promotion/` (one prompt
-  per stage). They must stay provider-agnostic per
-  [12_prompts/README.md](12_prompts/README.md).
+- **Prompt library** — [12_prompts/](12_prompts) is a flat directory of
+  prompts named with dot-notation classification (e.g. `tasks.vision.overview.md`,
+  `examples.hello-shell.md`). The per-stage promotion prompts live under the
+  `tasks.spec-promotion.*` namespace (one prompt per stage). They must stay
+  provider-agnostic per [12_prompts/README.md](12_prompts/README.md).
 - **Model registry** — [13_models/registry.yaml](13_models/registry.yaml)
   lists local Ollama models. LM Studio is declared as a provider in
   [13_models/providers.yaml](13_models/providers.yaml) at

@@ -1,0 +1,38 @@
+id: docker.grafana
+name: grafana
+category: observability
+purpose: |
+  Grafana dashboard server fronting Prometheus, Jaeger, and other data sources used
+  for observability of the content graph stack. Persistent state lives on DATA_PATH.
+
+inputs:
+  DATA_PATH:
+    description: Host path for Grafana state (binds to /var/lib/grafana in container)
+    required: true
+  GF_SECURITY_ADMIN_USER:
+    description: Grafana admin user
+    required: true
+  GF_SECURITY_ADMIN_PASSWORD:
+    description: Grafana admin password
+    required: true
+  GRAFANA_PORT:
+    default: 3002
+    description: Host port to expose the Grafana HTTP interface (default 3002)
+    required: false
+
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: contentgraph-grafana
+    restart: unless-stopped
+    environment:
+      - map: GF_SECURITY_ADMIN_USER: {{ GF_SECURITY_ADMIN_USER }}
+        description: Grafana admin user
+      - map: GF_SECURITY_ADMIN_PASSWORD: {{ GF_SECURITY_ADMIN_PASSWORD }}
+        description: Grafana admin password
+    ports:
+      - map: "{{ GRAFANA_PORT }}:3000"
+        description: Grafana HTTP interface
+    volumes:
+      - map: {{ DATA_PATH }}:/var/lib/grafana
+        description: Grafana persistent state directory

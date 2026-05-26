@@ -10,7 +10,7 @@ agents consume those records and make scoped changes after reviewing evidence.
 
 | Artifact | Purpose |
 | --- | --- |
-| `01_contracts/classification_audit_finding.schema.json` | Contract for one JSONL finding |
+| `01_schemas/audit.classification_finding.schema.yaml` | Contract for one JSONL finding |
 | `17_scripts/audit_classifications.py` | Deterministic crawler and finding generator |
 | `14_data/runs/classification_audit/findings.jsonl` | Open decomposition work queue |
 | `14_data/runs/classification_audit/summary.json` | Scan statistics and rule counts |
@@ -41,7 +41,7 @@ existing `status` value for findings that remain present.
 | `workflow_owns_persistent_file_io` | `08_drivers` owns persistent read/write operations |
 | `external_document_tool_execution_in_core` | `02_core` remains domain-neutral |
 | `router_depends_on_mcp_exposure_layer` | `05_router` dispatches internal capabilities rather than importing exposure adapters |
-| `configured_model_missing_from_registry` | `13_models` is authoritative for model availability |
+| `configured_model_missing_from_registry` | `13_models` is authoritative for model availability (one YAML per model) |
 | `duplicate_docker_service_lifecycle_paths` | Runtime and harness layers do not duplicate lifecycle execution |
 
 ## Remediation Agent Pipeline

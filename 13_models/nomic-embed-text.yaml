@@ -1,0 +1,18 @@
+# Model: nomic-embed-text
+#
+# Text embedding model from Nomic. Returns vectors for retrieval, clustering,
+# and similarity search — not a chat model.
+
+name: nomic-embed-text
+
+documentation:
+  summary: |
+    Text embeddings for semantic search, retrieval augmented generation,
+    clustering, and similarity matching.
+  vendor: Nomic
+
+providers:
+  - ollama
+
+features:
+  - embedding

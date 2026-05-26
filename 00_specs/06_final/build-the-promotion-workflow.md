@@ -39,11 +39,11 @@ linked upstream artifacts before doing anything else.
 > Implement the three branchable units in this order:
 >
 > 1. `claude_feature_spec-promotion-prompts` — create the five per-stage
->    prompt templates under
->    `20_workspaces/12_prompts/tasks/spec_promotion/` as specified in P1
->    of the prompts stage. Use the hand-written upstream artifacts of
->    this very spec as worked examples — the prompts should produce
->    artifacts of the same shape.
+>    prompt templates in the flat `20_workspaces/12_prompts/` directory
+>    under the `tasks.spec-promotion.*` namespace as specified in P1 of
+>    the prompts stage. Use the hand-written upstream artifacts of this
+>    very spec as worked examples — the prompts should produce artifacts
+>    of the same shape.
 >
 > 2. `claude_feature_spec-promotion-notebook` — implement
 >    `20_workspaces/15_notebooks/promote_spec.ipynb` per the cell layout in

@@ -1,23 +1,25 @@
-# Prompts
+# Prompt templates
 
-Prompt templates and role definitions used across the system. Organized by
-responsibility, matching `REPO_STRUCTURE.md`.
+Flat directory of prompt templates. Files use dot-notation in their names to
+encode classification (no nested subdirectories). Every file declares an
+`id:` in YAML frontmatter that matches the filename stem.
 
-## Layout
+Naming convention:
 
-- `roles/` — persona and system-prompt definitions (e.g. "senior reviewer",
-  "research assistant"). Use these to set model behavior independent of any
-  specific task.
-- `tasks/` — task-specific prompt templates (e.g. summarization, extraction,
-  classification). Parameterized for reuse.
-- `agents/` — composite prompts for multi-step or tool-using agents. Typically
-  combine a role plus task instructions plus tool descriptions.
-- `templates/` — generic, reusable prompt fragments (few-shot blocks, output
-  schemas, chain-of-thought scaffolds) that other prompts can compose.
+```
+<namespace>[.<sub-namespace>...].<slug>.md
+```
 
-## Conventions
+Example: `tasks.vision.overview.md` has `id: tasks.vision.overview`.
 
-- Plain Markdown or Jinja-style templates; one prompt per file.
-- File name describes purpose, not the model it targets.
-- Keep prompts provider-agnostic — model-specific tuning belongs in the
-  harness layer, not here.
+Current namespaces:
+
+| Prefix | Purpose |
+| --- | --- |
+| `tasks.*` | Provider-agnostic task prompts loaded by workflows and tools. |
+| `tasks.vision.*` | Vision sub-task prompts consumed by the image-intelligence workflow. |
+| `tasks.spec-promotion.*` | Stage prompts for the spec promotion workflow (research → final). |
+| `examples.*` | Runnable demos for the markdown runtime harness. Also used as fixtures by `16_tests/harnesses.markdown.cli.test.py`. |
+
+The markdown runtime harness lives at `04_harnesses/markdown/`. See its
+README for the file format, frontmatter schema, and CLI invocation.

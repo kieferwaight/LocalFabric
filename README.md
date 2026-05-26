@@ -1,6 +1,8 @@
 # LocalFabric
 
+<!-- PROJECT_TAGLINE_START -->
 **Local-first AI orchestration for models, tools, workflows, and data services.**
+<!-- PROJECT_TAGLINE_END -->
 
 LocalFabric is a modular platform for building private, reproducible AI workflows that run on local infrastructure first and can extend to cloud providers when needed. It brings model routing, reusable tools, workflow execution, service orchestration, storage drivers, prompt assets, and auditability into one responsibility-driven workspace.
 
@@ -54,10 +56,12 @@ flowchart LR
 
 Implementation lives directly under the repo root in numeric-prefixed responsibility buckets. Each bucket owns a single concern.
 
+<!-- BUCKETS_TABLE_START -->
 | Bucket | Role | Import name |
 |--------|------|-------------|
 | [`00_specs/`](00_specs/) | Agent-ready specs and task artifacts | — |
-| [`01_contracts/`](01_contracts/) | Shared JSON schemas and Protocol mirrors | — |
+| [`01_interfaces/`](01_interfaces/) | Python Protocol mirrors of the JSON schemas | `interfaces` |
+| [`01_schemas/`](01_schemas/) | Shared JSON schemas used across components | — |
 | [`02_core/`](02_core/) | Shared primitives: config, logging, paths | `core` |
 | [`03_adapters/`](03_adapters/) | Interface translation (CLI, REST, OpenAI-compat, MCP) | `adapters` |
 | [`04_harnesses/`](04_harnesses/) | Execution lifecycle per provider | `harnesses` |
@@ -69,13 +73,15 @@ Implementation lives directly under the repo root in numeric-prefixed responsibi
 | [`10_service_runtime/`](10_service_runtime/) | `cmd <service> <path>` runtime | `service_runtime` |
 | [`11_mcp/`](11_mcp/) | MCP servers and exposure shims | `mcp_servers` |
 | [`12_prompts/`](12_prompts/) | Prompt templates | — |
-| [`13_models/`](13_models/) | Model registry, providers, profiles | — |
+| [`13_models/`](13_models/) | Per-model YAML registry (providers + features) | — |
+| [`13_providers/`](13_providers/) | Per-provider YAML registry (protocols + endpoints) | — |
 | [`14_data/`](14_data/) | Persistent data (filesystem-backed) | — |
 | [`15_notebooks/`](15_notebooks/) | Exploration notebooks | — |
 | [`16_tests/`](16_tests/) | Integration and contract tests | — |
 | [`17_scripts/`](17_scripts/) | Utility and maintenance scripts | — |
 | [`18_docs/`](18_docs/) | Supporting docs | — |
 | [`19_archive/`](19_archive/) | Deprecated components | — |
+<!-- BUCKETS_TABLE_END -->
 
 ## Import-name Strategy
 
@@ -87,6 +93,16 @@ Numeric prefixes are filesystem-only — Python forbids module names that start 
 `11_mcp/` is intentionally exposed as **`mcp_servers`**, not `mcp`: [`11_mcp/server.py`](11_mcp/server.py) imports `from mcp.server.fastmcp import FastMCP` (the PyPI MCP SDK), so we leave that top-level name unshadowed.
 
 Always import via the clean name (`from drivers.sql.session import init_db`), never via the numeric path.
+
+## Console Scripts
+
+<!-- CLI_COMMANDS_START -->
+| Command | Entry point |
+|---------|-------------|
+| `localfabric` | `adapters.cli.main:app` |
+| `localfabric-md` | `adapters.cli.markdown_runtime_adapter:main` |
+| `localfabric-runtime` | `service_runtime.cmd:main` |
+<!-- CLI_COMMANDS_END -->
 
 ## Getting Started
 
@@ -112,7 +128,7 @@ python -m mcp_servers.server
 ## Notes for contributors
 
 - Cross-bucket imports use the clean import name (`from drivers.sql.session import init_db`), never the numeric path.
-- [`core.paths.REPO_ROOT`](02_core/src/core/paths.py) is the canonical anchor for path resolution — no `os.path.join(__file__, "..", "..")` patterns anywhere else.
+- [`core.paths.REPO_ROOT`](02_core/paths.py) is the canonical anchor for path resolution — no `os.path.join(__file__, "..", "..")` patterns anywhere else.
 - [`17_scripts/audit_classifications.py`](17_scripts/audit_classifications.py) checks for layer-boundary violations; run it before opening a PR. Findings land at `14_data/runs/classification_audit/`.
 
 ## Design Principles

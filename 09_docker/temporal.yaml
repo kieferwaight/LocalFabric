@@ -1,0 +1,56 @@
+id: docker.temporal
+name: temporal
+category: workers
+purpose: |
+  Temporal auto-setup server backed by PostgreSQL. Provides durable workflow execution
+  for the worker services. Dynamic config is mounted from ./dynamicconfig.
+
+inputs:
+  POSTGRES_USER:
+    description: PostgreSQL user used by Temporal
+    required: true
+  POSTGRES_PASSWORD:
+    description: PostgreSQL password used by Temporal
+    required: true
+  POSTGRES_SEEDS:
+    description: Comma-separated PostgreSQL host seeds (default pgvector)
+    required: true
+  TEMPORAL_PORT:
+    default: 7233
+    description: Host port to expose the Temporal frontend gRPC API (default 7233)
+    required: false
+  DB_PORT:
+    default: 5432
+    description: PostgreSQL port Temporal connects to (default 5432)
+    required: false
+
+services:
+  temporal:
+    image: temporalio/auto-setup
+    container_name: contentgraph-temporal
+    restart: unless-stopped
+    environment:
+      - map: DB: postgresql
+        description: Database driver Temporal should use
+      - map: DB_PORT: {{ DB_PORT }}
+        description: PostgreSQL port
+      - map: POSTGRES_USER: {{ POSTGRES_USER }}
+        description: PostgreSQL user
+      - map: POSTGRES_PWD: {{ POSTGRES_PASSWORD }}
+        description: PostgreSQL password
+      - map: POSTGRES_SEEDS: {{ POSTGRES_SEEDS }}
+        description: PostgreSQL host seeds
+      - map: DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/development-sql.yaml
+        description: Path to the dynamic config file inside the container
+    ports:
+      - map: "{{ TEMPORAL_PORT }}:7233"
+        description: Temporal frontend gRPC API
+    volumes:
+      - map: ./dynamicconfig:/etc/temporal/config/dynamicconfig
+        description: Temporal dynamic configuration directory
+
+files:
+  - path: ./dynamicconfig/development-sql.yaml
+    content: |
+      frontend.enableUpdateWorkflowExecution:
+        - value: true

@@ -1,23 +1,15 @@
 {
-    "python-envs.pythonProjects": [
-        {
-            "path": ".",
-            "envManager": "ms-python.python:system",
-            "packageManager": "ms-python.python:pip"
-        }
-    ],
     "markdown.styles": [
         ".vscode/documentation.css"
     ],
-    "workbench.editorAssociations": {
-        "*.md": "vscode.markdown.preview.editor"
-    },
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
     "files.exclude": {
-        "**/__pycache__": true,
-        "**/.pytest_cache": true,
-        "**/.venv": true,
-        "**/venv": true,
-        "**/*.egg-info": true
+        // "**/__pycache__": true,
+        // "**/.pytest_cache": true,
+        // "**/.venv": true,
+        // "**/venv": true,
+        // "**/*.egg-info": true
     },
     "python.testing.pytestArgs": [
         "16_tests"

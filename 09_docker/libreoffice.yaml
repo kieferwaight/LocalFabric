@@ -1,0 +1,42 @@
+id: docker.libreoffice
+name: libreoffice
+category: document
+purpose: |
+  Headless LibreOffice container used as a conversion worker for Office documents
+  in the ingestion pipeline. Built locally; idles waiting for work on /work.
+
+inputs:
+  DATA_PATH:
+    description: Host path for conversion work (binds to /work in container)
+    required: true
+
+services:
+  libreoffice:
+    build: .
+    image: contentgraph-libreoffice:local
+    container_name: contentgraph-libreoffice
+    restart: unless-stopped
+    volumes:
+      - map: {{ DATA_PATH }}:/work
+        description: Shared working directory for conversion input and output
+
+files:
+  - path: ./Dockerfile
+    content: |
+      FROM python:3.12-slim
+
+      RUN apt-get update \
+        && apt-get install -y --no-install-recommends libreoffice \
+        && rm -rf /var/lib/apt/lists/*
+
+      WORKDIR /app
+      COPY app /app
+      CMD ["python", "worker.py"]
+  - path: ./app/worker.py
+    content: |
+      import time
+
+
+      print("libreoffice conversion worker ready")
+      while True:
+          time.sleep(60)

@@ -1,0 +1,155 @@
+- id: docs.classification.audit.template
+  title: Docs - Classification Audit
+  description: |
+    Canonical body of `18_docs/classification_audit.md`. Pure static content —
+    the YAML definition is the source of truth so the committed `.md` file
+    can be regenerated without drift and won't be silently overwritten.
+  tags: [documentation, template, classification]
+  template:
+    engine: jinja
+    output: markdown
+    body: |
+      # Classification Boundary Audit
+
+      ## Purpose
+
+      The classification audit identifies files that contain responsibilities belonging
+      to multiple numeric buckets. It produces planning records only. Remediation
+      agents consume those records and make scoped changes after reviewing evidence.
+
+      ## Artifacts
+
+      | Artifact | Purpose |
+      | --- | --- |
+      | `01_schemas/audit.classification_finding.schema.yaml` | Contract for one JSONL finding |
+      | `17_scripts/audit_classifications.py` | Deterministic crawler and finding generator |
+      | `14_data/runs/classification_audit/findings.jsonl` | Open decomposition work queue |
+      | `14_data/runs/classification_audit/summary.json` | Scan statistics and rule counts |
+
+      ## Run The Audit
+
+      From the repo root:
+
+      ```bash
+      python3 17_scripts/audit_classifications.py
+      ```
+
+      The crawler reads source, configuration, workflow, and documentation files
+      under active numeric-prefixed buckets. It excludes persistent run data and
+      `19_archive/`, whose contents are retained for historical reference only. Re-running it
+      refreshes current evidence while stable `finding_id` values preserve any
+      existing `status` value for findings that remain present.
+
+      ## Initial Rule Families
+
+      | Rule | Boundary Being Enforced |
+      | --- | --- |
+      | `executable_provider_wrapper_in_prompt_bucket` | `12_prompts` stores templates, not API clients |
+      | `provider_execution_in_tool_bucket` | `07_tools` exposes reusable capabilities, not provider invocation |
+      | `provider_health_probe_in_adapter` | `03_adapters` translates/presents input and output, while harnesses query providers |
+      | `mcp_tool_combines_provider_prompt_and_fetch_execution` | `11_mcp` exposes tools without becoming the implementation layer |
+      | `workflow_executes_prompt_bucket_as_scripts` | `06_workflows` orchestrates named prompt tasks without running prompt assets as programs |
+      | `workflow_owns_persistent_file_io` | `08_drivers` owns persistent read/write operations |
+      | `external_document_tool_execution_in_core` | `02_core` remains domain-neutral |
+      | `router_depends_on_mcp_exposure_layer` | `05_router` dispatches internal capabilities rather than importing exposure adapters |
+      | `configured_model_missing_from_registry` | `13_models` is authoritative for model availability |
+      | `duplicate_docker_service_lifecycle_paths` | Runtime and harness layers do not duplicate lifecycle execution |
+
+      ## Remediation Agent Pipeline
+
+      Use the JSONL as an ordered queue, processing high severity records first.
+
+      1. **Triage agent** reads a record, verifies evidence still exists, and marks it
+         accepted or dismissed in its working plan.
+      2. **Contract agent** defines or updates the internal contract before behavior is
+         moved, especially when prompts, harnesses, or drivers are involved.
+      3. **Decomposition agent** extracts functionality into the listed destination
+         buckets while preserving existing entry points through delegation.
+      4. **Verification agent** runs focused tests and the classification audit again.
+         A resolved record must disappear or be explicitly documented as intentional.
+
+      One remediation change should target one finding or one tightly coupled finding
+      cluster. For example, the Ollama vision prompt wrappers and the vision tool
+      client form a single cluster because they define competing contracts for the
+      same task.
+
+      ## Finding Interpretation
+
+      Each JSONL line includes:
+
+      - `file`: absolute source path under review.
+      - `violation`: rule, severity, evidence lines, and audit confidence.
+      - `decomposition_classes`: destination ownership suggestions with naming guidance.
+      - `related_files`: files that should be inspected during the same remediation.
+      - `remediation_guidance`: sequencing guidance for the next agent.
+      - `status`: planning lifecycle field; generated findings begin as `open`.
+
+      The audit intentionally favors false negatives over broad guesses. Add a new
+      rule only when its ownership boundary can be stated clearly and its evidence can
+      be detected without interpreting arbitrary business logic.
+
+      Ephemeral workflow-runtime IPC files created with `tempfile.mkstemp` are
+      execution plumbing rather than persistent data targets and are excluded from
+      the persistent-file-I/O finding rule.
+
+- id: docs.classification.remediation-workflow.template
+  title: Docs - Classification Remediation Workflow
+  description: |
+    Canonical body of `18_docs/classification_remediation_workflow.md`. Pure
+    static content owned by this YAML definition so the committed `.md` file
+    can be regenerated cleanly and drift is caught by `--mode=check`.
+  tags: [documentation, template, classification]
+  template:
+    engine: jinja
+    output: markdown
+    body: |
+      # Classification Remediation Workflow
+
+      ## Objective
+
+      Resolve the findings in `14_data/runs/classification_audit/findings.jsonl`
+      through small dependency-aware remediation clusters. Each cluster is reviewed
+      by rerunning the audit and focused tests before proceeding to the next one.
+
+      ## Agent Loop
+
+      1. **Select** the next open high-severity finding and any records that depend on
+         the same implementation boundary.
+      2. **Verify** that each cited evidence line is still present and decide whether
+         the record needs decomposition or dismissal.
+      3. **Implement** only the ownership moves needed for that cluster, preserving
+         supported APIs with delegation when appropriate.
+      4. **Validate** with focused tests, compilation, and a refreshed audit queue.
+      5. **Record** the audit delta and any rule/process adjustment in
+         `14_data/runs/classification_audit/remediation_log.jsonl`.
+
+      ## Planned Order
+
+      | Cluster | Scope | Reason For Order |
+      | --- | --- | --- |
+      | `vision-prompts` | Vision tool client, executable prompt wrappers, shell legacy flows, model registration, CLI preflight | Establishes the canonical provider/prompt boundary used by later work |
+      | `mcp-research` | MCP local tools and router imports | Moves internal capability implementation below the exposure layer |
+      | `embeddings` | Embedding provider call and cache persistence | Reuses the established harness pattern |
+      | `artifact-io` | Workflow file writes and PDF-specific core execution | Establishes driver ownership for persistent/document operations |
+      | `service-runtime` | Docker lifecycle duplication | Consolidates runtime behavior after application paths are stable |
+
+      ## Completion Criteria
+
+      - Supported behavior has an owning bucket consistent with `REPO_STRUCTURE.md`.
+      - Legacy-only executable paths are archived or removed from active execution.
+      - The audit emits no open actionable findings.
+      - Focused tests and structural compilation pass after each cluster.
+
+      ## Completed Run
+
+      The initial remediation run resolved all `19` generated findings in five
+      dependency-aware clusters:
+
+      | Cluster | Finding Delta | Process Learning |
+      | --- | ---: | --- |
+      | `vision-prompts` | `19` to `7` | Archive historical executables before consolidating the supported path |
+      | `mcp-research` | `7` to `5` | Keep MCP thin and avoid introducing optional config dependencies at import time |
+      | `embeddings` | `5` to `4` | Provider invocation and persistent cache state require separate owners |
+      | `artifact-io` | `4` to `1` | Workflow nodes should delegate persistent artifact writes to drivers |
+      | `service-runtime` | `1` to `0` | The runtime resolves bindings; the harness executes lifecycle operations |
+
