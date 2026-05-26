@@ -18,7 +18,7 @@ Or as a standalone CLI:
 import os
 from typing import Literal, Optional
 
-from tools.embeddings.embedder import Embedder, EmbedderUnavailable
+from tasks.embeddings.embedder import Embedder, EmbedderUnavailable
 
 StoreBackend = Literal["lancedb", "numpy"]
 

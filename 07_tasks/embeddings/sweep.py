@@ -19,17 +19,18 @@ import json
 import os
 import time
 
+from core.environment import REPO_ROOT as _REPO_ROOT
 from drivers.vector.lancedb_driver import LanceStore
-from tools.embeddings.chunker import chunk_file
-from tools.embeddings.embedder import Embedder, EmbedderUnavailable
+from tasks.embeddings.chunker import chunk_file
+from tasks.embeddings.embedder import Embedder, EmbedderUnavailable
 
 # ------------------------------------------------------------------
 # Configuration
 # ------------------------------------------------------------------
 
-_DEFAULT_TARGET = _REPO_ROOT
+_DEFAULT_TARGET = str(_REPO_ROOT)
 _MANIFEST_PATH = os.path.join(
-    _REPO_ROOT, "14_data", "cache", "embeddings", "sweep_manifest.json"
+    str(_REPO_ROOT), "14_data", "cache", "embeddings", "sweep_manifest.json"
 )
 
 # Extensions to index (all others skipped)
