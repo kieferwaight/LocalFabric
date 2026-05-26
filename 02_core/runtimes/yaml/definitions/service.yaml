@@ -1,0 +1,183 @@
+# service.yaml — service abstraction layer
+#
+# A `service.<id>` definition picks a backend ("docker" | "launchd") and a
+# `target` that names the backend-specific definition id.  The `action` input
+# selects a lifecycle verb; `service.base` looks up the appropriate lifecycle
+# definition via `action_to_def[action]` and dispatches an `invoke:` with the
+# backend-specific argument map from `action_arguments[action]`.
+#
+# Two mixins wire up the per-backend action maps:
+#   - service.docker.mixin  →  compose.up / compose.down / compose.status / …
+#   - service.launchd.mixin →  launchd.start / launchd.stop / launchd.status / …
+#
+# Concrete services extend service.base and include exactly one mixin:
+#
+#   - id: service.ollama
+#     extends: service.base
+#     mixins: [service.launchd.mixin]
+#     variables:
+#       backend: launchd
+#       target: launchd.ollama
+
+- id: service.base
+  title: Service Abstraction Base
+  description: |
+    Abstract base for a runtime service. Children declare a `backend`
+    variable ("docker" | "launchd") and a `target` variable (the
+    backend-specific definition id this service is backed by — e.g.
+    "docker.ollama" or "launchd.ollama"). They MUST also extend exactly
+    one of the action-mixins (service.docker.mixin or
+    service.launchd.mixin) so that `action_to_def` resolves correctly.
+
+    The `action` input picks a verb from
+    {start, stop, enable, disable, install, uninstall, status}. The base
+    looks up `action_to_def[action]` to find the lifecycle definition to
+    invoke and `action_arguments[action]` to find the arguments mapping
+    to pass through.
+  tags: [service, abstract]
+  extends: stdlib.base
+  inputs:
+    action:
+      type: string
+      required: true
+      description: "Lifecycle verb: start | stop | enable | disable | install | uninstall | status"
+  variables:
+    backend: ""                # set by child: "docker" | "launchd"
+    target: ""                 # set by child: "docker.<id>" or "launchd.<id>"
+    action_to_def: {}          # set by service.<backend>.mixin
+    action_arguments: {}       # set by service.<backend>.mixin
+  run:
+    - invoke:
+        definition: "{{ action_to_def[action] }}"
+        arguments: "{{ action_arguments[action] }}"
+
+- id: service.docker.mixin
+  title: Docker Backend Action Map
+  description: |
+    Mixin that wires the docker-backend action verbs to their lifecycle
+    definitions. `target` (set by the consuming service) is the
+    `docker.<id>` definition; lifecycle defs take `target_dir` which we
+    derive as `14_data/<target-flat>/`.
+
+    Note: docker has no "enable"/"disable" concept (compose services
+    are always reachable once their compose file exists), so those verbs
+    map to no-ops via a `stdlib.logger` invocation that records the no-op.
+  tags: [service, docker, abstract]
+  extends: stdlib.base
+  variables:
+    action_to_def:
+      start:     "compose.up"
+      stop:      "compose.down"
+      status:    "compose.status"
+      install:   "compose.up"          # docker "install" == scaffold + bring up
+      uninstall: "compose.down"
+      enable:    "stdlib.logger"
+      disable:   "stdlib.logger"
+    # Per-action arguments mapping. `target` resolves at runtime via Jinja.
+    action_arguments:
+      start:     {target_dir: "14_data/{{ target | replace('.', '_') }}"}
+      stop:      {target_dir: "14_data/{{ target | replace('.', '_') }}"}
+      status:    {target_dir: "14_data/{{ target | replace('.', '_') }}"}
+      install:   {target_dir: "14_data/{{ target | replace('.', '_') }}"}
+      uninstall: {target_dir: "14_data/{{ target | replace('.', '_') }}"}
+      enable:    {message: "docker backend: enable is a no-op", level: "INFO"}
+      disable:   {message: "docker backend: disable is a no-op", level: "INFO"}
+
+- id: service.launchd.mixin
+  title: Launchd Backend Action Map
+  description: |
+    Mixin that wires the launchd-backend action verbs to their
+    lifecycle definitions. `target` (set by the consuming service) is
+    the `launchd.<id>` definition; lifecycle defs accept a `definition:`
+    input that they resolve to a label via the catalog.
+  tags: [service, launchd, abstract]
+  extends: stdlib.base
+  variables:
+    action_to_def:
+      start:     "launchd.start"
+      stop:      "launchd.stop"
+      enable:    "launchd.enable"
+      disable:   "launchd.disable"
+      install:   "launchd.install"
+      uninstall: "launchd.uninstall"
+      status:    "launchd.status"
+    action_arguments:
+      start:     {definition: "{{ target }}"}
+      stop:      {definition: "{{ target }}"}
+      enable:    {definition: "{{ target }}"}
+      disable:   {definition: "{{ target }}"}
+      install:   {definition: "{{ target }}"}
+      uninstall: {definition: "{{ target }}"}
+      status:    {definition: "{{ target }}"}
+
+# ---------------------------------------------------------------------------
+# Concrete service definitions
+# ---------------------------------------------------------------------------
+#
+# Each service below declares:
+#   - extends: service.base
+#   - mixins: [service.<backend>.mixin]
+#   - variables.backend and variables.target
+#
+# Launchd-backed services: ollama, caffienate, lm-studio
+# Docker-backed services:  postgres, redis, neo4j
+
+- id: service.ollama
+  title: Ollama Service (launchd backend)
+  description: Local Ollama model server managed via launchd.
+  tags: [service, launchd]
+  extends: service.base
+  mixins: [service.launchd.mixin]
+  variables:
+    backend: launchd
+    target: launchd.ollama
+
+- id: service.caffienate
+  title: Caffienate Service (launchd backend)
+  description: macOS Caffeinate keep-awake daemon managed via launchd.
+  tags: [service, launchd]
+  extends: service.base
+  mixins: [service.launchd.mixin]
+  variables:
+    backend: launchd
+    target: launchd.caffienate
+
+- id: service.lm-studio
+  title: LM Studio Service (launchd backend)
+  description: LM Studio local inference server managed via launchd.
+  tags: [service, launchd]
+  extends: service.base
+  mixins: [service.launchd.mixin]
+  variables:
+    backend: launchd
+    target: launchd.lm-studio
+
+- id: service.postgres
+  title: Postgres Service (docker backend)
+  description: Local Postgres database managed via docker-compose.
+  tags: [service, docker]
+  extends: service.base
+  mixins: [service.docker.mixin]
+  variables:
+    backend: docker
+    target: docker.postgres
+
+- id: service.redis
+  title: Redis Service (docker backend)
+  description: Local Redis cache managed via docker-compose.
+  tags: [service, docker]
+  extends: service.base
+  mixins: [service.docker.mixin]
+  variables:
+    backend: docker
+    target: docker.redis
+
+- id: service.neo4j
+  title: Neo4j Service (docker backend)
+  description: Local Neo4j graph database managed via docker-compose.
+  tags: [service, docker]
+  extends: service.base
+  mixins: [service.docker.mixin]
+  variables:
+    backend: docker
+    target: docker.neo4j

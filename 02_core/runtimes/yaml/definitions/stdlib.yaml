@@ -34,6 +34,7 @@
     - model.yaml
     - provider.yaml
     - route.yaml
+    - service.yaml
   variables:
     module_namespace: "builtin"
 

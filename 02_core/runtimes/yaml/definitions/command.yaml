@@ -72,6 +72,43 @@
         definition: "{{ task_id }}"
         arguments: "{{ arguments }}"
 
+- id: command.service.action
+  title: Run a Service Lifecycle Action
+  description: |
+    Invokes a service definition (tagged `service`) with the given
+    lifecycle verb. The service definition routes the verb to its
+    backend's lifecycle wrapper (docker compose up/down/..., launchd
+    start/stop/...).
+    Wired as `localfabric service action <service_id> <action>` on the CLI
+    and as POST /v1/service/action on the API surface (Phase C3).
+  tags: [command]
+  extends: command.base
+  inputs:
+    service_id:
+      type: string
+      required: true
+      description: Service definition id (e.g. service.ollama). Must descend from service.base.
+    action:
+      type: string
+      required: true
+      description: One of start | stop | enable | disable | install | uninstall | status.
+  variables:
+    argv_spec:
+      group: service
+      verb: action
+      positional: [service_id, action]
+      options: []
+    http_spec:
+      method: POST
+      path: /v1/service/action
+    mcp_spec:
+      expose: false
+  run:
+    - invoke:
+        definition: "{{ service_id }}"
+        arguments:
+          action: "{{ action }}"
+
 - id: command.route
   title: Route an Intent through the Router
   description: |
