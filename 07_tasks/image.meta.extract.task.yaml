@@ -1,0 +1,21 @@
+- id: image.meta.extract.task
+  title: Extract image file metadata
+  description: |
+    Extract file identity metadata, dimensions, EXIF, and ICC profile info
+    from an image. Wraps lib.image.meta.extract_meta.
+  tags: [task]
+  extends: task.base
+  inputs:
+    path:
+      type: string
+      required: true
+      description: Path to the image file.
+  run:
+    - python: |
+        import json, os
+        from pathlib import Path
+        from lib.image.meta import extract_meta
+
+        result = extract_meta(Path("{{ path }}"))
+        with open(os.environ["STATE_FILE"], "w") as f:
+            json.dump(result, f, default=str)

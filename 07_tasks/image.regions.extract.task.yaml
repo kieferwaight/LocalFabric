@@ -1,0 +1,26 @@
+- id: image.regions.extract.task
+  title: Detect content regions in an image
+  description: |
+    Detect visible content regions, OCR text bounding boxes, and graphic
+    contours in an image. Wraps lib.image.regions.extract_regions.
+  tags: [task]
+  extends: task.base
+  inputs:
+    path:
+      type: string
+      required: true
+      description: Path to the image file.
+    max_contours:
+      type: number
+      required: false
+      default: 20
+      description: Maximum number of graphic contours to return.
+  run:
+    - python: |
+        import json, os
+        from pathlib import Path
+        from lib.image.regions import extract_regions
+
+        result = extract_regions(Path("{{ path }}"), max_contours={{ max_contours }})
+        with open(os.environ["STATE_FILE"], "w") as f:
+            json.dump(result, f)

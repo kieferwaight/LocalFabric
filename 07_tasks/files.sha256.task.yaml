@@ -1,0 +1,21 @@
+- id: files.sha256.task
+  title: Compute SHA-256 hash of a file
+  description: |
+    Return the SHA-256 hex digest of the file at the given path.
+    Wraps lib.files.sha256_file.
+  tags: [task]
+  extends: task.base
+  inputs:
+    path:
+      type: string
+      required: true
+      description: Path to the file to hash.
+  run:
+    - python: |
+        import json, os
+        from pathlib import Path
+        from lib.files import sha256_file
+
+        digest = sha256_file(Path("{{ path }}"))
+        with open(os.environ["STATE_FILE"], "w") as f:
+            json.dump({"hash": digest, "path": "{{ path }}"}, f)

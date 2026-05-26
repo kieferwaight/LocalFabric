@@ -211,6 +211,7 @@ class Runtime:
                 "has_schema": bool(definition.schema),
                 "launchd": dict(definition.launchd),
                 "has_launchd": bool(definition.launchd),
+                "has_task": self._descends_from(def_id, "task.base"),
                 "has_command": self._descends_from(def_id, "command.base"),
                 "has_docker": self._descends_from(def_id, "docker.base"),
                 "has_model": self._descends_from(def_id, "model.base"),

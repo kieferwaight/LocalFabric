@@ -35,6 +35,7 @@
     - provider.yaml
     - route.yaml
     - service.yaml
+    - task.yaml
   variables:
     module_namespace: "builtin"
 

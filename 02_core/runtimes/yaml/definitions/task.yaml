@@ -1,0 +1,9 @@
+- id: task.base
+  title: Task base
+  description: |
+    Abstract base for atomic task definitions. A task is a single
+    pure-ish operation: takes inputs, returns output, no orchestration,
+    no lifecycle state. Children declare inputs and a `run:` block that
+    typically wraps a Python function in `lib.*`.
+  tags: [task, abstract]
+  extends: stdlib.base

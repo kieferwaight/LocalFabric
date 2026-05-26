@@ -1,0 +1,22 @@
+- id: shell.tests.run.task
+  title: Run local test suite
+  description: |
+    Execute a local test command and return a compact report string.
+    Trims output for downstream context-window efficiency.
+    Wraps lib.shell.run_tests.run_local_tests.
+  tags: [task]
+  extends: task.base
+  inputs:
+    command:
+      type: string
+      required: false
+      default: "pytest"
+      description: Test command to execute (shell string).
+  run:
+    - python: |
+        import json, os
+        from lib.shell.run_tests import run_local_tests
+
+        report = run_local_tests("{{ command }}")
+        with open(os.environ["STATE_FILE"], "w") as f:
+            json.dump({"report": report}, f)

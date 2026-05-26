@@ -1,0 +1,25 @@
+- id: embeddings.sweep.save_manifest.task
+  title: Persist the embedding sweep manifest
+  description: |
+    Write the sweep manifest dict as JSON to a path.
+    Wraps lib.embeddings.sweep.save_manifest.
+  tags: [task]
+  extends: task.base
+  inputs:
+    manifest_path:
+      type: string
+      required: true
+      description: Path to write the JSON manifest file.
+    manifest:
+      type: object
+      required: true
+      description: Dict mapping file paths to their MD5 hex digests.
+  run:
+    - python: |
+        import json, os
+        from lib.embeddings.sweep import save_manifest
+
+        manifest = {{ manifest | tojson }}
+        save_manifest("{{ manifest_path }}", manifest)
+        with open(os.environ["STATE_FILE"], "w") as f:
+            json.dump({"manifest_path": "{{ manifest_path }}", "entry_count": len(manifest)}, f)

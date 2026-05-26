@@ -1,0 +1,20 @@
+- id: browser.fetch.text.task
+  title: Fetch readable text from a URL or search topic
+  description: |
+    Retrieve and clean readable text for a URL or DuckDuckGo search topic.
+    Wraps lib.browser.fetch_text.fetch_readable_text.
+  tags: [task]
+  extends: task.base
+  inputs:
+    topic_or_url:
+      type: string
+      required: true
+      description: A URL (starting with http) or a search topic string.
+  run:
+    - python: |
+        import json, os
+        from lib.browser.fetch_text import fetch_readable_text
+
+        text, source_label, url = fetch_readable_text("{{ topic_or_url }}")
+        with open(os.environ["STATE_FILE"], "w") as f:
+            json.dump({"text": text, "source_label": source_label, "url": url}, f)

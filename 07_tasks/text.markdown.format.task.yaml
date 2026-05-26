@@ -1,0 +1,26 @@
+- id: text.markdown.format.task
+  title: Format a markdown file using a local LM Studio model
+  description: |
+    Read a markdown file, apply a formatting prompt through LM Studio,
+    and return the formatted content string.
+    Wraps lib.text.format_markdown.format_markdown_with_lmstudio.
+  tags: [task]
+  extends: task.base
+  inputs:
+    file_path:
+      type: string
+      required: true
+      description: Path to the markdown file to format.
+    model:
+      type: string
+      required: false
+      default: "qwen/qwen3.6-27b"
+      description: LM Studio model identifier.
+  run:
+    - python: |
+        import json, os
+        from lib.text.format_markdown import format_markdown_with_lmstudio
+
+        result = format_markdown_with_lmstudio("{{ file_path }}", model="{{ model }}")
+        with open(os.environ["STATE_FILE"], "w") as f:
+            json.dump({"formatted": result}, f)

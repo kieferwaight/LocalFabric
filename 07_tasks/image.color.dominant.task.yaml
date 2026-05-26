@@ -1,0 +1,27 @@
+- id: image.color.dominant.task
+  title: Extract dominant color palette from an image
+  description: |
+    Return color analysis for an image: dominant palette, brightness,
+    contrast, saturation, and dominant hex color.
+    Wraps lib.image.color.extract_color.
+  tags: [task]
+  extends: task.base
+  inputs:
+    path:
+      type: string
+      required: true
+      description: Path to the image file.
+    n_colors:
+      type: number
+      required: false
+      default: 6
+      description: Number of palette colors to extract.
+  run:
+    - python: |
+        import json, os
+        from pathlib import Path
+        from lib.image.color import extract_color
+
+        result = extract_color(Path("{{ path }}"), n_colors={{ n_colors }})
+        with open(os.environ["STATE_FILE"], "w") as f:
+            json.dump(result, f)
