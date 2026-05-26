@@ -39,33 +39,38 @@ localfabric = "core.interfaces.cli.main:app"
 localfabric-md = "core.interfaces.cli.markdown_runtime:main"
 
 [tool.setuptools]
-package-dir = { "interfaces" = "01_interfaces", "core" = "02_core", "adapters" = "03_adapters", "harnesses" = "04_harnesses", "router" = "05_router", "workflows" = "06_workflows", "tools" = "07_tools", "drivers" = "08_drivers", "mcp_servers" = "11_mcp" }
+# Map clean import names to the numbered on-disk buckets. Only five
+# top-level Python aliases survive after the 02_core restructure:
+# `core`, `interfaces` (the Protocol ABCs), `harnesses` (provider
+# harnesses), `tools`, and `drivers`. Everything else has been pulled
+# into core.* (router, mcp, cli, environment, runtimes.yaml,
+# runtimes.markdown, runtimes.langgraph).
+package-dir = { "interfaces" = "01_interfaces", "core" = "02_core", "harnesses" = "04_harnesses", "tools" = "07_tools", "drivers" = "08_drivers" }
 packages = [
     "core",
     "core.environment",
+    "core.router",
+    "core.mcp",
+    "core.mcp.tools",
+    "core.runtimes",
+    "core.runtimes.yaml",
+    "core.runtimes.yaml.src",
+    "core.runtimes.markdown",
+    "core.runtimes.markdown.providers",
+    "core.runtimes.langgraph",
+    "core.runtimes.langgraph.image_intelligence",
+    "core.runtimes.langgraph.ingest",
+    "core.runtimes.langgraph.markdown_format",
     "core.interfaces",
     "core.interfaces.cli",
     "interfaces",
-    "adapters",
     "harnesses",
     "harnesses.claude",
     "harnesses.codex",
     "harnesses.gemini",
     "harnesses.lmstudio",
-    "core.runtimes.markdown",
-    "core.runtimes.markdown.providers",
     "harnesses.ollama",
     "harnesses.openai",
-    "router",
-    "workflows",
-    "core.runtimes",
-    "core.runtimes.langgraph",
-    "core.runtimes.langgraph.image_intelligence",
-    "core.runtimes.langgraph.ingest",
-    "core.runtimes.langgraph.markdown_format",
-    "workflows.research",
-    "workflows.yaml",
-    "workflows.yaml.src",
     "tools",
     "tools.browser",
     "tools.classify",
@@ -81,51 +86,52 @@ packages = [
     "drivers.file",
     "drivers.sql",
     "drivers.vector",
-    "mcp_servers",
-    "mcp_servers.tools",
 ]
 
 [tool.localfabric.workspace_manifest]
 excluded_buckets = [
     "00_specs",
     "01_schemas",
+    "09_docker",
+    "09_launchd",
     "09_services",
     "12_prompts",
     "13_models",
     "13_providers",
     "14_data",
+    "14_templates",
     "15_notebooks",
     "16_tests",
     "17_scripts",
+    "17_tasks",
     "18_docs",
-    "19_archive",
 ]
 
 [tool.localfabric.mcp_mapping]
-system_sdk_override = "mcp_servers"
+system_sdk_override = "core.mcp"
 
 [tool.localfabric.workspace_descriptions]
 "00_specs" = "Agent-ready specs and task artifacts"
 "01_interfaces" = "Python Protocol mirrors of the JSON schemas"
 "01_schemas" = "Shared JSON schemas used across components"
-"02_core" = "Cross-cutting primitives (currently just paths)"
-"03_adapters" = "Interface translation (CLI, REST, OpenAI-compat, MCP)"
-"04_harnesses" = "Execution lifecycle per provider"
-"05_router" = "Classification → scoring → dispatch"
-"06_workflows" = "LangGraph, LangChain, shell, YAML workflows"
+"02_core" = "Core libraries — environment, router, runtimes (yaml/markdown/langgraph), interfaces (cli/api/mcp)"
+"04_harnesses" = "Provider harnesses — execution lifecycle per model provider"
+"06_workflows" = "Composed pipelines of tasks (YAML)"
 "07_tools" = "Reusable functional units (image, pdf, vision, embeddings, …)"
 "08_drivers" = "Storage/database connectors"
+"09_docker" = "Docker service definitions (extend docker.base)"
+"09_launchd" = "macOS launchd job definitions (extend launchd.base)"
 "09_services" = "Docker-Compose service catalog by category"
-"11_mcp" = "MCP servers and exposure shims"
-"12_prompts" = "Prompt templates"
+"12_prompts" = "Prompt templates (markdown runtime sources)"
 "13_models" = "Per-model YAML registry (one file per model; declares providers and features)"
 "13_providers" = "Per-provider YAML registry (one file per provider; declares protocols and endpoints)"
 "14_data" = "Persistent data (filesystem-backed)"
+"14_templates" = "Document templates rendered by YAML workflows"
 "15_notebooks" = "Exploration notebooks"
 "16_tests" = "Integration and contract tests"
 "17_scripts" = "Utility and maintenance scripts"
+"17_tasks" = "Atomic task definitions (YAML; behave like functions)"
 "18_docs" = "Supporting docs"
-"19_archive" = "Deprecated components"
 
 [tool.pytest.ini_options]
 testpaths = ["16_tests"]

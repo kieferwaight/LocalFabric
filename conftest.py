@@ -18,17 +18,15 @@ from pathlib import Path
 _ROOT = Path(__file__).resolve().parent
 
 # bucket-dir → import name. Keep in sync with [tool.setuptools.package-dir]
-# in pyproject.toml.
+# in pyproject.toml. Only buckets containing Python live here; pure
+# YAML/markdown directories (06_workflows, 09_docker, 12_prompts, ...)
+# are content trees, not packages.
 _BUCKETS: dict[str, str] = {
     "01_interfaces": "interfaces",
     "02_core": "core",
-    "03_adapters": "adapters",
     "04_harnesses": "harnesses",
-    "05_router": "router",
-    "06_workflows": "workflows",
     "07_tools": "tools",
     "08_drivers": "drivers",
-    "11_mcp": "mcp_servers",
 }
 
 
