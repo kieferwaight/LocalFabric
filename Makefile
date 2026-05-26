@@ -1,7 +1,7 @@
 PYTHON_VERSION ?= 3.14
 
 .PHONY: help venv clean-pycache clean-egg-info clean-venv clean-lock clean \
-        install install-dev install-all lock sync reset docs
+        install install-dev install-all lock sync reset docs audit
 
 help:
 	@echo "Targets:"
@@ -16,7 +16,8 @@ help:
 	@echo "  install        Alias for 'sync'"
 	@echo "  install-dev    uv sync --extra dev"
 	@echo "  install-all    uv sync --all-extras"
-	@echo "  docs           Regenerate README.md from README.template.md + pyproject.toml"
+	@echo "  docs           Regenerate the YAML API reference + README via the docs workflow"
+	@echo "  audit          Run the classification-boundary audit workflow"
 	@echo "  reset          clean + venv + install-all (full rebuild)"
 
 venv:
@@ -51,6 +52,9 @@ install-all:
 	uv sync --all-extras
 
 docs:
-	.venv/bin/python 02_core/runtimes/yaml/interpreter.py 06_workflows/generate-docs.yaml generate-docs
+	.venv/bin/python 02_core/runtimes/yaml/interpreter.py 06_workflows/docs.generate.workflow.yaml docs.generate.workflow
+
+audit:
+	.venv/bin/python 02_core/runtimes/yaml/interpreter.py 06_workflows/audit.classifications.scan.workflow.yaml audit.classifications.scan.workflow
 
 reset: clean venv install-all

@@ -25,10 +25,9 @@
 
 ## Architecture & Structure
 
-- Workspaces are in `20_workspaces/` with numeric prefixes for import order; import aliases are registered in `conftest.py`.
-- Tests are in `20_workspaces/16_tests/`.
-- Scripts are in `20_workspaces/17_scripts/`.
-- MCP servers are in `20_workspaces/11_mcp/` (no extra config required unless requested).
+- Numeric-prefixed top-level buckets carry import order; import aliases are registered in `conftest.py` + `pyproject.toml`'s `[tool.setuptools.package-dir]`.
+- Tests are in `16_tests/`.
+- The MCP server lives at `02_core/interfaces/mcp/` (registered as `core.interfaces.mcp`).
 
 ## Key Conventions
 

@@ -78,7 +78,6 @@ Implementation lives directly under the repo root in numeric-prefixed responsibi
 | [`14_data/`](14_data/) | Persistent data (filesystem-backed) | — |
 | [`15_notebooks/`](15_notebooks/) | Exploration notebooks | — |
 | [`16_tests/`](16_tests/) | Integration and contract tests | — |
-| [`17_scripts/`](17_scripts/) | Utility and maintenance scripts | — |
 | [`18_docs/`](18_docs/) | Supporting docs | — |
 | [`19_archive/`](19_archive/) | Deprecated components | — |
 <!-- BUCKETS_TABLE_END -->
@@ -129,7 +128,7 @@ python -m mcp_servers.server
 
 - Cross-bucket imports use the clean import name (`from drivers.sql.session import init_db`), never the numeric path.
 - [`core.paths.REPO_ROOT`](02_core/paths.py) is the canonical anchor for path resolution — no `os.path.join(__file__, "..", "..")` patterns anywhere else.
-- [`17_scripts/audit_classifications.py`](17_scripts/audit_classifications.py) checks for layer-boundary violations; run it before opening a PR. Findings land at `14_data/runs/classification_audit/`.
+- The classification-boundary audit runs as the `audit.classifications.scan.workflow` YAML workflow — invoke via `make audit` before opening a PR. Findings land at `14_data/runs/classification_audit/`.
 
 ## Design Principles
 

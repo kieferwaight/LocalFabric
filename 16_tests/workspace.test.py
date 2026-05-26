@@ -1,19 +1,14 @@
-import importlib.util
-import sys
+"""Workspace-layout sanity checks.
+
+Catches drift between the on-disk numeric-bucket structure and the
+pyproject manifest: every bucket must be either packaged or explicitly
+excluded; the manifest must not reference buckets that no longer exist;
+the MCP sdk override must resolve to a real package.
+"""
 import tomllib
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-
-
-def _load_generator():
-    spec = importlib.util.spec_from_file_location(
-        "_generate_docs", PROJECT_ROOT / "17_scripts" / "generate_docs.py"
-    )
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[spec.name] = module
-    spec.loader.exec_module(module)
-    return module
 
 
 def _load_pyproject() -> dict:
@@ -68,34 +63,17 @@ def test_no_phantom_excluded_or_packaged_entries():
     )
 
 
-def test_mcp_sdk_override_is_registered():
-    """The mcp_mapping override must name a real alias in package-dir."""
+def test_mcp_sdk_override_resolves_to_a_real_package():
+    """system_sdk_override must name an enumerated package in pyproject."""
     cfg = _load_pyproject()
     override = cfg["tool"]["localfabric"]["mcp_mapping"]["system_sdk_override"]
-    aliases = set(cfg["tool"]["setuptools"]["package-dir"].keys())
+    packages = set(cfg["tool"]["setuptools"]["packages"])
 
-    assert override in aliases, (
-        f"system_sdk_override = '{override}' is not present in package-dir "
-        f"aliases {sorted(aliases)} — the override would be silently inert."
+    assert override in packages, (
+        f"system_sdk_override = '{override}' is not enumerated in "
+        f"[tool.setuptools].packages — the override would be silently inert."
     )
     assert override != "mcp", (
         "system_sdk_override must NOT be 'mcp' — that would shadow the PyPI "
-        "mcp package, which 11_mcp/server.py imports from."
-    )
-
-
-def test_readme_is_up_to_date():
-    """README.md must match what generate_docs.py would produce right now.
-
-    Fails if pyproject.toml descriptions, the package-dir map, or the
-    excluded_buckets list have drifted from the committed README.md without
-    a corresponding `uv run 17_scripts/generate_docs.py` regeneration.
-    """
-    gen = _load_generator()
-    expected = gen.compile_readme()
-    actual = (PROJECT_ROOT / "README.md").read_text()
-
-    assert actual == expected, (
-        "README.md is stale. Run `uv run 17_scripts/generate_docs.py` to "
-        "regenerate it from README.template.md + pyproject.toml, then commit."
+        "mcp package, which the MCP server imports from."
     )

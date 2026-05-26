@@ -11,7 +11,8 @@ agents consume those records and make scoped changes after reviewing evidence.
 | Artifact | Purpose |
 | --- | --- |
 | `01_schemas/audit.classification_finding.schema.yaml` | Contract for one JSONL finding |
-| `17_scripts/audit_classifications.py` | Deterministic crawler and finding generator |
+| `07_lib/audit/scan_boundary_violations.py` | Deterministic crawler and finding generator |
+| `06_workflows/audit.classifications.scan.workflow.yaml` | YAML workflow that invokes the crawler |
 | `14_data/runs/classification_audit/findings.jsonl` | Open decomposition work queue |
 | `14_data/runs/classification_audit/summary.json` | Scan statistics and rule counts |
 
@@ -20,7 +21,7 @@ agents consume those records and make scoped changes after reviewing evidence.
 From the repo root:
 
 ```bash
-python3 17_scripts/audit_classifications.py
+make audit
 ```
 
 The crawler reads source, configuration, workflow, and documentation files

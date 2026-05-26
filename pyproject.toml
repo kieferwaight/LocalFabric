@@ -98,6 +98,7 @@ packages = [
 excluded_buckets = [
     "00_specs",
     "01_schemas",
+    "06_workflows",
     "07_tasks",
     "09_docker",
     "09_launchd",
@@ -110,7 +111,6 @@ excluded_buckets = [
     "15_examples",
     "15_notebooks",
     "16_tests",
-    "17_scripts",
     "18_docs",
 ]
 
@@ -138,7 +138,6 @@ system_sdk_override = "core.interfaces.mcp"
 "15_examples" = "Example YAML definitions showing runtime composition patterns"
 "15_notebooks" = "Exploration notebooks"
 "16_tests" = "Integration and contract tests"
-"17_scripts" = "Utility and maintenance scripts"
 "18_docs" = "Supporting docs"
 
 [tool.pytest.ini_options]
