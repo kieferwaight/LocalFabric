@@ -6,32 +6,32 @@
   tags: [workflow]
   extends: stdlib.base
   run:
-    python: |
-      import subprocess
-      import sys
-      from pathlib import Path
+    - python: |
+        import subprocess
+        import sys
+        from pathlib import Path
 
-      REPO_ROOT = Path(__file__).resolve().parents[1] if "__file__" in dir() else Path(".").resolve()
-      INTERPRETER = REPO_ROOT / "02_core" / "runtimes" / "yaml" / "interpreter.py"
-      WORKFLOWS_DIR = REPO_ROOT / "06_workflows"
-      TEMPLATES_DIR = REPO_ROOT / "14_templates"
+        REPO_ROOT = Path(__file__).resolve().parents[1] if "__file__" in dir() else Path(".").resolve()
+        INTERPRETER = REPO_ROOT / "02_core" / "runtimes" / "yaml" / "interpreter.py"
+        WORKFLOWS_DIR = REPO_ROOT / "06_workflows"
+        TEMPLATES_DIR = REPO_ROOT / "14_templates"
 
-      def _run(yaml_file: Path, def_id: str, mode: str, extra: list) -> int:
-          cmd = [sys.executable, str(INTERPRETER), str(yaml_file), def_id, f"--mode={mode}", *extra]
-          print(f"$ {' '.join(cmd)}", flush=True)
-          return subprocess.call(cmd, cwd=REPO_ROOT)
+        def _run(yaml_file: Path, def_id: str, mode: str, extra: list) -> int:
+            cmd = [sys.executable, str(INTERPRETER), str(yaml_file), def_id, f"--mode={mode}", *extra]
+            print(f"$ {' '.join(cmd)}", flush=True)
+            return subprocess.call(cmd, cwd=REPO_ROOT)
 
-      argv = sys.argv[1:] if hasattr(sys, "argv") else []
-      mode = "check" if "--check" in argv else "write"
+        argv = sys.argv[1:] if hasattr(sys, "argv") else []
+        mode = "check" if "--check" in argv else "write"
 
-      readme_rc = _run(WORKFLOWS_DIR / "docs.readme.generate.workflow.yaml", "docs.readme.generate.workflow", mode, [])
-      if readme_rc != 0:
-          sys.exit(readme_rc)
-      classification_rc = _run(
-          WORKFLOWS_DIR / "docs.classification.render.workflow.yaml", "docs.classification.render.workflow",
-          mode, ["--output_dir=18_docs"],
-      )
-      if classification_rc != 0:
-          sys.exit(classification_rc)
-      api_rc = _run(WORKFLOWS_DIR / "docs.api.reference.workflow.yaml", "docs.api.reference.workflow", mode, ["--output_dir=18_docs"])
-      sys.exit(api_rc)
+        readme_rc = _run(WORKFLOWS_DIR / "docs.readme.generate.workflow.yaml", "docs.readme.generate.workflow", mode, [])
+        if readme_rc != 0:
+            sys.exit(readme_rc)
+        classification_rc = _run(
+            WORKFLOWS_DIR / "docs.classification.render.workflow.yaml", "docs.classification.render.workflow",
+            mode, ["--output_dir=18_docs"],
+        )
+        if classification_rc != 0:
+            sys.exit(classification_rc)
+        api_rc = _run(WORKFLOWS_DIR / "docs.api.reference.workflow.yaml", "docs.api.reference.workflow", mode, ["--output_dir=18_docs"])
+        sys.exit(api_rc)

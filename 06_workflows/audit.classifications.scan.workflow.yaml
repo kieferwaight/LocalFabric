@@ -6,27 +6,27 @@
   tags: [workflow]
   extends: stdlib.base
   run:
-    python: |
-      import json
-      from collections import Counter
-      from pathlib import Path
+    - python: |
+        import json
+        from collections import Counter
+        from pathlib import Path
 
-      from lib.audit.scan_boundary_violations import preserve_statuses, run_audit
+        from lib.audit.scan_boundary_violations import preserve_statuses, run_audit
 
-      workspace = Path(__file__).resolve().parents[1] if "__file__" in dir() else Path(".").resolve()
-      output_dir = workspace / "14_data" / "runs" / "classification_audit"
-      output_dir.mkdir(parents=True, exist_ok=True)
+        workspace = Path(__file__).resolve().parents[1] if "__file__" in dir() else Path(".").resolve()
+        output_dir = workspace / "14_data" / "runs" / "classification_audit"
+        output_dir.mkdir(parents=True, exist_ok=True)
 
-      findings, summary = run_audit(workspace, output_dir)
-      findings_path = output_dir / "findings.jsonl"
-      preserve_statuses(findings, findings_path)
-      summary["findings_by_status"] = dict(Counter(item["status"] for item in findings))
-      with findings_path.open("w", encoding="utf-8") as handle:
-          for finding in findings:
-              handle.write(json.dumps(finding, sort_keys=True) + "\n")
-      (output_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
+        findings, summary = run_audit(workspace, output_dir)
+        findings_path = output_dir / "findings.jsonl"
+        preserve_statuses(findings, findings_path)
+        summary["findings_by_status"] = dict(Counter(item["status"] for item in findings))
+        with findings_path.open("w", encoding="utf-8") as handle:
+            for finding in findings:
+                handle.write(json.dumps(finding, sort_keys=True) + "\n")
+        (output_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
 
-      print(
-          f"Scanned {summary['files_scanned']} files; wrote {summary['findings']} findings "
-          f"to {summary['jsonl_file']}"
-      )
+        print(
+            f"Scanned {summary['files_scanned']} files; wrote {summary['findings']} findings "
+            f"to {summary['jsonl_file']}"
+        )

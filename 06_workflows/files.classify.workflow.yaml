@@ -8,22 +8,22 @@
   tags: [workflow]
   extends: stdlib.base
   run:
-    python: |
-      from pathlib import Path
+    - python: |
+        from pathlib import Path
 
-      from core.environment import REPO_ROOT, data
-      from lib.classify.build_manifest import build_classification
-      from lib.files import write_json
+        from core.environment import REPO_ROOT, data
+        from lib.classify.build_manifest import build_classification
+        from lib.files import write_json
 
-      manifests_dir = data("manifests")
-      manifests_dir.mkdir(parents=True, exist_ok=True)
+        manifests_dir = data("manifests")
+        manifests_dir.mkdir(parents=True, exist_ok=True)
 
-      classification_report, current_state_manifest, fingerprint_report = build_classification(REPO_ROOT)
+        classification_report, current_state_manifest, fingerprint_report = build_classification(REPO_ROOT)
 
-      write_json(manifests_dir / "classification_report.json", classification_report)
-      write_json(manifests_dir / "current_state_manifest.json", current_state_manifest)
-      write_json(manifests_dir / "fingerprint_report.json", fingerprint_report)
+        write_json(manifests_dir / "classification_report.json", classification_report)
+        write_json(manifests_dir / "current_state_manifest.json", current_state_manifest)
+        write_json(manifests_dir / "fingerprint_report.json", fingerprint_report)
 
-      print("Wrote classification_report.json")
-      print("Wrote current_state_manifest.json")
-      print("Wrote fingerprint_report.json")
+        print("Wrote classification_report.json")
+        print("Wrote current_state_manifest.json")
+        print("Wrote fingerprint_report.json")

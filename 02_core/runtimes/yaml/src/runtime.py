@@ -111,6 +111,70 @@ class Runtime:
         self._update_catalog()
         return loaded
 
+    _REPO_WIDE_YAML_BUCKETS = [
+        "01_schemas",
+        "02_core/runtimes/yaml/definitions",
+        "06_workflows",
+        "07_tasks",
+        "09_docker",
+        "09_launchd",
+        "13_models",
+        "13_providers",
+        "14_templates",
+        "15_examples",
+    ]
+    _REPO_WIDE_MARKDOWN_BUCKETS = ["12_prompts"]
+
+    def import_repo_wide(
+        self,
+        repo_root: "str | Path",
+        *,
+        markdown_harness=None,
+    ) -> "dict[str, int]":
+        """Import every YAML/markdown definition under the listed repo buckets.
+
+        Returns a dict mapping bucket name to count of definitions registered.
+        If markdown_harness is provided, compiles and registers every .md file
+        under 12_prompts/.
+        """
+        import logging
+        import warnings
+
+        logger = logging.getLogger(__name__)
+        root = Path(repo_root).resolve()
+        counts: dict[str, int] = {}
+
+        for bucket in self._REPO_WIDE_YAML_BUCKETS:
+            bucket_path = root / bucket
+            if not bucket_path.exists():
+                counts[bucket] = 0
+                continue
+            before = len(self.registry)
+            for yaml_file in sorted(bucket_path.glob("*.yaml")):
+                try:
+                    self.import_yaml(str(yaml_file))
+                except Exception as exc:  # pragma: no cover
+                    warnings.warn(
+                        f"import_repo_wide: skipping {yaml_file.relative_to(root)}: {exc}",
+                        stacklevel=2,
+                    )
+                    logger.warning("Skipping %s: %s", yaml_file, exc)
+            counts[bucket] = len(self.registry) - before
+
+        for bucket in self._REPO_WIDE_MARKDOWN_BUCKETS:
+            bucket_path = root / bucket
+            if not bucket_path.exists():
+                counts[bucket] = 0
+                continue
+            if markdown_harness is not None:
+                before = len(self.registry)
+                markdown_harness.register_dir(bucket_path)
+                counts[bucket] = len(self.registry) - before
+            else:
+                counts[bucket] = 0
+
+        return counts
+
     def import_yaml_raw(self, raw: object) -> list[Definition]:
         loaded = self.compiler.import_raw(raw)
         for definition in loaded:
