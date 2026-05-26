@@ -18,5 +18,10 @@
         "**/.venv": true,
         "**/venv": true,
         "**/*.egg-info": true
-    }
+    },
+    "python.testing.pytestArgs": [
+        "16_tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }
