@@ -5,7 +5,7 @@ Ties together Embedder + a store backend to produce a formatted context snippet
 ready to be injected into a frontier model prompt.
 
 Usage:
-    from tools.embeddings.query import LocalKnowledgeQuery
+    from tasks.embeddings.query import LocalKnowledgeQuery
 
     lkq = LocalKnowledgeQuery()          # uses LanceDB by default
     context_md = lkq.query("how do I run tests?", k=4)
