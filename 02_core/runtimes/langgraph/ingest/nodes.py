@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import mimetypes
 from datetime import UTC, datetime
 from pathlib import Path
@@ -14,31 +13,11 @@ from drivers.sql.schema import assets
 from drivers.sql.session import get_connection
 from drivers.file import copy_asset
 from core.runtimes.langgraph.types import IngestState
+from tasks.classify.media import media_class_for_path
+from tasks.files import sha256_file
 
 _DB_PATH = data("workspace.db")
 _INPUTS_ROOT = data("inputs")
-
-# ── Media classification ──────────────────────────────────────────────────────
-
-_IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".tiff", ".tif", ".bmp"}
-_DOCUMENT_EXTS = {".pdf", ".docx", ".doc", ".txt", ".md"}
-
-
-def _media_class(path: Path) -> str:
-    ext = path.suffix.lower()
-    if ext in _IMAGE_EXTS:
-        return "image"
-    if ext in _DOCUMENT_EXTS:
-        return "document"
-    return "unknown"
-
-
-def _sha256(path: Path) -> str:
-    h = hashlib.sha256()
-    with open(path, "rb") as f:
-        for chunk in iter(lambda: f.read(65536), b""):
-            h.update(chunk)
-    return h.hexdigest()
 
 
 # ── Node: scan ────────────────────────────────────────────────────────────────
@@ -76,7 +55,7 @@ def classify(state: IngestState) -> IngestState:
                 **item,
                 "extension": p.suffix.lstrip(".").lower(),
                 "mime_type": mime,
-                "media_class": _media_class(p),
+                "media_class": media_class_for_path(p),
             }
         )
     return {**state, "classified_files": classified}
@@ -89,7 +68,7 @@ def hash_files(state: IngestState) -> IngestState:
     hashed: list[dict] = []
     for item in state.get("classified_files", []):
         try:
-            sha = _sha256(Path(item["original_path"]))
+            sha = sha256_file(Path(item["original_path"]))
             hashed.append(
                 {
                     **item,
@@ -154,7 +133,7 @@ def copy_assets(state: IngestState) -> IngestState:
         if dest.exists():
             # If SHA matches, skip — already ingested
             try:
-                existing_sha = _sha256(dest)
+                existing_sha = sha256_file(dest)
                 if existing_sha == item.get("sha256"):
                     copied.append(
                         {**item, "ingested_path": str(dest), "copy_status": "already_exists"}

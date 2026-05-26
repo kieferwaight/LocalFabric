@@ -8,6 +8,25 @@ DATA_EXT = {".json", ".jsonl", ".csv", ".tsv", ".yaml", ".yml", ".xml", ".xlsx",
 IMAGE_EXT = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg"}
 ARCHIVE_EXT = {".zip", ".tar", ".gz", ".bz2", ".7z"}
 
+# Ingest-specific extension sets (superset of IMAGE_EXT for binary image formats)
+_INGEST_IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".tiff", ".tif", ".bmp"}
+_INGEST_DOCUMENT_EXTS = {".pdf", ".docx", ".doc", ".txt", ".md"}
+
+
+def media_class_for_path(path: Path) -> str:
+    """Return a broad media class string suitable for ingest routing.
+
+    Returns one of: ``"image"``, ``"document"``, ``"unknown"``.
+    Uses the same extension sets as the langgraph ingest pipeline so that
+    the mapping lives in a single place.
+    """
+    ext = path.suffix.lower()
+    if ext in _INGEST_IMAGE_EXTS:
+        return "image"
+    if ext in _INGEST_DOCUMENT_EXTS:
+        return "document"
+    return "unknown"
+
 
 def classify_file(rel_path: Path) -> dict:
     rel_norm = rel_path.as_posix().lower()
