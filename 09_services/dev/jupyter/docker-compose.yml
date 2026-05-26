@@ -1,11 +1,19 @@
 # Required env: DATA_PATH
-# Optional env: JUPYTER_PORT (default 8888)
+# Optional env: JUPYTER_PORT (default 8888), JUPYTER_TOKEN (default localfabric-dev)
 services:
   jupyter:
-    image: jupyter/base-notebook
+    build:
+      context: ../../..
+      dockerfile: 09_services/dev/jupyter/Dockerfile
     container_name: contentgraph-jupyter
     restart: unless-stopped
     ports:
       - "${JUPYTER_PORT:-8888}:8888"
+    environment:
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN:-localfabric-dev}
     volumes:
+      - ../../..:/workspace
       - ${DATA_PATH}:/home/jovyan/work
+    command:
+      - start-notebook.py
+      - --ServerApp.root_dir=/workspace/15_notebooks

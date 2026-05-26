@@ -2,33 +2,83 @@
 
 ## Purpose
 
-Optional analysis sandbox for notebooks and exploratory data work.
+Notebook host for LocalFabric's research and development workflow. Notebooks
+in [`15_notebooks/`](../../../15_notebooks/) run against this container with
+the project installed editably, so cells like `from harnesses.markdown import
+MarkdownHarness` work without bootstrap ceremony.
 
 ## Container
 
-- Image: `jupyter/base-notebook`
-- Compose file: `docker-compose.yml`
+- Base image: `jupyter/base-notebook`
+- Compose file: [`docker-compose.yml`](docker-compose.yml)
+- Dockerfile: [`Dockerfile`](Dockerfile) — layers `pip install -e ".[notebook]"`
+  onto the base image so project imports and the `[notebook]` extras
+  (`ipykernel`, `openai`) are available in the kernel.
 
-## Storage
+## Mounts
 
-- `${DATA_PATH}` -> `/home/jovyan/work`: notebook workspace
+| Host | Container | Purpose |
+| --- | --- | --- |
+| repo root | `/workspace` | Live source — edits flow both ways. The editable install's `.pth` points here. |
+| `${DATA_PATH}` | `/home/jovyan/work` | Per-instance scratch / output directory. |
 
-Bind to a data instance under `14_data/apps/jupyter/<name>/`.
+Bind `${DATA_PATH}` to `14_data/apps/jupyter/<name>/` per the data convention.
 
-## Ports
+## Ports & Auth
 
-| Host env var | Default | Container | Use |
-| --- | ---: | ---: | --- |
-| `JUPYTER_PORT` | `8888` | `8888` | Jupyter UI |
+| Host env var | Default | Use |
+| --- | ---: | --- |
+| `JUPYTER_PORT` | `8888` | Jupyter UI port. |
+| `JUPYTER_TOKEN` | `localfabric-dev` | Fixed dev token. Override if you need a different one. |
+
+Open: `http://localhost:8888/?token=localfabric-dev`
+
+The token is a dev convenience, not real security — it gives a stable URL so
+you don't have to scrape container logs every restart. Override
+`JUPYTER_TOKEN` for any non-localhost use.
 
 ## Run
 
+Via the service runtime (preferred):
+
 ```bash
-DATA_PATH=./14_data/apps/jupyter/main docker compose up -d
-docker compose logs -f
+python -m service_runtime.cmd up jupyter ./14_data/apps/jupyter/scratch
+python -m service_runtime.cmd status jupyter ./14_data/apps/jupyter/scratch
+python -m service_runtime.cmd down jupyter ./14_data/apps/jupyter/scratch
+```
+
+Or directly with compose (from this directory):
+
+```bash
+DATA_PATH=../../../14_data/apps/jupyter/scratch docker compose up -d
 docker compose down
 ```
 
-## Notes
+## Verifying
 
-- Check logs for the tokenized notebook URL on first startup.
+After `up`, in a new notebook under `/workspace/15_notebooks`:
+
+```python
+from harnesses.markdown import MarkdownHarness
+MarkdownHarness()
+```
+
+Should succeed with no `ModuleNotFoundError`.
+
+## Rebuilding
+
+The Dockerfile installs project dependencies at build time. After changes to
+[`pyproject.toml`](../../../pyproject.toml) (new deps, new optional extras),
+rebuild the image:
+
+```bash
+DATA_PATH=./14_data/apps/jupyter/scratch \
+  docker compose -f 09_services/dev/jupyter/docker-compose.yml build
+```
+
+`DATA_PATH` isn't used by the build itself, but compose parses every volume
+mount during build and will reject an empty `${DATA_PATH}`. The service
+runtime sets this automatically; manual builds need it set explicitly.
+
+The next `up` will use the new image. Source-only edits (anything inside
+`/workspace`) do not require a rebuild — they flow through the live mount.
