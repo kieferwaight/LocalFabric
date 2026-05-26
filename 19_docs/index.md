@@ -17,729 +17,729 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 
 | Definition | ID | Source | Tags |
 | --- | --- | --- | --- |
-| [Abstract Base](stdlib.base.md) | `stdlib.base` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | core, abstract |
-| [Load Standard Library Modules](stdlib.load-modules.md) | `stdlib.load-modules` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | core, modules |
-| [Run Command](stdlib.run-command.md) | `stdlib.run-command` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | shell |
-| [Clean Workspace](stdlib.clean-workspace.md) | `stdlib.clean-workspace` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | files, destructive |
-| [Logger](stdlib.logger.md) | `stdlib.logger` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | logging |
-| [Write Text File](stdlib.files.write-text.md) | `stdlib.files.write-text` | `02_core/runtimes/yaml/definitions/stdlib.files.yaml` | files, templates |
-| [Create Directory](stdlib.files.create-directory.md) | `stdlib.files.create-directory` | `02_core/runtimes/yaml/definitions/stdlib.files.yaml` | files |
-| [Write Text File (input form)](stdlib.files.write.md) | `stdlib.files.write` | `02_core/runtimes/yaml/definitions/stdlib.files.yaml` | files, templates |
-| [Initialize Current Git Workspace](stdlib.git.init-current-workspace.md) | `stdlib.git.init-current-workspace` | `02_core/runtimes/yaml/definitions/stdlib.git.yaml` | git |
-| [Write Python Gitignore](stdlib.git.gitignore-python.md) | `stdlib.git.gitignore-python` | `02_core/runtimes/yaml/definitions/stdlib.git.yaml` | git, files, templates |
-| [Create GitHub Repository](stdlib.git.create-github-repository.md) | `stdlib.git.create-github-repository` | `02_core/runtimes/yaml/definitions/stdlib.git.yaml` | git, github |
-| [Prune Generated Definition Pages](stdlib.docs.prune-definition-pages.md) | `stdlib.docs.prune-definition-pages` | `02_core/runtimes/yaml/definitions/stdlib.docs.yaml` | documentation, files |
-| [Analysis Base](stdlib.analysis.base.md) | `stdlib.analysis.base` | `02_core/runtimes/yaml/definitions/stdlib.analysis.yaml` | analysis, abstract |
-| [Write Analysis Snapshot](stdlib.analysis.snapshot.md) | `stdlib.analysis.snapshot` | `02_core/runtimes/yaml/definitions/stdlib.analysis.yaml` | analysis, intelligence |
-| [Verify Definition References](stdlib.analysis.verify-references.md) | `stdlib.analysis.verify-references` | `02_core/runtimes/yaml/definitions/stdlib.analysis.yaml` | analysis, validation |
-| [Python Barrel - __init__.py Template](stdlib.python.barrel.template.md) | `stdlib.python.barrel.template` | `02_core/runtimes/yaml/definitions/stdlib.python.yaml` | python, template |
-| [Generate Python Barrel](stdlib.python.barrel.md) | `stdlib.python.barrel` | `02_core/runtimes/yaml/definitions/stdlib.python.yaml` | python, generator |
-| [Abstract Command Base](command.base.md) | `command.base` | `02_core/runtimes/yaml/definitions/command.yaml` | command, abstract |
-| [Run Task](command.task.run.md) | `command.task.run` | `02_core/runtimes/yaml/definitions/command.yaml` | command |
-| [Run a Service Lifecycle Action](command.service.action.md) | `command.service.action` | `02_core/runtimes/yaml/definitions/command.yaml` | command |
-| [Route an Intent through the Router](command.route.md) | `command.route` | `02_core/runtimes/yaml/definitions/command.yaml` | command |
-| [Folder Scaffold Base](folder.base.md) | `folder.base` | `02_core/runtimes/yaml/definitions/folder.yaml` | folder, abstract |
-| [Dockerfile Mixin](dockerfile.base.md) | `dockerfile.base` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, dockerfile, abstract |
-| [Docker Compose Mixin](compose.base.md) | `compose.base` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, abstract |
-| [Docker Service (Compose + Dockerfile)](docker.base.md) | `docker.base` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, abstract |
-| [Build Docker Image](docker.build.md) | `docker.build` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, build |
-| [Docker Compose Up](compose.up.md) | `compose.up` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, lifecycle |
-| [Docker Compose Down](compose.down.md) | `compose.down` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, lifecycle |
-| [Docker Compose Status](compose.status.md) | `compose.status` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, lifecycle |
-| [Docker Compose Logs](compose.logs.md) | `compose.logs` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, lifecycle |
-| [Scaffold All Docker Services](docker.generate-all.md) | `docker.generate-all` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, workflow |
-| [launchd Job Base](launchd.base.md) | `launchd.base` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, abstract |
-| [Generate launchd Plists](launchd.generate-plist.md) | `launchd.generate-plist` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, workflow |
-| [launchd Lifecycle Base](launchd.lifecycle.base.md) | `launchd.lifecycle.base` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle, abstract |
-| [Install LaunchAgent](launchd.install.md) | `launchd.install` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
-| [Uninstall LaunchAgent](launchd.uninstall.md) | `launchd.uninstall` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
-| [Enable LaunchAgent](launchd.enable.md) | `launchd.enable` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
-| [Disable LaunchAgent](launchd.disable.md) | `launchd.disable` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
-| [Start LaunchAgent](launchd.start.md) | `launchd.start` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
-| [Stop LaunchAgent](launchd.stop.md) | `launchd.stop` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
-| [Print LaunchAgent Status](launchd.status.md) | `launchd.status` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
-| [LLM Model Record](model.base.md) | `model.base` | `02_core/runtimes/yaml/definitions/model.yaml` | model, abstract |
-| [LLM Provider Record](provider.base.md) | `provider.base` | `02_core/runtimes/yaml/definitions/provider.yaml` | provider, abstract |
-| [Routable Definition Base](route.base.md) | `route.base` | `02_core/runtimes/yaml/definitions/route.yaml` | route, abstract |
-| [Echo Route (smoke test)](route.echo.md) | `route.echo` | `02_core/runtimes/yaml/definitions/route.yaml` | route |
-| [Service Abstraction Base](service.base.md) | `service.base` | `02_core/runtimes/yaml/definitions/service.yaml` | service, abstract |
-| [Docker Backend Action Map](service.docker.mixin.md) | `service.docker.mixin` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker, abstract |
-| [Launchd Backend Action Map](service.launchd.mixin.md) | `service.launchd.mixin` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd, abstract |
-| [Ollama Service (launchd backend)](service.ollama.md) | `service.ollama` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd |
-| [Caffienate Service (launchd backend)](service.caffienate.md) | `service.caffienate` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd |
-| [LM Studio Service (launchd backend)](service.lm-studio.md) | `service.lm-studio` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd |
-| [Postgres Service (docker backend)](service.postgres.md) | `service.postgres` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker |
-| [Redis Service (docker backend)](service.redis.md) | `service.redis` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker |
-| [Neo4j Service (docker backend)](service.neo4j.md) | `service.neo4j` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker |
-| [Task base](task.base.md) | `task.base` | `02_core/runtimes/yaml/definitions/task.yaml` | task, abstract |
-| [JSON Schema Base](schemas.base.md) | `schemas.base` | `02_core/runtimes/yaml/definitions/schemas.yaml` | schema, abstract |
-| [Generate Schema JSON](schemas.generate-json.md) | `schemas.generate-json` | `02_core/runtimes/yaml/definitions/schemas.yaml` | schema, workflow |
-| [Classification Audit Finding](audit.classification_finding.schema.md) | `audit.classification_finding.schema` | `01_schemas/audit.classification_finding.schema.yaml` | schema, audit |
-| [Dispatch Request Envelope](dispatch.request.schema.md) | `dispatch.request.schema` | `01_schemas/dispatch.request.schema.yaml` | schema, dispatch |
-| [Dispatch Response Envelope](dispatch.response.schema.md) | `dispatch.response.schema` | `01_schemas/dispatch.response.schema.yaml` | schema, dispatch |
-| [Harness Stream Event](harness.stream_event.schema.md) | `harness.stream_event.schema` | `01_schemas/harness.stream_event.schema.yaml` | schema, harness |
-| [Tool Invocation](tool.invocation.schema.md) | `tool.invocation.schema` | `01_schemas/tool.invocation.schema.yaml` | schema, tool |
-| [Audit classification boundaries and ownership](audit.classifications.scan.workflow.md) | `audit.classifications.scan.workflow` | `06_workflows/audit.classifications.scan.workflow.yaml` | workflow |
-| [Regenerate All Workflows Barrels](barrels.regenerate.workflow.md) | `barrels.regenerate.workflow` | `06_workflows/barrels.regenerate.workflow.yaml` | python, generator, workflow |
-| [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.md) | `barrels.regenerate.yaml-runtime` | `06_workflows/barrels.regenerate.workflow.yaml` | python, generator, workflow |
-| [YAML API Reference Build](docs.api.reference.workflow.md) | `docs.api.reference.workflow` | `06_workflows/docs.api.reference.workflow.yaml` | documentation, workflow |
-| [API Documentation Catalog Sources](docs.catalog.generate.workflow.md) | `docs.catalog.generate.workflow` | `06_workflows/docs.catalog.generate.workflow.yaml` | documentation, modules |
-| [Docs - Relationship Graph Component](docs.definition.template.component-relationship-graph.md) | `docs.definition.template.component-relationship-graph` | `14_templates/docs.definition.template.yaml` | documentation, template, component |
-| [Docs - Definition Page Template](docs.definition.template.definition.md) | `docs.definition.template.definition` | `14_templates/docs.definition.template.yaml` | documentation, template |
-| [Docs - Index Page Template](docs.catalog.template.index.md) | `docs.catalog.template.index` | `14_templates/docs.catalog.template.yaml` | documentation, template |
-| [Docs - Authoring Schema Page Template](docs.catalog.template.schema.md) | `docs.catalog.template.schema` | `14_templates/docs.catalog.template.yaml` | documentation, template |
-| [Example Catalog Modules](examples.catalog.modules.md) | `examples.catalog.modules` | `15_examples/examples.catalog.yaml` | examples, modules |
-| [Git Information](cloud.mixin.git-info.md) | `cloud.mixin.git-info` | `15_examples/cloud.yaml` | mixin, git, deployment |
-| [Timestamp](cloud.mixin.timestamp.md) | `cloud.mixin.timestamp` | `15_examples/cloud.yaml` | mixin, deployment |
-| [Cloud Deployer](cloud.deployer.md) | `cloud.deployer` | `15_examples/cloud.yaml` | example, deployment, cloud |
-| [Initialize Git Example](git.init.md) | `git.init` | `15_examples/git.yaml` | example, git |
-| [GitHub Repository Example](git.github.md) | `git.github` | `15_examples/git.yaml` | example, git, github |
-| [Gitignore Template Example](git.gitignore.md) | `git.gitignore` | `15_examples/git.yaml` | example, git, templates |
-| [Obsidian Daily Note Template](obsidian.template.md) | `obsidian.template` | `15_examples/obsidian.yaml` | example, obsidian, templates |
-| [Render Classification Docs](docs.classification.render.workflow.md) | `docs.classification.render.workflow` | `06_workflows/docs.classification.render.workflow.yaml` | documentation, workflow, classification |
-| [Docs - Classification Audit](docs.classification.audit.template.md) | `docs.classification.audit.template` | `14_templates/docs.classification.template.yaml` | documentation, template, classification |
-| [Docs - Classification Remediation Workflow](docs.classification.remediation-workflow.template.md) | `docs.classification.remediation-workflow.template` | `14_templates/docs.classification.template.yaml` | documentation, template, classification |
-| [Generate Documentation](docs.generate.workflow.md) | `docs.generate.workflow` | `06_workflows/docs.generate.workflow.yaml` | workflow |
-| [Build Repo README](docs.readme.generate.workflow.md) | `docs.readme.generate.workflow` | `06_workflows/docs.readme.generate.workflow.yaml` | documentation, workflow |
-| [Docs - Repo README Template](docs.readme.template.md) | `docs.readme.template` | `14_templates/docs.readme.template.yaml` | documentation, template |
-| [Sweep and embed project files into the vector store](embeddings.sweep.workflow.md) | `embeddings.sweep.workflow` | `06_workflows/embeddings.sweep.workflow.yaml` | workflow |
-| [Classify files for audit and remediation](files.classify.workflow.md) | `files.classify.workflow` | `06_workflows/files.classify.workflow.yaml` | workflow |
-| [Scan Boundary Violations](audit.boundary_violations.scan.task.md) | `audit.boundary_violations.scan.task` | `07_tasks/audit.boundary_violations.scan.task.yaml` | task |
-| [Fetch readable text from a URL or search topic](browser.fetch.text.task.md) | `browser.fetch.text.task` | `07_tasks/browser.fetch.text.task.yaml` | task |
-| [Build file classification manifest](classify.manifest.build.task.md) | `classify.manifest.build.task` | `07_tasks/classify.manifest.build.task.yaml` | task |
-| [Return broad media class for a path](classify.media.class_for_path.task.md) | `classify.media.class_for_path.task` | `07_tasks/classify.media.class_for_path.task.yaml` | task |
-| [Classify a file by media type and destination](classify.media.file.task.md) | `classify.media.file.task` | `07_tasks/classify.media.file.task.yaml` | task |
-| [Chunk a file into embeddable text segments](embeddings.chunker.chunk_file.task.md) | `embeddings.chunker.chunk_file.task` | `07_tasks/embeddings.chunker.chunk_file.task.yaml` | task |
-| [Generate an embedding vector for text](embeddings.embed.text.task.md) | `embeddings.embed.text.task` | `07_tasks/embeddings.embed.text.task.yaml` | task |
-| [Query the local knowledge base](embeddings.query.search.task.md) | `embeddings.query.search.task` | `07_tasks/embeddings.query.search.task.yaml` | task |
-| [Collect indexable files for embedding sweep](embeddings.sweep.collect_files.task.md) | `embeddings.sweep.collect_files.task` | `07_tasks/embeddings.sweep.collect_files.task.yaml` | task |
-| [Compute MD5 hash of a file](embeddings.sweep.file_hash.task.md) | `embeddings.sweep.file_hash.task` | `07_tasks/embeddings.sweep.file_hash.task.yaml` | task |
-| [Load the embedding sweep manifest](embeddings.sweep.load_manifest.task.md) | `embeddings.sweep.load_manifest.task` | `07_tasks/embeddings.sweep.load_manifest.task.yaml` | task |
-| [Persist the embedding sweep manifest](embeddings.sweep.save_manifest.task.md) | `embeddings.sweep.save_manifest.task` | `07_tasks/embeddings.sweep.save_manifest.task.yaml` | task |
-| [Iterate files in a directory tree](files.iter.task.md) | `files.iter.task` | `07_tasks/files.iter.task.yaml` | task |
-| [Compute SHA-256 hash of a file](files.sha256.task.md) | `files.sha256.task` | `07_tasks/files.sha256.task.yaml` | task |
-| [Write data to a JSON file](files.write_json.task.md) | `files.write_json.task` | `07_tasks/files.write_json.task.yaml` | task |
-| [Classify an image by semantic type](image.classify.task.md) | `image.classify.task` | `07_tasks/image.classify.task.yaml` | task |
-| [Extract dominant color palette from an image](image.color.dominant.task.md) | `image.color.dominant.task` | `07_tasks/image.color.dominant.task.yaml` | task |
-| [Extract image file metadata](image.meta.extract.task.md) | `image.meta.extract.task` | `07_tasks/image.meta.extract.task.yaml` | task |
-| [Assess image quality](image.quality.extract.task.md) | `image.quality.extract.task` | `07_tasks/image.quality.extract.task.yaml` | task |
-| [Detect content regions in an image](image.regions.extract.task.md) | `image.regions.extract.task` | `07_tasks/image.regions.extract.task.yaml` | task |
-| [Extract OCR text from an image](image.text_ocr.extract.task.md) | `image.text_ocr.extract.task` | `07_tasks/image.text_ocr.extract.task.yaml` | task |
-| [Infer document type from filename](metadata.doc_type.task.md) | `metadata.doc_type.task` | `07_tasks/metadata.doc_type.task.yaml` | task |
-| [Infer source origin from file path](metadata.source_guess.task.md) | `metadata.source_guess.task` | `07_tasks/metadata.source_guess.task.yaml` | task |
-| [Get PDF page count](pdf.meta.page_count.task.md) | `pdf.meta.page_count.task` | `07_tasks/pdf.meta.page_count.task.yaml` | task |
-| [Fetch and summarize content through a local model](research.local.summarize.task.md) | `research.local.summarize.task` | `07_tasks/research.local.summarize.task.yaml` | task |
-| [Run local test suite](shell.tests.run.task.md) | `shell.tests.run.task` | `07_tasks/shell.tests.run.task.yaml` | task |
-| [Format a markdown file using a local LM Studio model](text.markdown.format.task.md) | `text.markdown.format.task` | `07_tasks/text.markdown.format.task.yaml` | task |
-| [Casbin Authorization Service](docker.casbin-service.md) | `docker.casbin-service` | `09_docker/casbin-service.yaml` | docker, auth |
-| [ClamAV Service](docker.clamav.md) | `docker.clamav` | `09_docker/clamav.yaml` | docker, document |
-| [FastAPI Service](docker.fastapi.md) | `docker.fastapi` | `09_docker/fastapi.yaml` | docker, workers |
-| [Gitea Service](docker.gitea.md) | `docker.gitea` | `09_docker/gitea.yaml` | docker, dev |
-| [Grafana Service](docker.grafana.md) | `docker.grafana` | `09_docker/grafana.yaml` | docker, observability |
-| [GROBID Service](docker.grobid.md) | `docker.grobid` | `09_docker/grobid.yaml` | docker, document |
-| [Jaeger Service](docker.jaeger.md) | `docker.jaeger` | `09_docker/jaeger.yaml` | docker, observability |
-| [Jupyter Service](docker.jupyter.md) | `docker.jupyter` | `09_docker/jupyter.yaml` | docker, dev |
-| [Keycloak Service](docker.keycloak.md) | `docker.keycloak` | `09_docker/keycloak.yaml` | docker, auth |
-| [LibreOffice Conversion Service](docker.libreoffice.md) | `docker.libreoffice` | `09_docker/libreoffice.yaml` | docker, document |
-| [MinIO Service](docker.minio.md) | `docker.minio` | `09_docker/minio.yaml` | docker, storage |
-| [n8n Service](docker.n8n.md) | `docker.n8n` | `09_docker/n8n.yaml` | docker, workers |
-| [Neo4j Service](docker.neo4j.md) | `docker.neo4j` | `09_docker/neo4j.yaml` | docker, graph |
-| [Ollama Service](docker.ollama.md) | `docker.ollama` | `09_docker/ollama.yaml` | docker, ai |
-| [Open WebUI Service](docker.open-webui.md) | `docker.open-webui` | `09_docker/open-webui.yaml` | docker, ai |
-| [OpenFGA Service](docker.openfga.md) | `docker.openfga` | `09_docker/openfga.yaml` | docker, auth |
-| [OpenSearch Dashboards Service](docker.opensearch-dashboards.md) | `docker.opensearch-dashboards` | `09_docker/opensearch-dashboards.yaml` | docker, search |
-| [OpenSearch Service](docker.opensearch.md) | `docker.opensearch` | `09_docker/opensearch.yaml` | docker, search |
-| [pgvector Service](docker.pgvector.md) | `docker.pgvector` | `09_docker/pgvector.yaml` | docker, database |
-| [Playwright Worker Service](docker.playwright-worker.md) | `docker.playwright-worker` | `09_docker/playwright-worker.yaml` | docker, document |
-| [PostgreSQL Service](docker.postgres.md) | `docker.postgres` | `09_docker/postgres.yaml` | docker, databases |
-| [Prometheus Service](docker.prometheus.md) | `docker.prometheus` | `09_docker/prometheus.yaml` | docker, observability |
-| [Qdrant Service](docker.qdrant.md) | `docker.qdrant` | `09_docker/qdrant.yaml` | docker, vector |
-| [Redis Service](docker.redis.md) | `docker.redis` | `09_docker/redis.yaml` | docker, databases |
-| [Temporal UI Service](docker.temporal-ui.md) | `docker.temporal-ui` | `09_docker/temporal-ui.yaml` | docker, workers |
-| [Temporal Service](docker.temporal.md) | `docker.temporal` | `09_docker/temporal.yaml` | docker, workers |
-| [Tesseract OCR Service](docker.tesseract-ocr.md) | `docker.tesseract-ocr` | `09_docker/tesseract-ocr.yaml` | docker, document |
-| [Apache Tika Service](docker.tika.md) | `docker.tika` | `09_docker/tika.yaml` | docker, document |
-| [Traefik Service](docker.traefik.md) | `docker.traefik` | `09_docker/traefik.yaml` | docker, proxy |
-| [Unstructured Service](docker.unstructured.md) | `docker.unstructured` | `09_docker/unstructured.yaml` | docker, document |
-| [Weaviate Service](docker.weaviate.md) | `docker.weaviate` | `09_docker/weaviate.yaml` | docker, vector |
-| [Content-Graph Worker Service](docker.worker.md) | `docker.worker` | `09_docker/worker.yaml` | docker, workers |
-| [launchd - Caffeinate](launchd.caffienate.md) | `launchd.caffienate` | `09_launchd/caffienate.yaml` | launchd, system |
-| [launchd - Docker](launchd.docker.md) | `launchd.docker` | `09_launchd/docker.yaml` | launchd, runtime |
-| [launchd - LM Studio](launchd.lm-studio.md) | `launchd.lm-studio` | `09_launchd/lm_studio.yaml` | launchd, ai |
-| [launchd - Ollama](launchd.ollama.md) | `launchd.ollama` | `09_launchd/ollama.yaml` | launchd, ai |
-| [claude-haiku-4-5](model.claude-haiku-4-5.md) | `model.claude-haiku-4-5` | `13_models/model.claude-haiku-4-5.yaml` | model |
-| [claude-opus-4-7](model.claude-opus-4-7.md) | `model.claude-opus-4-7` | `13_models/model.claude-opus-4-7.yaml` | model |
-| [claude-sonnet-4-6](model.claude-sonnet-4-6.md) | `model.claude-sonnet-4-6` | `13_models/model.claude-sonnet-4-6.yaml` | model |
-| [deepseek-r1](model.deepseek-r1.md) | `model.deepseek-r1` | `13_models/model.deepseek-r1.yaml` | model |
-| [gemma2](model.gemma2.md) | `model.gemma2` | `13_models/model.gemma2.yaml` | model |
-| [gemma3](model.gemma3.md) | `model.gemma3` | `13_models/model.gemma3.yaml` | model |
-| [llama3.1](model.llama3.1.md) | `model.llama3.1` | `13_models/model.llama3.1.yaml` | model |
-| [llama3.2-vision](model.llama3.2-vision.md) | `model.llama3.2-vision` | `13_models/model.llama3.2-vision.yaml` | model |
-| [llama3.2](model.llama3.2.md) | `model.llama3.2` | `13_models/model.llama3.2.yaml` | model |
-| [llama3](model.llama3.md) | `model.llama3` | `13_models/model.llama3.yaml` | model |
-| [mistral](model.mistral.md) | `model.mistral` | `13_models/model.mistral.yaml` | model |
-| [nomic-embed-text](model.nomic-embed-text.md) | `model.nomic-embed-text` | `13_models/model.nomic-embed-text.yaml` | model |
-| [qwen2.5](model.qwen2.5.md) | `model.qwen2.5` | `13_models/model.qwen2.5.yaml` | model |
-| [qwen3](model.qwen3.md) | `model.qwen3` | `13_models/model.qwen3.yaml` | model |
-| [claude](provider.claude.md) | `provider.claude` | `13_providers/provider.claude.yaml` | provider |
-| [gemini](provider.gemini.md) | `provider.gemini` | `13_providers/provider.gemini.yaml` | provider |
-| [lmstudio](provider.lmstudio.md) | `provider.lmstudio` | `13_providers/provider.lmstudio.yaml` | provider |
-| [ollama](provider.ollama.md) | `provider.ollama` | `13_providers/provider.ollama.yaml` | provider |
-| [openai](provider.openai.md) | `provider.openai` | `13_providers/provider.openai.yaml` | provider |
-| [Hello Polyglot](examples.hello-polyglot.md) | `examples.hello-polyglot` | `<raw>` | - |
-| [Hello Python](examples.hello-python.md) | `examples.hello-python` | `<raw>` | - |
-| [Hello Shell](examples.hello-shell.md) | `examples.hello-shell` | `<raw>` | - |
-| [Format Markdown for Compliance](tasks.format-markdown.md) | `tasks.format-markdown` | `<raw>` | - |
-| [tasks.generate-title-from-text](tasks.generate-title-from-text.md) | `tasks.generate-title-from-text` | `<raw>` | - |
-| [tasks.research-summary](tasks.research-summary.md) | `tasks.research-summary` | `<raw>` | - |
-| [Spec promotion — Final stage](tasks.spec-promotion.final.md) | `tasks.spec-promotion.final` | `<raw>` | - |
-| [Spec promotion — Prompts stage](tasks.spec-promotion.prompts.md) | `tasks.spec-promotion.prompts` | `<raw>` | - |
-| [Spec promotion — Requirements stage](tasks.spec-promotion.requirements.md) | `tasks.spec-promotion.requirements` | `<raw>` | - |
-| [Spec promotion — Research stage](tasks.spec-promotion.research.md) | `tasks.spec-promotion.research` | `<raw>` | - |
-| [Spec promotion — Tasks stage](tasks.spec-promotion.tasks.md) | `tasks.spec-promotion.tasks` | `<raw>` | - |
-| [tasks.vision.layout](tasks.vision.layout.md) | `tasks.vision.layout` | `<raw>` | - |
-| [tasks.vision.overview](tasks.vision.overview.md) | `tasks.vision.overview` | `<raw>` | - |
-| [tasks.vision.style](tasks.vision.style.md) | `tasks.vision.style` | `<raw>` | - |
-| [tasks.vision.visible-text](tasks.vision.visible-text.md) | `tasks.vision.visible-text` | `<raw>` | - |
+| [Abstract Base](stdlib.base.definition.md) | `stdlib.base` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | core, abstract |
+| [Load Standard Library Modules](stdlib.load-modules.definition.md) | `stdlib.load-modules` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | core, modules |
+| [Run Command](stdlib.run-command.definition.md) | `stdlib.run-command` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | shell |
+| [Clean Workspace](stdlib.clean-workspace.definition.md) | `stdlib.clean-workspace` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | files, destructive |
+| [Logger](stdlib.logger.definition.md) | `stdlib.logger` | `02_core/runtimes/yaml/definitions/stdlib.yaml` | logging |
+| [Write Text File](stdlib.files.write-text.definition.md) | `stdlib.files.write-text` | `02_core/runtimes/yaml/definitions/stdlib.files.yaml` | files, templates |
+| [Create Directory](stdlib.files.create-directory.definition.md) | `stdlib.files.create-directory` | `02_core/runtimes/yaml/definitions/stdlib.files.yaml` | files |
+| [Write Text File (input form)](stdlib.files.write.definition.md) | `stdlib.files.write` | `02_core/runtimes/yaml/definitions/stdlib.files.yaml` | files, templates |
+| [Initialize Current Git Workspace](stdlib.git.init-current-workspace.definition.md) | `stdlib.git.init-current-workspace` | `02_core/runtimes/yaml/definitions/stdlib.git.yaml` | git |
+| [Write Python Gitignore](stdlib.git.gitignore-python.definition.md) | `stdlib.git.gitignore-python` | `02_core/runtimes/yaml/definitions/stdlib.git.yaml` | git, files, templates |
+| [Create GitHub Repository](stdlib.git.create-github-repository.definition.md) | `stdlib.git.create-github-repository` | `02_core/runtimes/yaml/definitions/stdlib.git.yaml` | git, github |
+| [Prune Generated Definition Pages](stdlib.docs.prune-definition-pages.definition.md) | `stdlib.docs.prune-definition-pages` | `02_core/runtimes/yaml/definitions/stdlib.docs.yaml` | documentation, files |
+| [Analysis Base](stdlib.analysis.base.definition.md) | `stdlib.analysis.base` | `02_core/runtimes/yaml/definitions/stdlib.analysis.yaml` | analysis, abstract |
+| [Write Analysis Snapshot](stdlib.analysis.snapshot.definition.md) | `stdlib.analysis.snapshot` | `02_core/runtimes/yaml/definitions/stdlib.analysis.yaml` | analysis, intelligence |
+| [Verify Definition References](stdlib.analysis.verify-references.definition.md) | `stdlib.analysis.verify-references` | `02_core/runtimes/yaml/definitions/stdlib.analysis.yaml` | analysis, validation |
+| [Python Barrel - __init__.py Template](stdlib.python.barrel.template.definition.md) | `stdlib.python.barrel.template` | `02_core/runtimes/yaml/definitions/stdlib.python.yaml` | python, template |
+| [Generate Python Barrel](stdlib.python.barrel.definition.md) | `stdlib.python.barrel` | `02_core/runtimes/yaml/definitions/stdlib.python.yaml` | python, generator |
+| [Abstract Command Base](command.base.definition.md) | `command.base` | `02_core/runtimes/yaml/definitions/command.yaml` | command, abstract |
+| [Run Task](command.task.run.definition.md) | `command.task.run` | `02_core/runtimes/yaml/definitions/command.yaml` | command |
+| [Run a Service Lifecycle Action](command.service.action.definition.md) | `command.service.action` | `02_core/runtimes/yaml/definitions/command.yaml` | command |
+| [Route an Intent through the Router](command.route.definition.md) | `command.route` | `02_core/runtimes/yaml/definitions/command.yaml` | command |
+| [Folder Scaffold Base](folder.base.definition.md) | `folder.base` | `02_core/runtimes/yaml/definitions/folder.yaml` | folder, abstract |
+| [Dockerfile Mixin](dockerfile.base.definition.md) | `dockerfile.base` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, dockerfile, abstract |
+| [Docker Compose Mixin](compose.base.definition.md) | `compose.base` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, abstract |
+| [Docker Service (Compose + Dockerfile)](docker.base.definition.md) | `docker.base` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, abstract |
+| [Build Docker Image](docker.build.definition.md) | `docker.build` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, build |
+| [Docker Compose Up](compose.up.definition.md) | `compose.up` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, lifecycle |
+| [Docker Compose Down](compose.down.definition.md) | `compose.down` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, lifecycle |
+| [Docker Compose Status](compose.status.definition.md) | `compose.status` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, lifecycle |
+| [Docker Compose Logs](compose.logs.definition.md) | `compose.logs` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, compose, lifecycle |
+| [Scaffold All Docker Services](docker.generate-all.definition.md) | `docker.generate-all` | `02_core/runtimes/yaml/definitions/docker.yaml` | docker, workflow |
+| [launchd Job Base](launchd.base.definition.md) | `launchd.base` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, abstract |
+| [Generate launchd Plists](launchd.generate-plist.definition.md) | `launchd.generate-plist` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, workflow |
+| [launchd Lifecycle Base](launchd.lifecycle.base.definition.md) | `launchd.lifecycle.base` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle, abstract |
+| [Install LaunchAgent](launchd.install.definition.md) | `launchd.install` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
+| [Uninstall LaunchAgent](launchd.uninstall.definition.md) | `launchd.uninstall` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
+| [Enable LaunchAgent](launchd.enable.definition.md) | `launchd.enable` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
+| [Disable LaunchAgent](launchd.disable.definition.md) | `launchd.disable` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
+| [Start LaunchAgent](launchd.start.definition.md) | `launchd.start` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
+| [Stop LaunchAgent](launchd.stop.definition.md) | `launchd.stop` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
+| [Print LaunchAgent Status](launchd.status.definition.md) | `launchd.status` | `02_core/runtimes/yaml/definitions/launchd.yaml` | launchd, lifecycle |
+| [LLM Model Record](model.base.definition.md) | `model.base` | `02_core/runtimes/yaml/definitions/model.yaml` | model, abstract |
+| [LLM Provider Record](provider.base.definition.md) | `provider.base` | `02_core/runtimes/yaml/definitions/provider.yaml` | provider, abstract |
+| [Routable Definition Base](route.base.definition.md) | `route.base` | `02_core/runtimes/yaml/definitions/route.yaml` | route, abstract |
+| [Echo Route (smoke test)](route.echo.definition.md) | `route.echo` | `02_core/runtimes/yaml/definitions/route.yaml` | route |
+| [Service Abstraction Base](service.base.definition.md) | `service.base` | `02_core/runtimes/yaml/definitions/service.yaml` | service, abstract |
+| [Docker Backend Action Map](service.docker.mixin.definition.md) | `service.docker.mixin` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker, abstract |
+| [Launchd Backend Action Map](service.launchd.mixin.definition.md) | `service.launchd.mixin` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd, abstract |
+| [Ollama Service (launchd backend)](service.ollama.definition.md) | `service.ollama` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd |
+| [Caffienate Service (launchd backend)](service.caffienate.definition.md) | `service.caffienate` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd |
+| [LM Studio Service (launchd backend)](service.lm-studio.definition.md) | `service.lm-studio` | `02_core/runtimes/yaml/definitions/service.yaml` | service, launchd |
+| [Postgres Service (docker backend)](service.postgres.definition.md) | `service.postgres` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker |
+| [Redis Service (docker backend)](service.redis.definition.md) | `service.redis` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker |
+| [Neo4j Service (docker backend)](service.neo4j.definition.md) | `service.neo4j` | `02_core/runtimes/yaml/definitions/service.yaml` | service, docker |
+| [Task base](task.base.definition.md) | `task.base` | `02_core/runtimes/yaml/definitions/task.yaml` | task, abstract |
+| [JSON Schema Base](schemas.base.definition.md) | `schemas.base` | `02_core/runtimes/yaml/definitions/schemas.yaml` | schema, abstract |
+| [Generate Schema JSON](schemas.generate-json.definition.md) | `schemas.generate-json` | `02_core/runtimes/yaml/definitions/schemas.yaml` | schema, workflow |
+| [Classification Audit Finding](audit.classification_finding.schema.definition.md) | `audit.classification_finding.schema` | `01_schemas/audit.classification_finding.schema.yaml` | schema, audit |
+| [Dispatch Request Envelope](dispatch.request.schema.definition.md) | `dispatch.request.schema` | `01_schemas/dispatch.request.schema.yaml` | schema, dispatch |
+| [Dispatch Response Envelope](dispatch.response.schema.definition.md) | `dispatch.response.schema` | `01_schemas/dispatch.response.schema.yaml` | schema, dispatch |
+| [Harness Stream Event](harness.stream_event.schema.definition.md) | `harness.stream_event.schema` | `01_schemas/harness.stream_event.schema.yaml` | schema, harness |
+| [Tool Invocation](tool.invocation.schema.definition.md) | `tool.invocation.schema` | `01_schemas/tool.invocation.schema.yaml` | schema, tool |
+| [Audit classification boundaries and ownership](audit.classifications.scan.workflow.definition.md) | `audit.classifications.scan.workflow` | `06_workflows/audit.classifications.scan.workflow.yaml` | workflow |
+| [Regenerate All Workflows Barrels](barrels.regenerate.workflow.definition.md) | `barrels.regenerate.workflow` | `06_workflows/barrels.regenerate.workflow.yaml` | python, generator, workflow |
+| [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.definition.md) | `barrels.regenerate.yaml-runtime` | `06_workflows/barrels.regenerate.workflow.yaml` | python, generator, workflow |
+| [YAML API Reference Build](docs.api.reference.workflow.definition.md) | `docs.api.reference.workflow` | `06_workflows/docs.api.reference.workflow.yaml` | documentation, workflow |
+| [API Documentation Catalog Sources](docs.catalog.generate.workflow.definition.md) | `docs.catalog.generate.workflow` | `06_workflows/docs.catalog.generate.workflow.yaml` | documentation, modules |
+| [Docs - Relationship Graph Component](docs.definition.template.component-relationship-graph.definition.md) | `docs.definition.template.component-relationship-graph` | `14_templates/docs.definition.template.yaml` | documentation, template, component |
+| [Docs - Definition Page Template](docs.definition.template.definition.definition.md) | `docs.definition.template.definition` | `14_templates/docs.definition.template.yaml` | documentation, template |
+| [Docs - Index Page Template](docs.catalog.template.index.definition.md) | `docs.catalog.template.index` | `14_templates/docs.catalog.template.yaml` | documentation, template |
+| [Docs - Authoring Schema Page Template](docs.catalog.template.schema.definition.md) | `docs.catalog.template.schema` | `14_templates/docs.catalog.template.yaml` | documentation, template |
+| [Example Catalog Modules](examples.catalog.modules.definition.md) | `examples.catalog.modules` | `15_examples/examples.catalog.yaml` | examples, modules |
+| [Git Information](cloud.mixin.git-info.definition.md) | `cloud.mixin.git-info` | `15_examples/cloud.yaml` | mixin, git, deployment |
+| [Timestamp](cloud.mixin.timestamp.definition.md) | `cloud.mixin.timestamp` | `15_examples/cloud.yaml` | mixin, deployment |
+| [Cloud Deployer](cloud.deployer.definition.md) | `cloud.deployer` | `15_examples/cloud.yaml` | example, deployment, cloud |
+| [Initialize Git Example](git.init.definition.md) | `git.init` | `15_examples/git.yaml` | example, git |
+| [GitHub Repository Example](git.github.definition.md) | `git.github` | `15_examples/git.yaml` | example, git, github |
+| [Gitignore Template Example](git.gitignore.definition.md) | `git.gitignore` | `15_examples/git.yaml` | example, git, templates |
+| [Obsidian Daily Note Template](obsidian.template.definition.md) | `obsidian.template` | `15_examples/obsidian.yaml` | example, obsidian, templates |
+| [Render Classification Docs](docs.classification.render.workflow.definition.md) | `docs.classification.render.workflow` | `06_workflows/docs.classification.render.workflow.yaml` | documentation, workflow, classification |
+| [Docs - Classification Audit](docs.classification.audit.template.definition.md) | `docs.classification.audit.template` | `14_templates/docs.classification.template.yaml` | documentation, template, classification |
+| [Docs - Classification Remediation Workflow](docs.classification.remediation-workflow.template.definition.md) | `docs.classification.remediation-workflow.template` | `14_templates/docs.classification.template.yaml` | documentation, template, classification |
+| [Generate Documentation](docs.generate.workflow.definition.md) | `docs.generate.workflow` | `06_workflows/docs.generate.workflow.yaml` | workflow |
+| [Build Repo README](docs.readme.generate.workflow.definition.md) | `docs.readme.generate.workflow` | `06_workflows/docs.readme.generate.workflow.yaml` | documentation, workflow |
+| [Docs - Repo README Template](docs.readme.template.definition.md) | `docs.readme.template` | `14_templates/docs.readme.template.yaml` | documentation, template |
+| [Sweep and embed project files into the vector store](embeddings.sweep.workflow.definition.md) | `embeddings.sweep.workflow` | `06_workflows/embeddings.sweep.workflow.yaml` | workflow |
+| [Classify files for audit and remediation](files.classify.workflow.definition.md) | `files.classify.workflow` | `06_workflows/files.classify.workflow.yaml` | workflow |
+| [Scan Boundary Violations](audit.boundary_violations.scan.task.definition.md) | `audit.boundary_violations.scan.task` | `07_tasks/audit.boundary_violations.scan.task.yaml` | task |
+| [Fetch readable text from a URL or search topic](browser.fetch.text.task.definition.md) | `browser.fetch.text.task` | `07_tasks/browser.fetch.text.task.yaml` | task |
+| [Build file classification manifest](classify.manifest.build.task.definition.md) | `classify.manifest.build.task` | `07_tasks/classify.manifest.build.task.yaml` | task |
+| [Return broad media class for a path](classify.media.class_for_path.task.definition.md) | `classify.media.class_for_path.task` | `07_tasks/classify.media.class_for_path.task.yaml` | task |
+| [Classify a file by media type and destination](classify.media.file.task.definition.md) | `classify.media.file.task` | `07_tasks/classify.media.file.task.yaml` | task |
+| [Chunk a file into embeddable text segments](embeddings.chunker.chunk_file.task.definition.md) | `embeddings.chunker.chunk_file.task` | `07_tasks/embeddings.chunker.chunk_file.task.yaml` | task |
+| [Generate an embedding vector for text](embeddings.embed.text.task.definition.md) | `embeddings.embed.text.task` | `07_tasks/embeddings.embed.text.task.yaml` | task |
+| [Query the local knowledge base](embeddings.query.search.task.definition.md) | `embeddings.query.search.task` | `07_tasks/embeddings.query.search.task.yaml` | task |
+| [Collect indexable files for embedding sweep](embeddings.sweep.collect_files.task.definition.md) | `embeddings.sweep.collect_files.task` | `07_tasks/embeddings.sweep.collect_files.task.yaml` | task |
+| [Compute MD5 hash of a file](embeddings.sweep.file_hash.task.definition.md) | `embeddings.sweep.file_hash.task` | `07_tasks/embeddings.sweep.file_hash.task.yaml` | task |
+| [Load the embedding sweep manifest](embeddings.sweep.load_manifest.task.definition.md) | `embeddings.sweep.load_manifest.task` | `07_tasks/embeddings.sweep.load_manifest.task.yaml` | task |
+| [Persist the embedding sweep manifest](embeddings.sweep.save_manifest.task.definition.md) | `embeddings.sweep.save_manifest.task` | `07_tasks/embeddings.sweep.save_manifest.task.yaml` | task |
+| [Iterate files in a directory tree](files.iter.task.definition.md) | `files.iter.task` | `07_tasks/files.iter.task.yaml` | task |
+| [Compute SHA-256 hash of a file](files.sha256.task.definition.md) | `files.sha256.task` | `07_tasks/files.sha256.task.yaml` | task |
+| [Write data to a JSON file](files.write_json.task.definition.md) | `files.write_json.task` | `07_tasks/files.write_json.task.yaml` | task |
+| [Classify an image by semantic type](image.classify.task.definition.md) | `image.classify.task` | `07_tasks/image.classify.task.yaml` | task |
+| [Extract dominant color palette from an image](image.color.dominant.task.definition.md) | `image.color.dominant.task` | `07_tasks/image.color.dominant.task.yaml` | task |
+| [Extract image file metadata](image.meta.extract.task.definition.md) | `image.meta.extract.task` | `07_tasks/image.meta.extract.task.yaml` | task |
+| [Assess image quality](image.quality.extract.task.definition.md) | `image.quality.extract.task` | `07_tasks/image.quality.extract.task.yaml` | task |
+| [Detect content regions in an image](image.regions.extract.task.definition.md) | `image.regions.extract.task` | `07_tasks/image.regions.extract.task.yaml` | task |
+| [Extract OCR text from an image](image.text_ocr.extract.task.definition.md) | `image.text_ocr.extract.task` | `07_tasks/image.text_ocr.extract.task.yaml` | task |
+| [Infer document type from filename](metadata.doc_type.task.definition.md) | `metadata.doc_type.task` | `07_tasks/metadata.doc_type.task.yaml` | task |
+| [Infer source origin from file path](metadata.source_guess.task.definition.md) | `metadata.source_guess.task` | `07_tasks/metadata.source_guess.task.yaml` | task |
+| [Get PDF page count](pdf.meta.page_count.task.definition.md) | `pdf.meta.page_count.task` | `07_tasks/pdf.meta.page_count.task.yaml` | task |
+| [Fetch and summarize content through a local model](research.local.summarize.task.definition.md) | `research.local.summarize.task` | `07_tasks/research.local.summarize.task.yaml` | task |
+| [Run local test suite](shell.tests.run.task.definition.md) | `shell.tests.run.task` | `07_tasks/shell.tests.run.task.yaml` | task |
+| [Format a markdown file using a local LM Studio model](text.markdown.format.task.definition.md) | `text.markdown.format.task` | `07_tasks/text.markdown.format.task.yaml` | task |
+| [Casbin Authorization Service](docker.casbin-service.definition.md) | `docker.casbin-service` | `09_docker/casbin-service.yaml` | docker, auth |
+| [ClamAV Service](docker.clamav.definition.md) | `docker.clamav` | `09_docker/clamav.yaml` | docker, document |
+| [FastAPI Service](docker.fastapi.definition.md) | `docker.fastapi` | `09_docker/fastapi.yaml` | docker, workers |
+| [Gitea Service](docker.gitea.definition.md) | `docker.gitea` | `09_docker/gitea.yaml` | docker, dev |
+| [Grafana Service](docker.grafana.definition.md) | `docker.grafana` | `09_docker/grafana.yaml` | docker, observability |
+| [GROBID Service](docker.grobid.definition.md) | `docker.grobid` | `09_docker/grobid.yaml` | docker, document |
+| [Jaeger Service](docker.jaeger.definition.md) | `docker.jaeger` | `09_docker/jaeger.yaml` | docker, observability |
+| [Jupyter Service](docker.jupyter.definition.md) | `docker.jupyter` | `09_docker/jupyter.yaml` | docker, dev |
+| [Keycloak Service](docker.keycloak.definition.md) | `docker.keycloak` | `09_docker/keycloak.yaml` | docker, auth |
+| [LibreOffice Conversion Service](docker.libreoffice.definition.md) | `docker.libreoffice` | `09_docker/libreoffice.yaml` | docker, document |
+| [MinIO Service](docker.minio.definition.md) | `docker.minio` | `09_docker/minio.yaml` | docker, storage |
+| [n8n Service](docker.n8n.definition.md) | `docker.n8n` | `09_docker/n8n.yaml` | docker, workers |
+| [Neo4j Service](docker.neo4j.definition.md) | `docker.neo4j` | `09_docker/neo4j.yaml` | docker, graph |
+| [Ollama Service](docker.ollama.definition.md) | `docker.ollama` | `09_docker/ollama.yaml` | docker, ai |
+| [Open WebUI Service](docker.open-webui.definition.md) | `docker.open-webui` | `09_docker/open-webui.yaml` | docker, ai |
+| [OpenFGA Service](docker.openfga.definition.md) | `docker.openfga` | `09_docker/openfga.yaml` | docker, auth |
+| [OpenSearch Dashboards Service](docker.opensearch-dashboards.definition.md) | `docker.opensearch-dashboards` | `09_docker/opensearch-dashboards.yaml` | docker, search |
+| [OpenSearch Service](docker.opensearch.definition.md) | `docker.opensearch` | `09_docker/opensearch.yaml` | docker, search |
+| [pgvector Service](docker.pgvector.definition.md) | `docker.pgvector` | `09_docker/pgvector.yaml` | docker, database |
+| [Playwright Worker Service](docker.playwright-worker.definition.md) | `docker.playwright-worker` | `09_docker/playwright-worker.yaml` | docker, document |
+| [PostgreSQL Service](docker.postgres.definition.md) | `docker.postgres` | `09_docker/postgres.yaml` | docker, databases |
+| [Prometheus Service](docker.prometheus.definition.md) | `docker.prometheus` | `09_docker/prometheus.yaml` | docker, observability |
+| [Qdrant Service](docker.qdrant.definition.md) | `docker.qdrant` | `09_docker/qdrant.yaml` | docker, vector |
+| [Redis Service](docker.redis.definition.md) | `docker.redis` | `09_docker/redis.yaml` | docker, databases |
+| [Temporal UI Service](docker.temporal-ui.definition.md) | `docker.temporal-ui` | `09_docker/temporal-ui.yaml` | docker, workers |
+| [Temporal Service](docker.temporal.definition.md) | `docker.temporal` | `09_docker/temporal.yaml` | docker, workers |
+| [Tesseract OCR Service](docker.tesseract-ocr.definition.md) | `docker.tesseract-ocr` | `09_docker/tesseract-ocr.yaml` | docker, document |
+| [Apache Tika Service](docker.tika.definition.md) | `docker.tika` | `09_docker/tika.yaml` | docker, document |
+| [Traefik Service](docker.traefik.definition.md) | `docker.traefik` | `09_docker/traefik.yaml` | docker, proxy |
+| [Unstructured Service](docker.unstructured.definition.md) | `docker.unstructured` | `09_docker/unstructured.yaml` | docker, document |
+| [Weaviate Service](docker.weaviate.definition.md) | `docker.weaviate` | `09_docker/weaviate.yaml` | docker, vector |
+| [Content-Graph Worker Service](docker.worker.definition.md) | `docker.worker` | `09_docker/worker.yaml` | docker, workers |
+| [launchd - Caffeinate](launchd.caffienate.definition.md) | `launchd.caffienate` | `09_launchd/caffienate.yaml` | launchd, system |
+| [launchd - Docker](launchd.docker.definition.md) | `launchd.docker` | `09_launchd/docker.yaml` | launchd, runtime |
+| [launchd - LM Studio](launchd.lm-studio.definition.md) | `launchd.lm-studio` | `09_launchd/lm_studio.yaml` | launchd, ai |
+| [launchd - Ollama](launchd.ollama.definition.md) | `launchd.ollama` | `09_launchd/ollama.yaml` | launchd, ai |
+| [claude-haiku-4-5](model.claude-haiku-4-5.definition.md) | `model.claude-haiku-4-5` | `13_models/model.claude-haiku-4-5.yaml` | model |
+| [claude-opus-4-7](model.claude-opus-4-7.definition.md) | `model.claude-opus-4-7` | `13_models/model.claude-opus-4-7.yaml` | model |
+| [claude-sonnet-4-6](model.claude-sonnet-4-6.definition.md) | `model.claude-sonnet-4-6` | `13_models/model.claude-sonnet-4-6.yaml` | model |
+| [deepseek-r1](model.deepseek-r1.definition.md) | `model.deepseek-r1` | `13_models/model.deepseek-r1.yaml` | model |
+| [gemma2](model.gemma2.definition.md) | `model.gemma2` | `13_models/model.gemma2.yaml` | model |
+| [gemma3](model.gemma3.definition.md) | `model.gemma3` | `13_models/model.gemma3.yaml` | model |
+| [llama3.1](model.llama3.1.definition.md) | `model.llama3.1` | `13_models/model.llama3.1.yaml` | model |
+| [llama3.2-vision](model.llama3.2-vision.definition.md) | `model.llama3.2-vision` | `13_models/model.llama3.2-vision.yaml` | model |
+| [llama3.2](model.llama3.2.definition.md) | `model.llama3.2` | `13_models/model.llama3.2.yaml` | model |
+| [llama3](model.llama3.definition.md) | `model.llama3` | `13_models/model.llama3.yaml` | model |
+| [mistral](model.mistral.definition.md) | `model.mistral` | `13_models/model.mistral.yaml` | model |
+| [nomic-embed-text](model.nomic-embed-text.definition.md) | `model.nomic-embed-text` | `13_models/model.nomic-embed-text.yaml` | model |
+| [qwen2.5](model.qwen2.5.definition.md) | `model.qwen2.5` | `13_models/model.qwen2.5.yaml` | model |
+| [qwen3](model.qwen3.definition.md) | `model.qwen3` | `13_models/model.qwen3.yaml` | model |
+| [claude](provider.claude.definition.md) | `provider.claude` | `13_providers/provider.claude.yaml` | provider |
+| [gemini](provider.gemini.definition.md) | `provider.gemini` | `13_providers/provider.gemini.yaml` | provider |
+| [lmstudio](provider.lmstudio.definition.md) | `provider.lmstudio` | `13_providers/provider.lmstudio.yaml` | provider |
+| [ollama](provider.ollama.definition.md) | `provider.ollama` | `13_providers/provider.ollama.yaml` | provider |
+| [openai](provider.openai.definition.md) | `provider.openai` | `13_providers/provider.openai.yaml` | provider |
+| [Hello Polyglot](examples.hello-polyglot.definition.md) | `examples.hello-polyglot` | `<raw>` | - |
+| [Hello Python](examples.hello-python.definition.md) | `examples.hello-python` | `<raw>` | - |
+| [Hello Shell](examples.hello-shell.definition.md) | `examples.hello-shell` | `<raw>` | - |
+| [Format Markdown for Compliance](tasks.format-markdown.definition.md) | `tasks.format-markdown` | `<raw>` | - |
+| [tasks.generate-title-from-text](tasks.generate-title-from-text.definition.md) | `tasks.generate-title-from-text` | `<raw>` | - |
+| [tasks.research-summary](tasks.research-summary.definition.md) | `tasks.research-summary` | `<raw>` | - |
+| [Spec promotion — Final stage](tasks.spec-promotion.final.definition.md) | `tasks.spec-promotion.final` | `<raw>` | - |
+| [Spec promotion — Prompts stage](tasks.spec-promotion.prompts.definition.md) | `tasks.spec-promotion.prompts` | `<raw>` | - |
+| [Spec promotion — Requirements stage](tasks.spec-promotion.requirements.definition.md) | `tasks.spec-promotion.requirements` | `<raw>` | - |
+| [Spec promotion — Research stage](tasks.spec-promotion.research.definition.md) | `tasks.spec-promotion.research` | `<raw>` | - |
+| [Spec promotion — Tasks stage](tasks.spec-promotion.tasks.definition.md) | `tasks.spec-promotion.tasks` | `<raw>` | - |
+| [tasks.vision.layout](tasks.vision.layout.definition.md) | `tasks.vision.layout` | `<raw>` | - |
+| [tasks.vision.overview](tasks.vision.overview.definition.md) | `tasks.vision.overview` | `<raw>` | - |
+| [tasks.vision.style](tasks.vision.style.definition.md) | `tasks.vision.style` | `<raw>` | - |
+| [tasks.vision.visible-text](tasks.vision.visible-text.definition.md) | `tasks.vision.visible-text` | `<raw>` | - |
 
 
 ## Tags
 
 ### abstract
 
-- [Abstract Base](stdlib.base.md) (`stdlib.base`)
-- [Analysis Base](stdlib.analysis.base.md) (`stdlib.analysis.base`)
-- [Abstract Command Base](command.base.md) (`command.base`)
-- [Folder Scaffold Base](folder.base.md) (`folder.base`)
-- [Dockerfile Mixin](dockerfile.base.md) (`dockerfile.base`)
-- [Docker Compose Mixin](compose.base.md) (`compose.base`)
-- [Docker Service (Compose + Dockerfile)](docker.base.md) (`docker.base`)
-- [launchd Job Base](launchd.base.md) (`launchd.base`)
-- [launchd Lifecycle Base](launchd.lifecycle.base.md) (`launchd.lifecycle.base`)
-- [LLM Model Record](model.base.md) (`model.base`)
-- [LLM Provider Record](provider.base.md) (`provider.base`)
-- [Routable Definition Base](route.base.md) (`route.base`)
-- [Service Abstraction Base](service.base.md) (`service.base`)
-- [Docker Backend Action Map](service.docker.mixin.md) (`service.docker.mixin`)
-- [Launchd Backend Action Map](service.launchd.mixin.md) (`service.launchd.mixin`)
-- [Task base](task.base.md) (`task.base`)
-- [JSON Schema Base](schemas.base.md) (`schemas.base`)
+- [Abstract Base](stdlib.base.definition.md) (`stdlib.base`)
+- [Analysis Base](stdlib.analysis.base.definition.md) (`stdlib.analysis.base`)
+- [Abstract Command Base](command.base.definition.md) (`command.base`)
+- [Folder Scaffold Base](folder.base.definition.md) (`folder.base`)
+- [Dockerfile Mixin](dockerfile.base.definition.md) (`dockerfile.base`)
+- [Docker Compose Mixin](compose.base.definition.md) (`compose.base`)
+- [Docker Service (Compose + Dockerfile)](docker.base.definition.md) (`docker.base`)
+- [launchd Job Base](launchd.base.definition.md) (`launchd.base`)
+- [launchd Lifecycle Base](launchd.lifecycle.base.definition.md) (`launchd.lifecycle.base`)
+- [LLM Model Record](model.base.definition.md) (`model.base`)
+- [LLM Provider Record](provider.base.definition.md) (`provider.base`)
+- [Routable Definition Base](route.base.definition.md) (`route.base`)
+- [Service Abstraction Base](service.base.definition.md) (`service.base`)
+- [Docker Backend Action Map](service.docker.mixin.definition.md) (`service.docker.mixin`)
+- [Launchd Backend Action Map](service.launchd.mixin.definition.md) (`service.launchd.mixin`)
+- [Task base](task.base.definition.md) (`task.base`)
+- [JSON Schema Base](schemas.base.definition.md) (`schemas.base`)
 
 
 ### ai
 
-- [Ollama Service](docker.ollama.md) (`docker.ollama`)
-- [Open WebUI Service](docker.open-webui.md) (`docker.open-webui`)
-- [launchd - LM Studio](launchd.lm-studio.md) (`launchd.lm-studio`)
-- [launchd - Ollama](launchd.ollama.md) (`launchd.ollama`)
+- [Ollama Service](docker.ollama.definition.md) (`docker.ollama`)
+- [Open WebUI Service](docker.open-webui.definition.md) (`docker.open-webui`)
+- [launchd - LM Studio](launchd.lm-studio.definition.md) (`launchd.lm-studio`)
+- [launchd - Ollama](launchd.ollama.definition.md) (`launchd.ollama`)
 
 
 ### analysis
 
-- [Analysis Base](stdlib.analysis.base.md) (`stdlib.analysis.base`)
-- [Write Analysis Snapshot](stdlib.analysis.snapshot.md) (`stdlib.analysis.snapshot`)
-- [Verify Definition References](stdlib.analysis.verify-references.md) (`stdlib.analysis.verify-references`)
+- [Analysis Base](stdlib.analysis.base.definition.md) (`stdlib.analysis.base`)
+- [Write Analysis Snapshot](stdlib.analysis.snapshot.definition.md) (`stdlib.analysis.snapshot`)
+- [Verify Definition References](stdlib.analysis.verify-references.definition.md) (`stdlib.analysis.verify-references`)
 
 
 ### audit
 
-- [Classification Audit Finding](audit.classification_finding.schema.md) (`audit.classification_finding.schema`)
+- [Classification Audit Finding](audit.classification_finding.schema.definition.md) (`audit.classification_finding.schema`)
 
 
 ### auth
 
-- [Casbin Authorization Service](docker.casbin-service.md) (`docker.casbin-service`)
-- [Keycloak Service](docker.keycloak.md) (`docker.keycloak`)
-- [OpenFGA Service](docker.openfga.md) (`docker.openfga`)
+- [Casbin Authorization Service](docker.casbin-service.definition.md) (`docker.casbin-service`)
+- [Keycloak Service](docker.keycloak.definition.md) (`docker.keycloak`)
+- [OpenFGA Service](docker.openfga.definition.md) (`docker.openfga`)
 
 
 ### build
 
-- [Build Docker Image](docker.build.md) (`docker.build`)
+- [Build Docker Image](docker.build.definition.md) (`docker.build`)
 
 
 ### classification
 
-- [Render Classification Docs](docs.classification.render.workflow.md) (`docs.classification.render.workflow`)
-- [Docs - Classification Audit](docs.classification.audit.template.md) (`docs.classification.audit.template`)
-- [Docs - Classification Remediation Workflow](docs.classification.remediation-workflow.template.md) (`docs.classification.remediation-workflow.template`)
+- [Render Classification Docs](docs.classification.render.workflow.definition.md) (`docs.classification.render.workflow`)
+- [Docs - Classification Audit](docs.classification.audit.template.definition.md) (`docs.classification.audit.template`)
+- [Docs - Classification Remediation Workflow](docs.classification.remediation-workflow.template.definition.md) (`docs.classification.remediation-workflow.template`)
 
 
 ### cloud
 
-- [Cloud Deployer](cloud.deployer.md) (`cloud.deployer`)
+- [Cloud Deployer](cloud.deployer.definition.md) (`cloud.deployer`)
 
 
 ### command
 
-- [Abstract Command Base](command.base.md) (`command.base`)
-- [Run Task](command.task.run.md) (`command.task.run`)
-- [Run a Service Lifecycle Action](command.service.action.md) (`command.service.action`)
-- [Route an Intent through the Router](command.route.md) (`command.route`)
+- [Abstract Command Base](command.base.definition.md) (`command.base`)
+- [Run Task](command.task.run.definition.md) (`command.task.run`)
+- [Run a Service Lifecycle Action](command.service.action.definition.md) (`command.service.action`)
+- [Route an Intent through the Router](command.route.definition.md) (`command.route`)
 
 
 ### component
 
-- [Docs - Relationship Graph Component](docs.definition.template.component-relationship-graph.md) (`docs.definition.template.component-relationship-graph`)
+- [Docs - Relationship Graph Component](docs.definition.template.component-relationship-graph.definition.md) (`docs.definition.template.component-relationship-graph`)
 
 
 ### compose
 
-- [Docker Compose Mixin](compose.base.md) (`compose.base`)
-- [Docker Compose Up](compose.up.md) (`compose.up`)
-- [Docker Compose Down](compose.down.md) (`compose.down`)
-- [Docker Compose Status](compose.status.md) (`compose.status`)
-- [Docker Compose Logs](compose.logs.md) (`compose.logs`)
+- [Docker Compose Mixin](compose.base.definition.md) (`compose.base`)
+- [Docker Compose Up](compose.up.definition.md) (`compose.up`)
+- [Docker Compose Down](compose.down.definition.md) (`compose.down`)
+- [Docker Compose Status](compose.status.definition.md) (`compose.status`)
+- [Docker Compose Logs](compose.logs.definition.md) (`compose.logs`)
 
 
 ### core
 
-- [Abstract Base](stdlib.base.md) (`stdlib.base`)
-- [Load Standard Library Modules](stdlib.load-modules.md) (`stdlib.load-modules`)
+- [Abstract Base](stdlib.base.definition.md) (`stdlib.base`)
+- [Load Standard Library Modules](stdlib.load-modules.definition.md) (`stdlib.load-modules`)
 
 
 ### database
 
-- [pgvector Service](docker.pgvector.md) (`docker.pgvector`)
+- [pgvector Service](docker.pgvector.definition.md) (`docker.pgvector`)
 
 
 ### databases
 
-- [PostgreSQL Service](docker.postgres.md) (`docker.postgres`)
-- [Redis Service](docker.redis.md) (`docker.redis`)
+- [PostgreSQL Service](docker.postgres.definition.md) (`docker.postgres`)
+- [Redis Service](docker.redis.definition.md) (`docker.redis`)
 
 
 ### deployment
 
-- [Git Information](cloud.mixin.git-info.md) (`cloud.mixin.git-info`)
-- [Timestamp](cloud.mixin.timestamp.md) (`cloud.mixin.timestamp`)
-- [Cloud Deployer](cloud.deployer.md) (`cloud.deployer`)
+- [Git Information](cloud.mixin.git-info.definition.md) (`cloud.mixin.git-info`)
+- [Timestamp](cloud.mixin.timestamp.definition.md) (`cloud.mixin.timestamp`)
+- [Cloud Deployer](cloud.deployer.definition.md) (`cloud.deployer`)
 
 
 ### destructive
 
-- [Clean Workspace](stdlib.clean-workspace.md) (`stdlib.clean-workspace`)
+- [Clean Workspace](stdlib.clean-workspace.definition.md) (`stdlib.clean-workspace`)
 
 
 ### dev
 
-- [Gitea Service](docker.gitea.md) (`docker.gitea`)
-- [Jupyter Service](docker.jupyter.md) (`docker.jupyter`)
+- [Gitea Service](docker.gitea.definition.md) (`docker.gitea`)
+- [Jupyter Service](docker.jupyter.definition.md) (`docker.jupyter`)
 
 
 ### dispatch
 
-- [Dispatch Request Envelope](dispatch.request.schema.md) (`dispatch.request.schema`)
-- [Dispatch Response Envelope](dispatch.response.schema.md) (`dispatch.response.schema`)
+- [Dispatch Request Envelope](dispatch.request.schema.definition.md) (`dispatch.request.schema`)
+- [Dispatch Response Envelope](dispatch.response.schema.definition.md) (`dispatch.response.schema`)
 
 
 ### docker
 
-- [Dockerfile Mixin](dockerfile.base.md) (`dockerfile.base`)
-- [Docker Compose Mixin](compose.base.md) (`compose.base`)
-- [Docker Service (Compose + Dockerfile)](docker.base.md) (`docker.base`)
-- [Build Docker Image](docker.build.md) (`docker.build`)
-- [Docker Compose Up](compose.up.md) (`compose.up`)
-- [Docker Compose Down](compose.down.md) (`compose.down`)
-- [Docker Compose Status](compose.status.md) (`compose.status`)
-- [Docker Compose Logs](compose.logs.md) (`compose.logs`)
-- [Scaffold All Docker Services](docker.generate-all.md) (`docker.generate-all`)
-- [Docker Backend Action Map](service.docker.mixin.md) (`service.docker.mixin`)
-- [Postgres Service (docker backend)](service.postgres.md) (`service.postgres`)
-- [Redis Service (docker backend)](service.redis.md) (`service.redis`)
-- [Neo4j Service (docker backend)](service.neo4j.md) (`service.neo4j`)
-- [Casbin Authorization Service](docker.casbin-service.md) (`docker.casbin-service`)
-- [ClamAV Service](docker.clamav.md) (`docker.clamav`)
-- [FastAPI Service](docker.fastapi.md) (`docker.fastapi`)
-- [Gitea Service](docker.gitea.md) (`docker.gitea`)
-- [Grafana Service](docker.grafana.md) (`docker.grafana`)
-- [GROBID Service](docker.grobid.md) (`docker.grobid`)
-- [Jaeger Service](docker.jaeger.md) (`docker.jaeger`)
-- [Jupyter Service](docker.jupyter.md) (`docker.jupyter`)
-- [Keycloak Service](docker.keycloak.md) (`docker.keycloak`)
-- [LibreOffice Conversion Service](docker.libreoffice.md) (`docker.libreoffice`)
-- [MinIO Service](docker.minio.md) (`docker.minio`)
-- [n8n Service](docker.n8n.md) (`docker.n8n`)
-- [Neo4j Service](docker.neo4j.md) (`docker.neo4j`)
-- [Ollama Service](docker.ollama.md) (`docker.ollama`)
-- [Open WebUI Service](docker.open-webui.md) (`docker.open-webui`)
-- [OpenFGA Service](docker.openfga.md) (`docker.openfga`)
-- [OpenSearch Dashboards Service](docker.opensearch-dashboards.md) (`docker.opensearch-dashboards`)
-- [OpenSearch Service](docker.opensearch.md) (`docker.opensearch`)
-- [pgvector Service](docker.pgvector.md) (`docker.pgvector`)
-- [Playwright Worker Service](docker.playwright-worker.md) (`docker.playwright-worker`)
-- [PostgreSQL Service](docker.postgres.md) (`docker.postgres`)
-- [Prometheus Service](docker.prometheus.md) (`docker.prometheus`)
-- [Qdrant Service](docker.qdrant.md) (`docker.qdrant`)
-- [Redis Service](docker.redis.md) (`docker.redis`)
-- [Temporal UI Service](docker.temporal-ui.md) (`docker.temporal-ui`)
-- [Temporal Service](docker.temporal.md) (`docker.temporal`)
-- [Tesseract OCR Service](docker.tesseract-ocr.md) (`docker.tesseract-ocr`)
-- [Apache Tika Service](docker.tika.md) (`docker.tika`)
-- [Traefik Service](docker.traefik.md) (`docker.traefik`)
-- [Unstructured Service](docker.unstructured.md) (`docker.unstructured`)
-- [Weaviate Service](docker.weaviate.md) (`docker.weaviate`)
-- [Content-Graph Worker Service](docker.worker.md) (`docker.worker`)
+- [Dockerfile Mixin](dockerfile.base.definition.md) (`dockerfile.base`)
+- [Docker Compose Mixin](compose.base.definition.md) (`compose.base`)
+- [Docker Service (Compose + Dockerfile)](docker.base.definition.md) (`docker.base`)
+- [Build Docker Image](docker.build.definition.md) (`docker.build`)
+- [Docker Compose Up](compose.up.definition.md) (`compose.up`)
+- [Docker Compose Down](compose.down.definition.md) (`compose.down`)
+- [Docker Compose Status](compose.status.definition.md) (`compose.status`)
+- [Docker Compose Logs](compose.logs.definition.md) (`compose.logs`)
+- [Scaffold All Docker Services](docker.generate-all.definition.md) (`docker.generate-all`)
+- [Docker Backend Action Map](service.docker.mixin.definition.md) (`service.docker.mixin`)
+- [Postgres Service (docker backend)](service.postgres.definition.md) (`service.postgres`)
+- [Redis Service (docker backend)](service.redis.definition.md) (`service.redis`)
+- [Neo4j Service (docker backend)](service.neo4j.definition.md) (`service.neo4j`)
+- [Casbin Authorization Service](docker.casbin-service.definition.md) (`docker.casbin-service`)
+- [ClamAV Service](docker.clamav.definition.md) (`docker.clamav`)
+- [FastAPI Service](docker.fastapi.definition.md) (`docker.fastapi`)
+- [Gitea Service](docker.gitea.definition.md) (`docker.gitea`)
+- [Grafana Service](docker.grafana.definition.md) (`docker.grafana`)
+- [GROBID Service](docker.grobid.definition.md) (`docker.grobid`)
+- [Jaeger Service](docker.jaeger.definition.md) (`docker.jaeger`)
+- [Jupyter Service](docker.jupyter.definition.md) (`docker.jupyter`)
+- [Keycloak Service](docker.keycloak.definition.md) (`docker.keycloak`)
+- [LibreOffice Conversion Service](docker.libreoffice.definition.md) (`docker.libreoffice`)
+- [MinIO Service](docker.minio.definition.md) (`docker.minio`)
+- [n8n Service](docker.n8n.definition.md) (`docker.n8n`)
+- [Neo4j Service](docker.neo4j.definition.md) (`docker.neo4j`)
+- [Ollama Service](docker.ollama.definition.md) (`docker.ollama`)
+- [Open WebUI Service](docker.open-webui.definition.md) (`docker.open-webui`)
+- [OpenFGA Service](docker.openfga.definition.md) (`docker.openfga`)
+- [OpenSearch Dashboards Service](docker.opensearch-dashboards.definition.md) (`docker.opensearch-dashboards`)
+- [OpenSearch Service](docker.opensearch.definition.md) (`docker.opensearch`)
+- [pgvector Service](docker.pgvector.definition.md) (`docker.pgvector`)
+- [Playwright Worker Service](docker.playwright-worker.definition.md) (`docker.playwright-worker`)
+- [PostgreSQL Service](docker.postgres.definition.md) (`docker.postgres`)
+- [Prometheus Service](docker.prometheus.definition.md) (`docker.prometheus`)
+- [Qdrant Service](docker.qdrant.definition.md) (`docker.qdrant`)
+- [Redis Service](docker.redis.definition.md) (`docker.redis`)
+- [Temporal UI Service](docker.temporal-ui.definition.md) (`docker.temporal-ui`)
+- [Temporal Service](docker.temporal.definition.md) (`docker.temporal`)
+- [Tesseract OCR Service](docker.tesseract-ocr.definition.md) (`docker.tesseract-ocr`)
+- [Apache Tika Service](docker.tika.definition.md) (`docker.tika`)
+- [Traefik Service](docker.traefik.definition.md) (`docker.traefik`)
+- [Unstructured Service](docker.unstructured.definition.md) (`docker.unstructured`)
+- [Weaviate Service](docker.weaviate.definition.md) (`docker.weaviate`)
+- [Content-Graph Worker Service](docker.worker.definition.md) (`docker.worker`)
 
 
 ### dockerfile
 
-- [Dockerfile Mixin](dockerfile.base.md) (`dockerfile.base`)
+- [Dockerfile Mixin](dockerfile.base.definition.md) (`dockerfile.base`)
 
 
 ### document
 
-- [ClamAV Service](docker.clamav.md) (`docker.clamav`)
-- [GROBID Service](docker.grobid.md) (`docker.grobid`)
-- [LibreOffice Conversion Service](docker.libreoffice.md) (`docker.libreoffice`)
-- [Playwright Worker Service](docker.playwright-worker.md) (`docker.playwright-worker`)
-- [Tesseract OCR Service](docker.tesseract-ocr.md) (`docker.tesseract-ocr`)
-- [Apache Tika Service](docker.tika.md) (`docker.tika`)
-- [Unstructured Service](docker.unstructured.md) (`docker.unstructured`)
+- [ClamAV Service](docker.clamav.definition.md) (`docker.clamav`)
+- [GROBID Service](docker.grobid.definition.md) (`docker.grobid`)
+- [LibreOffice Conversion Service](docker.libreoffice.definition.md) (`docker.libreoffice`)
+- [Playwright Worker Service](docker.playwright-worker.definition.md) (`docker.playwright-worker`)
+- [Tesseract OCR Service](docker.tesseract-ocr.definition.md) (`docker.tesseract-ocr`)
+- [Apache Tika Service](docker.tika.definition.md) (`docker.tika`)
+- [Unstructured Service](docker.unstructured.definition.md) (`docker.unstructured`)
 
 
 ### documentation
 
-- [Prune Generated Definition Pages](stdlib.docs.prune-definition-pages.md) (`stdlib.docs.prune-definition-pages`)
-- [YAML API Reference Build](docs.api.reference.workflow.md) (`docs.api.reference.workflow`)
-- [API Documentation Catalog Sources](docs.catalog.generate.workflow.md) (`docs.catalog.generate.workflow`)
-- [Docs - Relationship Graph Component](docs.definition.template.component-relationship-graph.md) (`docs.definition.template.component-relationship-graph`)
-- [Docs - Definition Page Template](docs.definition.template.definition.md) (`docs.definition.template.definition`)
-- [Docs - Index Page Template](docs.catalog.template.index.md) (`docs.catalog.template.index`)
-- [Docs - Authoring Schema Page Template](docs.catalog.template.schema.md) (`docs.catalog.template.schema`)
-- [Render Classification Docs](docs.classification.render.workflow.md) (`docs.classification.render.workflow`)
-- [Docs - Classification Audit](docs.classification.audit.template.md) (`docs.classification.audit.template`)
-- [Docs - Classification Remediation Workflow](docs.classification.remediation-workflow.template.md) (`docs.classification.remediation-workflow.template`)
-- [Build Repo README](docs.readme.generate.workflow.md) (`docs.readme.generate.workflow`)
-- [Docs - Repo README Template](docs.readme.template.md) (`docs.readme.template`)
+- [Prune Generated Definition Pages](stdlib.docs.prune-definition-pages.definition.md) (`stdlib.docs.prune-definition-pages`)
+- [YAML API Reference Build](docs.api.reference.workflow.definition.md) (`docs.api.reference.workflow`)
+- [API Documentation Catalog Sources](docs.catalog.generate.workflow.definition.md) (`docs.catalog.generate.workflow`)
+- [Docs - Relationship Graph Component](docs.definition.template.component-relationship-graph.definition.md) (`docs.definition.template.component-relationship-graph`)
+- [Docs - Definition Page Template](docs.definition.template.definition.definition.md) (`docs.definition.template.definition`)
+- [Docs - Index Page Template](docs.catalog.template.index.definition.md) (`docs.catalog.template.index`)
+- [Docs - Authoring Schema Page Template](docs.catalog.template.schema.definition.md) (`docs.catalog.template.schema`)
+- [Render Classification Docs](docs.classification.render.workflow.definition.md) (`docs.classification.render.workflow`)
+- [Docs - Classification Audit](docs.classification.audit.template.definition.md) (`docs.classification.audit.template`)
+- [Docs - Classification Remediation Workflow](docs.classification.remediation-workflow.template.definition.md) (`docs.classification.remediation-workflow.template`)
+- [Build Repo README](docs.readme.generate.workflow.definition.md) (`docs.readme.generate.workflow`)
+- [Docs - Repo README Template](docs.readme.template.definition.md) (`docs.readme.template`)
 
 
 ### example
 
-- [Cloud Deployer](cloud.deployer.md) (`cloud.deployer`)
-- [Initialize Git Example](git.init.md) (`git.init`)
-- [GitHub Repository Example](git.github.md) (`git.github`)
-- [Gitignore Template Example](git.gitignore.md) (`git.gitignore`)
-- [Obsidian Daily Note Template](obsidian.template.md) (`obsidian.template`)
+- [Cloud Deployer](cloud.deployer.definition.md) (`cloud.deployer`)
+- [Initialize Git Example](git.init.definition.md) (`git.init`)
+- [GitHub Repository Example](git.github.definition.md) (`git.github`)
+- [Gitignore Template Example](git.gitignore.definition.md) (`git.gitignore`)
+- [Obsidian Daily Note Template](obsidian.template.definition.md) (`obsidian.template`)
 
 
 ### examples
 
-- [Example Catalog Modules](examples.catalog.modules.md) (`examples.catalog.modules`)
+- [Example Catalog Modules](examples.catalog.modules.definition.md) (`examples.catalog.modules`)
 
 
 ### files
 
-- [Clean Workspace](stdlib.clean-workspace.md) (`stdlib.clean-workspace`)
-- [Write Text File](stdlib.files.write-text.md) (`stdlib.files.write-text`)
-- [Create Directory](stdlib.files.create-directory.md) (`stdlib.files.create-directory`)
-- [Write Text File (input form)](stdlib.files.write.md) (`stdlib.files.write`)
-- [Write Python Gitignore](stdlib.git.gitignore-python.md) (`stdlib.git.gitignore-python`)
-- [Prune Generated Definition Pages](stdlib.docs.prune-definition-pages.md) (`stdlib.docs.prune-definition-pages`)
+- [Clean Workspace](stdlib.clean-workspace.definition.md) (`stdlib.clean-workspace`)
+- [Write Text File](stdlib.files.write-text.definition.md) (`stdlib.files.write-text`)
+- [Create Directory](stdlib.files.create-directory.definition.md) (`stdlib.files.create-directory`)
+- [Write Text File (input form)](stdlib.files.write.definition.md) (`stdlib.files.write`)
+- [Write Python Gitignore](stdlib.git.gitignore-python.definition.md) (`stdlib.git.gitignore-python`)
+- [Prune Generated Definition Pages](stdlib.docs.prune-definition-pages.definition.md) (`stdlib.docs.prune-definition-pages`)
 
 
 ### folder
 
-- [Folder Scaffold Base](folder.base.md) (`folder.base`)
+- [Folder Scaffold Base](folder.base.definition.md) (`folder.base`)
 
 
 ### generator
 
-- [Generate Python Barrel](stdlib.python.barrel.md) (`stdlib.python.barrel`)
-- [Regenerate All Workflows Barrels](barrels.regenerate.workflow.md) (`barrels.regenerate.workflow`)
-- [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.md) (`barrels.regenerate.yaml-runtime`)
+- [Generate Python Barrel](stdlib.python.barrel.definition.md) (`stdlib.python.barrel`)
+- [Regenerate All Workflows Barrels](barrels.regenerate.workflow.definition.md) (`barrels.regenerate.workflow`)
+- [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.definition.md) (`barrels.regenerate.yaml-runtime`)
 
 
 ### git
 
-- [Initialize Current Git Workspace](stdlib.git.init-current-workspace.md) (`stdlib.git.init-current-workspace`)
-- [Write Python Gitignore](stdlib.git.gitignore-python.md) (`stdlib.git.gitignore-python`)
-- [Create GitHub Repository](stdlib.git.create-github-repository.md) (`stdlib.git.create-github-repository`)
-- [Git Information](cloud.mixin.git-info.md) (`cloud.mixin.git-info`)
-- [Initialize Git Example](git.init.md) (`git.init`)
-- [GitHub Repository Example](git.github.md) (`git.github`)
-- [Gitignore Template Example](git.gitignore.md) (`git.gitignore`)
+- [Initialize Current Git Workspace](stdlib.git.init-current-workspace.definition.md) (`stdlib.git.init-current-workspace`)
+- [Write Python Gitignore](stdlib.git.gitignore-python.definition.md) (`stdlib.git.gitignore-python`)
+- [Create GitHub Repository](stdlib.git.create-github-repository.definition.md) (`stdlib.git.create-github-repository`)
+- [Git Information](cloud.mixin.git-info.definition.md) (`cloud.mixin.git-info`)
+- [Initialize Git Example](git.init.definition.md) (`git.init`)
+- [GitHub Repository Example](git.github.definition.md) (`git.github`)
+- [Gitignore Template Example](git.gitignore.definition.md) (`git.gitignore`)
 
 
 ### github
 
-- [Create GitHub Repository](stdlib.git.create-github-repository.md) (`stdlib.git.create-github-repository`)
-- [GitHub Repository Example](git.github.md) (`git.github`)
+- [Create GitHub Repository](stdlib.git.create-github-repository.definition.md) (`stdlib.git.create-github-repository`)
+- [GitHub Repository Example](git.github.definition.md) (`git.github`)
 
 
 ### graph
 
-- [Neo4j Service](docker.neo4j.md) (`docker.neo4j`)
+- [Neo4j Service](docker.neo4j.definition.md) (`docker.neo4j`)
 
 
 ### harness
 
-- [Harness Stream Event](harness.stream_event.schema.md) (`harness.stream_event.schema`)
+- [Harness Stream Event](harness.stream_event.schema.definition.md) (`harness.stream_event.schema`)
 
 
 ### intelligence
 
-- [Write Analysis Snapshot](stdlib.analysis.snapshot.md) (`stdlib.analysis.snapshot`)
+- [Write Analysis Snapshot](stdlib.analysis.snapshot.definition.md) (`stdlib.analysis.snapshot`)
 
 
 ### launchd
 
-- [launchd Job Base](launchd.base.md) (`launchd.base`)
-- [Generate launchd Plists](launchd.generate-plist.md) (`launchd.generate-plist`)
-- [launchd Lifecycle Base](launchd.lifecycle.base.md) (`launchd.lifecycle.base`)
-- [Install LaunchAgent](launchd.install.md) (`launchd.install`)
-- [Uninstall LaunchAgent](launchd.uninstall.md) (`launchd.uninstall`)
-- [Enable LaunchAgent](launchd.enable.md) (`launchd.enable`)
-- [Disable LaunchAgent](launchd.disable.md) (`launchd.disable`)
-- [Start LaunchAgent](launchd.start.md) (`launchd.start`)
-- [Stop LaunchAgent](launchd.stop.md) (`launchd.stop`)
-- [Print LaunchAgent Status](launchd.status.md) (`launchd.status`)
-- [Launchd Backend Action Map](service.launchd.mixin.md) (`service.launchd.mixin`)
-- [Ollama Service (launchd backend)](service.ollama.md) (`service.ollama`)
-- [Caffienate Service (launchd backend)](service.caffienate.md) (`service.caffienate`)
-- [LM Studio Service (launchd backend)](service.lm-studio.md) (`service.lm-studio`)
-- [launchd - Caffeinate](launchd.caffienate.md) (`launchd.caffienate`)
-- [launchd - Docker](launchd.docker.md) (`launchd.docker`)
-- [launchd - LM Studio](launchd.lm-studio.md) (`launchd.lm-studio`)
-- [launchd - Ollama](launchd.ollama.md) (`launchd.ollama`)
+- [launchd Job Base](launchd.base.definition.md) (`launchd.base`)
+- [Generate launchd Plists](launchd.generate-plist.definition.md) (`launchd.generate-plist`)
+- [launchd Lifecycle Base](launchd.lifecycle.base.definition.md) (`launchd.lifecycle.base`)
+- [Install LaunchAgent](launchd.install.definition.md) (`launchd.install`)
+- [Uninstall LaunchAgent](launchd.uninstall.definition.md) (`launchd.uninstall`)
+- [Enable LaunchAgent](launchd.enable.definition.md) (`launchd.enable`)
+- [Disable LaunchAgent](launchd.disable.definition.md) (`launchd.disable`)
+- [Start LaunchAgent](launchd.start.definition.md) (`launchd.start`)
+- [Stop LaunchAgent](launchd.stop.definition.md) (`launchd.stop`)
+- [Print LaunchAgent Status](launchd.status.definition.md) (`launchd.status`)
+- [Launchd Backend Action Map](service.launchd.mixin.definition.md) (`service.launchd.mixin`)
+- [Ollama Service (launchd backend)](service.ollama.definition.md) (`service.ollama`)
+- [Caffienate Service (launchd backend)](service.caffienate.definition.md) (`service.caffienate`)
+- [LM Studio Service (launchd backend)](service.lm-studio.definition.md) (`service.lm-studio`)
+- [launchd - Caffeinate](launchd.caffienate.definition.md) (`launchd.caffienate`)
+- [launchd - Docker](launchd.docker.definition.md) (`launchd.docker`)
+- [launchd - LM Studio](launchd.lm-studio.definition.md) (`launchd.lm-studio`)
+- [launchd - Ollama](launchd.ollama.definition.md) (`launchd.ollama`)
 
 
 ### lifecycle
 
-- [Docker Compose Up](compose.up.md) (`compose.up`)
-- [Docker Compose Down](compose.down.md) (`compose.down`)
-- [Docker Compose Status](compose.status.md) (`compose.status`)
-- [Docker Compose Logs](compose.logs.md) (`compose.logs`)
-- [launchd Lifecycle Base](launchd.lifecycle.base.md) (`launchd.lifecycle.base`)
-- [Install LaunchAgent](launchd.install.md) (`launchd.install`)
-- [Uninstall LaunchAgent](launchd.uninstall.md) (`launchd.uninstall`)
-- [Enable LaunchAgent](launchd.enable.md) (`launchd.enable`)
-- [Disable LaunchAgent](launchd.disable.md) (`launchd.disable`)
-- [Start LaunchAgent](launchd.start.md) (`launchd.start`)
-- [Stop LaunchAgent](launchd.stop.md) (`launchd.stop`)
-- [Print LaunchAgent Status](launchd.status.md) (`launchd.status`)
+- [Docker Compose Up](compose.up.definition.md) (`compose.up`)
+- [Docker Compose Down](compose.down.definition.md) (`compose.down`)
+- [Docker Compose Status](compose.status.definition.md) (`compose.status`)
+- [Docker Compose Logs](compose.logs.definition.md) (`compose.logs`)
+- [launchd Lifecycle Base](launchd.lifecycle.base.definition.md) (`launchd.lifecycle.base`)
+- [Install LaunchAgent](launchd.install.definition.md) (`launchd.install`)
+- [Uninstall LaunchAgent](launchd.uninstall.definition.md) (`launchd.uninstall`)
+- [Enable LaunchAgent](launchd.enable.definition.md) (`launchd.enable`)
+- [Disable LaunchAgent](launchd.disable.definition.md) (`launchd.disable`)
+- [Start LaunchAgent](launchd.start.definition.md) (`launchd.start`)
+- [Stop LaunchAgent](launchd.stop.definition.md) (`launchd.stop`)
+- [Print LaunchAgent Status](launchd.status.definition.md) (`launchd.status`)
 
 
 ### logging
 
-- [Logger](stdlib.logger.md) (`stdlib.logger`)
+- [Logger](stdlib.logger.definition.md) (`stdlib.logger`)
 
 
 ### mixin
 
-- [Git Information](cloud.mixin.git-info.md) (`cloud.mixin.git-info`)
-- [Timestamp](cloud.mixin.timestamp.md) (`cloud.mixin.timestamp`)
+- [Git Information](cloud.mixin.git-info.definition.md) (`cloud.mixin.git-info`)
+- [Timestamp](cloud.mixin.timestamp.definition.md) (`cloud.mixin.timestamp`)
 
 
 ### model
 
-- [LLM Model Record](model.base.md) (`model.base`)
-- [claude-haiku-4-5](model.claude-haiku-4-5.md) (`model.claude-haiku-4-5`)
-- [claude-opus-4-7](model.claude-opus-4-7.md) (`model.claude-opus-4-7`)
-- [claude-sonnet-4-6](model.claude-sonnet-4-6.md) (`model.claude-sonnet-4-6`)
-- [deepseek-r1](model.deepseek-r1.md) (`model.deepseek-r1`)
-- [gemma2](model.gemma2.md) (`model.gemma2`)
-- [gemma3](model.gemma3.md) (`model.gemma3`)
-- [llama3.1](model.llama3.1.md) (`model.llama3.1`)
-- [llama3.2-vision](model.llama3.2-vision.md) (`model.llama3.2-vision`)
-- [llama3.2](model.llama3.2.md) (`model.llama3.2`)
-- [llama3](model.llama3.md) (`model.llama3`)
-- [mistral](model.mistral.md) (`model.mistral`)
-- [nomic-embed-text](model.nomic-embed-text.md) (`model.nomic-embed-text`)
-- [qwen2.5](model.qwen2.5.md) (`model.qwen2.5`)
-- [qwen3](model.qwen3.md) (`model.qwen3`)
+- [LLM Model Record](model.base.definition.md) (`model.base`)
+- [claude-haiku-4-5](model.claude-haiku-4-5.definition.md) (`model.claude-haiku-4-5`)
+- [claude-opus-4-7](model.claude-opus-4-7.definition.md) (`model.claude-opus-4-7`)
+- [claude-sonnet-4-6](model.claude-sonnet-4-6.definition.md) (`model.claude-sonnet-4-6`)
+- [deepseek-r1](model.deepseek-r1.definition.md) (`model.deepseek-r1`)
+- [gemma2](model.gemma2.definition.md) (`model.gemma2`)
+- [gemma3](model.gemma3.definition.md) (`model.gemma3`)
+- [llama3.1](model.llama3.1.definition.md) (`model.llama3.1`)
+- [llama3.2-vision](model.llama3.2-vision.definition.md) (`model.llama3.2-vision`)
+- [llama3.2](model.llama3.2.definition.md) (`model.llama3.2`)
+- [llama3](model.llama3.definition.md) (`model.llama3`)
+- [mistral](model.mistral.definition.md) (`model.mistral`)
+- [nomic-embed-text](model.nomic-embed-text.definition.md) (`model.nomic-embed-text`)
+- [qwen2.5](model.qwen2.5.definition.md) (`model.qwen2.5`)
+- [qwen3](model.qwen3.definition.md) (`model.qwen3`)
 
 
 ### modules
 
-- [Load Standard Library Modules](stdlib.load-modules.md) (`stdlib.load-modules`)
-- [API Documentation Catalog Sources](docs.catalog.generate.workflow.md) (`docs.catalog.generate.workflow`)
-- [Example Catalog Modules](examples.catalog.modules.md) (`examples.catalog.modules`)
+- [Load Standard Library Modules](stdlib.load-modules.definition.md) (`stdlib.load-modules`)
+- [API Documentation Catalog Sources](docs.catalog.generate.workflow.definition.md) (`docs.catalog.generate.workflow`)
+- [Example Catalog Modules](examples.catalog.modules.definition.md) (`examples.catalog.modules`)
 
 
 ### observability
 
-- [Grafana Service](docker.grafana.md) (`docker.grafana`)
-- [Jaeger Service](docker.jaeger.md) (`docker.jaeger`)
-- [Prometheus Service](docker.prometheus.md) (`docker.prometheus`)
+- [Grafana Service](docker.grafana.definition.md) (`docker.grafana`)
+- [Jaeger Service](docker.jaeger.definition.md) (`docker.jaeger`)
+- [Prometheus Service](docker.prometheus.definition.md) (`docker.prometheus`)
 
 
 ### obsidian
 
-- [Obsidian Daily Note Template](obsidian.template.md) (`obsidian.template`)
+- [Obsidian Daily Note Template](obsidian.template.definition.md) (`obsidian.template`)
 
 
 ### provider
 
-- [LLM Provider Record](provider.base.md) (`provider.base`)
-- [claude](provider.claude.md) (`provider.claude`)
-- [gemini](provider.gemini.md) (`provider.gemini`)
-- [lmstudio](provider.lmstudio.md) (`provider.lmstudio`)
-- [ollama](provider.ollama.md) (`provider.ollama`)
-- [openai](provider.openai.md) (`provider.openai`)
+- [LLM Provider Record](provider.base.definition.md) (`provider.base`)
+- [claude](provider.claude.definition.md) (`provider.claude`)
+- [gemini](provider.gemini.definition.md) (`provider.gemini`)
+- [lmstudio](provider.lmstudio.definition.md) (`provider.lmstudio`)
+- [ollama](provider.ollama.definition.md) (`provider.ollama`)
+- [openai](provider.openai.definition.md) (`provider.openai`)
 
 
 ### proxy
 
-- [Traefik Service](docker.traefik.md) (`docker.traefik`)
+- [Traefik Service](docker.traefik.definition.md) (`docker.traefik`)
 
 
 ### python
 
-- [Python Barrel - __init__.py Template](stdlib.python.barrel.template.md) (`stdlib.python.barrel.template`)
-- [Generate Python Barrel](stdlib.python.barrel.md) (`stdlib.python.barrel`)
-- [Regenerate All Workflows Barrels](barrels.regenerate.workflow.md) (`barrels.regenerate.workflow`)
-- [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.md) (`barrels.regenerate.yaml-runtime`)
+- [Python Barrel - __init__.py Template](stdlib.python.barrel.template.definition.md) (`stdlib.python.barrel.template`)
+- [Generate Python Barrel](stdlib.python.barrel.definition.md) (`stdlib.python.barrel`)
+- [Regenerate All Workflows Barrels](barrels.regenerate.workflow.definition.md) (`barrels.regenerate.workflow`)
+- [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.definition.md) (`barrels.regenerate.yaml-runtime`)
 
 
 ### route
 
-- [Routable Definition Base](route.base.md) (`route.base`)
-- [Echo Route (smoke test)](route.echo.md) (`route.echo`)
+- [Routable Definition Base](route.base.definition.md) (`route.base`)
+- [Echo Route (smoke test)](route.echo.definition.md) (`route.echo`)
 
 
 ### runtime
 
-- [launchd - Docker](launchd.docker.md) (`launchd.docker`)
+- [launchd - Docker](launchd.docker.definition.md) (`launchd.docker`)
 
 
 ### schema
 
-- [JSON Schema Base](schemas.base.md) (`schemas.base`)
-- [Generate Schema JSON](schemas.generate-json.md) (`schemas.generate-json`)
-- [Classification Audit Finding](audit.classification_finding.schema.md) (`audit.classification_finding.schema`)
-- [Dispatch Request Envelope](dispatch.request.schema.md) (`dispatch.request.schema`)
-- [Dispatch Response Envelope](dispatch.response.schema.md) (`dispatch.response.schema`)
-- [Harness Stream Event](harness.stream_event.schema.md) (`harness.stream_event.schema`)
-- [Tool Invocation](tool.invocation.schema.md) (`tool.invocation.schema`)
+- [JSON Schema Base](schemas.base.definition.md) (`schemas.base`)
+- [Generate Schema JSON](schemas.generate-json.definition.md) (`schemas.generate-json`)
+- [Classification Audit Finding](audit.classification_finding.schema.definition.md) (`audit.classification_finding.schema`)
+- [Dispatch Request Envelope](dispatch.request.schema.definition.md) (`dispatch.request.schema`)
+- [Dispatch Response Envelope](dispatch.response.schema.definition.md) (`dispatch.response.schema`)
+- [Harness Stream Event](harness.stream_event.schema.definition.md) (`harness.stream_event.schema`)
+- [Tool Invocation](tool.invocation.schema.definition.md) (`tool.invocation.schema`)
 
 
 ### search
 
-- [OpenSearch Dashboards Service](docker.opensearch-dashboards.md) (`docker.opensearch-dashboards`)
-- [OpenSearch Service](docker.opensearch.md) (`docker.opensearch`)
+- [OpenSearch Dashboards Service](docker.opensearch-dashboards.definition.md) (`docker.opensearch-dashboards`)
+- [OpenSearch Service](docker.opensearch.definition.md) (`docker.opensearch`)
 
 
 ### service
 
-- [Service Abstraction Base](service.base.md) (`service.base`)
-- [Docker Backend Action Map](service.docker.mixin.md) (`service.docker.mixin`)
-- [Launchd Backend Action Map](service.launchd.mixin.md) (`service.launchd.mixin`)
-- [Ollama Service (launchd backend)](service.ollama.md) (`service.ollama`)
-- [Caffienate Service (launchd backend)](service.caffienate.md) (`service.caffienate`)
-- [LM Studio Service (launchd backend)](service.lm-studio.md) (`service.lm-studio`)
-- [Postgres Service (docker backend)](service.postgres.md) (`service.postgres`)
-- [Redis Service (docker backend)](service.redis.md) (`service.redis`)
-- [Neo4j Service (docker backend)](service.neo4j.md) (`service.neo4j`)
+- [Service Abstraction Base](service.base.definition.md) (`service.base`)
+- [Docker Backend Action Map](service.docker.mixin.definition.md) (`service.docker.mixin`)
+- [Launchd Backend Action Map](service.launchd.mixin.definition.md) (`service.launchd.mixin`)
+- [Ollama Service (launchd backend)](service.ollama.definition.md) (`service.ollama`)
+- [Caffienate Service (launchd backend)](service.caffienate.definition.md) (`service.caffienate`)
+- [LM Studio Service (launchd backend)](service.lm-studio.definition.md) (`service.lm-studio`)
+- [Postgres Service (docker backend)](service.postgres.definition.md) (`service.postgres`)
+- [Redis Service (docker backend)](service.redis.definition.md) (`service.redis`)
+- [Neo4j Service (docker backend)](service.neo4j.definition.md) (`service.neo4j`)
 
 
 ### shell
 
-- [Run Command](stdlib.run-command.md) (`stdlib.run-command`)
+- [Run Command](stdlib.run-command.definition.md) (`stdlib.run-command`)
 
 
 ### storage
 
-- [MinIO Service](docker.minio.md) (`docker.minio`)
+- [MinIO Service](docker.minio.definition.md) (`docker.minio`)
 
 
 ### system
 
-- [launchd - Caffeinate](launchd.caffienate.md) (`launchd.caffienate`)
+- [launchd - Caffeinate](launchd.caffienate.definition.md) (`launchd.caffienate`)
 
 
 ### task
 
-- [Task base](task.base.md) (`task.base`)
-- [Scan Boundary Violations](audit.boundary_violations.scan.task.md) (`audit.boundary_violations.scan.task`)
-- [Fetch readable text from a URL or search topic](browser.fetch.text.task.md) (`browser.fetch.text.task`)
-- [Build file classification manifest](classify.manifest.build.task.md) (`classify.manifest.build.task`)
-- [Return broad media class for a path](classify.media.class_for_path.task.md) (`classify.media.class_for_path.task`)
-- [Classify a file by media type and destination](classify.media.file.task.md) (`classify.media.file.task`)
-- [Chunk a file into embeddable text segments](embeddings.chunker.chunk_file.task.md) (`embeddings.chunker.chunk_file.task`)
-- [Generate an embedding vector for text](embeddings.embed.text.task.md) (`embeddings.embed.text.task`)
-- [Query the local knowledge base](embeddings.query.search.task.md) (`embeddings.query.search.task`)
-- [Collect indexable files for embedding sweep](embeddings.sweep.collect_files.task.md) (`embeddings.sweep.collect_files.task`)
-- [Compute MD5 hash of a file](embeddings.sweep.file_hash.task.md) (`embeddings.sweep.file_hash.task`)
-- [Load the embedding sweep manifest](embeddings.sweep.load_manifest.task.md) (`embeddings.sweep.load_manifest.task`)
-- [Persist the embedding sweep manifest](embeddings.sweep.save_manifest.task.md) (`embeddings.sweep.save_manifest.task`)
-- [Iterate files in a directory tree](files.iter.task.md) (`files.iter.task`)
-- [Compute SHA-256 hash of a file](files.sha256.task.md) (`files.sha256.task`)
-- [Write data to a JSON file](files.write_json.task.md) (`files.write_json.task`)
-- [Classify an image by semantic type](image.classify.task.md) (`image.classify.task`)
-- [Extract dominant color palette from an image](image.color.dominant.task.md) (`image.color.dominant.task`)
-- [Extract image file metadata](image.meta.extract.task.md) (`image.meta.extract.task`)
-- [Assess image quality](image.quality.extract.task.md) (`image.quality.extract.task`)
-- [Detect content regions in an image](image.regions.extract.task.md) (`image.regions.extract.task`)
-- [Extract OCR text from an image](image.text_ocr.extract.task.md) (`image.text_ocr.extract.task`)
-- [Infer document type from filename](metadata.doc_type.task.md) (`metadata.doc_type.task`)
-- [Infer source origin from file path](metadata.source_guess.task.md) (`metadata.source_guess.task`)
-- [Get PDF page count](pdf.meta.page_count.task.md) (`pdf.meta.page_count.task`)
-- [Fetch and summarize content through a local model](research.local.summarize.task.md) (`research.local.summarize.task`)
-- [Run local test suite](shell.tests.run.task.md) (`shell.tests.run.task`)
-- [Format a markdown file using a local LM Studio model](text.markdown.format.task.md) (`text.markdown.format.task`)
+- [Task base](task.base.definition.md) (`task.base`)
+- [Scan Boundary Violations](audit.boundary_violations.scan.task.definition.md) (`audit.boundary_violations.scan.task`)
+- [Fetch readable text from a URL or search topic](browser.fetch.text.task.definition.md) (`browser.fetch.text.task`)
+- [Build file classification manifest](classify.manifest.build.task.definition.md) (`classify.manifest.build.task`)
+- [Return broad media class for a path](classify.media.class_for_path.task.definition.md) (`classify.media.class_for_path.task`)
+- [Classify a file by media type and destination](classify.media.file.task.definition.md) (`classify.media.file.task`)
+- [Chunk a file into embeddable text segments](embeddings.chunker.chunk_file.task.definition.md) (`embeddings.chunker.chunk_file.task`)
+- [Generate an embedding vector for text](embeddings.embed.text.task.definition.md) (`embeddings.embed.text.task`)
+- [Query the local knowledge base](embeddings.query.search.task.definition.md) (`embeddings.query.search.task`)
+- [Collect indexable files for embedding sweep](embeddings.sweep.collect_files.task.definition.md) (`embeddings.sweep.collect_files.task`)
+- [Compute MD5 hash of a file](embeddings.sweep.file_hash.task.definition.md) (`embeddings.sweep.file_hash.task`)
+- [Load the embedding sweep manifest](embeddings.sweep.load_manifest.task.definition.md) (`embeddings.sweep.load_manifest.task`)
+- [Persist the embedding sweep manifest](embeddings.sweep.save_manifest.task.definition.md) (`embeddings.sweep.save_manifest.task`)
+- [Iterate files in a directory tree](files.iter.task.definition.md) (`files.iter.task`)
+- [Compute SHA-256 hash of a file](files.sha256.task.definition.md) (`files.sha256.task`)
+- [Write data to a JSON file](files.write_json.task.definition.md) (`files.write_json.task`)
+- [Classify an image by semantic type](image.classify.task.definition.md) (`image.classify.task`)
+- [Extract dominant color palette from an image](image.color.dominant.task.definition.md) (`image.color.dominant.task`)
+- [Extract image file metadata](image.meta.extract.task.definition.md) (`image.meta.extract.task`)
+- [Assess image quality](image.quality.extract.task.definition.md) (`image.quality.extract.task`)
+- [Detect content regions in an image](image.regions.extract.task.definition.md) (`image.regions.extract.task`)
+- [Extract OCR text from an image](image.text_ocr.extract.task.definition.md) (`image.text_ocr.extract.task`)
+- [Infer document type from filename](metadata.doc_type.task.definition.md) (`metadata.doc_type.task`)
+- [Infer source origin from file path](metadata.source_guess.task.definition.md) (`metadata.source_guess.task`)
+- [Get PDF page count](pdf.meta.page_count.task.definition.md) (`pdf.meta.page_count.task`)
+- [Fetch and summarize content through a local model](research.local.summarize.task.definition.md) (`research.local.summarize.task`)
+- [Run local test suite](shell.tests.run.task.definition.md) (`shell.tests.run.task`)
+- [Format a markdown file using a local LM Studio model](text.markdown.format.task.definition.md) (`text.markdown.format.task`)
 
 
 ### template
 
-- [Python Barrel - __init__.py Template](stdlib.python.barrel.template.md) (`stdlib.python.barrel.template`)
-- [Docs - Relationship Graph Component](docs.definition.template.component-relationship-graph.md) (`docs.definition.template.component-relationship-graph`)
-- [Docs - Definition Page Template](docs.definition.template.definition.md) (`docs.definition.template.definition`)
-- [Docs - Index Page Template](docs.catalog.template.index.md) (`docs.catalog.template.index`)
-- [Docs - Authoring Schema Page Template](docs.catalog.template.schema.md) (`docs.catalog.template.schema`)
-- [Docs - Classification Audit](docs.classification.audit.template.md) (`docs.classification.audit.template`)
-- [Docs - Classification Remediation Workflow](docs.classification.remediation-workflow.template.md) (`docs.classification.remediation-workflow.template`)
-- [Docs - Repo README Template](docs.readme.template.md) (`docs.readme.template`)
+- [Python Barrel - __init__.py Template](stdlib.python.barrel.template.definition.md) (`stdlib.python.barrel.template`)
+- [Docs - Relationship Graph Component](docs.definition.template.component-relationship-graph.definition.md) (`docs.definition.template.component-relationship-graph`)
+- [Docs - Definition Page Template](docs.definition.template.definition.definition.md) (`docs.definition.template.definition`)
+- [Docs - Index Page Template](docs.catalog.template.index.definition.md) (`docs.catalog.template.index`)
+- [Docs - Authoring Schema Page Template](docs.catalog.template.schema.definition.md) (`docs.catalog.template.schema`)
+- [Docs - Classification Audit](docs.classification.audit.template.definition.md) (`docs.classification.audit.template`)
+- [Docs - Classification Remediation Workflow](docs.classification.remediation-workflow.template.definition.md) (`docs.classification.remediation-workflow.template`)
+- [Docs - Repo README Template](docs.readme.template.definition.md) (`docs.readme.template`)
 
 
 ### templates
 
-- [Write Text File](stdlib.files.write-text.md) (`stdlib.files.write-text`)
-- [Write Text File (input form)](stdlib.files.write.md) (`stdlib.files.write`)
-- [Write Python Gitignore](stdlib.git.gitignore-python.md) (`stdlib.git.gitignore-python`)
-- [Gitignore Template Example](git.gitignore.md) (`git.gitignore`)
-- [Obsidian Daily Note Template](obsidian.template.md) (`obsidian.template`)
+- [Write Text File](stdlib.files.write-text.definition.md) (`stdlib.files.write-text`)
+- [Write Text File (input form)](stdlib.files.write.definition.md) (`stdlib.files.write`)
+- [Write Python Gitignore](stdlib.git.gitignore-python.definition.md) (`stdlib.git.gitignore-python`)
+- [Gitignore Template Example](git.gitignore.definition.md) (`git.gitignore`)
+- [Obsidian Daily Note Template](obsidian.template.definition.md) (`obsidian.template`)
 
 
 ### tool
 
-- [Tool Invocation](tool.invocation.schema.md) (`tool.invocation.schema`)
+- [Tool Invocation](tool.invocation.schema.definition.md) (`tool.invocation.schema`)
 
 
 ### validation
 
-- [Verify Definition References](stdlib.analysis.verify-references.md) (`stdlib.analysis.verify-references`)
+- [Verify Definition References](stdlib.analysis.verify-references.definition.md) (`stdlib.analysis.verify-references`)
 
 
 ### vector
 
-- [Qdrant Service](docker.qdrant.md) (`docker.qdrant`)
-- [Weaviate Service](docker.weaviate.md) (`docker.weaviate`)
+- [Qdrant Service](docker.qdrant.definition.md) (`docker.qdrant`)
+- [Weaviate Service](docker.weaviate.definition.md) (`docker.weaviate`)
 
 
 ### workers
 
-- [FastAPI Service](docker.fastapi.md) (`docker.fastapi`)
-- [n8n Service](docker.n8n.md) (`docker.n8n`)
-- [Temporal UI Service](docker.temporal-ui.md) (`docker.temporal-ui`)
-- [Temporal Service](docker.temporal.md) (`docker.temporal`)
-- [Content-Graph Worker Service](docker.worker.md) (`docker.worker`)
+- [FastAPI Service](docker.fastapi.definition.md) (`docker.fastapi`)
+- [n8n Service](docker.n8n.definition.md) (`docker.n8n`)
+- [Temporal UI Service](docker.temporal-ui.definition.md) (`docker.temporal-ui`)
+- [Temporal Service](docker.temporal.definition.md) (`docker.temporal`)
+- [Content-Graph Worker Service](docker.worker.definition.md) (`docker.worker`)
 
 
 ### workflow
 
-- [Scaffold All Docker Services](docker.generate-all.md) (`docker.generate-all`)
-- [Generate launchd Plists](launchd.generate-plist.md) (`launchd.generate-plist`)
-- [Generate Schema JSON](schemas.generate-json.md) (`schemas.generate-json`)
-- [Audit classification boundaries and ownership](audit.classifications.scan.workflow.md) (`audit.classifications.scan.workflow`)
-- [Regenerate All Workflows Barrels](barrels.regenerate.workflow.md) (`barrels.regenerate.workflow`)
-- [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.md) (`barrels.regenerate.yaml-runtime`)
-- [YAML API Reference Build](docs.api.reference.workflow.md) (`docs.api.reference.workflow`)
-- [Render Classification Docs](docs.classification.render.workflow.md) (`docs.classification.render.workflow`)
-- [Generate Documentation](docs.generate.workflow.md) (`docs.generate.workflow`)
-- [Build Repo README](docs.readme.generate.workflow.md) (`docs.readme.generate.workflow`)
-- [Sweep and embed project files into the vector store](embeddings.sweep.workflow.md) (`embeddings.sweep.workflow`)
-- [Classify files for audit and remediation](files.classify.workflow.md) (`files.classify.workflow`)
+- [Scaffold All Docker Services](docker.generate-all.definition.md) (`docker.generate-all`)
+- [Generate launchd Plists](launchd.generate-plist.definition.md) (`launchd.generate-plist`)
+- [Generate Schema JSON](schemas.generate-json.definition.md) (`schemas.generate-json`)
+- [Audit classification boundaries and ownership](audit.classifications.scan.workflow.definition.md) (`audit.classifications.scan.workflow`)
+- [Regenerate All Workflows Barrels](barrels.regenerate.workflow.definition.md) (`barrels.regenerate.workflow`)
+- [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.definition.md) (`barrels.regenerate.yaml-runtime`)
+- [YAML API Reference Build](docs.api.reference.workflow.definition.md) (`docs.api.reference.workflow`)
+- [Render Classification Docs](docs.classification.render.workflow.definition.md) (`docs.classification.render.workflow`)
+- [Generate Documentation](docs.generate.workflow.definition.md) (`docs.generate.workflow`)
+- [Build Repo README](docs.readme.generate.workflow.definition.md) (`docs.readme.generate.workflow`)
+- [Sweep and embed project files into the vector store](embeddings.sweep.workflow.definition.md) (`embeddings.sweep.workflow`)
+- [Classify files for audit and remediation](files.classify.workflow.definition.md) (`files.classify.workflow`)
 
 
 ## Relationship Graph

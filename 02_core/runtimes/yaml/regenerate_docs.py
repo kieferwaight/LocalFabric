@@ -20,6 +20,19 @@ from core.runtimes.markdown import MarkdownHarness
 from core.runtimes.yaml.src import Runtime
 
 
+def _bucket_dir_for(source_path: str) -> str:
+    """Map a definition's source_path to its 19_docs/ bucket subdir.
+
+    Most YAML defs have a repo-relative source_path like
+    ``09_docker/ollama.yaml``; the first path component is the bucket
+    (``09_docker``). Markdown prompts compiled through MarkdownHarness use
+    ``<raw>`` (no file path); they all live in ``12_prompts/``.
+    """
+    if source_path == "<raw>":
+        return "12_prompts"
+    return source_path.split("/", 1)[0]
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Regenerate 19_docs/ from every repo definition")
     parser.add_argument("--output-dir", default="19_docs")
@@ -31,8 +44,11 @@ def main(argv: list[str] | None = None) -> int:
 
     runtime = Runtime(
         workflow_dir=str(REPO_ROOT / "02_core" / "runtimes" / "yaml"),
-        # Flat layout: all pages live directly in 19_docs/; links are sibling refs.
-        definition_page_format="{id}.md",
+        # Pages live under 19_docs/<source-bucket>/<id>.definition.md; the
+        # format here is only used by _update_catalog for cross-link
+        # computation. Use the full bucketed shape so parent/mixin/child
+        # links resolve correctly.
+        definition_page_format="{flat_id}.definition.md",
         index_page="index.md",
         schema_page="schema.md",
     )
@@ -61,12 +77,16 @@ def main(argv: list[str] | None = None) -> int:
         for w in caught_warnings:
             print(f"  {w.message}")
 
-    # Render one page per definition.
+    # Render one page per definition into the source-bucket subdir so the
+    # docs layout mirrors the on-disk YAML/markdown layout.
     rendered = 0
     stale: list[str] = []
     for entry in runtime.globals["catalog"]["definitions"]:
         def_id = entry["id"]
-        target = output_dir / f"{def_id}.md"
+        bucket_dir = _bucket_dir_for(entry["source_path"])
+        target_dir = output_dir / bucket_dir
+        target_dir.mkdir(parents=True, exist_ok=True)
+        target = target_dir / f"{def_id}.definition.md"
         try:
             body = runtime.render_definition(
                 "docs.definition.template.definition", {"definition": entry}
@@ -75,10 +95,11 @@ def main(argv: list[str] | None = None) -> int:
             print(f"  RENDER ERROR: {def_id}: {exc}", file=sys.stderr)
             continue
 
+        rel_name = target.relative_to(output_dir).as_posix()
         if args.mode == "check":
             if not target.exists() or target.read_text() != body:
-                print(f"STALE: {target.name}", file=sys.stderr)
-                stale.append(str(target.name))
+                print(f"STALE: {rel_name}", file=sys.stderr)
+                stale.append(rel_name)
         else:
             target.write_text(body, encoding="utf-8")
             rendered += 1
