@@ -1,0 +1,73 @@
+# command.yaml — command-as-YAML contract
+#
+# Every CLI/API/MCP verb is a YAML definition that extends command.base.
+# Three variable slots carry binding information read at registration time
+# by interfaces/commands/registry.py and binder.py:
+#
+#   argv_spec   — Typer wiring: group, verb, positional inputs, option inputs
+#   http_spec   — FastAPI wiring: method, path  (Phase C3)
+#   mcp_spec    — FastMCP wiring: expose flag    (Phase C4)
+#
+# Children override these dicts entirely; individual fields within a dict
+# can be selectively overridden because dict variables are deep-merged
+# through the inheritance chain by the YAML runtime.
+
+- id: command.base
+  title: Abstract Command Base
+  description: |
+    Abstract base shared by all command definitions. Establishes the
+    three variable slots (argv_spec, http_spec, mcp_spec) that
+    interfaces/commands/binder.py reads to wire CLI / API / MCP handlers.
+    This definition is never executed directly; it is only an ancestor.
+  tags: [command, abstract]
+  extends: stdlib.base
+  variables:
+    argv_spec: {}
+    http_spec: {}
+    mcp_spec:
+      expose: false
+  docs:
+    variables:
+      argv_spec: >
+        CLI binding info consumed by binder.bind_typer().
+        Shape: {group, verb, positional: [], options: []}.
+      http_spec: >
+        FastAPI binding info consumed by binder.bind_fastapi() (Phase C3).
+        Shape: {method, path}.
+      mcp_spec: >
+        FastMCP exposure flag consumed by binder.bind_fastmcp() (Phase C4).
+        Shape: {expose: bool}.
+
+- id: command.task.run
+  title: Run Task
+  description: |
+    Invoke a task definition by id, passing an optional arguments mapping.
+    Wired as `localfabric task run <task_id>` on the CLI and as
+    POST /v1/task/run on the API surface (Phase C3).
+  tags: [command]
+  extends: command.base
+  inputs:
+    task_id:
+      type: string
+      required: true
+      description: Task definition id to invoke (must exist in the catalog).
+    arguments:
+      type: object
+      required: false
+      default: {}
+      description: Arguments mapping passed through to the task.
+  variables:
+    argv_spec:
+      group: task
+      verb: run
+      positional: [task_id]
+      options: [arguments]
+    http_spec:
+      method: POST
+      path: /v1/task/run
+    mcp_spec:
+      expose: false
+  run:
+    - invoke:
+        definition: "{{ task_id }}"
+        arguments: "{{ arguments }}"

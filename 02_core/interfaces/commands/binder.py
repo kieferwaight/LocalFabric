@@ -1,0 +1,173 @@
+"""Command binder — turns a :class:`~registry.Command` into a Typer / FastAPI / FastMCP handler.
+
+Phase C1 implements :func:`bind_typer` only.
+:func:`bind_fastapi` and :func:`bind_fastmcp` are stubs that Phase C3/C4 will fill in.
+"""
+
+from __future__ import annotations
+
+import inspect
+import json
+from typing import TYPE_CHECKING, Annotated, Any
+
+import typer
+from rich.console import Console
+
+try:
+    from core.interfaces.commands.registry import Command
+except ModuleNotFoundError:
+    from interfaces.commands.registry import Command  # type: ignore[no-redef]
+
+if TYPE_CHECKING:
+    # Runtime is not imported at module level to avoid circular dependencies
+    # and to keep CLI startup fast.
+    from core.runtimes.yaml.src import Runtime
+
+# ---------------------------------------------------------------------------
+# Type mapping
+# ---------------------------------------------------------------------------
+
+_PYTYPE_MAP: dict[str, type] = {
+    "string": str,
+    "number": float,
+    "boolean": bool,
+    # array and object are passed as JSON strings and parsed at invocation time.
+    "array": str,
+    "object": str,
+}
+
+
+# ---------------------------------------------------------------------------
+# Public API
+# ---------------------------------------------------------------------------
+
+
+def bind_typer(
+    parent: typer.Typer,
+    command: Command,
+    runtime: Runtime,
+    group_cache: dict[str, typer.Typer] | None = None,
+) -> None:
+    """Register *command* as a Typer subcommand under *parent*.
+
+    The command's ``argv_spec["group"]`` determines the sub-Typer name (e.g.
+    ``"task"``). The ``argv_spec["verb"]`` is the command name within that
+    group (e.g. ``"run"``). Sub-Typers are created on first use and cached via
+    *group_cache* so that commands sharing a group share one sub-app.
+
+    Parameters
+    ----------
+    parent:
+        Root :class:`typer.Typer` to mount the group sub-app onto.
+    command:
+        A :class:`~registry.Command` sourced from :class:`~registry.CommandRegistry`.
+    runtime:
+        A loaded :class:`~core.runtimes.yaml.src.Runtime` used to execute
+        the command when its handler is invoked.
+    group_cache:
+        Optional dict mapping group name → sub-Typer; pass the same dict for
+        all :func:`bind_typer` calls that share a *parent* so groups are
+        reused rather than duplicated.
+    """
+    if group_cache is None:
+        group_cache = {}
+
+    group: str = command.argv_spec.get("group") or command.id.split(".")[1]
+    verb: str = command.argv_spec.get("verb") or command.id.split(".")[-1]
+
+    if group not in group_cache:
+        sub_app = typer.Typer(name=group, help=f"{group.title()} commands.", no_args_is_help=True)
+        parent.add_typer(sub_app, name=group)
+        group_cache[group] = sub_app
+
+    sub_app = group_cache[group]
+    handler = _make_handler(command, runtime)
+    sub_app.command(name=verb, help=command.description or f"{group} {verb}")(handler)
+
+
+def bind_fastapi(parent: Any, command: Command, runtime: Any) -> None:
+    """Register *command* as a FastAPI route on *parent*.
+
+    .. note::
+        Not implemented. Phase C3 will fill this in.
+    """
+    raise NotImplementedError("Phase C3 will implement bind_fastapi.")
+
+
+def bind_fastmcp(parent: Any, command: Command, runtime: Any) -> None:
+    """Register *command* as a FastMCP tool on *parent*.
+
+    .. note::
+        Not implemented. Phase C4 will implement this.
+    """
+    raise NotImplementedError("Phase C4 will implement bind_fastmcp.")
+
+
+# ---------------------------------------------------------------------------
+# Internal helpers
+# ---------------------------------------------------------------------------
+
+
+def _make_handler(command: Command, runtime: Runtime):
+    """Build a dynamic function whose ``__signature__`` matches the command inputs.
+
+    Typer introspects ``__signature__`` to generate CLI argument/option
+    definitions, so we must construct it explicitly for dynamic commands.
+
+    Positional inputs (listed in ``argv_spec.positional``) become
+    ``typer.Argument``; all others become ``typer.Option``.
+    """
+    positional_names: list[str] = list(command.argv_spec.get("positional") or [])
+    params: list[inspect.Parameter] = []
+
+    for name, constraint in command.inputs.items():
+        pytype = _PYTYPE_MAP.get(constraint.type, str)
+        is_positional = name in positional_names
+
+        if is_positional:
+            typer_marker = typer.Argument(help=constraint.description or "")
+        else:
+            typer_marker = typer.Option(help=constraint.description or "")
+
+        annotation = Annotated[pytype, typer_marker]
+
+        # Determine the default value for this parameter.
+        if constraint.required and constraint.default is None:
+            default = inspect.Parameter.empty
+        else:
+            # For object/array types, the CLI receives a JSON string;
+            # use an empty string as the default rather than {} / [].
+            if constraint.type in ("object", "array"):
+                default = "" if constraint.default is None else json.dumps(constraint.default)
+            else:
+                default = constraint.default
+
+        params.append(
+            inspect.Parameter(
+                name,
+                inspect.Parameter.KEYWORD_ONLY,
+                annotation=annotation,
+                default=default,
+            )
+        )
+
+    def handler(**kwargs: Any) -> None:
+        coerced: dict[str, Any] = {}
+        for k, v in kwargs.items():
+            c = command.inputs[k]
+            if c.type in ("object", "array") and isinstance(v, str):
+                if v:
+                    v = json.loads(v)
+                elif c.default is not None:
+                    v = c.default
+                else:
+                    v = {} if c.type == "object" else []
+            coerced[k] = v
+
+        result = runtime.execute(command.definition_id, arguments=coerced)
+        Console().print(result if result is not None else "[dim]ok[/dim]")
+
+    handler.__signature__ = inspect.Signature(parameters=params)
+    handler.__name__ = verb_name = command.argv_spec.get("verb") or command.id.split(".")[-1]
+    handler.__qualname__ = f"{command.id.replace('.', '_')}_{verb_name}"
+    return handler

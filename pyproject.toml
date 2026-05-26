@@ -62,6 +62,7 @@ packages = [
     "core.runtimes.langgraph.ingest",
     "core.runtimes.langgraph.markdown_format",
     "core.interfaces",
+    "core.interfaces.commands",
     "core.interfaces.cli",
     "interfaces",
     "harnesses",

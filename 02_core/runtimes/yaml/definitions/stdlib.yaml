@@ -27,6 +27,7 @@
     - stdlib.docs.yaml
     - stdlib.analysis.yaml
     - stdlib.python.yaml
+    - command.yaml
     - folder.yaml
     - docker.yaml
     - launchd.yaml

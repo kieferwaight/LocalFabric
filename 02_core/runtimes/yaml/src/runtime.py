@@ -211,6 +211,7 @@ class Runtime:
                 "has_schema": bool(definition.schema),
                 "launchd": dict(definition.launchd),
                 "has_launchd": bool(definition.launchd),
+                "has_command": self._descends_from(def_id, "command.base"),
                 "has_docker": self._descends_from(def_id, "docker.base"),
                 "has_model": self._descends_from(def_id, "model.base"),
                 "has_provider": self._descends_from(def_id, "provider.base"),
@@ -627,7 +628,7 @@ class Runtime:
                 invocation_scope.set(alias, item)
             invocation_context = self._build_template_context(invocation_scope)
             target = self.jinja.render_value(invoke["definition"], invocation_context)
-            arguments = self.jinja.render_value(invoke.get("arguments") or {}, invocation_context)
+            arguments = self.jinja.resolve_argument(invoke.get("arguments") or {}, invocation_context)
             if target not in self.registry:
                 raise KeyError(f"Unknown invoked definition id: {target!r}")
             self.execute(str(target), arguments, parent_scope=invocation_scope)
