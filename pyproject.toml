@@ -33,7 +33,21 @@ llm = ["anthropic>=0.40", "openai>=1.0", "google-generativeai>=0.5"]
 vision = ["opencv-python>=4.8", "pytesseract>=0.3"]
 pdf = ["pymupdf>=1.24", "pdfminer.six>=20221105", "pdf2image>=1.16"]
 vector = ["lancedb>=0.6"]
-dev = ["pytest>=8.0", "ruff>=0.4", "mypy>=1.10"]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.4",
+    "mypy>=1.10",
+    # Markdown formatting + linting
+    "mdformat>=0.7",
+    "mdformat-gfm>=0.3",
+    "mdformat-frontmatter>=2.0",
+    "mdformat-tables>=1.0",
+    # YAML formatting + linting; yamlfix rewrites single-quoted multi-line
+    # scalars into block-scalar form (`|` / `>`).
+    "yamlfix>=1.16",
+    "yamllint>=1.35",
+    "pre-commit>=3.7",
+]
 notebook = ["openai>=1.0", "ipykernel>=6.0"]
 
 [project.scripts]
@@ -148,6 +162,7 @@ addopts = "--import-mode=importlib"
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+extend-exclude = [".venv", "18_docs", "14_data"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP"]
@@ -157,3 +172,20 @@ python_version = "3.11"
 strict = false
 ignore_missing_imports = true
 explicit_package_bases = true
+
+[tool.yamlfix]
+line_length = 100
+sequence_style = "block_style"
+preserve_quotes = false
+explicit_start = false
+section_whitelines = 0
+comments_min_spaces_from_content = 2
+quote_basic_values = false
+quote_representation = "\""
+# Align ruamel indentation with scripts/yaml_block_scalars.py so the two
+# passes don't fight each other. `mapping=2 sequence=2 offset=0` keeps
+# top-level list items flush at col 0 (matches the catalog's existing
+# style) while still emitting tidy nested blocks.
+indent_mapping = 2
+indent_sequence = 2
+indent_offset = 0

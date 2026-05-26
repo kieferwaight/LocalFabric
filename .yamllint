@@ -1,0 +1,24 @@
+---
+extends: default
+
+rules:
+  line-length:
+    max: 120
+    level: warning
+  truthy:
+    check-keys: false
+  comments:
+    min-spaces-from-content: 1
+  comments-indentation: disable
+  # We use 2-space indent for sequences; yamllint's default flags this.
+  indentation:
+    indent-sequences: consistent
+  # block-scalar bodies often exceed 100 chars; allow them.
+  document-start: disable
+
+ignore: |
+  .venv/
+  14_data/
+  18_docs/
+  node_modules/
+  .git/

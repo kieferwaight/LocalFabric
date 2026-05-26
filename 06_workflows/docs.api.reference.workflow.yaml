@@ -1,12 +1,9 @@
 - id: docs.api.reference.workflow
   title: YAML API Reference Build
-  description: 'Public documentation workflow. Renders the index, authoring schema, and one
-
+  description: |
+    Public documentation workflow. Renders the index, authoring schema, and one
     page per imported definition by invoking template definitions through
-
     `render:` blocks, then prunes stale generated pages.
-
-    '
   tags:
   - documentation
   - workflow

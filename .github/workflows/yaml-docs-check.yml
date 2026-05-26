@@ -1,29 +1,46 @@
+---
 name: yaml-docs-check
 
 on:
   pull_request:
     paths:
-      - "20_workspaces/06_workflows/yaml/**"
+      - "01_schemas/**"
+      - "02_core/**"
+      - "06_workflows/**"
+      - "07_tasks/**"
+      - "09_docker/**"
+      - "09_launchd/**"
+      - "12_prompts/**"
+      - "13_models/**"
+      - "13_providers/**"
+      - "14_templates/**"
+      - "15_examples/**"
+      - "18_docs/**"
       - ".github/workflows/yaml-docs-check.yml"
   push:
     branches: [main]
     paths:
-      - "20_workspaces/06_workflows/yaml/**"
+      - "01_schemas/**"
+      - "02_core/**"
+      - "06_workflows/**"
+      - "07_tasks/**"
+      - "09_docker/**"
+      - "09_launchd/**"
+      - "12_prompts/**"
+      - "13_models/**"
+      - "13_providers/**"
+      - "14_templates/**"
+      - "15_examples/**"
+      - "18_docs/**"
 
 jobs:
   check:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: 20_workspaces
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
       - run: pip install -e ".[dev]"
-      - name: Verify generated YAML docs are current
-        working-directory: 20_workspaces/06_workflows/yaml
-        run: |
-          python interpreter.py config.yaml docs/api/reference \
-            --output_dir=docs --mode=check
+      - name: Verify 18_docs/ is up to date
+        run: python -m core.runtimes.yaml.regenerate_docs --mode=check
