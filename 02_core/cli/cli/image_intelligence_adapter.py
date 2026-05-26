@@ -53,7 +53,7 @@ class ImageIntelligenceRunCommand(CliCommand):
             typer.Option("--limit", help="Process only the first N images (for smoke testing)."),
         ] = None,
     ) -> None:
-        from core.paths import data
+        from core.environment import data
         from drivers.sql.session import init_db
         from workflows.langgraph.image_intelligence.graph import run_batch
 
@@ -110,7 +110,7 @@ class ImageIntelligenceSingleCommand(CliCommand):
             str, typer.Option("--collection", "-c", help="Collection label.")
         ] = "default",
     ) -> None:
-        from core.paths import data
+        from core.environment import data
         from drivers.sql.session import init_db
         from workflows.langgraph.image_intelligence.graph import run_image_intelligence
 

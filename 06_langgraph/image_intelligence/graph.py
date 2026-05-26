@@ -8,7 +8,7 @@ from typing import Any
 from langgraph.graph import END, START, StateGraph
 from sqlalchemy import select
 
-from core.paths import data
+from core.environment import data
 from drivers.sql.schema import assets
 from drivers.sql.session import get_connection
 

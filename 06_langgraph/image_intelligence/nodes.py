@@ -8,7 +8,7 @@ from pathlib import Path
 
 from sqlalchemy import insert, update
 
-from core.paths import data
+from core.environment import data
 from drivers.sql.schema import workflow_runs
 from drivers.sql.session import get_connection
 from drivers.file import write_json_artifact

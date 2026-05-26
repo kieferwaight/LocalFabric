@@ -29,7 +29,7 @@ class IngestRunCommand(CliCommand):
             bool, typer.Option("--dry-run", help="Show what would happen without copying.")
         ] = False,
     ) -> None:
-        from core.paths import data
+        from core.environment import data
         from drivers.sql.session import init_db
         from workflows.langgraph.ingest.graph import run_ingest
 

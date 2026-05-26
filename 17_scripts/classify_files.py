@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 import sys
 
-from core.paths import REPO_ROOT, data
+from core.environment import REPO_ROOT, data
 from tools.classify.media import classify_file
 from tools.files import iter_files, sha256_file, write_json
 from tools.metadata.extract import infer_source_guess

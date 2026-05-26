@@ -9,7 +9,7 @@ from pathlib import Path
 
 from sqlalchemy import func, insert, select
 
-from core.paths import data
+from core.environment import data
 from drivers.sql.schema import assets
 from drivers.sql.session import get_connection
 from drivers.file import copy_asset

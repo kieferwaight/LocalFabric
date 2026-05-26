@@ -11,7 +11,7 @@ import json
 import sys
 from pathlib import Path
 
-from core.paths import REPO_ROOT
+from core.environment import REPO_ROOT
 
 # Repo root; used by Claude Desktop registration so the server is launched
 # with the correct cwd and PYTHONPATH.

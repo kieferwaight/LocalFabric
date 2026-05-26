@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 from typing import Iterable
 
-from core.paths import REPO_ROOT
+from core.environment import REPO_ROOT
 
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".gif"}
 

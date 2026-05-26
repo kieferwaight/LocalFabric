@@ -15,8 +15,8 @@ def _resolve_repo_root() -> Path:
     env_root = os.environ.get("REPO_ROOT")
     if env_root:
         return Path(env_root).expanduser().resolve()
-    # 02_core/paths.py → repo root
-    return Path(__file__).resolve().parents[1]
+    # 02_core/environment/paths.py → repo root
+    return Path(__file__).resolve().parents[2]
 
 
 REPO_ROOT: Path = _resolve_repo_root()

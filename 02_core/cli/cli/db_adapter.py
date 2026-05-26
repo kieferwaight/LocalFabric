@@ -17,7 +17,7 @@ class DbInitCommand(CliCommand):
 
     @staticmethod
     def run() -> None:
-        from core.paths import data
+        from core.environment import data
         from drivers.sql.session import init_db
 
         db_path = data(*_DEFAULT_DB_PATH_PARTS)

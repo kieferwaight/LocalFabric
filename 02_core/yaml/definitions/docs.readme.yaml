@@ -148,7 +148,7 @@
       ## Notes for contributors
 
       - Cross-bucket imports use the clean import name (`from drivers.sql.session import init_db`), never the numeric path.
-      - [`core.paths.REPO_ROOT`](02_core/src/core/paths.py) is the canonical anchor for path resolution — no `os.path.join(__file__, "..", "..")` patterns anywhere else.
+      - [`core.environment.REPO_ROOT`](02_core/environment/paths.py) is the canonical anchor for path resolution — no `os.path.join(__file__, "..", "..")` patterns anywhere else.
       - [`17_scripts/audit_classifications.py`](17_scripts/audit_classifications.py) checks for layer-boundary violations; run it before opening a PR. Findings land at `14_data/runs/classification_audit/`.
 
       ## Design Principles
