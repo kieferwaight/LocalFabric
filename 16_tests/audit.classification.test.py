@@ -1,15 +1,9 @@
 from __future__ import annotations
 
-import importlib.util
 import json
 from pathlib import Path
 
-
-SCRIPT = Path(__file__).resolve().parents[1] / "17_scripts" / "audit_classifications.py"
-SPEC = importlib.util.spec_from_file_location("audit_classifications", SCRIPT)
-assert SPEC and SPEC.loader
-AUDIT = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(AUDIT)
+from tasks.audit import scan_boundary_violations as AUDIT
 
 
 def test_prompt_executable_is_flagged(tmp_path: Path) -> None:

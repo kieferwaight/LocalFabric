@@ -491,7 +491,7 @@ def main() -> None:
     parser.add_argument(
         "--workspace",
         type=Path,
-        default=Path(__file__).resolve().parent.parent,
+        default=Path(__file__).resolve().parents[2],
         help="Path to the repo root.",
     )
     parser.add_argument(
