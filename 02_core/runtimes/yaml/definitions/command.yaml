@@ -66,7 +66,7 @@
       method: POST
       path: /v1/task/run
     mcp_spec:
-      expose: false
+      expose: true
   run:
     - invoke:
         definition: "{{ task_id }}"
@@ -102,7 +102,7 @@
       method: POST
       path: /v1/service/action
     mcp_spec:
-      expose: false
+      expose: true
   run:
     - invoke:
         definition: "{{ service_id }}"

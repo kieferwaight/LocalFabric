@@ -94,13 +94,73 @@ def bind_fastapi(parent: Any, command: Command, runtime: Any) -> None:
     raise NotImplementedError("Phase C3 will implement bind_fastapi.")
 
 
-def bind_fastmcp(parent: Any, command: Command, runtime: Any) -> None:
-    """Register *command* as a FastMCP tool on *parent*.
+def bind_fastmcp(mcp: Any, command: Command, runtime: Any) -> None:
+    """Register *command* as a FastMCP tool on *mcp*.
 
-    .. note::
-        Not implemented. Phase C4 will implement this.
+    Tool name:
+        ``command.id`` with dots replaced by underscores (FastMCP tool
+        names must be Python identifiers).
+    Tool description:
+        ``command.description``.
+    Input schema:
+        Built from ``command.inputs`` — each :class:`~registry.InputConstraint`
+        maps ``type`` to a Python annotation (``string``→``str``,
+        ``number``→``float``, ``boolean``→``bool``, ``array``→``list``,
+        ``object``→``dict``) and ``required``/``default`` to parameter
+        defaults.  FastMCP introspects the handler's ``__signature__`` so
+        no manual JSON schema authoring is needed.
+
+    Parameters
+    ----------
+    mcp:
+        A :class:`mcp.server.fastmcp.FastMCP` instance.
+    command:
+        A :class:`~registry.Command` sourced from :class:`~registry.CommandRegistry`.
+    runtime:
+        A loaded :class:`~core.runtimes.yaml.src.Runtime` used to execute
+        the command when the tool is invoked.
     """
-    raise NotImplementedError("Phase C4 will implement bind_fastmcp.")
+    tool_name = command.id.replace(".", "_")
+
+    # FastMCP natively accepts list / dict annotations for array / object.
+    _MCP_TYPE_MAP: dict[str, type] = {
+        "string": str,
+        "number": float,
+        "boolean": bool,
+        "array": list,
+        "object": dict,
+    }
+
+    params: list[inspect.Parameter] = []
+    for name, constraint in command.inputs.items():
+        pytype = _MCP_TYPE_MAP.get(constraint.type, str)
+
+        if not constraint.required and constraint.default is not None:
+            default = constraint.default
+        elif not constraint.required:
+            # Optional with no stated default — use the zero value for the type.
+            default = [] if constraint.type == "array" else ({} if constraint.type == "object" else None)
+        else:
+            default = inspect.Parameter.empty
+
+        params.append(
+            inspect.Parameter(
+                name,
+                inspect.Parameter.KEYWORD_ONLY,
+                annotation=pytype,
+                default=default,
+            )
+        )
+
+    def handler(**kwargs: Any) -> Any:
+        return runtime.execute(command.definition_id, arguments=kwargs)
+
+    handler.__signature__ = inspect.Signature(parameters=params)
+    handler.__name__ = tool_name
+    handler.__qualname__ = tool_name
+    handler.__doc__ = command.description or f"Invoke {command.id}."
+
+    mcp.tool(name=tool_name, description=command.description or f"Invoke {command.id}.")(handler)
 
 
 # ---------------------------------------------------------------------------

@@ -4,7 +4,7 @@ config.py — Configuration and Claude Desktop registration helper.
 Run this file directly to print the JSON block you need to add to
 ~/Library/Application Support/Claude/claude_desktop_config.json:
 
-    python -m mcp_servers.config
+    python -m core.interfaces.mcp.config
 """
 
 import json
@@ -47,8 +47,7 @@ def claude_desktop_entry() -> dict:
     """Return the mcpServers entry for claude_desktop_config.json."""
     return {
         "local_router": {
-            "command": _python_executable(),
-            "args": ["-m", "mcp_servers.server"],
+            "command": "localfabric-mcp",
             "cwd": _PROJECT_ROOT,
             "env": {
                 "PYTHONPATH": _PROJECT_ROOT,

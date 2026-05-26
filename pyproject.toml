@@ -37,6 +37,7 @@ notebook = ["openai>=1.0", "ipykernel>=6.0"]
 [project.scripts]
 localfabric = "core.interfaces.cli.main:app"
 localfabric-md = "core.interfaces.cli.markdown_runtime:main"
+localfabric-mcp = "core.interfaces.mcp.server:main"
 
 [tool.setuptools]
 # Map clean import names to the numbered on-disk buckets. Only five
@@ -50,8 +51,6 @@ packages = [
     "core",
     "core.environment",
     "core.router",
-    "core.mcp",
-    "core.mcp.tools",
     "core.runtimes",
     "core.runtimes.yaml",
     "core.runtimes.yaml.src",
@@ -64,6 +63,7 @@ packages = [
     "core.interfaces",
     "core.interfaces.commands",
     "core.interfaces.cli",
+    "core.interfaces.mcp",
     "interfaces",
     "harnesses",
     "harnesses.claude",
@@ -109,7 +109,7 @@ excluded_buckets = [
 ]
 
 [tool.localfabric.mcp_mapping]
-system_sdk_override = "core.mcp"
+system_sdk_override = "core.interfaces.mcp"
 
 [tool.localfabric.workspace_descriptions]
 "00_specs" = "Agent-ready specs and task artifacts"
