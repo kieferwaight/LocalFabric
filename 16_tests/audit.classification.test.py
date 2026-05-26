@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from tasks.audit import scan_boundary_violations as AUDIT
+from lib.audit import scan_boundary_violations as AUDIT
 
 
 def test_prompt_executable_is_flagged(tmp_path: Path) -> None:
@@ -36,7 +36,7 @@ def test_mcp_documentation_is_not_mistaken_for_execution(tmp_path: Path) -> None
 
 def test_tool_provider_execution_includes_harness_destination(tmp_path: Path) -> None:
     workspace = tmp_path / "workspace"
-    tool = workspace / "07_tasks" / "vision" / "client.py"
+    tool = workspace / "07_lib" / "vision" / "client.py"
     tool.parent.mkdir(parents=True)
     tool.write_text("from langchain_ollama import ChatOllama\n", encoding="utf-8")
 

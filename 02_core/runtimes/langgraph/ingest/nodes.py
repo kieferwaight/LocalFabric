@@ -13,8 +13,8 @@ from drivers.sql.schema import assets
 from drivers.sql.session import get_connection
 from drivers.file import copy_asset
 from core.runtimes.langgraph.types import IngestState
-from tasks.classify.media import media_class_for_path
-from tasks.files import sha256_file
+from lib.classify.media import media_class_for_path
+from lib.files import sha256_file
 
 _DB_PATH = data("workspace.db")
 _INPUTS_ROOT = data("inputs")

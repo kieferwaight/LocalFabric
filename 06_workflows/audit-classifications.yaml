@@ -11,7 +11,7 @@
       from collections import Counter
       from pathlib import Path
 
-      from tasks.audit.scan_boundary_violations import preserve_statuses, run_audit
+      from lib.audit.scan_boundary_violations import preserve_statuses, run_audit
 
       workspace = Path(__file__).resolve().parents[1] if "__file__" in dir() else Path(".").resolve()
       output_dir = workspace / "14_data" / "runs" / "classification_audit"

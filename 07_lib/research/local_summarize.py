@@ -7,7 +7,7 @@ from pathlib import Path
 
 from core.runtimes.markdown.frontmatter import parse as parse_frontmatter
 from harnesses.ollama import OllamaHarness
-from tasks.browser.fetch_text import fetch_readable_text
+from lib.browser.fetch_text import fetch_readable_text
 
 
 _PROMPT_PATH = Path(__file__).resolve().parents[2] / "12_prompts" / "tasks.research-summary.md"

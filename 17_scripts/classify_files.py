@@ -9,8 +9,8 @@ import argparse
 from pathlib import Path
 
 from core.environment import REPO_ROOT, data
-from tasks.classify.build_manifest import build_classification
-from tasks.files import write_json
+from lib.classify.build_manifest import build_classification
+from lib.files import write_json
 
 MANIFESTS_DIR = data("manifests")
 

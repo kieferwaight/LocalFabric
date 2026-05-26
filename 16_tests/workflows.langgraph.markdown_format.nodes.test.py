@@ -1,6 +1,6 @@
 import tempfile
 from pathlib import Path
-from tasks.text.format_markdown import format_markdown_with_lmstudio
+from lib.text.format_markdown import format_markdown_with_lmstudio
 
 def test_format_markdown_with_lmstudio(monkeypatch):
     # Patch LMStudioHarness to avoid real API call

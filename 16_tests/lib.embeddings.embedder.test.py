@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from tasks.embeddings.embedder import Embedder
+from lib.embeddings.embedder import Embedder
 
 
 class RecordingExecutor:

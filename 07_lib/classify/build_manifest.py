@@ -6,9 +6,9 @@ from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
-from tasks.classify.media import classify_file
-from tasks.files import iter_files, sha256_file
-from tasks.metadata.extract import infer_source_guess
+from lib.classify.media import classify_file
+from lib.files import iter_files, sha256_file
+from lib.metadata.extract import infer_source_guess
 
 CONFIDENCE_REVIEW_THRESHOLD = 0.80
 

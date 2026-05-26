@@ -153,7 +153,7 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
             )
 
     provider_markers = ["ChatOllama", "import ollama", ".embeddings(", "ollama.generate("]
-    if rel.startswith("07_tasks/") and any(marker in text for marker in provider_markers):
+    if rel.startswith("07_lib/") and any(marker in text for marker in provider_markers):
         evidence = _lines_with(text, provider_markers + ["_PROMPT", "prompt ="])
         extra_targets: list[dict[str, str]] = []
         if any(marker in text for marker in ["_PROMPT", "system_prompt", "user_prompt", "prompt = (", "prompt = \"\"\""]):
@@ -185,7 +185,7 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
                 evidence,
                 [
                     _target(
-                        "07_tasks",
+                        "07_lib",
                         str(Path(rel).parent / "analyze.py"),
                         "Keep provider-neutral task operations and typed input/output handling.",
                         "Use capability names such as analyze.py or embed.py, not provider client names.",
@@ -257,8 +257,8 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
                         "Keep exported MCP functions small and orchestration-free.",
                     ),
                     _target(
-                        "07_tasks",
-                        "07_tasks/browser/fetch_text.py",
+                        "07_lib",
+                        "07_lib/browser/fetch_text.py",
                         "Fetch and clean source text as a reusable functional unit.",
                         "Use a capability-oriented module name independent of MCP.",
                     ),
@@ -374,8 +374,8 @@ def audit_file(path: Path, workspace: Path, generated_at: str) -> list[dict[str,
                         "Router implementations import tools, workflows, or harness contracts.",
                     ),
                     _target(
-                        "07_tasks",
-                        "07_tasks/research/",
+                        "07_lib",
+                        "07_lib/research/",
                         "Host reusable local research and local test capability implementations.",
                         "Name modules for capabilities exposed by MCP and routing.",
                     ),

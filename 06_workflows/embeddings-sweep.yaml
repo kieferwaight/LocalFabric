@@ -5,7 +5,7 @@
     local Ollama harness, upsert changed chunks into LanceDB, and persist an
     MD5 manifest so unchanged files are skipped on subsequent runs.
 
-    Equivalent to the old ``tasks.embeddings.sweep.sweep()`` function, but
+    Equivalent to the old ``lib.embeddings.sweep.sweep()`` function, but
     expressed as a YAML workflow so it can be scheduled, composed, and
     dry-run through the standard YAML runtime.
   tags: [workflow]
@@ -44,9 +44,9 @@
 
       from core.environment import REPO_ROOT as _REPO_ROOT
       from drivers.vector.lancedb_driver import LanceStore
-      from tasks.embeddings.chunker import chunk_file
-      from tasks.embeddings.embedder import Embedder, EmbedderUnavailable
-      from tasks.embeddings.sweep import (
+      from lib.embeddings.chunker import chunk_file
+      from lib.embeddings.embedder import Embedder, EmbedderUnavailable
+      from lib.embeddings.sweep import (
           collect_files,
           file_hash,
           load_manifest,

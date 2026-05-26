@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from drivers.file import write_text_artifact
-from tasks.text import format_markdown as nodes
+from lib.text import format_markdown as nodes
 
 
 def run_markdown_format_workflow(

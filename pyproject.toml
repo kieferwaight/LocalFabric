@@ -49,7 +49,7 @@ localfabric-api = "core.interfaces.api.app:cli_main"
 # harnesses), `tasks` (atomic execution units; was `tools`), and
 # `drivers`. Everything else has been pulled into core.* (router, mcp,
 # cli, environment, runtimes.yaml, runtimes.markdown, runtimes.langgraph).
-package-dir = { "interfaces" = "01_interfaces", "core" = "02_core", "harnesses" = "04_harnesses", "tasks" = "07_tasks", "drivers" = "08_drivers" }
+package-dir = { "interfaces" = "01_interfaces", "core" = "02_core", "harnesses" = "04_harnesses", "lib" = "07_lib", "drivers" = "08_drivers" }
 packages = [
     "core",
     "core.environment",
@@ -76,19 +76,17 @@ packages = [
     "harnesses.lmstudio",
     "harnesses.ollama",
     "harnesses.openai",
-    "tasks",
-    "tasks.audit",
-    "tasks.browser",
-    "tasks.classify",
-    "tasks.research",
-    "tasks.docx",
-    "tasks.embeddings",
-    "tasks.image",
-    "tasks.metadata",
-    "tasks.pdf",
-    "tasks.shell",
-    "tasks.text",
-    "tasks.vision",
+    "lib",
+    "lib.audit",
+    "lib.browser",
+    "lib.classify",
+    "lib.research",
+    "lib.embeddings",
+    "lib.image",
+    "lib.metadata",
+    "lib.pdf",
+    "lib.shell",
+    "lib.text",
     "drivers",
     "drivers.cache",
     "drivers.file",
@@ -100,6 +98,7 @@ packages = [
 excluded_buckets = [
     "00_specs",
     "01_schemas",
+    "07_tasks",
     "09_docker",
     "09_launchd",
     "09_services",
@@ -108,6 +107,7 @@ excluded_buckets = [
     "13_providers",
     "14_data",
     "14_templates",
+    "15_examples",
     "15_notebooks",
     "16_tests",
     "17_scripts",
@@ -124,7 +124,8 @@ system_sdk_override = "core.interfaces.mcp"
 "02_core" = "Core libraries — environment, router, runtimes (yaml/markdown/langgraph), interfaces (cli/api/mcp)"
 "04_harnesses" = "Provider harnesses — execution lifecycle per model provider"
 "06_workflows" = "Composed pipelines of tasks (YAML)"
-"07_tasks" = "Atomic task implementations — Python functions wrapped by YAML task defs (image, pdf, vision, embeddings, …)"
+"07_lib" = "Python helper library invoked by YAML tasks (image, pdf, embeddings, classify, research, …)"
+"07_tasks" = "YAML task wrappers — one .task.yaml file per atomic lib.* function"
 "08_drivers" = "Storage/database connectors"
 "09_docker" = "Docker service definitions (extend docker.base)"
 "09_launchd" = "macOS launchd job definitions (extend launchd.base)"
@@ -134,6 +135,7 @@ system_sdk_override = "core.interfaces.mcp"
 "13_providers" = "Per-provider YAML registry (one file per provider; declares protocols and endpoints)"
 "14_data" = "Persistent data (filesystem-backed)"
 "14_templates" = "Document templates rendered by YAML workflows"
+"15_examples" = "Example YAML definitions showing runtime composition patterns"
 "15_notebooks" = "Exploration notebooks"
 "16_tests" = "Integration and contract tests"
 "17_scripts" = "Utility and maintenance scripts"
