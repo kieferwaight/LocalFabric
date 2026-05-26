@@ -1,0 +1,26 @@
+- id: provider.base
+  title: LLM Provider Record
+  description: |
+    Pure-data base for the provider records under `13_providers/`.
+    Establishes the canonical fields every provider declares (`name`,
+    `location`, `endpoint`, `auth`, `env`, `protocols`, `documentation`).
+    Carries no run blocks.
+  tags: [provider, abstract]
+  extends: stdlib.base
+  variables:
+    name: ""
+    location: ""
+    documentation: {}
+    endpoint: ""
+    auth: ""
+    env: {}
+    protocols: {}
+  docs:
+    variables:
+      name: Canonical identifier of the provider (e.g. `ollama`, `claude`).
+      location: Either `cloud` or `local` — where the provider physically runs.
+      documentation: Free-form notes — typically `summary`, `homepage`, `install`.
+      endpoint: Default endpoint URL clients connect to.
+      auth: Auth mechanism (`api_key`, `none`, etc.).
+      env: Environment-variable mapping (logical name → env var).
+      protocols: Map of supported protocols (cli, sdk, openai-api, ...).

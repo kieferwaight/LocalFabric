@@ -27,6 +27,10 @@
     - stdlib.docs.yaml
     - stdlib.analysis.yaml
     - stdlib.python.yaml
+    - folder.yaml
+    - docker.yaml
+    - model.yaml
+    - provider.yaml
   variables:
     module_namespace: "builtin"
 

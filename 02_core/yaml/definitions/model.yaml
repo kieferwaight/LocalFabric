@@ -1,0 +1,20 @@
+- id: model.base
+  title: LLM Model Record
+  description: |
+    Pure-data base for the model records under `13_models/`. Establishes
+    the canonical fields every model declares (`name`, `documentation`,
+    `providers`, `features`) so the catalog can iterate them uniformly and
+    downstream tooling can rely on the shape. Carries no run blocks.
+  tags: [model, abstract]
+  extends: stdlib.base
+  variables:
+    name: ""
+    documentation: {}
+    providers: []
+    features: []
+  docs:
+    variables:
+      name: Canonical identifier of the model (e.g. `claude-opus-4-7`).
+      documentation: Free-form notes — typically `summary`, `vendor`, `homepage`.
+      providers: List of provider IDs (from `13_providers/`) that serve this model.
+      features: Capability tags (e.g. `text`, `tool_calling`, `vision`, `streaming`).

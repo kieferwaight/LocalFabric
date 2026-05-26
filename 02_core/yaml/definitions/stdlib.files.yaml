@@ -40,3 +40,32 @@
     - artifact:
         action: create_directory
         target_path: "{{ directory_path }}"
+
+- id: stdlib.files.write
+  title: Write Text File (input form)
+  description: |
+    Input-driven sibling of `stdlib.files.write-text`. Designed to be invoked
+    with `arguments:` so callers can pass `target_path` and `content` per
+    iteration (e.g. inside a `for_each` loop). The variable-based
+    `write-text` definition cannot receive values through invoke arguments,
+    so this exists for dynamic scaffolding workflows.
+  tags: [files, templates]
+  extends: stdlib.base
+  inputs:
+    target_path:
+      type: "string"
+      required: true
+      description: Output path for the generated text file.
+    content:
+      type: "string"
+      required: true
+      description: Text content to write.
+  docs:
+    run:
+      - title: Write text from inputs
+  run:
+    - artifact:
+        action: write_text
+        target_path: "{{ target_path }}"
+        content: "{{ content }}"
+        restore_template_markers: true

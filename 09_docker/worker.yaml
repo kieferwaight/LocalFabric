@@ -1,76 +1,53 @@
-id: docker.worker
-name: worker
-category: workers
-purpose: |
-  Generic content graph worker built locally. Pulls jobs from Redis/Temporal and uses
-  Postgres, MinIO, Tika, Unstructured, Qdrant, and Ollama via configurable URLs.
-
-inputs:
-  DATA_PATH:
-    description: Host path for worker scratch storage (binds to /work in container)
-    required: true
-  DATABASE_URL:
-    description: PostgreSQL connection URL for the worker
-    required: true
-  REDIS_URL:
-    default: redis://redis:6379/0
-    description: Redis connection URL
-    required: false
-  MINIO_ENDPOINT:
-    default: minio:9000
-    description: MinIO endpoint host:port
-    required: false
-  TEMPORAL_ADDRESS:
-    default: temporal:7233
-    description: Temporal frontend address
-    required: false
-  TIKA_URL:
-    default: http://tika:9998
-    description: Apache Tika base URL
-    required: false
-  UNSTRUCTURED_URL:
-    default: http://unstructured:8000
-    description: Unstructured API base URL
-    required: false
-  QDRANT_URL:
-    default: http://qdrant:6333
-    description: Qdrant base URL
-    required: false
-  OLLAMA_URL:
-    default: http://ollama:11434
-    description: Ollama base URL
-    required: false
-
-services:
-  contentgraph-worker:
-    build: .
-    image: contentgraph-worker:local
-    container_name: contentgraph-worker
-    restart: unless-stopped
-    environment:
-      - map: DATABASE_URL: {{ DATABASE_URL }}
-        description: PostgreSQL connection URL
-      - map: REDIS_URL: {{ REDIS_URL }}
-        description: Redis connection URL
-      - map: MINIO_ENDPOINT: {{ MINIO_ENDPOINT }}
-        description: MinIO endpoint host:port
-      - map: TEMPORAL_ADDRESS: {{ TEMPORAL_ADDRESS }}
-        description: Temporal frontend address
-      - map: TIKA_URL: {{ TIKA_URL }}
-        description: Apache Tika base URL
-      - map: UNSTRUCTURED_URL: {{ UNSTRUCTURED_URL }}
-        description: Unstructured API base URL
-      - map: QDRANT_URL: {{ QDRANT_URL }}
-        description: Qdrant base URL
-      - map: OLLAMA_URL: {{ OLLAMA_URL }}
-        description: Ollama base URL
-    volumes:
-      - map: {{ DATA_PATH }}:/work
-        description: Shared working directory for worker input and output
-
-files:
-  - path: ./Dockerfile
-    content: |
+- id: docker.worker
+  title: Content-Graph Worker Service
+  description: |
+    Generic content-graph worker built locally. Pulls jobs from
+    Redis/Temporal and uses Postgres, MinIO, Tika, Unstructured, Qdrant,
+    and Ollama via configurable URLs. Demonstrates a `docker.base` child
+    that ships both a generated Dockerfile and additional source files
+    (`app/worker.py`) alongside the compose document.
+  tags: [docker, workers]
+  extends: docker.base
+  inputs:
+    DATA_PATH:
+      type: "string"
+      required: true
+      description: Host path for worker scratch storage (binds to /work in container).
+    DATABASE_URL:
+      type: "string"
+      required: true
+      description: PostgreSQL connection URL for the worker.
+    REDIS_URL:
+      type: "string"
+      required: false
+      default: "redis://redis:6379/0"
+    MINIO_ENDPOINT:
+      type: "string"
+      required: false
+      default: "minio:9000"
+    TEMPORAL_ADDRESS:
+      type: "string"
+      required: false
+      default: "temporal:7233"
+    TIKA_URL:
+      type: "string"
+      required: false
+      default: "http://tika:9998"
+    UNSTRUCTURED_URL:
+      type: "string"
+      required: false
+      default: "http://unstructured:8000"
+    QDRANT_URL:
+      type: "string"
+      required: false
+      default: "http://qdrant:6333"
+    OLLAMA_URL:
+      type: "string"
+      required: false
+      default: "http://ollama:11434"
+  variables:
+    image_tag: "contentgraph-worker:local"
+    dockerfile_body: |
       FROM python:3.12-slim
 
       WORKDIR /app
@@ -78,11 +55,29 @@ files:
       COPY app /app
 
       CMD ["python", "worker.py"]
-  - path: ./app/worker.py
-    content: |
-      import time
+    services:
+      contentgraph-worker:
+        build: .
+        image: contentgraph-worker:local
+        container_name: contentgraph-worker
+        restart: unless-stopped
+        environment:
+          DATABASE_URL: "{{ DATABASE_URL }}"
+          REDIS_URL: "{{ REDIS_URL }}"
+          MINIO_ENDPOINT: "{{ MINIO_ENDPOINT }}"
+          TEMPORAL_ADDRESS: "{{ TEMPORAL_ADDRESS }}"
+          TIKA_URL: "{{ TIKA_URL }}"
+          UNSTRUCTURED_URL: "{{ UNSTRUCTURED_URL }}"
+          QDRANT_URL: "{{ QDRANT_URL }}"
+          OLLAMA_URL: "{{ OLLAMA_URL }}"
+        volumes:
+          - "{{ DATA_PATH }}:/work"
+    extra_files:
+      - path: "app/worker.py"
+        content: |
+          import time
 
 
-      print("contentgraph worker started")
-      while True:
-          time.sleep(60)
+          print("contentgraph worker started")
+          while True:
+              time.sleep(60)

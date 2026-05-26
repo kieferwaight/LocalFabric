@@ -211,6 +211,10 @@ class Runtime:
                 "has_schema": bool(definition.schema),
                 "launchd": dict(definition.launchd),
                 "has_launchd": bool(definition.launchd),
+                "has_docker": self._descends_from(def_id, "docker.base"),
+                "has_model": self._descends_from(def_id, "model.base"),
+                "has_provider": self._descends_from(def_id, "provider.base"),
+                "has_folder": self._descends_from(def_id, "folder.base"),
                 "declared": {
                     "inputs": self._input_entries(definition.inputs, def_id),
                     "variables": self._variable_entries(definition, def_id),
@@ -272,6 +276,20 @@ class Runtime:
         if source == "<raw>":
             return source
         return os.path.relpath(source, self.env.cwd)
+
+    def _descends_from(self, def_id: str, ancestor_id: str) -> bool:
+        if def_id == ancestor_id:
+            return False
+        seen: set[str] = set()
+        current = self.registry.get(def_id)
+        while current is not None and current.id not in seen:
+            seen.add(current.id)
+            if current.extends == ancestor_id:
+                return True
+            if any(self._descends_from(m, ancestor_id) or m == ancestor_id for m in current.mixins):
+                return True
+            current = self.registry.get(current.extends) if current.extends else None
+        return False
 
     def _relation(
         self, entries: dict[str, dict[str, Any]], source_id: str, target_id: str | None
