@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Regenerate the comprehensive docs surface into 19_docs/.
+"""Regenerate the comprehensive docs surface into 18_docs/.
 
 Walks every YAML and markdown definition across the listed repo buckets,
 populates a single Runtime catalog, and renders one Markdown page per
-definition id using the docs.definition.template.definition template.
+definition id directly at the root of 18_docs/ as siblings. Flat layout
+keeps cross-document links (parent/mixin/child references emitted by the
+per-definition template) resolvable without ../-walks.
 """
 from __future__ import annotations
 
@@ -20,22 +22,9 @@ from core.runtimes.markdown import MarkdownHarness
 from core.runtimes.yaml.src import Runtime
 
 
-def _bucket_dir_for(source_path: str) -> str:
-    """Map a definition's source_path to its 19_docs/ bucket subdir.
-
-    Most YAML defs have a repo-relative source_path like
-    ``09_docker/ollama.yaml``; the first path component is the bucket
-    (``09_docker``). Markdown prompts compiled through MarkdownHarness use
-    ``<raw>`` (no file path); they all live in ``12_prompts/``.
-    """
-    if source_path == "<raw>":
-        return "12_prompts"
-    return source_path.split("/", 1)[0]
-
-
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Regenerate 19_docs/ from every repo definition")
-    parser.add_argument("--output-dir", default="19_docs")
+    parser = argparse.ArgumentParser(description="Regenerate 18_docs/ from every repo definition")
+    parser.add_argument("--output-dir", default="18_docs")
     parser.add_argument("--mode", choices=["write", "check"], default="write")
     args = parser.parse_args(argv)
 
@@ -44,10 +33,10 @@ def main(argv: list[str] | None = None) -> int:
 
     runtime = Runtime(
         workflow_dir=str(REPO_ROOT / "02_core" / "runtimes" / "yaml"),
-        # Pages live under 19_docs/<source-bucket>/<id>.definition.md; the
-        # format here is only used by _update_catalog for cross-link
-        # computation. Use the full bucketed shape so parent/mixin/child
-        # links resolve correctly.
+        # Flat layout: every page lives directly under 18_docs/, so the
+        # per-definition page format here matches the on-disk shape and
+        # parent / mixin / child links emitted by _update_catalog resolve
+        # as sibling references with no directory traversal.
         definition_page_format="{flat_id}.definition.md",
         index_page="index.md",
         schema_page="schema.md",
@@ -77,16 +66,14 @@ def main(argv: list[str] | None = None) -> int:
         for w in caught_warnings:
             print(f"  {w.message}")
 
-    # Render one page per definition into the source-bucket subdir so the
-    # docs layout mirrors the on-disk YAML/markdown layout.
+    # Render one page per definition directly at the root so every page
+    # is a sibling of every other — cross-document links work without
+    # directory traversal.
     rendered = 0
     stale: list[str] = []
     for entry in runtime.globals["catalog"]["definitions"]:
         def_id = entry["id"]
-        bucket_dir = _bucket_dir_for(entry["source_path"])
-        target_dir = output_dir / bucket_dir
-        target_dir.mkdir(parents=True, exist_ok=True)
-        target = target_dir / f"{def_id}.definition.md"
+        target = output_dir / f"{def_id}.definition.md"
         try:
             body = runtime.render_definition(
                 "docs.definition.template.definition", {"definition": entry}
@@ -95,11 +82,10 @@ def main(argv: list[str] | None = None) -> int:
             print(f"  RENDER ERROR: {def_id}: {exc}", file=sys.stderr)
             continue
 
-        rel_name = target.relative_to(output_dir).as_posix()
         if args.mode == "check":
             if not target.exists() or target.read_text() != body:
-                print(f"STALE: {rel_name}", file=sys.stderr)
-                stale.append(rel_name)
+                print(f"STALE: {target.name}", file=sys.stderr)
+                stale.append(target.name)
         else:
             target.write_text(body, encoding="utf-8")
             rendered += 1
