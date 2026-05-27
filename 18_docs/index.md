@@ -181,16 +181,13 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 | [lmstudio](provider.lmstudio.provider.definition.md) | `provider.lmstudio.provider` | `13_providers/provider.lmstudio.provider.yaml` | provider |
 | [ollama](provider.ollama.provider.definition.md) | `provider.ollama.provider` | `13_providers/provider.ollama.provider.yaml` | provider |
 | [openai](provider.openai.provider.definition.md) | `provider.openai.provider` | `13_providers/provider.openai.provider.yaml` | provider |
-| [image.vision.layout.task](image.vision.layout.task.definition.md) | `image.vision.layout.task` | `<raw>` | - |
-| [image.vision.overview.task](image.vision.overview.task.definition.md) | `image.vision.overview.task` | `<raw>` | - |
-| [image.vision.style.task](image.vision.style.task.definition.md) | `image.vision.style.task` | `<raw>` | - |
-| [image.vision.visible-text.task](image.vision.visible-text.task.definition.md) | `image.vision.visible-text.task` | `<raw>` | - |
 | [Spec promotion — Final stage](spec.promotion.final.task.definition.md) | `spec.promotion.final.task` | `<raw>` | - |
 | [Spec promotion — Prompts stage](spec.promotion.prompts.task.definition.md) | `spec.promotion.prompts.task` | `<raw>` | - |
 | [Spec promotion — Requirements stage](spec.promotion.requirements.task.definition.md) | `spec.promotion.requirements.task` | `<raw>` | - |
 | [Spec promotion — Research stage](spec.promotion.research.task.definition.md) | `spec.promotion.research.task` | `<raw>` | - |
 | [Spec promotion — Tasks stage](spec.promotion.tasks.task.definition.md) | `spec.promotion.tasks.task` | `<raw>` | - |
 | [text.title.generate.task](text.title.generate.task.definition.md) | `text.title.generate.task` | `<raw>` | - |
+| [Analyze an image with LM Studio vision](image.analyze.example.definition.md) | `image.analyze.example` | `<raw>` | example, vision |
 | [Hello Polyglot](polyglot.hello.example.definition.md) | `polyglot.hello.example` | `<raw>` | - |
 | [Hello Python](python.hello.example.definition.md) | `python.hello.example` | `<raw>` | - |
 | [Hello Shell](shell.hello.example.definition.md) | `shell.hello.example` | `<raw>` | - |
@@ -367,6 +364,7 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 - [GitHub Repository Example](git.github.example.definition.md) (`git.github.example`)
 - [Gitignore Template Example](git.gitignore.example.definition.md) (`git.gitignore.example`)
 - [Obsidian Daily Note Template](obsidian.daily-note.example.definition.md) (`obsidian.daily-note.example`)
+- [Analyze an image with LM Studio vision](image.analyze.example.definition.md) (`image.analyze.example`)
 
 ### files
 - [Clean Workspace](stdlib.clean-workspace.task.definition.md) (`stdlib.clean-workspace.task`)
@@ -588,6 +586,9 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 ### vector
 - [Qdrant Service](docker.qdrant.service.definition.md) (`docker.qdrant.service`)
 - [Weaviate Service](docker.weaviate.service.definition.md) (`docker.weaviate.service`)
+
+### vision
+- [Analyze an image with LM Studio vision](image.analyze.example.definition.md) (`image.analyze.example`)
 
 ### workers
 - [FastAPI Service](docker.fastapi.service.definition.md) (`docker.fastapi.service`)
@@ -948,16 +949,13 @@ def_provider_ollama_provider["ollama"]
 def_provider_ollama_provider --> def_provider.base
 def_provider_openai_provider["openai"]
 def_provider_openai_provider --> def_provider.base
-def_image_vision_layout_task["image.vision.layout.task"]
-def_image_vision_overview_task["image.vision.overview.task"]
-def_image_vision_style_task["image.vision.style.task"]
-def_image_vision_visible_text_task["image.vision.visible-text.task"]
 def_spec_promotion_final_task["Spec promotion — Final stage"]
 def_spec_promotion_prompts_task["Spec promotion — Prompts stage"]
 def_spec_promotion_requirements_task["Spec promotion — Requirements stage"]
 def_spec_promotion_research_task["Spec promotion — Research stage"]
 def_spec_promotion_tasks_task["Spec promotion — Tasks stage"]
 def_text_title_generate_task["text.title.generate.task"]
+def_image_analyze_example["Analyze an image with LM Studio vision"]
 def_polyglot_hello_example["Hello Polyglot"]
 def_python_hello_example["Hello Python"]
 def_shell_hello_example["Hello Shell"]
