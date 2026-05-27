@@ -34,20 +34,15 @@
       import os
       import tomllib
       from pathlib import Path
-
       repo_root = Path("{{ repo_root }}").resolve()
       cfg = tomllib.loads((repo_root / "pyproject.toml").read_text(encoding="utf-8"))
-
       project_tagline = f"**{cfg['project']['description']}**"
-
       package_dir = cfg["tool"]["setuptools"]["package-dir"]
       packages = cfg["tool"]["setuptools"]["packages"]
       manifest = cfg["tool"]["localfabric"]["workspace_manifest"]
       descriptions = cfg["tool"]["localfabric"]["workspace_descriptions"]
-
       bucket_to_import = {path.split("/", 1)[0]: alias for alias, path in package_dir.items()}
       import_to_bucket = {alias: bucket for bucket, alias in bucket_to_import.items()}
-
       all_buckets = sorted(set(bucket_to_import) | set(manifest["excluded_buckets"]))
       missing = [b for b in all_buckets if b not in descriptions]
       if missing:
@@ -77,7 +72,6 @@
           grouped[top].setdefault(head, set())
           if tail is not None:
               grouped[top][head].add(tail)
-
       python_aliases = [
           {
               "alias": alias,
@@ -89,18 +83,15 @@
           }
           for alias in package_dir
       ]
-
       scripts = cfg.get("project", {}).get("scripts", {})
       cli_commands = [
           {"name": name, "entry_point": scripts[name]} for name in sorted(scripts)
       ]
-
       optional_deps = cfg.get("project", {}).get("optional-dependencies", {})
       optional_groups = [
           {"name": name, "packages": optional_deps[name]}
           for name in sorted(optional_deps)
       ]
-
       state_file = os.environ["STATE_FILE"]
       with open(state_file, "w", encoding="utf-8") as fh:
           json.dump({

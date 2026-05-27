@@ -8,16 +8,16 @@ All Python work in this repo goes through [uv](https://docs.astral.sh/uv/). Do n
 
 ### Canonical commands
 
-| Task | Command |
-| --- | --- |
-| Install base + dev tooling | `uv sync --extra dev` |
-| Enable cloud / LM Studio providers | `uv sync --extra llm` |
-| Add a dependency | `uv add <pkg>` (or `uv add --optional <group> <pkg>`) |
-| Run a one-off script | `uv run python path/to/script.py` |
-| Run a console entry | `uv run localfabric --help` (also `localfabric-md`, `localfabric-mcp`, `localfabric-api`) |
-| Run the test suite | `uv run pytest` |
-| Run a YAML workflow | `uv run python 02_core/runtimes/yaml/interpreter.py <file> <def-id>` |
-| Run a markdown prompt | `uv run localfabric-md <file>.md [--key=value]` |
+| Task                               | Command                                                                                   |
+| ---------------------------------- | ----------------------------------------------------------------------------------------- |
+| Install base + dev tooling         | `uv sync --extra dev`                                                                     |
+| Enable cloud / LM Studio providers | `uv sync --extra llm`                                                                     |
+| Add a dependency                   | `uv add <pkg>` (or `uv add --optional <group> <pkg>`)                                     |
+| Run a one-off script               | `uv run python path/to/script.py`                                                         |
+| Run a console entry                | `uv run localfabric --help` (also `localfabric-md`, `localfabric-mcp`, `localfabric-api`) |
+| Run the test suite                 | `uv run pytest`                                                                           |
+| Run a YAML workflow                | `uv run python 02_core/runtimes/yaml/interpreter.py <file> <def-id>`                      |
+| Run a markdown prompt              | `uv run localfabric-md <file>.md [--key=value]`                                           |
 
 ### Why uv
 

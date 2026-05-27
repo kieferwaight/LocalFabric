@@ -9,7 +9,7 @@ inputs:
     type: string
     required: true
 images:
-- "{{ image_path }}"
+  - "{{ image_path }}"
 ---
 
 Extract only the exact visible text from the image.
