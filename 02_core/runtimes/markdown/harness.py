@@ -125,9 +125,7 @@ class MarkdownHarness:
         provider = get_provider(provider_name, overrides=self._provider_overrides)
 
         inputs = definition.get("inputs") or {}
-        context = self._coerce_inputs(
-            inputs, arguments, source_path=config["source_path"]
-        )
+        context = self._coerce_inputs(inputs, arguments, source_path=config["source_path"])
         prompt = self._jinja.render_template(config["prompt_template"], context)
         images = self._render_image_paths(config.get("images"), context=context)
 
