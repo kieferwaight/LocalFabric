@@ -1,6 +1,6 @@
-"""Validate every service docker-compose.yml under 09_services/.
+"""Validate every service docker-compose.yml under 11_services/.
 
-Each service lives at `09_services/<category>/<service>/docker-compose.yml`.
+Each service lives at `11_services/<category>/<service>/docker-compose.yml`.
 We shell out to `docker compose config --quiet` to syntactically validate
 each file. Compose interpolation requires several env vars to be present;
 we inject placeholders so validation succeeds without real credentials.
@@ -16,7 +16,7 @@ from pathlib import Path
 import pytest
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-SERVICES_DIR = PROJECT_ROOT / "09_services"
+SERVICES_DIR = PROJECT_ROOT / "11_services"
 
 # Placeholders for env vars referenced in compose files. Not used at runtime,
 # only to let `docker compose config` interpolate without erroring.

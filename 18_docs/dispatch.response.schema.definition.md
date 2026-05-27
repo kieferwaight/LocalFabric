@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `dispatch.response.schema` |
-| Source | `01_schemas/dispatch.response.schema.yaml` |
+| Source | `03_schemas/dispatch.response.schema.yaml` |
 | Tags | schema, dispatch |
 Internal response envelope returned by a harness or the dispatcher.
 

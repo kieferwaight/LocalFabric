@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `docs.classification.audit.template` |
-| Source | `14_templates/docs.classification.template.yaml` |
+| Source | `19_templates/docs.classification.template.yaml` |
 | Tags | documentation, template, classification |
 Canonical body of `18_docs/classification_audit.md`. Pure static content —
 the YAML definition is the source of truth so the committed `.md` file

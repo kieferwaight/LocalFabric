@@ -3,7 +3,7 @@
 ## Purpose
 
 Notebook host for LocalFabric's research and development workflow. Notebooks
-in [`15_notebooks/`](../../../15_notebooks/) run against this container with
+in [`20_notebooks/`](../../../20_notebooks/) run against this container with
 the project installed editably, so cells like `from harnesses.markdown import MarkdownHarness` work without bootstrap ceremony.
 
 ## Container
@@ -55,7 +55,7 @@ docker compose down
 
 ## Verifying
 
-After `up`, in a new notebook under `/workspace/15_notebooks`:
+After `up`, in a new notebook under `/workspace/20_notebooks`:
 
 ```python
 from harnesses.markdown import MarkdownHarness
@@ -72,7 +72,7 @@ rebuild the image:
 
 ```bash
 DATA_PATH=./14_data/apps/jupyter/scratch \
-  docker compose -f 09_services/dev/jupyter/docker-compose.yml build
+  docker compose -f 11_services/dev/jupyter/docker-compose.yml build
 ```
 
 `DATA_PATH` isn't used by the build itself, but compose parses every volume

@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `image.text-ocr.extract.task` |
-| Source | `07_tasks/image.text-ocr.extract.task.yaml` |
+| Source | `05_tasks/image.text-ocr.extract.task.yaml` |
 | Tags | task |
 Run OCR on an image and return full text, word count, per-word
 bounding boxes, and block groupings.

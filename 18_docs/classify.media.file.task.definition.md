@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `classify.media.file.task` |
-| Source | `07_tasks/classify.media.file.task.yaml` |
+| Source | `05_tasks/classify.media.file.task.yaml` |
 | Tags | task |
 Classify a file (by relative path) into a media class with routing
 recommendation. Wraps lib.classify.media.classify_file.

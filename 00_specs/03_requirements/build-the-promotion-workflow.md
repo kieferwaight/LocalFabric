@@ -74,7 +74,7 @@ must run against Ollama by changing two constants.
 
 ### N2 — Classification-audit clean
 
-The notebook lives in [15_notebooks/](15_notebooks), is not
+The notebook lives in [20_notebooks/](20_notebooks), is not
 imported by other buckets, and contains no business logic that other buckets
 would need. When a workflow under [06_workflows/](06_workflows)
 later supersedes the notebook, file I/O moves into a driver and LLM calls

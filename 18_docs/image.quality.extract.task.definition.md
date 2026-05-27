@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `image.quality.extract.task` |
-| Source | `07_tasks/image.quality.extract.task.yaml` |
+| Source | `05_tasks/image.quality.extract.task.yaml` |
 | Tags | task |
 Return quality metrics for an image: blur score, edge density,
 blank detection, mean brightness, and brightness std deviation.

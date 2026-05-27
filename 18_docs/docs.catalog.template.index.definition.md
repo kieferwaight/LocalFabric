@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `docs.catalog.template.index` |
-| Source | `14_templates/docs.catalog.template.yaml` |
+| Source | `19_templates/docs.catalog.template.yaml` |
 | Tags | documentation, template |
 Top-level YAML API reference page. Lists every definition in the catalog,
 groups them by tag, and renders two relationship overview graphs.

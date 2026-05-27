@@ -8,7 +8,7 @@
 | Tags | schema, workflow |
 Emits one `.json` file per definition that declares a `schema:` block, by
 iterating `runtime.catalog.definitions` and filtering on `has_schema`.
-Defaults write into `01_schemas/` next to the authoring YAML.
+Defaults write into `03_schemas/` next to the authoring YAML.
 
 
 ## Relationships
@@ -31,7 +31,7 @@ def_schemas_generate_json_workflow --> def_stdlib_base["Abstract Base"]
 ### Inputs
 | Name | Type | Required | Default | Description |
 | --- | --- | --- | --- | --- |
-| `output_dir` | `string` | no | `01_schemas` | Directory that receives the generated `.json` files. |
+| `output_dir` | `string` | no | `03_schemas` | Directory that receives the generated `.json` files. |
 | `mode` | `string` | no | `write` | Either `write` to regenerate output or `check` to verify it. |
 | `indent` | `number` | no | `2` | JSON indent width. |
 
@@ -63,7 +63,7 @@ _No locally declared teardown operations._
 ### Effective Inputs
 | Name | Type | Required | Default | Origin |
 | --- | --- | --- | --- | --- |
-| `output_dir` | `string` | no | `01_schemas` | [Generate Schema JSON](schemas.generate-json.workflow.definition.md) |
+| `output_dir` | `string` | no | `03_schemas` | [Generate Schema JSON](schemas.generate-json.workflow.definition.md) |
 | `mode` | `string` | no | `write` | [Generate Schema JSON](schemas.generate-json.workflow.definition.md) |
 | `indent` | `number` | no | `2` | [Generate Schema JSON](schemas.generate-json.workflow.definition.md) |
 

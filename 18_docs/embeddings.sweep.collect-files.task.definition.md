@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `embeddings.sweep.collect-files.task` |
-| Source | `07_tasks/embeddings.sweep.collect-files.task.yaml` |
+| Source | `05_tasks/embeddings.sweep.collect-files.task.yaml` |
 | Tags | task |
 Walk a root directory and return all indexable file paths (sorted).
 Wraps lib.embeddings.sweep.collect_files.

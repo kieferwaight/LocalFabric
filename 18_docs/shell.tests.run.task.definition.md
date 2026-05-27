@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `shell.tests.run.task` |
-| Source | `07_tasks/shell.tests.run.task.yaml` |
+| Source | `05_tasks/shell.tests.run.task.yaml` |
 | Tags | task |
 Execute a local test command and return a compact report string.
 Trims output for downstream context-window efficiency.

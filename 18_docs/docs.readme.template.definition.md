@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `docs.readme.template` |
-| Source | `14_templates/docs.readme.template.yaml` |
+| Source | `19_templates/docs.readme.template.yaml` |
 | Tags | documentation, template |
 Markdown template for the repo-root README.md. Static prose plus five
 data-driven sections rendered from `pyproject.toml`: the project tagline,

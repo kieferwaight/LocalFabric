@@ -8,7 +8,7 @@
 | Tags | launchd, workflow |
 Emits one `.plist` file per definition that declares a `launchd:` block, by
 iterating `runtime.catalog.definitions` and filtering on `has_launchd`.
-Defaults write into `09_launchd/` next to the authoring YAML.
+Defaults write into `10_launchd/` next to the authoring YAML.
 
 
 ## Relationships
@@ -31,7 +31,7 @@ def_launchd_generate_plist_workflow --> def_stdlib_base["Abstract Base"]
 ### Inputs
 | Name | Type | Required | Default | Description |
 | --- | --- | --- | --- | --- |
-| `output_dir` | `string` | no | `09_launchd` | Directory that receives the generated `.plist` files. |
+| `output_dir` | `string` | no | `10_launchd` | Directory that receives the generated `.plist` files. |
 | `mode` | `string` | no | `write` | Either `write` to regenerate output or `check` to verify it. |
 
 
@@ -61,7 +61,7 @@ _No locally declared teardown operations._
 ### Effective Inputs
 | Name | Type | Required | Default | Origin |
 | --- | --- | --- | --- | --- |
-| `output_dir` | `string` | no | `09_launchd` | [Generate launchd Plists](launchd.generate-plist.workflow.definition.md) |
+| `output_dir` | `string` | no | `10_launchd` | [Generate launchd Plists](launchd.generate-plist.workflow.definition.md) |
 | `mode` | `string` | no | `write` | [Generate launchd Plists](launchd.generate-plist.workflow.definition.md) |
 
 

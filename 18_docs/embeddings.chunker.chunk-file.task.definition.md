@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `embeddings.chunker.chunk-file.task` |
-| Source | `07_tasks/embeddings.chunker.chunk-file.task.yaml` |
+| Source | `05_tasks/embeddings.chunker.chunk-file.task.yaml` |
 | Tags | task |
 Read a file and return a list of chunk dicts with text, source, chunk_index,
 line_start, line_end, and strategy fields. Wraps lib.embeddings.chunker.chunk_file.

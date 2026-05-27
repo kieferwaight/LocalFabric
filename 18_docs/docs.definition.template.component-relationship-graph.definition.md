@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `docs.definition.template.component-relationship-graph` |
-| Source | `14_templates/docs.definition.template.yaml` |
+| Source | `19_templates/docs.definition.template.yaml` |
 | Tags | documentation, template, component |
 Mermaid relationship subgraph for a single definition page. Renders the
 target definition with its parent (`extends`), mixins, and children using

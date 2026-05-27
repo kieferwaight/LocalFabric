@@ -3,7 +3,7 @@
 The **Harness Layer** controls execution lifecycle for every external thing the
 system talks to: hosted LLM providers (Claude, OpenAI, Gemini, Codex), local
 model servers (Ollama, LM Studio), and Docker Compose services from the
-`09_services/` catalog.
+`11_services/` catalog.
 
 Per `ARCHITECTURE.md`, harnesses handle process or API invocation, streaming,
 retries, timeouts, auth, and telemetry. They sit *below* the router and

@@ -112,15 +112,15 @@ class Runtime:
         return loaded
 
     _REPO_WIDE_YAML_BUCKETS = [
-        "01_schemas",
+        "03_schemas",
         "02_core/runtimes/yaml/definitions",
         "06_workflows",
-        "07_tasks",
+        "05_tasks",
         "09_docker",
-        "09_launchd",
+        "10_launchd",
         "13_models",
-        "13_providers",
-        "14_templates",
+        "17_providers",
+        "19_templates",
         "15_examples",
     ]
     _REPO_WIDE_MARKDOWN_BUCKETS = ["12_prompts", "15_examples"]

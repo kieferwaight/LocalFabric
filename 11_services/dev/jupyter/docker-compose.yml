@@ -4,7 +4,7 @@ services:
   jupyter:
     build:
       context: ../../..
-      dockerfile: 09_services/dev/jupyter/Dockerfile
+      dockerfile: 11_services/dev/jupyter/Dockerfile
     container_name: contentgraph-jupyter
     restart: unless-stopped
     ports:
@@ -16,4 +16,4 @@ services:
     - ${DATA_PATH}:/home/jovyan/work
     command:
     - start-notebook.py
-    - --ServerApp.root_dir=/workspace/15_notebooks
+    - --ServerApp.root_dir=/workspace/20_notebooks

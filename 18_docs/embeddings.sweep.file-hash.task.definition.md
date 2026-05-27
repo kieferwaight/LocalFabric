@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `embeddings.sweep.file-hash.task` |
-| Source | `07_tasks/embeddings.sweep.file-hash.task.yaml` |
+| Source | `05_tasks/embeddings.sweep.file-hash.task.yaml` |
 | Tags | task |
 Return the MD5 hex digest of the file at the given path.
 Wraps lib.embeddings.sweep.file_hash.

@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `audit.boundary-violations.scan.task` |
-| Source | `07_tasks/audit.boundary-violations.scan.task.yaml` |
+| Source | `05_tasks/audit.boundary-violations.scan.task.yaml` |
 | Tags | task |
 Run the responsibility-boundary audit over a workspace and write
 findings.jsonl + summary.json. Wraps lib.audit.scan_boundary_violations.run_audit.

@@ -69,20 +69,20 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 | [Task base](task.base.definition.md) | `task.base` | `02_core/runtimes/yaml/definitions/task.yaml` | task, abstract |
 | [JSON Schema Base](schemas.base.definition.md) | `schemas.base` | `02_core/runtimes/yaml/definitions/schemas.yaml` | schema, abstract |
 | [Generate Schema JSON](schemas.generate-json.workflow.definition.md) | `schemas.generate-json.workflow` | `02_core/runtimes/yaml/definitions/schemas.yaml` | schema, workflow |
-| [Classification Audit Finding](audit.classification-finding.schema.definition.md) | `audit.classification-finding.schema` | `01_schemas/audit.classification-finding.schema.yaml` | schema, audit |
-| [Dispatch Request Envelope](dispatch.request.schema.definition.md) | `dispatch.request.schema` | `01_schemas/dispatch.request.schema.yaml` | schema, dispatch |
-| [Dispatch Response Envelope](dispatch.response.schema.definition.md) | `dispatch.response.schema` | `01_schemas/dispatch.response.schema.yaml` | schema, dispatch |
-| [Harness Stream Event](harness.stream-event.schema.definition.md) | `harness.stream-event.schema` | `01_schemas/harness.stream-event.schema.yaml` | schema, harness |
-| [Tool Invocation](tool.invocation.schema.definition.md) | `tool.invocation.schema` | `01_schemas/tool.invocation.schema.yaml` | schema, tool |
+| [Classification Audit Finding](audit.classification-finding.schema.definition.md) | `audit.classification-finding.schema` | `03_schemas/audit.classification-finding.schema.yaml` | schema, audit |
+| [Dispatch Request Envelope](dispatch.request.schema.definition.md) | `dispatch.request.schema` | `03_schemas/dispatch.request.schema.yaml` | schema, dispatch |
+| [Dispatch Response Envelope](dispatch.response.schema.definition.md) | `dispatch.response.schema` | `03_schemas/dispatch.response.schema.yaml` | schema, dispatch |
+| [Harness Stream Event](harness.stream-event.schema.definition.md) | `harness.stream-event.schema` | `03_schemas/harness.stream-event.schema.yaml` | schema, harness |
+| [Tool Invocation](tool.invocation.schema.definition.md) | `tool.invocation.schema` | `03_schemas/tool.invocation.schema.yaml` | schema, tool |
 | [Audit classification boundaries and ownership](audit.classifications.scan.workflow.definition.md) | `audit.classifications.scan.workflow` | `06_workflows/audit.classifications.scan.workflow.yaml` | workflow |
 | [Regenerate All Workflows Barrels](barrels.regenerate.workflow.definition.md) | `barrels.regenerate.workflow` | `06_workflows/barrels.regenerate.workflow.yaml` | python, generator, workflow |
 | [Regenerate workflows.yaml Bucket Barrels](barrels.regenerate.yaml-runtime.workflow.definition.md) | `barrels.regenerate.yaml-runtime.workflow` | `06_workflows/barrels.regenerate.workflow.yaml` | python, generator, workflow |
 | [YAML API Reference Build](docs.api.reference.workflow.definition.md) | `docs.api.reference.workflow` | `06_workflows/docs.api.reference.workflow.yaml` | documentation, workflow |
 | [API Documentation Catalog Sources](docs.catalog.generate.workflow.definition.md) | `docs.catalog.generate.workflow` | `06_workflows/docs.catalog.generate.workflow.yaml` | documentation, modules |
-| [Docs - Relationship Graph Component](docs.definition.template.component-relationship-graph.definition.md) | `docs.definition.template.component-relationship-graph` | `14_templates/docs.definition.template.yaml` | documentation, template, component |
-| [Docs - Definition Page Template](docs.definition.template.definition.definition.md) | `docs.definition.template.definition` | `14_templates/docs.definition.template.yaml` | documentation, template |
-| [Docs - Index Page Template](docs.catalog.template.index.definition.md) | `docs.catalog.template.index` | `14_templates/docs.catalog.template.yaml` | documentation, template |
-| [Docs - Authoring Schema Page Template](docs.catalog.template.schema.definition.md) | `docs.catalog.template.schema` | `14_templates/docs.catalog.template.yaml` | documentation, template |
+| [Docs - Relationship Graph Component](docs.definition.template.component-relationship-graph.definition.md) | `docs.definition.template.component-relationship-graph` | `19_templates/docs.definition.template.yaml` | documentation, template, component |
+| [Docs - Definition Page Template](docs.definition.template.definition.definition.md) | `docs.definition.template.definition` | `19_templates/docs.definition.template.yaml` | documentation, template |
+| [Docs - Index Page Template](docs.catalog.template.index.definition.md) | `docs.catalog.template.index` | `19_templates/docs.catalog.template.yaml` | documentation, template |
+| [Docs - Authoring Schema Page Template](docs.catalog.template.schema.definition.md) | `docs.catalog.template.schema` | `19_templates/docs.catalog.template.yaml` | documentation, template |
 | [Example Catalog Modules](examples.catalog.modules.definition.md) | `examples.catalog.modules` | `15_examples/examples.catalog.modules.yaml` | example, modules |
 | [Git Information](cloud.mixin.git-info.definition.md) | `cloud.mixin.git-info` | `15_examples/cloud.mixin.git-info.yaml` | mixin, git, deployment |
 | [Timestamp](cloud.mixin.timestamp.definition.md) | `cloud.mixin.timestamp` | `15_examples/cloud.mixin.timestamp.yaml` | mixin, deployment |
@@ -92,39 +92,39 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 | [Gitignore Template Example](git.gitignore.example.definition.md) | `git.gitignore.example` | `15_examples/git.gitignore.example.yaml` | example, git, templates |
 | [Obsidian Daily Note Template](obsidian.daily-note.example.definition.md) | `obsidian.daily-note.example` | `15_examples/obsidian.daily-note.example.yaml` | example, obsidian, templates |
 | [Render Classification Docs](docs.classification.render.workflow.definition.md) | `docs.classification.render.workflow` | `06_workflows/docs.classification.render.workflow.yaml` | documentation, workflow, classification |
-| [Docs - Classification Audit](docs.classification.audit.template.definition.md) | `docs.classification.audit.template` | `14_templates/docs.classification.template.yaml` | documentation, template, classification |
-| [Docs - Classification Remediation Workflow](docs.classification.remediation-workflow.template.definition.md) | `docs.classification.remediation-workflow.template` | `14_templates/docs.classification.template.yaml` | documentation, template, classification |
+| [Docs - Classification Audit](docs.classification.audit.template.definition.md) | `docs.classification.audit.template` | `19_templates/docs.classification.template.yaml` | documentation, template, classification |
+| [Docs - Classification Remediation Workflow](docs.classification.remediation-workflow.template.definition.md) | `docs.classification.remediation-workflow.template` | `19_templates/docs.classification.template.yaml` | documentation, template, classification |
 | [Generate Documentation](docs.generate.workflow.definition.md) | `docs.generate.workflow` | `06_workflows/docs.generate.workflow.yaml` | workflow |
 | [Build Repo README](docs.readme.generate.workflow.definition.md) | `docs.readme.generate.workflow` | `06_workflows/docs.readme.generate.workflow.yaml` | documentation, workflow |
-| [Docs - Repo README Template](docs.readme.template.definition.md) | `docs.readme.template` | `14_templates/docs.readme.template.yaml` | documentation, template |
+| [Docs - Repo README Template](docs.readme.template.definition.md) | `docs.readme.template` | `19_templates/docs.readme.template.yaml` | documentation, template |
 | [Sweep and embed project files into the vector store](embeddings.sweep.workflow.definition.md) | `embeddings.sweep.workflow` | `06_workflows/embeddings.sweep.workflow.yaml` | workflow |
 | [Classify files for audit and remediation](files.classify.workflow.definition.md) | `files.classify.workflow` | `06_workflows/files.classify.workflow.yaml` | workflow |
-| [Scan Boundary Violations](audit.boundary-violations.scan.task.definition.md) | `audit.boundary-violations.scan.task` | `07_tasks/audit.boundary-violations.scan.task.yaml` | task |
-| [Fetch readable text from a URL or search topic](browser.fetch.text.task.definition.md) | `browser.fetch.text.task` | `07_tasks/browser.fetch.text.task.yaml` | task |
-| [Build file classification manifest](classify.manifest.build.task.definition.md) | `classify.manifest.build.task` | `07_tasks/classify.manifest.build.task.yaml` | task |
-| [Return broad media class for a path](classify.media.class-for-path.task.definition.md) | `classify.media.class-for-path.task` | `07_tasks/classify.media.class-for-path.task.yaml` | task |
-| [Classify a file by media type and destination](classify.media.file.task.definition.md) | `classify.media.file.task` | `07_tasks/classify.media.file.task.yaml` | task |
-| [Chunk a file into embeddable text segments](embeddings.chunker.chunk-file.task.definition.md) | `embeddings.chunker.chunk-file.task` | `07_tasks/embeddings.chunker.chunk-file.task.yaml` | task |
-| [Generate an embedding vector for text](embeddings.embed.text.task.definition.md) | `embeddings.embed.text.task` | `07_tasks/embeddings.embed.text.task.yaml` | task |
-| [Query the local knowledge base](embeddings.query.search.task.definition.md) | `embeddings.query.search.task` | `07_tasks/embeddings.query.search.task.yaml` | task |
-| [Collect indexable files for embedding sweep](embeddings.sweep.collect-files.task.definition.md) | `embeddings.sweep.collect-files.task` | `07_tasks/embeddings.sweep.collect-files.task.yaml` | task |
-| [Compute MD5 hash of a file](embeddings.sweep.file-hash.task.definition.md) | `embeddings.sweep.file-hash.task` | `07_tasks/embeddings.sweep.file-hash.task.yaml` | task |
-| [Load the embedding sweep manifest](embeddings.sweep.load-manifest.task.definition.md) | `embeddings.sweep.load-manifest.task` | `07_tasks/embeddings.sweep.load-manifest.task.yaml` | task |
-| [Persist the embedding sweep manifest](embeddings.sweep.save-manifest.task.definition.md) | `embeddings.sweep.save-manifest.task` | `07_tasks/embeddings.sweep.save-manifest.task.yaml` | task |
-| [Iterate files in a directory tree](files.iter.task.definition.md) | `files.iter.task` | `07_tasks/files.iter.task.yaml` | task |
-| [Compute SHA-256 hash of a file](files.sha256.task.definition.md) | `files.sha256.task` | `07_tasks/files.sha256.task.yaml` | task |
-| [Write data to a JSON file](files.write-json.task.definition.md) | `files.write-json.task` | `07_tasks/files.write-json.task.yaml` | task |
-| [Classify an image by semantic type](image.classify.task.definition.md) | `image.classify.task` | `07_tasks/image.classify.task.yaml` | task |
-| [Extract dominant color palette from an image](image.color.dominant.task.definition.md) | `image.color.dominant.task` | `07_tasks/image.color.dominant.task.yaml` | task |
-| [Extract image file metadata](image.meta.extract.task.definition.md) | `image.meta.extract.task` | `07_tasks/image.meta.extract.task.yaml` | task |
-| [Assess image quality](image.quality.extract.task.definition.md) | `image.quality.extract.task` | `07_tasks/image.quality.extract.task.yaml` | task |
-| [Detect content regions in an image](image.regions.extract.task.definition.md) | `image.regions.extract.task` | `07_tasks/image.regions.extract.task.yaml` | task |
-| [Extract OCR text from an image](image.text-ocr.extract.task.definition.md) | `image.text-ocr.extract.task` | `07_tasks/image.text-ocr.extract.task.yaml` | task |
-| [Infer document type from filename](metadata.doc-type.task.definition.md) | `metadata.doc-type.task` | `07_tasks/metadata.doc-type.task.yaml` | task |
-| [Infer source origin from file path](metadata.source-guess.task.definition.md) | `metadata.source-guess.task` | `07_tasks/metadata.source-guess.task.yaml` | task |
-| [Get PDF page count](pdf.meta.page-count.task.definition.md) | `pdf.meta.page-count.task` | `07_tasks/pdf.meta.page-count.task.yaml` | task |
+| [Scan Boundary Violations](audit.boundary-violations.scan.task.definition.md) | `audit.boundary-violations.scan.task` | `05_tasks/audit.boundary-violations.scan.task.yaml` | task |
+| [Fetch readable text from a URL or search topic](browser.fetch.text.task.definition.md) | `browser.fetch.text.task` | `05_tasks/browser.fetch.text.task.yaml` | task |
+| [Build file classification manifest](classify.manifest.build.task.definition.md) | `classify.manifest.build.task` | `05_tasks/classify.manifest.build.task.yaml` | task |
+| [Return broad media class for a path](classify.media.class-for-path.task.definition.md) | `classify.media.class-for-path.task` | `05_tasks/classify.media.class-for-path.task.yaml` | task |
+| [Classify a file by media type and destination](classify.media.file.task.definition.md) | `classify.media.file.task` | `05_tasks/classify.media.file.task.yaml` | task |
+| [Chunk a file into embeddable text segments](embeddings.chunker.chunk-file.task.definition.md) | `embeddings.chunker.chunk-file.task` | `05_tasks/embeddings.chunker.chunk-file.task.yaml` | task |
+| [Generate an embedding vector for text](embeddings.embed.text.task.definition.md) | `embeddings.embed.text.task` | `05_tasks/embeddings.embed.text.task.yaml` | task |
+| [Query the local knowledge base](embeddings.query.search.task.definition.md) | `embeddings.query.search.task` | `05_tasks/embeddings.query.search.task.yaml` | task |
+| [Collect indexable files for embedding sweep](embeddings.sweep.collect-files.task.definition.md) | `embeddings.sweep.collect-files.task` | `05_tasks/embeddings.sweep.collect-files.task.yaml` | task |
+| [Compute MD5 hash of a file](embeddings.sweep.file-hash.task.definition.md) | `embeddings.sweep.file-hash.task` | `05_tasks/embeddings.sweep.file-hash.task.yaml` | task |
+| [Load the embedding sweep manifest](embeddings.sweep.load-manifest.task.definition.md) | `embeddings.sweep.load-manifest.task` | `05_tasks/embeddings.sweep.load-manifest.task.yaml` | task |
+| [Persist the embedding sweep manifest](embeddings.sweep.save-manifest.task.definition.md) | `embeddings.sweep.save-manifest.task` | `05_tasks/embeddings.sweep.save-manifest.task.yaml` | task |
+| [Iterate files in a directory tree](files.iter.task.definition.md) | `files.iter.task` | `05_tasks/files.iter.task.yaml` | task |
+| [Compute SHA-256 hash of a file](files.sha256.task.definition.md) | `files.sha256.task` | `05_tasks/files.sha256.task.yaml` | task |
+| [Write data to a JSON file](files.write-json.task.definition.md) | `files.write-json.task` | `05_tasks/files.write-json.task.yaml` | task |
+| [Classify an image by semantic type](image.classify.task.definition.md) | `image.classify.task` | `05_tasks/image.classify.task.yaml` | task |
+| [Extract dominant color palette from an image](image.color.dominant.task.definition.md) | `image.color.dominant.task` | `05_tasks/image.color.dominant.task.yaml` | task |
+| [Extract image file metadata](image.meta.extract.task.definition.md) | `image.meta.extract.task` | `05_tasks/image.meta.extract.task.yaml` | task |
+| [Assess image quality](image.quality.extract.task.definition.md) | `image.quality.extract.task` | `05_tasks/image.quality.extract.task.yaml` | task |
+| [Detect content regions in an image](image.regions.extract.task.definition.md) | `image.regions.extract.task` | `05_tasks/image.regions.extract.task.yaml` | task |
+| [Extract OCR text from an image](image.text-ocr.extract.task.definition.md) | `image.text-ocr.extract.task` | `05_tasks/image.text-ocr.extract.task.yaml` | task |
+| [Infer document type from filename](metadata.doc-type.task.definition.md) | `metadata.doc-type.task` | `05_tasks/metadata.doc-type.task.yaml` | task |
+| [Infer source origin from file path](metadata.source-guess.task.definition.md) | `metadata.source-guess.task` | `05_tasks/metadata.source-guess.task.yaml` | task |
+| [Get PDF page count](pdf.meta.page-count.task.definition.md) | `pdf.meta.page-count.task` | `05_tasks/pdf.meta.page-count.task.yaml` | task |
 | [research.local.summarize.task](research.local.summarize.task.definition.md) | `research.local.summarize.task` | `<raw>` | - |
-| [Run local test suite](shell.tests.run.task.definition.md) | `shell.tests.run.task` | `07_tasks/shell.tests.run.task.yaml` | task |
+| [Run local test suite](shell.tests.run.task.definition.md) | `shell.tests.run.task` | `05_tasks/shell.tests.run.task.yaml` | task |
 | [Format Markdown for Compliance](text.markdown.format.task.definition.md) | `text.markdown.format.task` | `<raw>` | - |
 | [Casbin Authorization Service](docker.casbin.service.definition.md) | `docker.casbin.service` | `09_docker/docker.casbin.service.yaml` | docker, auth |
 | [ClamAV Service](docker.clamav.service.definition.md) | `docker.clamav.service` | `09_docker/docker.clamav.service.yaml` | docker, document |
@@ -158,10 +158,10 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 | [Unstructured Service](docker.unstructured.service.definition.md) | `docker.unstructured.service` | `09_docker/docker.unstructured.service.yaml` | docker, document |
 | [Weaviate Service](docker.weaviate.service.definition.md) | `docker.weaviate.service` | `09_docker/docker.weaviate.service.yaml` | docker, vector |
 | [Content-Graph Worker Service](docker.worker.service.definition.md) | `docker.worker.service` | `09_docker/docker.worker.service.yaml` | docker, workers |
-| [launchd - Caffeinate](launchd.caffeinate.service.definition.md) | `launchd.caffeinate.service` | `09_launchd/launchd.caffeinate.service.yaml` | launchd, system |
-| [launchd - Docker](launchd.docker.service.definition.md) | `launchd.docker.service` | `09_launchd/launchd.docker.service.yaml` | launchd, runtime |
-| [launchd - LM Studio](launchd.lm-studio.service.definition.md) | `launchd.lm-studio.service` | `09_launchd/launchd.lm-studio.service.yaml` | launchd, ai |
-| [launchd - Ollama](launchd.ollama.service.definition.md) | `launchd.ollama.service` | `09_launchd/launchd.ollama.service.yaml` | launchd, ai |
+| [launchd - Caffeinate](launchd.caffeinate.service.definition.md) | `launchd.caffeinate.service` | `10_launchd/launchd.caffeinate.service.yaml` | launchd, system |
+| [launchd - Docker](launchd.docker.service.definition.md) | `launchd.docker.service` | `10_launchd/launchd.docker.service.yaml` | launchd, runtime |
+| [launchd - LM Studio](launchd.lm-studio.service.definition.md) | `launchd.lm-studio.service` | `10_launchd/launchd.lm-studio.service.yaml` | launchd, ai |
+| [launchd - Ollama](launchd.ollama.service.definition.md) | `launchd.ollama.service` | `10_launchd/launchd.ollama.service.yaml` | launchd, ai |
 | [claude-haiku-4-5](model.claude.claude-haiku-4-5.model.definition.md) | `model.claude.claude-haiku-4-5.model` | `13_models/model.claude.claude-haiku-4-5.model.yaml` | model |
 | [claude-opus-4-7](model.claude.claude-opus-4-7.model.definition.md) | `model.claude.claude-opus-4-7.model` | `13_models/model.claude.claude-opus-4-7.model.yaml` | model |
 | [claude-sonnet-4-6](model.claude.claude-sonnet-4-6.model.definition.md) | `model.claude.claude-sonnet-4-6.model` | `13_models/model.claude.claude-sonnet-4-6.model.yaml` | model |
@@ -176,11 +176,11 @@ See the [definition authoring schema](schema.md) for metadata and composition fi
 | [nomic-embed-text](model.ollama.nomic-embed-text.model.definition.md) | `model.ollama.nomic-embed-text.model` | `13_models/model.ollama.nomic-embed-text.model.yaml` | model |
 | [qwen2.5](model.ollama.qwen2-5.model.definition.md) | `model.ollama.qwen2-5.model` | `13_models/model.ollama.qwen2-5.model.yaml` | model |
 | [qwen3](model.ollama.qwen3.model.definition.md) | `model.ollama.qwen3.model` | `13_models/model.ollama.qwen3.model.yaml` | model |
-| [claude](provider.claude.provider.definition.md) | `provider.claude.provider` | `13_providers/provider.claude.provider.yaml` | provider |
-| [gemini](provider.gemini.provider.definition.md) | `provider.gemini.provider` | `13_providers/provider.gemini.provider.yaml` | provider |
-| [lmstudio](provider.lmstudio.provider.definition.md) | `provider.lmstudio.provider` | `13_providers/provider.lmstudio.provider.yaml` | provider |
-| [ollama](provider.ollama.provider.definition.md) | `provider.ollama.provider` | `13_providers/provider.ollama.provider.yaml` | provider |
-| [openai](provider.openai.provider.definition.md) | `provider.openai.provider` | `13_providers/provider.openai.provider.yaml` | provider |
+| [claude](provider.claude.provider.definition.md) | `provider.claude.provider` | `17_providers/provider.claude.provider.yaml` | provider |
+| [gemini](provider.gemini.provider.definition.md) | `provider.gemini.provider` | `17_providers/provider.gemini.provider.yaml` | provider |
+| [lmstudio](provider.lmstudio.provider.definition.md) | `provider.lmstudio.provider` | `17_providers/provider.lmstudio.provider.yaml` | provider |
+| [ollama](provider.ollama.provider.definition.md) | `provider.ollama.provider` | `17_providers/provider.ollama.provider.yaml` | provider |
+| [openai](provider.openai.provider.definition.md) | `provider.openai.provider` | `17_providers/provider.openai.provider.yaml` | provider |
 | [Spec promotion — Final stage](spec.promotion.final.task.definition.md) | `spec.promotion.final.task` | `<raw>` | - |
 | [Spec promotion — Prompts stage](spec.promotion.prompts.task.definition.md) | `spec.promotion.prompts.task` | `<raw>` | - |
 | [Spec promotion — Requirements stage](spec.promotion.requirements.task.definition.md) | `spec.promotion.requirements.task` | `<raw>` | - |
@@ -979,8 +979,8 @@ def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_
 def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_load_modules_workflow_module_13["service.yaml"]
 def_stdlib_load_modules_workflow["stdlib.load-modules.workflow"] --> def_stdlib_load_modules_workflow_module_14["task.yaml"]
 def_docs_api_reference_workflow["docs.api.reference.workflow"] --> def_docs_api_reference_workflow_module_1["docs.catalog.generate.workflow.yaml"]
-def_docs_catalog_generate_workflow["docs.catalog.generate.workflow"] --> def_docs_catalog_generate_workflow_module_1["../14_templates/docs.definition.template.yaml"]
-def_docs_catalog_generate_workflow["docs.catalog.generate.workflow"] --> def_docs_catalog_generate_workflow_module_2["../14_templates/docs.catalog.template.yaml"]
+def_docs_catalog_generate_workflow["docs.catalog.generate.workflow"] --> def_docs_catalog_generate_workflow_module_1["../19_templates/docs.definition.template.yaml"]
+def_docs_catalog_generate_workflow["docs.catalog.generate.workflow"] --> def_docs_catalog_generate_workflow_module_2["../19_templates/docs.catalog.template.yaml"]
 def_docs_catalog_generate_workflow["docs.catalog.generate.workflow"] --> def_docs_catalog_generate_workflow_module_3["../15_examples/examples.catalog.modules.yaml"]
 def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_1["cloud.mixin.git-info.yaml"]
 def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_2["cloud.mixin.timestamp.yaml"]
@@ -989,6 +989,6 @@ def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalo
 def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_5["git.github.example.yaml"]
 def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_6["git.gitignore.example.yaml"]
 def_examples_catalog_modules["examples.catalog.modules"] --> def_examples_catalog_modules_module_7["obsidian.daily-note.example.yaml"]
-def_docs_classification_render_workflow["docs.classification.render.workflow"] --> def_docs_classification_render_workflow_module_1["../14_templates/docs.classification.template.yaml"]
-def_docs_readme_generate_workflow["docs.readme.generate.workflow"] --> def_docs_readme_generate_workflow_module_1["../14_templates/docs.readme.template.yaml"]
+def_docs_classification_render_workflow["docs.classification.render.workflow"] --> def_docs_classification_render_workflow_module_1["../19_templates/docs.classification.template.yaml"]
+def_docs_readme_generate_workflow["docs.readme.generate.workflow"] --> def_docs_readme_generate_workflow_module_1["../19_templates/docs.readme.template.yaml"]
 ```

@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `pdf.meta.page-count.task` |
-| Source | `07_tasks/pdf.meta.page-count.task.yaml` |
+| Source | `05_tasks/pdf.meta.page-count.task.yaml` |
 | Tags | task |
 Return the page count of a PDF file using the pdfinfo command-line tool.
 Returns null if pdfinfo is unavailable or fails.

@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `provider.lmstudio.provider` |
-| Source | `13_providers/provider.lmstudio.provider.yaml` |
+| Source | `17_providers/provider.lmstudio.provider.yaml` |
 | Tags | provider |
 Desktop LLM runtime. Loads quantized open-weight models locally and serves them through a native HTTP API plus an OpenAI-compatible surface.
 

@@ -43,7 +43,7 @@ works inside the notebook.
 
 ## T3 — Build `promote_spec.ipynb`
 
-**Bucket:** `15_notebooks`
+**Bucket:** `20_notebooks`
 
 Implement the notebook per F1–F7 of the requirements. Cell layout:
 

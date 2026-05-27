@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `image.classify.task` |
-| Source | `07_tasks/image.classify.task.yaml` |
+| Source | `05_tasks/image.classify.task.yaml` |
 | Tags | task |
 Classify an image into one of 10 semantic types (photograph, screenshot,
 diagram, chart, infographic, illustration, document, blueprint, logo, other)

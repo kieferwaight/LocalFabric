@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `classify.media.class-for-path.task` |
-| Source | `07_tasks/classify.media.class-for-path.task.yaml` |
+| Source | `05_tasks/classify.media.class-for-path.task.yaml` |
 | Tags | task |
 Return a broad media class string ("image", "document", or "unknown")
 for the given path. Wraps lib.classify.media.media_class_for_path.

@@ -17,7 +17,7 @@
   description: |
     Emits one `.json` file per definition that declares a `schema:` block, by
     iterating `runtime.catalog.definitions` and filtering on `has_schema`.
-    Defaults write into `01_schemas/` next to the authoring YAML.
+    Defaults write into `03_schemas/` next to the authoring YAML.
   tags:
   - schema
   - workflow
@@ -26,7 +26,7 @@
     output_dir:
       type: string
       required: false
-      default: 01_schemas
+      default: 03_schemas
       description: Directory that receives the generated `.json` files.
     mode:
       type: string

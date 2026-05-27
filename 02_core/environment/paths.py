@@ -1,7 +1,7 @@
 """Repository path constants.
 
 ``REPO_ROOT`` is the single canonical anchor that every other module uses to
-locate buckets (``09_services``, ``14_data``, …). Override via the ``REPO_ROOT``
+locate buckets (``11_services``, ``14_data``, …). Override via the ``REPO_ROOT``
 env var to point at a different tree (tests use this).
 """
 
@@ -33,8 +33,8 @@ def stores(*parts: str) -> Path:
 
 
 def services_dir() -> Path:
-    """Path to ``09_services/``."""
-    return REPO_ROOT / "09_services"
+    """Path to ``11_services/``."""
+    return REPO_ROOT / "11_services"
 
 
 def registry_file(name: str) -> Path:

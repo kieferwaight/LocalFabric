@@ -2,7 +2,7 @@
 
 ## Summary
 
-The [`promote_spec.ipynb`](15_notebooks/promote_spec.ipynb) flow
+The [`promote_spec.ipynb`](20_notebooks/promote_spec.ipynb) flow
 just surfaced a real coupling: a prompt, a model, an enabled-thinking flag, a
 context budget, and a temperature only *work together* — but the code treats
 `Prompt` as a string and passes the rest as loose kwargs to
@@ -60,10 +60,10 @@ typed result. Loose kwargs and silent empties go away.
 ## Unknowns
 
 - Where do `Invocation` / `Runtime` / `Prompt` types live —
-  [`01_schemas/`](01_schemas) (just JSON schemas),
+  [`03_schemas/`](03_schemas) (just JSON schemas),
   [`01_interfaces/`](01_interfaces) (Protocol mirrors), or
   [`02_core/`](02_core) (runtime helpers too)? Probably split:
-  schemas in `01_schemas`, Protocols in `01_interfaces`, builders/validators
+  schemas in `03_schemas`, Protocols in `01_interfaces`, builders/validators
   in core.
 - Is `lms load` (LM Studio) + Ollama's REST `load` endpoint enough for a
   cross-provider `lifecycle.ensure_loaded()`, or do we need a fallback that
@@ -77,7 +77,7 @@ typed result. Loose kwargs and silent empties go away.
 
 ## Strategy
 
-Promote this idea through [`promote_spec.ipynb`](15_notebooks/promote_spec.ipynb).
+Promote this idea through [`promote_spec.ipynb`](20_notebooks/promote_spec.ipynb).
 It is the second idea promoted through the pipeline (after
 `build-the-promotion-workflow` itself) and the first one *not* hand-written —
 making it the cleanest end-to-end test of the notebook against a fresh slug.

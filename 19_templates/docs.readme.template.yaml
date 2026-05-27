@@ -67,11 +67,11 @@
       flowchart LR
           Surfaces["CLI / API / MCP"] --> Commands["core.interfaces.commands"]
           Commands --> Runtimes["core.runtimes\n(yaml / markdown / langgraph)"]
-          Runtimes --> Tasks["07_tasks\nYAML wrappers"]
+          Runtimes --> Tasks["05_tasks\nYAML wrappers"]
           Tasks --> Lib["lib.*\nhelpers"]
           Tasks --> Harnesses["harnesses.*\n(claude / ollama / ...)"]
           Lib --> Drivers["drivers.*\n(sql / vector / file / cache)"]
-          Harnesses --> Registry["13_models, 13_providers\nregistries"]
+          Harnesses --> Registry["13_models, 17_providers\nregistries"]
       ```
 
       ## Repository Layout
@@ -144,7 +144,7 @@
       ```
       Bring up a service from the Docker-Compose catalog:
       ```bash
-      docker compose -f 09_services/<category>/<service>/docker-compose.yml up -d
+      docker compose -f 11_services/<category>/<service>/docker-compose.yml up -d
       ```
 
       ## Notes For Contributors

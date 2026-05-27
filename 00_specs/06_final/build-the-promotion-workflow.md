@@ -31,7 +31,7 @@ ______________________________________________________________________
 > `20_workspaces/00_specs/01_ideas/build-the-promotion-workflow.md` and
 > refined in the artifacts indexed at the top of this file. The first
 > trigger of this capability is a Jupyter notebook —
-> `20_workspaces/15_notebooks/promote_spec.ipynb` — that promotes a spec
+> `20_workspaces/20_notebooks/promote_spec.ipynb` — that promotes a spec
 > through `01_ideas/ → 02_research/ → 03_requirements/ → 04_tasks/ → 05_prompts/ → 06_final/` by calling a local OpenAI-compatible chat model
 > at each stage.
 >
@@ -45,7 +45,7 @@ ______________________________________________________________________
 >    of the same shape.
 >
 > 1. `claude_feature_spec-promotion-notebook` — implement
->    `20_workspaces/15_notebooks/promote_spec.ipynb` per the cell layout in
+>    `20_workspaces/20_notebooks/promote_spec.ipynb` per the cell layout in
 >    T3 of the tasks stage, satisfying acceptance criteria A1–A5 of the
 >    requirements stage. Path resolution must go through
 >    `core.paths.WORKSPACES_ROOT`. Provider is LM Studio by default

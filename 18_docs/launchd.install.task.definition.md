@@ -31,13 +31,13 @@ def_launchd_install_task --> def_launchd_lifecycle_base["launchd Lifecycle Base"
 ### Inputs
 | Name | Type | Required | Default | Description |
 | --- | --- | --- | --- | --- |
-| `plist_path` | `string` | no | `` | Path to the rendered `.plist` file. Defaults to `09_launchd/<definition>.plist`. |
+| `plist_path` | `string` | no | `` | Path to the rendered `.plist` file. Defaults to `10_launchd/<definition>.plist`. |
 
 
 ### Variables
 | Name | YAML Type | Value / Template | Description |
 | --- | --- | --- | --- |
-| `resolved_plist_path` | `str` | `{{ plist_path if plist_path else '09_launchd/' ~ definition ~ '.plist' }}` | - |
+| `resolved_plist_path` | `str` | `{{ plist_path if plist_path else '10_launchd/' ~ definition ~ '.plist' }}` | - |
 | `command` | `str` | `mkdir -p "$HOME/Library/LaunchAgents" cp "{{ resolved_plist_path }}" "$HOME/Library/LaunchAgents/{{ resolved_label }}.plist" launchctl bootout "gui/$UID/{{ resolved_label }}" 2>/dev/null \|\| true launchctl bootstrap "gui/$UID" "$HOME/Library/LaunchAgents/{{ resolved_label }}.plist" ` | - |
 
 
@@ -62,7 +62,7 @@ _No locally declared teardown operations._
 | --- | --- | --- |
 | `system_log_format` | `[{{ entity_id }} \| {{ runtime.version }}]` | [Abstract Base](stdlib.base.definition.md) |
 | `resolved_label` | `{{ ((runtime.catalog.definitions \| selectattr('id', 'equalto', definition) \| list \| first).launchd.label) if definition else label }}` | [launchd Lifecycle Base](launchd.lifecycle.base.definition.md) |
-| `resolved_plist_path` | `{{ plist_path if plist_path else '09_launchd/' ~ definition ~ '.plist' }}` | [Install LaunchAgent](launchd.install.task.definition.md) |
+| `resolved_plist_path` | `{{ plist_path if plist_path else '10_launchd/' ~ definition ~ '.plist' }}` | [Install LaunchAgent](launchd.install.task.definition.md) |
 | `command` | `mkdir -p "$HOME/Library/LaunchAgents" cp "{{ resolved_plist_path }}" "$HOME/Library/LaunchAgents/{{ resolved_label }}.plist" launchctl bootout "gui/$UID/{{ resolved_label }}" 2>/dev/null \|\| true launchctl bootstrap "gui/$UID" "$HOME/Library/LaunchAgents/{{ resolved_label }}.plist" ` | [Install LaunchAgent](launchd.install.task.definition.md) |
 
 

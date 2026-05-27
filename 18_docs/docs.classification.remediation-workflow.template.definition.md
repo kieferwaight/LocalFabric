@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `docs.classification.remediation-workflow.template` |
-| Source | `14_templates/docs.classification.template.yaml` |
+| Source | `19_templates/docs.classification.template.yaml` |
 | Tags | documentation, template, classification |
 Canonical body of `18_docs/classification_remediation_workflow.md`. Pure
 static content owned by this YAML definition so the committed `.md` file

@@ -11,7 +11,7 @@ promoted_at: '2026-05-23T19:06:13Z'
 
 ## Existing Repository Assets
 
-- `15_notebooks/` — Target directory for the new notebook; existing notebook templates or execution conventions should be reused.
+- `20_notebooks/` — Target directory for the new notebook; existing notebook templates or execution conventions should be reused.
 - `12_prompts/text.markdown.format.task.md` — The prompt artifact to be consumed and tested; must be read as-is without modification.
 - `08_drivers/` or `03_adapters/` — Likely contains existing LLM client implementations (e.g., OpenAI-compatible API wrappers) that should be reused for LM Studio communication.
 - `04_harnesses/` or `06_workflows/` — Existing orchestration harnesses or workflow definitions that may provide reusable step-chaining, logging, or evaluation utilities.

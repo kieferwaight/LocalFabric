@@ -19,7 +19,7 @@ files so manual edits don't silently overwrite the canonical content.
 | Mixins | - |
 | Children | - |
 | Mixin consumers | - |
-| Modules | `../14_templates/docs.classification.template.yaml` |
+| Modules | `../19_templates/docs.classification.template.yaml` |
 ```mermaid
 flowchart LR
   def_docs_classification_render_workflow["Render Classification Docs"]

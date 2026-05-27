@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `launchd.docker.service` |
-| Source | `09_launchd/launchd.docker.service.yaml` |
+| Source | `10_launchd/launchd.docker.service.yaml` |
 | Tags | launchd, runtime |
 Stub for a launchd-managed Docker daemon on macOS. Expand `program` to
 point at the desired runner (orbctl, colima, docker desktop helper, ...).

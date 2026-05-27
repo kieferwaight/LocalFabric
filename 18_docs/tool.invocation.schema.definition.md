@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `tool.invocation.schema` |
-| Source | `01_schemas/tool.invocation.schema.yaml` |
+| Source | `03_schemas/tool.invocation.schema.yaml` |
 | Tags | schema, tool |
 Internal shape for invoking a tool (07_lib) or MCP-exposed function
 (11_mcp/tools).

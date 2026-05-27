@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `harness.stream-event.schema` |
-| Source | `01_schemas/harness.stream-event.schema.yaml` |
+| Source | `03_schemas/harness.stream-event.schema.yaml` |
 | Tags | schema, harness |
 Single event emitted by a harness's stream() method. Modeled loosely on the
 OpenAI/Anthropic streaming shape so adapters can normalize.

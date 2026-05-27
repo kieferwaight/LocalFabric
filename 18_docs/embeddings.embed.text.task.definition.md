@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `embeddings.embed.text.task` |
-| Source | `07_tasks/embeddings.embed.text.task.yaml` |
+| Source | `05_tasks/embeddings.embed.text.task.yaml` |
 | Tags | task |
 Embed a text string through the local Ollama harness and return the
 vector. Wraps lib.embeddings.embedder.Embedder.embed.

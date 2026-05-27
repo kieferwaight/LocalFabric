@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `provider.openai.provider` |
-| Source | `13_providers/provider.openai.provider.yaml` |
+| Source | `17_providers/provider.openai.provider.yaml` |
 | Tags | provider |
 OpenAI's hosted model catalog (GPT-class chat, code, embedding, and vision). The canonical owner of the OpenAI Chat Completions wire format.
 

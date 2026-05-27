@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `dispatch.request.schema` |
-| Source | `01_schemas/dispatch.request.schema.yaml` |
+| Source | `03_schemas/dispatch.request.schema.yaml` |
 | Tags | schema, dispatch |
 Internal request envelope passed from an adapter to the router or a harness.
 

@@ -12,7 +12,7 @@
   - workflow
   extends: stdlib.base
   modules:
-  - ../14_templates/docs.readme.template.yaml
+  - ../19_templates/docs.readme.template.yaml
   inputs:
     repo_root:
       type: string
