@@ -18,3 +18,6 @@
       text, source_label, url = fetch_readable_text("{{ topic_or_url }}")
       with open(os.environ["STATE_FILE"], "w") as f:
           json.dump({"text": text, "source_label": source_label, "url": url}, f)
+  example:
+  - description: Fetch text for a Wikipedia article URL
+    input: "https://en.wikipedia.org/wiki/Artificial_intelligence"

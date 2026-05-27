@@ -1,10 +1,8 @@
 ---
-id: image.vision.layout.lmstudio-gemma4.task
-description: Describe only an image's page layout and spacing (via LM Studio, Gemma 4 E4B).
-provider: lmstudio
-model: google/gemma-4-e4b
-max_tokens: 1200
-temperature: 0.0
+id: image.vision.layout.claude-cli.task
+description: Describe only an image's page layout and spacing (via Claude CLI, Sonnet 4.6).
+provider: claude_cli
+model: claude-sonnet-4-6
 inputs:
   image_path:
     type: string
@@ -22,11 +20,10 @@ Return exactly this markdown shape:
 - Main area: <short description>
 - Lower area: <short description>
 - Footer: <short description>
-
-Rules:
-
+  Rules:
 - Maximum 4 bullets.
 - Do not transcribe any visible text.
 - Do not list navigation items, headings, or button labels one by one.
 - Mention only large visible blocks, media, CTA areas, and spacing.
 - No placeholders except the angle-bracket examples in this template.
+- End with <END>.

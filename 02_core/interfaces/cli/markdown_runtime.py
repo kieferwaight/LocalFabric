@@ -20,12 +20,14 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from core.interfaces.cli.spinner import Spinner
 from core.runtimes.markdown import (
     MarkdownCompileError,
     MarkdownHarness,
     ProviderError,
     ProviderResult,
 )
+from core.runtimes.markdown.compiler import PROVIDER_MARKER_KEY
 from core.runtimes.yaml.src import Runtime, ShellEnvironment
 
 USAGE = "Usage: localfabric-md <markdown_file> [positional args] [--key=value] [--flag]"
@@ -89,8 +91,30 @@ def main(argv: list[str] | None = None) -> int:
         runtime.import_yaml(str(_YAML_STDLIB))
 
     harness = MarkdownHarness(runtime=runtime)
+
+    # Pre-compile so the spinner can label the in-flight provider. The
+    # compile is cheap and idempotent — `harness.execute` re-runs it
+    # internally, but the duplicate parse costs a few ms at most.
+    spinner_label = "Running…"
+    is_streaming = False
     try:
-        result = harness.execute(markdown_file, dict(env.options))
+        peek = harness.compile_file(markdown_file)
+    except MarkdownCompileError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    provider_marker = peek.get(PROVIDER_MARKER_KEY) if isinstance(peek, dict) else None
+    if isinstance(provider_marker, dict):
+        spinner_label = f"Asking {provider_marker.get('provider', 'provider')}…"
+        is_streaming = bool(provider_marker.get("stream"))
+
+    try:
+        # Streaming runs already echo chunks live; a spinner would fight
+        # them for the terminal. Only the blocking path gets one.
+        if is_streaming:
+            result = harness.execute(markdown_file, dict(env.options))
+        else:
+            with Spinner(spinner_label):
+                result = harness.execute(markdown_file, dict(env.options))
     except MarkdownCompileError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2

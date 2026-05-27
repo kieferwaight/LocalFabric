@@ -1,5 +1,6 @@
 ---
 id: image.vision.style.lmstudio-gemma4.task
+description: Describe an image's visual style (via LM Studio, Gemma 4 E4B).
 provider: lmstudio
 model: google/gemma-4-e4b
 max_tokens: 1200

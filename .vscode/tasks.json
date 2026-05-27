@@ -2,100 +2,29 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Service: Jupyter Up",
+      "label": "Run Current File with Args",
       "type": "shell",
-      "command": "python -m service_runtime.cmd up jupyter ./14_data/apps/jupyter/scratch",
-      "presentation": { "reveal": "always", "panel": "dedicated" },
-      "problemMatcher": []
-    },
-    {
-      "label": "Service: Jupyter Down",
-      "type": "shell",
-      "command": "python -m service_runtime.cmd down jupyter ./14_data/apps/jupyter/scratch",
-      "presentation": { "reveal": "always", "panel": "dedicated" },
-      "problemMatcher": []
-    },
-    {
-      "label": "Service: Jupyter Open",
-      "type": "shell",
-      "command": "echo 'http://localhost:8888/?token=localfabric-dev' && open 'http://localhost:8888/?token=localfabric-dev'",
-      "linux": {
-        "command": "echo 'http://localhost:8888/?token=localfabric-dev' && xdg-open 'http://localhost:8888/?token=localfabric-dev'"
+      "command": "uv run lfc run ${relativeFile} ${input:lfcArgs}",
+      "options": {
+        "cwd": "${workspaceFolder}"
       },
-      "windows": {
-        "command": "echo 'http://localhost:8888/?token=localfabric-dev' && start 'http://localhost:8888/?token=localfabric-dev'"
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": false
       },
-      "presentation": { "reveal": "silent" },
-      "problemMatcher": []
-    },
-    {
-      "label": "Service: Up (any)",
-      "type": "shell",
-      "command": "python -m service_runtime.cmd up ${input:serviceName} ${input:dataPath}",
-      "presentation": { "reveal": "always", "panel": "dedicated" },
-      "problemMatcher": []
-    },
-    {
-      "label": "Service: Down (any)",
-      "type": "shell",
-      "command": "python -m service_runtime.cmd down ${input:serviceName} ${input:dataPath}",
-      "presentation": { "reveal": "always", "panel": "dedicated" },
-      "problemMatcher": []
-    },
-    {
-      "label": "Service: Status (any)",
-      "type": "shell",
-      "command": "python -m service_runtime.cmd status ${input:serviceName} ${input:dataPath}",
-      "presentation": { "reveal": "always", "panel": "dedicated" },
       "problemMatcher": []
     }
   ],
   "inputs": [
     {
-      "id": "serviceName",
-      "type": "pickString",
-      "description": "Service from 14_data/_registry/services.yaml",
-      "default": "jupyter",
-      "options": [
-        "jupyter",
-        "postgres",
-        "pgvector",
-        "redis",
-        "qdrant",
-        "weaviate",
-        "opensearch",
-        "opensearch-dashboards",
-        "neo4j",
-        "grafana",
-        "prometheus",
-        "jaeger",
-        "ollama",
-        "open-webui",
-        "minio",
-        "keycloak",
-        "openfga",
-        "casbin-service",
-        "temporal",
-        "temporal-ui",
-        "n8n",
-        "fastapi",
-        "worker",
-        "gitea",
-        "traefik",
-        "tika",
-        "grobid",
-        "unstructured",
-        "tesseract-ocr",
-        "libreoffice",
-        "clamav",
-        "playwright-worker"
-      ]
-    },
-    {
-      "id": "dataPath",
+      "id": "lfcArgs",
       "type": "promptString",
-      "description": "Data path. Standard pattern: ./14_data/<data_subpath>/<instance>. Check the registry for each service's data_subpath.",
-      "default": "./14_data/apps/jupyter/scratch"
+      "description": "Args/options for lfc run (e.g. --url=https://example.com --foo=bar)",
+      "default": ""
     }
   ]
 }

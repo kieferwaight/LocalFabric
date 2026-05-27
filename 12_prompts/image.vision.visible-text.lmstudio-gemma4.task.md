@@ -1,5 +1,6 @@
 ---
 id: image.vision.visible-text.lmstudio-gemma4.task
+description: Extract exact visible text from an image (via LM Studio, Gemma 4 E4B).
 provider: lmstudio
 model: google/gemma-4-e4b
 max_tokens: 1800
