@@ -6,7 +6,6 @@ from pathlib import Path
 
 from lib.classify.build_manifest import CONFIDENCE_REVIEW_THRESHOLD, build_classification
 
-
 # ---------------------------------------------------------------------------
 # helpers
 # ---------------------------------------------------------------------------
@@ -41,7 +40,14 @@ def test_build_classification_returns_three_dicts(tmp_path: Path) -> None:
 def test_classification_report_has_required_top_level_keys(tmp_path: Path) -> None:
     root = _make_workspace(tmp_path, {"misc/doc.md": "# Hello"})
     classification, _, _ = build_classification(root)
-    for key in ("generated_at", "root", "total_files", "counts_by_class", "items", "review_threshold"):
+    for key in (
+        "generated_at",
+        "root",
+        "total_files",
+        "counts_by_class",
+        "items",
+        "review_threshold",
+    ):
         assert key in classification, f"Missing key: {key}"
 
 
@@ -82,7 +88,13 @@ def test_single_md_file_in_planning_classified_as_content(tmp_path: Path) -> Non
 def test_single_image_classified_as_asset_raw(tmp_path: Path) -> None:
     """Use 10_publication path for images, which routes at 0.88 — above the 0.80 threshold."""
     root = tmp_path / "workspace_img"
-    img = root / "10_publication_applied_machine_learning" / "04_research_and_data" / "graphics" / "fig.png"
+    img = (
+        root
+        / "10_publication_applied_machine_learning"
+        / "04_research_and_data"
+        / "graphics"
+        / "fig.png"
+    )
     img.parent.mkdir(parents=True)
     img.write_bytes(b"\x89PNG")
     classification, _, _ = build_classification(root)

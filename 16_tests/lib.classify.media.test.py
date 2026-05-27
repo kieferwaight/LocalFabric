@@ -4,10 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-
 from lib.classify.media import classify_file, media_class_for_path
-
 
 # ---------------------------------------------------------------------------
 # media_class_for_path — broad ingest triage
@@ -48,7 +45,13 @@ def test_media_class_for_path_no_extension() -> None:
 
 def test_classify_file_returns_required_keys() -> None:
     result = classify_file(Path("some/file.md"))
-    assert set(result.keys()) == {"class", "subclass", "recommended_destination", "confidence", "reason"}
+    assert set(result.keys()) == {
+        "class",
+        "subclass",
+        "recommended_destination",
+        "confidence",
+        "reason",
+    }
 
 
 # --- backup bucket ---
@@ -184,9 +187,7 @@ def test_classify_file_research_code_becomes_pipeline_script() -> None:
 
 def test_classify_file_research_graphic_treated_as_asset() -> None:
     result = classify_file(
-        Path(
-            "10_publication_applied_machine_learning/04_research_and_data/graphics/figure1.png"
-        )
+        Path("10_publication_applied_machine_learning/04_research_and_data/graphics/figure1.png")
     )
     assert result["class"] == "asset_raw"
     assert result["subclass"] == "research_graphic"
@@ -202,9 +203,7 @@ def test_classify_file_distribution_outputs_are_exports() -> None:
 
 def test_classify_file_internal_knowledge_doc_is_content() -> None:
     result = classify_file(
-        Path(
-            "10_publication_applied_machine_learning/02_internal_knowledge/overview.md"
-        )
+        Path("10_publication_applied_machine_learning/02_internal_knowledge/overview.md")
     )
     assert result["class"] == "content"
     assert result["subclass"] == "internal_draft"
@@ -212,9 +211,7 @@ def test_classify_file_internal_knowledge_doc_is_content() -> None:
 
 def test_classify_file_internal_knowledge_image_is_diagram_asset() -> None:
     result = classify_file(
-        Path(
-            "10_publication_applied_machine_learning/02_internal_knowledge/arch.png"
-        )
+        Path("10_publication_applied_machine_learning/02_internal_knowledge/arch.png")
     )
     assert result["class"] == "asset_processed"
     assert result["subclass"] == "internal_visual"
