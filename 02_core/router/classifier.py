@@ -21,14 +21,14 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 
 # ------------------------------------------------------------------
 # Enums
 # ------------------------------------------------------------------
 
 
-class Intent(str, Enum):
+class Intent(StrEnum):
     """Primary task categories."""
 
     RESEARCH = "research"  # web fetch, summarize, investigate
@@ -42,7 +42,7 @@ class Intent(str, Enum):
     UNKNOWN = "unknown"  # fallback
 
 
-class Complexity(str, Enum):
+class Complexity(StrEnum):
     """Execution tier recommendation."""
 
     LOCAL = "local"  # local Ollama model (fastest, free)
@@ -123,7 +123,8 @@ _INTENT_RULES: list[tuple[re.Pattern, Intent, Complexity | None, float]] = [
     # Code gen
     (
         re.compile(
-            r"\b(write|generate|create|implement|build|scaffold|new (script|module|function|class|tool))\b",
+            r"\b(write|generate|create|implement|build|scaffold|"
+            r"new (script|module|function|class|tool))\b",
             re.I,
         ),
         Intent.CODE_GEN,
