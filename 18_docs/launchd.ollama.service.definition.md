@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `launchd.ollama.service` |
-| Source | `09_launchd/launchd.ollama.service.yaml` |
+| Source | `10_launchd/launchd.ollama.service.yaml` |
 | Tags | launchd, ai |
 Runs `ollama serve` under launchd, bound to 127.0.0.1:11434. Inherits the
 common process posture and log layout from `launchd.base`.

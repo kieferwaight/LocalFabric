@@ -27,7 +27,7 @@
   description: |
     Emits one `.plist` file per definition that declares a `launchd:` block, by
     iterating `runtime.catalog.definitions` and filtering on `has_launchd`.
-    Defaults write into `09_launchd/` next to the authoring YAML.
+    Defaults write into `10_launchd/` next to the authoring YAML.
   tags:
   - launchd
   - workflow
@@ -36,7 +36,7 @@
     output_dir:
       type: string
       required: false
-      default: 09_launchd
+      default: 10_launchd
       description: Directory that receives the generated `.plist` files.
     mode:
       type: string
@@ -70,7 +70,7 @@
 # variables and the run command reference `resolved_label` directly.
 #
 # `install` / `uninstall` additionally need the path to the rendered
-# `.plist`. By default we look under `09_launchd/<definition-id>.plist`,
+# `.plist`. By default we look under `10_launchd/<definition-id>.plist`,
 # matching `launchd.generate-plist.workflow`'s default output layout.
 # ---------------------------------------------------------------------------
 - id: launchd.lifecycle.base
@@ -116,9 +116,9 @@
       type: string
       required: false
       default: ''
-      description: Path to the rendered `.plist` file. Defaults to `09_launchd/<definition>.plist`.
+      description: Path to the rendered `.plist` file. Defaults to `10_launchd/<definition>.plist`.
   variables:
-    resolved_plist_path: "{{ plist_path if plist_path else '09_launchd/' ~ definition ~ '.plist' }}"
+    resolved_plist_path: "{{ plist_path if plist_path else '10_launchd/' ~ definition ~ '.plist' }}"
     command: |
       mkdir -p "$HOME/Library/LaunchAgents"
       cp "{{ resolved_plist_path }}" "$HOME/Library/LaunchAgents/{{ resolved_label }}.plist"

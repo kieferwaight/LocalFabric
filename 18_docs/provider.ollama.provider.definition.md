@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `provider.ollama.provider` |
-| Source | `13_providers/provider.ollama.provider.yaml` |
+| Source | `17_providers/provider.ollama.provider.yaml` |
 | Tags | provider |
 Local-first runtime for open-weight LLMs. Pulls model weights on demand and serves them through a daemon that ships both a native API and an OpenAI Chat Completions-compatible surface.
 

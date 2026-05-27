@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `audit.classification-finding.schema` |
-| Source | `01_schemas/audit.classification-finding.schema.yaml` |
+| Source | `03_schemas/audit.classification-finding.schema.yaml` |
 | Tags | schema, audit |
 A planning record for source functionality that crosses the numeric bucket
 ownership model.

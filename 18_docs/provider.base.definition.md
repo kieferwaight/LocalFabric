@@ -6,7 +6,7 @@
 | ID | `provider.base` |
 | Source | `02_core/runtimes/yaml/definitions/provider.yaml` |
 | Tags | provider, abstract |
-Pure-data base for the provider records under `13_providers/`.
+Pure-data base for the provider records under `17_providers/`.
 Establishes the canonical fields every provider declares (`name`,
 `location`, `endpoint`, `auth`, `env`, `protocols`, `documentation`).
 Carries no run blocks.

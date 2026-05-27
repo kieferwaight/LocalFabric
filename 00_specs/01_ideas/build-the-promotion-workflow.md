@@ -2,7 +2,7 @@
 
 ## Summary
 
-I want a [15_notebooks](15_notebooks) that promotes an idea
+I want a [20_notebooks](20_notebooks) that promotes an idea
 through the `00_specs/` pipeline — from `01_ideas/` to `06_final/` — by calling
 a local LLM at each stage. The notebook is the observable "first trigger" for a
 capability we will eventually expose as a `/promote-spec` command, an MCP tool,

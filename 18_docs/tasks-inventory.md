@@ -1,11 +1,11 @@
 # Tasks inventory
 
-_Regenerated 2026-05-26 after `07_tasks → 07_lib` rename and YAML task-wrapper authoring._
+_Regenerated 2026-05-26 after `05_tasks → 07_lib` rename and YAML task-wrapper authoring._
 
 Two complementary layers:
 
 - **`07_lib/`** — Python helper library; import via `lib.*`. Pure(-ish) functions and classes; no workflow orchestration.
-- **`07_tasks/`** — YAML task wrappers; each file contains one definition that `extends: task.base` and delegates to a `lib.*` function in its `run:` block.
+- **`05_tasks/`** — YAML task wrappers; each file contains one definition that `extends: task.base` and delegates to a `lib.*` function in its `run:` block.
 
 Workflows under `06_workflows/` compose tasks into pipelines.
 
@@ -230,7 +230,7 @@ Workflows under `06_workflows/` compose tasks into pipelines.
 
 ---
 
-## Section B — What tasks can I invoke (`07_tasks/*.task.yaml`)
+## Section B — What tasks can I invoke (`05_tasks/*.task.yaml`)
 
 Each entry shows the task id, its required inputs, and the `lib.*` function it delegates to.
 

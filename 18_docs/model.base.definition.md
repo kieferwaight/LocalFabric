@@ -54,7 +54,7 @@ def_model_ollama_qwen3_model["qwen3"] --> def_model_base
 | --- | --- | --- | --- |
 | `name` | `str` | `` | Canonical identifier of the model (e.g. `claude-opus-4-7`). |
 | `documentation` | `dict` | `{}` | Free-form notes — typically `summary`, `vendor`, `homepage`. |
-| `providers` | `list` | `[]` | List of provider IDs (from `13_providers/`) that serve this model. |
+| `providers` | `list` | `[]` | List of provider IDs (from `17_providers/`) that serve this model. |
 | `features` | `list` | `[]` | Capability tags (e.g. `text`, `tool_calling`, `vision`, `streaming`). |
 
 

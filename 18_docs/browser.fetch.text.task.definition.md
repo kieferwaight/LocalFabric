@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `browser.fetch.text.task` |
-| Source | `07_tasks/browser.fetch.text.task.yaml` |
+| Source | `05_tasks/browser.fetch.text.task.yaml` |
 | Tags | task |
 Retrieve and clean readable text for a URL or DuckDuckGo search topic.
 Wraps lib.browser.fetch_text.fetch_readable_text.

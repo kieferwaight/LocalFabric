@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `classify.manifest.build.task` |
-| Source | `07_tasks/classify.manifest.build.task.yaml` |
+| Source | `05_tasks/classify.manifest.build.task.yaml` |
 | Tags | task |
 Walk a repository root and produce classification, current-state manifest,
 and fingerprint report dicts. Wraps lib.classify.build_manifest.build_classification.

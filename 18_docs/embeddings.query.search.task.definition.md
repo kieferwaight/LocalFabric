@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `embeddings.query.search.task` |
-| Source | `07_tasks/embeddings.query.search.task.yaml` |
+| Source | `05_tasks/embeddings.query.search.task.yaml` |
 | Tags | task |
 Embed a query and retrieve the top-k most relevant chunks from the
 local vector store, returning a formatted markdown context block.

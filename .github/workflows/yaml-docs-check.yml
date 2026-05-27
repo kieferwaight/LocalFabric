@@ -2,35 +2,35 @@ name: yaml-docs-check
 on:
   pull_request:
     paths:
-    - 01_schemas/**
+    - 03_schemas/**
     - 02_core/**
+    - 05_tasks/**
     - 06_workflows/**
-    - 07_tasks/**
     - 09_docker/**
-    - 09_launchd/**
+    - 10_launchd/**
     - 12_prompts/**
     - 13_models/**
-    - 13_providers/**
-    - 14_templates/**
     - 15_examples/**
+    - 17_providers/**
     - 18_docs/**
+    - 19_templates/**
     - .github/workflows/yaml-docs-check.yml
   push:
     branches:
     - main
     paths:
-    - 01_schemas/**
+    - 03_schemas/**
     - 02_core/**
+    - 05_tasks/**
     - 06_workflows/**
-    - 07_tasks/**
     - 09_docker/**
-    - 09_launchd/**
+    - 10_launchd/**
     - 12_prompts/**
     - 13_models/**
-    - 13_providers/**
-    - 14_templates/**
     - 15_examples/**
+    - 17_providers/**
     - 18_docs/**
+    - 19_templates/**
 jobs:
   check:
     runs-on: ubuntu-latest

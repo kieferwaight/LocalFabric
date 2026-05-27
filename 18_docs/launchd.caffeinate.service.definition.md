@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `launchd.caffeinate.service` |
-| Source | `09_launchd/launchd.caffeinate.service.yaml` |
+| Source | `10_launchd/launchd.caffeinate.service.yaml` |
 | Tags | launchd, system |
 Holds the system awake under launchd by running macOS's `caffeinate -d`.
 Useful for keeping local services warm while the lid is closed.

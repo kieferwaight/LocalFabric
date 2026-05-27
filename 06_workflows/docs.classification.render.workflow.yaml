@@ -11,7 +11,7 @@
   - classification
   extends: stdlib.base
   modules:
-  - ../14_templates/docs.classification.template.yaml
+  - ../19_templates/docs.classification.template.yaml
   inputs:
     output_dir:
       type: string

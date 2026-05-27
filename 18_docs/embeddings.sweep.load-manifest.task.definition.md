@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `embeddings.sweep.load-manifest.task` |
-| Source | `07_tasks/embeddings.sweep.load-manifest.task.yaml` |
+| Source | `05_tasks/embeddings.sweep.load-manifest.task.yaml` |
 | Tags | task |
 Load the sweep manifest JSON from a path, returning an empty dict on
 missing or corrupt file. Wraps lib.embeddings.sweep.load_manifest.

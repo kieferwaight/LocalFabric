@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `docs.catalog.template.schema` |
-| Source | `14_templates/docs.catalog.template.yaml` |
+| Source | `19_templates/docs.catalog.template.yaml` |
 | Tags | documentation, template |
 Reference for the YAML definition authoring schema; fields, structured
 operations, and resolution rules.

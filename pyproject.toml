@@ -111,19 +111,19 @@ packages = [
 [tool.localfabric.workspace_manifest]
 excluded_buckets = [
     "00_specs",
-    "01_schemas",
+    "03_schemas",
     "06_workflows",
-    "07_tasks",
+    "05_tasks",
     "09_docker",
-    "09_launchd",
-    "09_services",
+    "10_launchd",
+    "11_services",
     "12_prompts",
     "13_models",
-    "13_providers",
+    "17_providers",
     "14_data",
-    "14_templates",
+    "19_templates",
     "15_examples",
-    "15_notebooks",
+    "20_notebooks",
     "16_tests",
     "18_docs",
 ]
@@ -134,25 +134,25 @@ system_sdk_override = "core.interfaces.mcp"
 [tool.localfabric.workspace_descriptions]
 "00_specs" = "Agent-ready specs and task artifacts"
 "01_interfaces" = "Python Protocol mirrors of the JSON schemas"
-"01_schemas" = "Shared JSON schemas used across components"
+"03_schemas" = "Shared JSON schemas used across components"
 "02_core" = "Core libraries — environment, router, runtimes (yaml/markdown/langgraph), interfaces (cli/api/mcp)"
 "04_harnesses" = "Provider harnesses — execution lifecycle per model provider"
+"05_tasks" = "YAML task wrappers — one .task.yaml file per atomic lib.* function"
 "06_workflows" = "Composed pipelines of tasks (YAML)"
 "07_lib" = "Python helper library invoked by YAML tasks (image, pdf, embeddings, classify, research, …)"
-"07_tasks" = "YAML task wrappers — one .task.yaml file per atomic lib.* function"
 "08_drivers" = "Storage/database connectors"
 "09_docker" = "Docker service definitions (extend docker.base)"
-"09_launchd" = "macOS launchd job definitions (extend launchd.base)"
-"09_services" = "Docker-Compose service catalog by category"
+"10_launchd" = "macOS launchd job definitions (extend launchd.base)"
+"11_services" = "Docker-Compose service catalog by category"
 "12_prompts" = "Prompt templates (markdown runtime sources)"
 "13_models" = "Per-model YAML registry (one file per model; declares providers and features)"
-"13_providers" = "Per-provider YAML registry (one file per provider; declares protocols and endpoints)"
 "14_data" = "Persistent data (filesystem-backed)"
-"14_templates" = "Document templates rendered by YAML workflows"
 "15_examples" = "Example YAML definitions showing runtime composition patterns"
-"15_notebooks" = "Exploration notebooks"
 "16_tests" = "Integration and contract tests"
+"17_providers" = "Per-provider YAML registry (one file per provider; declares protocols and endpoints)"
 "18_docs" = "Supporting docs"
+"19_templates" = "Document templates rendered by YAML workflows"
+"20_notebooks" = "Exploration notebooks"
 
 [tool.pytest.ini_options]
 testpaths = ["16_tests"]
@@ -162,7 +162,7 @@ addopts = "--import-mode=importlib"
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-extend-exclude = [".venv", "18_docs", "14_data", "15_notebooks", "00_specs"]
+extend-exclude = [".venv", "18_docs", "14_data", "20_notebooks", "00_specs"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP"]

@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `docs.definition.template.definition` |
-| Source | `14_templates/docs.definition.template.yaml` |
+| Source | `19_templates/docs.definition.template.yaml` |
 | Tags | documentation, template |
 Markdown page describing a single definition: metadata table, relationship
 summary, mermaid relationship-graph component, declared API, and resolved

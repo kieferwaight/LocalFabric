@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `files.write-json.task` |
-| Source | `07_tasks/files.write-json.task.yaml` |
+| Source | `05_tasks/files.write-json.task.yaml` |
 | Tags | task |
 Write a data object as indented JSON to a file, creating parent
 directories as needed. Wraps lib.files.write_json.

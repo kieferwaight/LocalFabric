@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `image.regions.extract.task` |
-| Source | `07_tasks/image.regions.extract.task.yaml` |
+| Source | `05_tasks/image.regions.extract.task.yaml` |
 | Tags | task |
 Detect visible content regions, OCR text bounding boxes, and graphic
 contours in an image. Wraps lib.image.regions.extract_regions.

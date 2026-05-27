@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `files.iter.task` |
-| Source | `07_tasks/files.iter.task.yaml` |
+| Source | `05_tasks/files.iter.task.yaml` |
 | Tags | task |
 Yield file paths under a root, skipping excluded dirs, protected inboxes,
 and backup directories. Returns paths as strings.

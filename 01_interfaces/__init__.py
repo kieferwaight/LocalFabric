@@ -1,4 +1,4 @@
-"""Python Protocol mirrors of the JSON schemas in `01_schemas/`."""
+"""Python Protocol mirrors of the JSON schemas in `03_schemas/`."""
 
 from .adapter import AdapterProtocol
 from .driver import DriverProtocol

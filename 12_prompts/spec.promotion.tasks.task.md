@@ -10,7 +10,7 @@ requirements, decompose the work into independently shippable tasks.
 Rules:
 
 - Each task is scoped to a single numeric bucket (`12_prompts`,
-  `15_notebooks`, `06_workflows`, etc.) so it can be picked up as one branch
+  `20_notebooks`, `06_workflows`, etc.) so it can be picked up as one branch
   and one PR. If a piece of work crosses buckets, split it.
 - Each task names the bucket explicitly and states its acceptance criterion
   by referencing a specific `Fn` / `An` from the requirements stage.

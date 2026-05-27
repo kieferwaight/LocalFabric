@@ -1,6 +1,6 @@
 # services.yaml — service catalog metadata.
 #
-# Each entry mirrors a directory under 09_services/<category>/<name>/.
+# Each entry mirrors a directory under 11_services/<category>/<name>/.
 # The service runtime (10_service_runtime/) reads this to resolve
 # `cmd <service> <data-path>` invocations.
 

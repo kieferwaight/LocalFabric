@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `files.sha256.task` |
-| Source | `07_tasks/files.sha256.task.yaml` |
+| Source | `05_tasks/files.sha256.task.yaml` |
 | Tags | task |
 Return the SHA-256 hex digest of the file at the given path.
 Wraps lib.files.sha256_file.

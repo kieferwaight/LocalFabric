@@ -1,5 +1,5 @@
 # Default Docker build-context excludes for builds that use the repo root
-# as context (e.g. 09_services/dev/jupyter/Dockerfile installs the project
+# as context (e.g. 11_services/dev/jupyter/Dockerfile installs the project
 # editably and needs the buckets, but not data or caches).
 
 .git

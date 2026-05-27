@@ -14,7 +14,7 @@
       REPO_ROOT = Path(__file__).resolve().parents[1] if "__file__" in dir() else Path(".").resolve()
       INTERPRETER = REPO_ROOT / "02_core" / "runtimes" / "yaml" / "interpreter.py"
       WORKFLOWS_DIR = REPO_ROOT / "06_workflows"
-      TEMPLATES_DIR = REPO_ROOT / "14_templates"
+      TEMPLATES_DIR = REPO_ROOT / "19_templates"
       def _run(yaml_file: Path, def_id: str, mode: str, extra: list) -> int:
           cmd = [sys.executable, str(INTERPRETER), str(yaml_file), def_id, f"--mode={mode}", *extra]
           print(f"$ {' '.join(cmd)}", flush=True)

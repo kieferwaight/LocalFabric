@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `metadata.source-guess.task` |
-| Source | `07_tasks/metadata.source-guess.task.yaml` |
+| Source | `05_tasks/metadata.source-guess.task.yaml` |
 | Tags | task |
 Infer a source origin label ("gemini", "openai", "perplexity",
 "undermind", "manual", "scraped", "uploads", or "unknown") from

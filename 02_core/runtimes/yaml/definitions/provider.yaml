@@ -1,7 +1,7 @@
 - id: provider.base
   title: LLM Provider Record
   description: |
-    Pure-data base for the provider records under `13_providers/`.
+    Pure-data base for the provider records under `17_providers/`.
     Establishes the canonical fields every provider declares (`name`,
     `location`, `endpoint`, `auth`, `env`, `protocols`, `documentation`).
     Carries no run blocks.

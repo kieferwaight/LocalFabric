@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `image.meta.extract.task` |
-| Source | `07_tasks/image.meta.extract.task.yaml` |
+| Source | `05_tasks/image.meta.extract.task.yaml` |
 | Tags | task |
 Extract file identity metadata, dimensions, EXIF, and ICC profile info
 from an image. Wraps lib.image.meta.extract_meta.

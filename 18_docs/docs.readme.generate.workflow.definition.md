@@ -21,7 +21,7 @@ Honors `mode: check` so CI can detect drift — identical contract to
 | Mixins | - |
 | Children | - |
 | Mixin consumers | - |
-| Modules | `../14_templates/docs.readme.template.yaml` |
+| Modules | `../19_templates/docs.readme.template.yaml` |
 ```mermaid
 flowchart LR
   def_docs_readme_generate_workflow["Build Repo README"]

@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `metadata.doc-type.task` |
-| Source | `07_tasks/metadata.doc-type.task.yaml` |
+| Source | `05_tasks/metadata.doc-type.task.yaml` |
 | Tags | task |
 Infer a document type label ("report", "prompt", "specification",
 "draft", or "note") from a filename string.

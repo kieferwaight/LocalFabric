@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `launchd.lm-studio.service` |
-| Source | `09_launchd/launchd.lm-studio.service.yaml` |
+| Source | `10_launchd/launchd.lm-studio.service.yaml` |
 | Tags | launchd, ai |
 Runs the LM Studio CLI server bound to 127.0.0.1:1234. The `lms server
 start` command exits cleanly once the daemon is up, so this job overrides

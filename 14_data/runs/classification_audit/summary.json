@@ -1,19 +1,21 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-05-26T08:29:50.273500+00:00",
-  "workspace": "/Users/kwaight/src/LocalFabric",
+  "generated_at": "2026-05-27T02:18:08.197350+00:00",
+  "workspace": "/Users/kwaight/src/LocalFabric/.claude/worktrees/agent-a8a2408cfaae10d06",
   "scan_scope": "repo source, configuration, documentation, and workflow files",
-  "files_scanned": 362,
-  "findings": 2,
+  "files_scanned": 621,
+  "findings": 3,
   "findings_by_severity": {
+    "high": 1,
     "medium": 2
   },
   "findings_by_rule": {
+    "provider_execution_in_tool_bucket": 1,
     "workflow_owns_persistent_file_io": 2
   },
-  "jsonl_file": "/Users/kwaight/src/LocalFabric/14_data/runs/classification_audit/findings.jsonl",
-  "schema_file": "/Users/kwaight/src/LocalFabric/01_schemas/audit.classification_finding.schema.json",
+  "jsonl_file": "/Users/kwaight/src/LocalFabric/.claude/worktrees/agent-a8a2408cfaae10d06/14_data/runs/classification_audit/findings.jsonl",
+  "schema_file": "/Users/kwaight/src/LocalFabric/.claude/worktrees/agent-a8a2408cfaae10d06/03_schemas/audit.classification-finding.schema.yaml",
   "findings_by_status": {
-    "open": 2
+    "open": 3
   }
 }

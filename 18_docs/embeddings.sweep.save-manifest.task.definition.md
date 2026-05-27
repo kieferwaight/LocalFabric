@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `embeddings.sweep.save-manifest.task` |
-| Source | `07_tasks/embeddings.sweep.save-manifest.task.yaml` |
+| Source | `05_tasks/embeddings.sweep.save-manifest.task.yaml` |
 | Tags | task |
 Write the sweep manifest dict as JSON to a path.
 Wraps lib.embeddings.sweep.save_manifest.

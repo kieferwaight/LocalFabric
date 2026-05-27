@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `image.color.dominant.task` |
-| Source | `07_tasks/image.color.dominant.task.yaml` |
+| Source | `05_tasks/image.color.dominant.task.yaml` |
 | Tags | task |
 Return color analysis for an image: dominant palette, brightness,
 contrast, saturation, and dominant hex color.

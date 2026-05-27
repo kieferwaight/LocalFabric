@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `provider.claude.provider` |
-| Source | `13_providers/provider.claude.provider.yaml` |
+| Source | `17_providers/provider.claude.provider.yaml` |
 | Tags | provider |
 Anthropic's hosted Claude models. Accessed via the Anthropic Messages API (no OpenAI-compatible endpoint), the official Anthropic SDKs, or the Claude Code CLI.
 

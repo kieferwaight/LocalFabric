@@ -495,7 +495,7 @@ def run_audit(workspace: Path, output_dir: Path) -> tuple[list[dict[str, Any]], 
         "findings_by_rule": dict(Counter(item["violation"]["code"] for item in findings)),
         "jsonl_file": str((output_dir / "findings.jsonl").resolve()),
         "schema_file": str(
-            (workspace / "01_schemas/audit.classification-finding.schema.yaml").resolve()
+            (workspace / "03_schemas/audit.classification-finding.schema.yaml").resolve()
         ),
     }
     return findings, summary

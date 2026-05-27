@@ -4,7 +4,7 @@
 | Field | Value |
 | --- | --- |
 | ID | `provider.gemini.provider` |
-| Source | `13_providers/provider.gemini.provider.yaml` |
+| Source | `17_providers/provider.gemini.provider.yaml` |
 | Tags | provider |
 Google's hosted Gemini models. Accessed via the Google GenAI API, the google-genai SDK, or the Gemini CLI.
 
