@@ -175,7 +175,12 @@ def test_unexpected_exception_wrapped_in_provider_error() -> None:
 def test_claude_provider_missing_api_key_raises_clear_error(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    # Force the env to be empty so the underlying ClaudeHarness raises.
+    # Requires the anthropic SDK to be installed — otherwise ClaudeHarness
+    # raises ImportError before reaching the API-key check. The `dev` extra
+    # doesn't include anthropic; the `llm` extra does. CI's `test` job
+    # syncs `--extra dev` only, so this test is skipped there and runs
+    # locally when the developer has `--extra llm` synced.
+    pytest.importorskip("anthropic")
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     provider = ClaudeProvider()
     harness = MarkdownHarness(provider_overrides={"claude": provider})
