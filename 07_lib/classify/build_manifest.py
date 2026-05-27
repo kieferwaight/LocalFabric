@@ -14,7 +14,9 @@ CONFIDENCE_REVIEW_THRESHOLD = 0.80
 
 
 def build_classification(root: Path) -> tuple[dict, dict, dict]:
-    """Walk *root* and produce three report dicts: classification, current-state manifest, fingerprints.
+    """Walk *root* and produce three report dicts.
+
+    The three are: classification, current-state manifest, fingerprints.
 
     Returns:
         (classification_report, current_state_manifest, fingerprint_report)

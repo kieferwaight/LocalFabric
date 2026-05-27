@@ -167,6 +167,13 @@ extend-exclude = [".venv", "18_docs", "14_data", "15_notebooks", "00_specs"]
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP"]
 
+[tool.ruff.lint.per-file-ignores]
+# Audit findings table is a structured data file in Python form; the
+# message strings genuinely exceed 100 cols and wrapping each would
+# hurt readability of the side-by-side bucket / responsibility /
+# evidence tuples.
+"07_lib/audit/scan_boundary_violations.py" = ["E501"]
+
 [tool.mypy]
 python_version = "3.11"
 strict = false

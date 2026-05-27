@@ -215,6 +215,5 @@ if __name__ == "__main__":
     print(f"File: {target}  →  {len(results)} chunks")
     for c in results[:3]:
         preview = c["text"][:80].replace("\n", " ")
-        print(
-            f"  [{c['chunk_index']}] L{c['line_start']}-{c['line_end']} ({c['strategy']}): {preview}…"
-        )
+        loc = f"L{c['line_start']}-{c['line_end']}"
+        print(f"  [{c['chunk_index']}] {loc} ({c['strategy']}): {preview}…")
