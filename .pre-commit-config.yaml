@@ -1,45 +1,42 @@
 # Run `pre-commit install` once after `uv sync --extra dev` to activate.
 # Then every `git commit` runs these hooks against staged files.
 repos:
-- repo: local
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.15.14
   hooks:
   - id: ruff-format
     name: ruff format (python)
-    entry: .venv/bin/ruff format
-    language: system
-    types:
-    - python
   - id: ruff-check
     name: ruff check (python)
-    entry: .venv/bin/ruff check --fix
-    language: system
-    types:
-    - python
+    args:
+    - --fix
+- repo: https://github.com/lyz-code/yamlfix
+  rev: 1.19.1
+  hooks:
   - id: yamlfix
-    name: yamlfix (yaml)
-    entry: .venv/bin/yamlfix
-    language: system
-    types:
-    - yaml
     exclude: ^(\.venv|14_data|18_docs|node_modules)/
+- repo: local
+  hooks:
   - id: yaml-block-scalars
     name: yaml block-scalar promotion
-    entry: .venv/bin/python scripts/yaml_block_scalars.py
-    language: system
+    entry: python scripts/yaml_block_scalars.py
+    language: python
+    additional_dependencies:
+    - ruamel.yaml>=0.18
     types:
     - yaml
     exclude: ^(\.venv|14_data|18_docs|node_modules)/
+- repo: https://github.com/adrienverge/yamllint
+  rev: v1.38.0
+  hooks:
   - id: yamllint
-    name: yamllint (yaml)
-    entry: .venv/bin/yamllint
-    language: system
-    types:
-    - yaml
     exclude: ^(\.venv|14_data|18_docs|node_modules)/
+- repo: https://github.com/hukkin/mdformat
+  rev: 0.7.22
+  hooks:
   - id: mdformat
-    name: mdformat (markdown)
-    entry: .venv/bin/mdformat
-    language: system
-    types:
-    - markdown
+    additional_dependencies:
+    - mdformat-gfm>=1.0
+    - mdformat-frontmatter>=2.0
+    - mdformat-tables>=1.0
     exclude: ^(\.venv|18_docs|node_modules)/
