@@ -1,4 +1,4 @@
-PYTHON_VERSION ?= 3.14
+PYTHON_VERSION ?= 3.12
 
 .PHONY: help venv clean-pycache clean-egg-info clean-venv clean-lock clean \
         install install-dev install-all lock sync reset docs docs-all docs-check audit \
