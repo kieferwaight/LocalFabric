@@ -17,17 +17,17 @@ Naming follows the platform-wide pattern: one definition per file, file
 name matches the id, and every concrete id ends with `.example` (or
 `.mixin` when the def is a reusable mixin supporting an example).
 
-| File | Id |
-| ---- | -- |
-| `cloud.mixin.git-info.yaml` | `cloud.mixin.git-info` |
-| `cloud.mixin.timestamp.yaml` | `cloud.mixin.timestamp` |
-| `cloud.deployer.example.yaml` | `cloud.deployer.example` |
-| `git.init.example.yaml` | `git.init.example` |
-| `git.github.example.yaml` | `git.github.example` |
-| `git.gitignore.example.yaml` | `git.gitignore.example` |
-| `obsidian.daily-note.example.yaml` | `obsidian.daily-note.example` |
-| `examples.catalog.modules.yaml` | `examples.catalog.modules` (manifest, loads the others) |
-| `code.summarize.example.md` | `code.summarize.example` (provider-style: Claude) |
-| `polyglot.hello.example.md` | `polyglot.hello.example` (fence-style demo) |
-| `python.hello.example.md` | `python.hello.example` (fence-style demo) |
-| `shell.hello.example.md` | `shell.hello.example` (fence-style demo, used by `16_tests/harnesses.markdown.cli.test.py`) |
+| File                               | Id                                                                                          |
+| ---------------------------------- | ------------------------------------------------------------------------------------------- |
+| `cloud.mixin.git-info.yaml`        | `cloud.mixin.git-info`                                                                      |
+| `cloud.mixin.timestamp.yaml`       | `cloud.mixin.timestamp`                                                                     |
+| `cloud.deployer.example.yaml`      | `cloud.deployer.example`                                                                    |
+| `git.init.example.yaml`            | `git.init.example`                                                                          |
+| `git.github.example.yaml`          | `git.github.example`                                                                        |
+| `git.gitignore.example.yaml`       | `git.gitignore.example`                                                                     |
+| `obsidian.daily-note.example.yaml` | `obsidian.daily-note.example`                                                               |
+| `examples.catalog.modules.yaml`    | `examples.catalog.modules` (manifest, loads the others)                                     |
+| `code.summarize.example.md`        | `code.summarize.example` (provider-style: Claude)                                           |
+| `polyglot.hello.example.md`        | `polyglot.hello.example` (fence-style demo)                                                 |
+| `python.hello.example.md`          | `python.hello.example` (fence-style demo)                                                   |
+| `shell.hello.example.md`           | `shell.hello.example` (fence-style demo, used by `16_tests/harnesses.markdown.cli.test.py`) |
