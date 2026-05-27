@@ -14,8 +14,8 @@ description: |
   uses), the `lms` CLI on PATH, and `google/gemma-4-e4b` loaded in LM
   Studio. Run with `uv run localfabric-md 15_examples/image.analyze.example.md --image_path=<path>`.
 tags:
-- example
-- vision
+  - example
+  - vision
 inputs:
   image_path:
     type: string
