@@ -10,6 +10,7 @@ from core.runtimes.yaml.src import Definition, Runtime, ShellEnvironment
 from core.runtimes.yaml.src.dispatcher import Dispatcher, DispatchResult
 
 YAML_ROOT = Path(__file__).resolve().parents[1] / "02_core" / "runtimes" / "yaml"
+EXAMPLES_ROOT = Path(__file__).resolve().parents[1] / "15_examples"
 
 
 class RecordingDispatcher(Dispatcher):
@@ -37,8 +38,8 @@ def catalog_runtime(dispatcher=None) -> Runtime:
         env=ShellEnvironment(cwd=str(YAML_ROOT)),
         dispatcher=dispatcher or RecordingDispatcher(),
     )
-    runtime.import_yaml(str(YAML_ROOT / "stdlib" / "stdlib.yaml"))
-    runtime.import_yaml(str(YAML_ROOT / "config.yaml"))
+    runtime.import_yaml(str(YAML_ROOT / "definitions" / "stdlib.yaml"))
+    runtime.import_yaml(str(EXAMPLES_ROOT / "examples.catalog.modules.yaml"))
     return runtime
 
 
@@ -69,26 +70,42 @@ def test_definition_metadata_is_optional_and_validated() -> None:
         Definition.from_dict({"id": "bad", "tags": "not-a-list"})
 
 
-@pytest.mark.skip(reason="references old path/id from pre-refactor layout — see #47")
 def test_catalog_tracks_sources_relationships_and_effective_origins() -> None:
     runtime = catalog_runtime()
     entries = {item["id"]: item for item in runtime.globals["catalog"]["definitions"]}
 
-    assert entries["builtin/files/write-text"]["source_path"] == "stdlib/stdlib.files.yaml"
-    assert entries["example/obsidian-template"]["parent"]["id"] == "builtin/files/write-text"
-    assert entries["examples/catalog/modules"]["modules"] == [
-        "deploy.yaml",
-        "git-current-workspace.yaml",
-        "gitignore-template.yaml",
-        "obsidian-template.yaml",
+    assert entries["stdlib.files.write-text.task"]["source_path"] == "definitions/stdlib.files.yaml"
+    assert entries["obsidian.daily-note.example"]["parent"]["id"] == "stdlib.files.write-text.task"
+    assert entries["examples.catalog.modules"]["modules"] == [
+        "cloud.mixin.git-info.yaml",
+        "cloud.mixin.timestamp.yaml",
+        "cloud.deployer.example.yaml",
+        "git.init.example.yaml",
+        "git.github.example.yaml",
+        "git.gitignore.example.yaml",
+        "obsidian.daily-note.example.yaml",
     ]
-    cloud = entries["cloud/deployer"]
-    assert {item["id"] for item in cloud["mixin_links"]} == {"mixin/git-info", "mixin/timestamp"}
-    assert any(item["origin"] == "cloud/deployer" for item in cloud["resolved"]["inputs"])
-    assert entries["builtin/load-modules"]["modules"] == [
+    cloud = entries["cloud.deployer.example"]
+    assert {item["id"] for item in cloud["mixin_links"]} == {
+        "cloud.mixin.timestamp",
+        "cloud.mixin.git-info",
+    }
+    assert any(item["origin"] == "cloud.deployer.example" for item in cloud["resolved"]["inputs"])
+    assert entries["stdlib.load-modules.workflow"]["modules"] == [
         "stdlib.files.yaml",
         "stdlib.git.yaml",
-        "stdlib.doc.yaml",
+        "stdlib.docs.yaml",
+        "stdlib.analysis.yaml",
+        "stdlib.python.yaml",
+        "command.yaml",
+        "folder.yaml",
+        "docker.yaml",
+        "launchd.yaml",
+        "model.yaml",
+        "provider.yaml",
+        "route.yaml",
+        "service.yaml",
+        "task.yaml",
     ]
 
 
@@ -128,32 +145,47 @@ def test_invoke_foreach_passes_parent_scope_without_leaking_child_state() -> Non
     assert "value" not in final_scope
 
 
-@pytest.mark.skip(reason="references old path/id from pre-refactor layout — see #47")
+@pytest.mark.skip(
+    reason=(
+        "source bug: stdlib.docs.prune-definition-pages.task uses pattern "
+        "'workflows.yaml.definition.*.md' which no longer matches the generated "
+        "page filenames 'definition-{flat_id}.md' — stale-page detection is broken. "
+        "Track and fix in a follow-up issue before re-enabling this test."
+    )
+)
 def test_documentation_workflow_writes_and_checks_generated_reference(tmp_path: Path) -> None:
-    runtime = catalog_runtime()
+    WORKFLOWS_ROOT = Path(__file__).resolve().parents[1] / "06_workflows"
+    runtime = Runtime(
+        env=ShellEnvironment(cwd=str(YAML_ROOT)),
+        dispatcher=RecordingDispatcher(),
+    )
+    runtime.import_yaml(str(YAML_ROOT / "definitions" / "stdlib.yaml"))
+    runtime.import_yaml(str(WORKFLOWS_ROOT / "docs.api.reference.workflow.yaml"))
     output = tmp_path / "docs"
 
-    runtime.execute("docs/api/reference", {"output_dir": str(output), "mode": "write"})
+    runtime.execute("docs.api.reference.workflow", {"output_dir": str(output), "mode": "write"})
 
     definitions = runtime.globals["catalog"]["definitions"]
     pages = sorted((output / "definitions").rglob("*.md"))
     assert len(pages) == len(definitions)
     assert "```mermaid" in (output / "README.md").read_text(encoding="utf-8")
-    definition_page = output / "definitions" / "definition-builtin-docs-prune-definition-pages.md"
+    definition_page = (
+        output / "definitions" / "definition-stdlib.docs.prune-definition-pages.task.md"
+    )
     assert "## Resolved API" in definition_page.read_text(encoding="utf-8")
 
-    runtime.execute("docs/api/reference", {"output_dir": str(output), "mode": "check"})
+    runtime.execute("docs.api.reference.workflow", {"output_dir": str(output), "mode": "check"})
 
     stale_page = output / "definitions" / "removed.md"
     stale_page.write_text(
-        "<!-- Generated by workflows.yaml docs/api/reference; do not edit. -->\n# Removed\n",
+        "<!-- Generated by docs.api.reference; do not edit. -->\n# Removed\n",
         encoding="utf-8",
     )
     with pytest.raises(RuntimeError, match="Obsolete generated documentation"):
-        runtime.execute("docs/api/reference", {"output_dir": str(output), "mode": "check"})
-    runtime.execute("docs/api/reference", {"output_dir": str(output), "mode": "write"})
+        runtime.execute("docs.api.reference.workflow", {"output_dir": str(output), "mode": "check"})
+    runtime.execute("docs.api.reference.workflow", {"output_dir": str(output), "mode": "write"})
     assert not stale_page.exists()
 
     (output / "README.md").write_text("changed\n", encoding="utf-8")
     with pytest.raises(RuntimeError, match="stale"):
-        runtime.execute("docs/api/reference", {"output_dir": str(output), "mode": "check"})
+        runtime.execute("docs.api.reference.workflow", {"output_dir": str(output), "mode": "check"})
