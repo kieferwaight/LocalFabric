@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="LocalFabric-kiefer-waight-local-first-ai-orchestration-for-models-tools-workflows-and-data-services.png" alt="LocalFabric - Kiefer Waight - Local-first AI orchestration for models, tools, workflows, and data services." width="100%">
+</p>
+
 # LocalFabric
 
 <!-- PROJECT_TAGLINE_START -->
