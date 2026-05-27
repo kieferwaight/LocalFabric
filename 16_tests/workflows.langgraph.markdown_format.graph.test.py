@@ -5,9 +5,7 @@ import pytest
 from core.runtimes.langgraph.markdown_format.graph import run_markdown_format_workflow
 
 
-@pytest.mark.skip(
-    reason="imports a submodule that doesn't exist after refactor — see #47"
-)
+@pytest.mark.skip(reason="imports a submodule that doesn't exist after refactor — see #47")
 def test_run_markdown_format_workflow(monkeypatch):
     # Patch format_markdown_with_lmstudio to avoid real API call
     import core.runtimes.langgraph.markdown_format.nodes as nodes
