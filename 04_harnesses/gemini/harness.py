@@ -41,7 +41,9 @@ class GeminiHarness(Harness):
         try:
             import google.generativeai as genai  # type: ignore
         except ImportError as exc:  # pragma: no cover
-            raise HarnessError("google-generativeai SDK is not installed") from exc
+            raise HarnessError(
+                "google-generativeai SDK is not installed — run `uv sync --extra llm`."
+            ) from exc
 
         api_key = (
             self.config.get("api_key")

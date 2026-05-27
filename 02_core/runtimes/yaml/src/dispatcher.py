@@ -15,8 +15,12 @@ LANGUAGE_BINARIES: dict[str, list[str]] = {
     "sh": ["/usr/bin/env", "sh"],
     "js": ["/usr/bin/env", "node"],
     "javascript": ["/usr/bin/env", "node"],
-    "python": ["/usr/bin/env", "python3"],
-    "py": ["/usr/bin/env", "python3"],
+    # Use the running interpreter so subprocess python blocks see the same
+    # venv (and the same editable install of the repo's bucket aliases) as
+    # whatever invoked the runtime. Otherwise `/usr/bin/env python3` resolves
+    # to the system Python and `from harnesses.* import …` fails.
+    "python": [sys.executable],
+    "py": [sys.executable],
 }
 
 

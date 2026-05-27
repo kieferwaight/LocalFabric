@@ -41,7 +41,9 @@ class ClaudeHarness(Harness):
         try:
             import anthropic  # type: ignore
         except ImportError as exc:  # pragma: no cover - env-dependent
-            raise HarnessError("anthropic SDK is not installed") from exc
+            raise HarnessError(
+                "anthropic SDK is not installed — run `uv sync --extra llm`."
+            ) from exc
 
         api_key = self.config.get("api_key") or os.environ.get("ANTHROPIC_API_KEY")
         if not api_key:

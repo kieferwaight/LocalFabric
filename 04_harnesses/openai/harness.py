@@ -40,7 +40,9 @@ class OpenAIHarness(Harness):
         try:
             from openai import OpenAI  # type: ignore
         except ImportError as exc:  # pragma: no cover
-            raise HarnessError("openai SDK is not installed") from exc
+            raise HarnessError(
+                "openai SDK is not installed — run `uv sync --extra llm`."
+            ) from exc
 
         api_key = self.config.get("api_key") or os.environ.get(self._api_key_env)
         if not api_key and not self.config.get("allow_anonymous"):

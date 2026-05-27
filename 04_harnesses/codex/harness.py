@@ -41,7 +41,9 @@ class CodexHarness(Harness):
         try:
             from openai import OpenAI  # type: ignore
         except ImportError as exc:  # pragma: no cover
-            raise HarnessError("openai SDK is not installed") from exc
+            raise HarnessError(
+                "openai SDK is not installed — run `uv sync --extra llm`."
+            ) from exc
 
         api_key = (
             self.config.get("api_key")
