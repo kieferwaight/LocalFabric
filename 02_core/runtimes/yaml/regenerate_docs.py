@@ -19,8 +19,8 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO_ROOT / "02_core"))
 sys.path.insert(0, str(REPO_ROOT / "02_core" / "runtimes" / "yaml"))
 
-from core.runtimes.markdown import MarkdownHarness
-from core.runtimes.yaml.src import Runtime
+from core.runtimes.markdown import MarkdownHarness  # noqa: E402  (sys.path setup above)
+from core.runtimes.yaml.src import Runtime  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
