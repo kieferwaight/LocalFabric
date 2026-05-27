@@ -44,7 +44,6 @@ _No operation description provided._
 import json, os, datetime
 with open(os.environ["STATE_FILE"], "w") as fh:
     json.dump({"deploy_started_at": datetime.datetime.utcnow().isoformat() + "Z"}, fh)
-
 ```
 ### Teardown Operations
 _No locally declared teardown operations._

@@ -13,21 +13,14 @@ from __future__ import annotations
 
 import importlib.util
 import sys
+import tomllib
 from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parent
-
-# bucket-dir → import name. Keep in sync with [tool.setuptools.package-dir]
-# in pyproject.toml. Only buckets containing Python live here; pure
-# YAML/markdown directories (06_workflows, 09_docker, 12_prompts, ...)
-# are content trees, not packages.
-_BUCKETS: dict[str, str] = {
-    "01_interfaces": "interfaces",
-    "02_core": "core",
-    "04_harnesses": "harnesses",
-    "07_lib": "lib",
-    "08_drivers": "drivers",
-}
+_PYPROJECT = tomllib.loads((_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+_PACKAGE_DIR = _PYPROJECT["tool"]["setuptools"]["package-dir"]
+# package-dir is import_name -> bucket_dir; conftest wants the reverse.
+_BUCKETS: dict[str, str] = {bucket: alias for alias, bucket in _PACKAGE_DIR.items()}
 
 
 def _register(alias: str, target: Path) -> None:
