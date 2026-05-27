@@ -35,7 +35,7 @@ from __future__ import annotations
 
 import time
 from dataclasses import dataclass
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 from router.scorer import Complexity, RouteCandidate
@@ -45,7 +45,7 @@ from router.scorer import Complexity, RouteCandidate
 # ------------------------------------------------------------------
 
 
-class ResultStatus(str, Enum):
+class ResultStatus(StrEnum):
     SUCCESS = "success"
     FAILURE = "failure"
     DEFERRED = "deferred"  # frontier route — caller must invoke the model
