@@ -1,14 +1,14 @@
 - id: docs.readme.template
   title: Docs - Repo README Template
   description: |
-    Markdown template for the repo-root README.md. Static prose plus three
+    Markdown template for the repo-root README.md. Static prose plus five
     data-driven sections rendered from `pyproject.toml`: the project tagline,
-    the bucket table (numeric prefix → role → import alias), and the console
-    script table.
-    Marker pairs (`<!-- NAME_START -->` / `<!-- NAME_END -->`) are preserved
-    around the dynamic regions so readers can still locate the generated
-    boundaries — the regeneration source of truth is this YAML, not the
-    markers.
+    the bucket table, the Python alias map (top-level packages and their
+    immediate subpackages), the console-script table, and the optional
+    dependency groups.
+    Marker pairs (`<!-- NAME_START -->` / `<!-- NAME_END -->`) wrap each
+    generated region so readers can locate the boundaries — the
+    regeneration source of truth is this YAML, not the markers.
   tags:
   - documentation
   - template
@@ -24,12 +24,26 @@
         Ordered bucket descriptors. Each entry has `bucket` (the directory
         name like `01_interfaces`), `description`, and `import_name` (the
         clean Python alias, or `""` when the bucket isn't importable).
+    python_aliases:
+      type: array
+      required: true
+      description: |
+        Top-level Python aliases derived from `[tool.setuptools].packages`.
+        Each entry has `alias`, `bucket`, and `children` — where each
+        child has `name` (immediate subpackage) and `subitems` (its own
+        immediate subpackages).
     cli_commands:
       type: array
       required: true
       description: |
         Console script entries. Each has `name` and `entry_point` mirroring
         `[project.scripts]` in `pyproject.toml`.
+    optional_groups:
+      type: array
+      required: true
+      description: |
+        Extras from `[project.optional-dependencies]`. Each entry has
+        `name` and `packages` (list of requirement strings).
   template:
     engine: jinja
     output: markdown
@@ -38,48 +52,27 @@
       <!-- PROJECT_TAGLINE_START -->
       {{ project_tagline }}
       <!-- PROJECT_TAGLINE_END -->
-      LocalFabric is a modular platform for building private, reproducible AI workflows that run on local infrastructure first and can extend to cloud providers when needed. It brings model routing, reusable tools, workflow execution, service orchestration, storage drivers, prompt assets, and auditability into one responsibility-driven workspace.
+      LocalFabric is a modular platform for building private, reproducible AI workflows that run on local infrastructure first and can extend to cloud providers when needed. It binds model routing, reusable tasks, YAML / markdown / LangGraph runtimes, service orchestration, storage drivers, prompt assets, and responsibility auditing into a single workspace.
 
       ## Why LocalFabric
-      AI applications quickly accumulate provider-specific integrations, disconnected scripts, and operational state that is difficult to reproduce. LocalFabric gives teams a structured foundation to:
-      - Route work across local and remote model providers behind clear interfaces.
-      - Operate services such as Ollama, vector stores, and databases from a portable runtime.
-      - Compose image, research, retrieval, and document workflows from reusable capabilities.
-      - Store persistent artifacts and service state in discoverable, filesystem-backed locations.
-      - Audit and remediate architecture boundary violations as the codebase evolves.
-
-      ## Platform Capabilities
-      | Capability | What It Provides |
-      | --- | --- |
-      | Model execution | Harness-based access to local and cloud model surfaces. |
-      | Workflow orchestration | Multi-step workflows implemented through LangGraph, shell, and YAML patterns. |
-      | Tool integration | Reusable tools for documents, images, vision, embeddings, research, and related tasks. |
-      | Service runtime | Docker Compose-backed execution of local infrastructure services. |
-      | Storage and retrieval | Structured data roots and storage drivers for files, databases, and vector stores. |
-      | Agent exposure | CLI and MCP surfaces for operators and agent-driven execution. |
-      | Architecture governance | JSONL audit findings and remediation workflows for responsibility classification. |
+      AI work accumulates provider-specific integrations, scratch scripts, and operational state that nobody can reproduce. LocalFabric gives that work a structure:
+      - Route requests across local and cloud model providers behind one set of harnesses.
+      - Compose multi-step image, document, retrieval, and research workflows from reusable atomic tasks.
+      - Run services (LLM runtimes, vector stores, databases) from a Docker-Compose catalog grouped by category.
+      - Persist state in filesystem-backed roots that any environment can mount.
+      - Audit responsibility boundaries automatically so the architecture doesn't drift as code lands.
 
       ## Architecture At A Glance
       ```mermaid
       flowchart LR
-          Interface["CLI / MCP / API"] --> Router
-          Router --> Workflows
-          Workflows --> Harnesses
-          Harnesses --> Targets["Models / Services / Tools"]
-          Targets --> Drivers
-          Drivers --> Data["Portable Data Layer"]
+          Surfaces["CLI / API / MCP"] --> Commands["core.interfaces.commands"]
+          Commands --> Runtimes["core.runtimes\n(yaml / markdown / langgraph)"]
+          Runtimes --> Tasks["07_tasks\nYAML wrappers"]
+          Tasks --> Lib["lib.*\nhelpers"]
+          Tasks --> Harnesses["harnesses.*\n(claude / ollama / ...)"]
+          Lib --> Drivers["drivers.*\n(sql / vector / file / cache)"]
+          Harnesses --> Registry["13_models, 13_providers\nregistries"]
       ```
-
-      ## Core Documentation
-      | Document | Purpose |
-      | --- | --- |
-      | [Architecture](ARCHITECTURE.md) | System layers, execution flow, contracts, design principles, and extension model. |
-      | [Data Model](DATA_MODEL.md) | Persistent data layout, addressing model, service mappings, and driver responsibilities. |
-      | [Repository Structure](REPO_STRUCTURE.md) | Canonical numbered classifications, ownership rules, and migration guidance. |
-      | [Services](SERVICES.md) | Service runtime design, service categories, state model, and operational interface. |
-      | [Collaboration](COLLABORATION.md) | Agent worktrees, branch naming, pull request requirements, and integration rules. |
-      | [Classification Audit](18_docs/classification_audit.md) | Automated checks for cross-classification responsibility leaks. |
-      | [Remediation Workflow](18_docs/classification_remediation_workflow.md) | Agent workflow for resolving findings safely and iteratively. |
 
       ## Repository Layout
       Implementation lives directly under the repo root in numeric-prefixed responsibility buckets. Each bucket owns a single concern.
@@ -91,12 +84,20 @@
       {% endfor -%}
       <!-- BUCKETS_TABLE_END -->
 
-      ## Import-name Strategy
-      Numeric prefixes are filesystem-only — Python forbids module names that start with a digit. The buckets are registered with clean import names via two synchronized mechanisms:
-      - **[`pyproject.toml`](pyproject.toml)** — `[tool.setuptools.package-dir]` maps each bucket to its import name. `pip install -e .` writes the aliases into a `.pth` file in site-packages so `from harnesses.base import Harness` resolves naturally.
-      - **[`conftest.py`](conftest.py)** — registers the same aliases at pytest startup so the test suite runs without an install step.
-      `11_mcp/` is intentionally exposed as **`mcp_servers`**, not `mcp`: [`11_mcp/server.py`](11_mcp/server.py) imports `from mcp.server.fastmcp import FastMCP` (the PyPI MCP SDK), so we leave that top-level name unshadowed.
-      Always import via the clean name (`from drivers.sql.session import init_db`), never via the numeric path.
+      ## Python Aliases
+      Numeric prefixes are filesystem-only — Python forbids module names that start with a digit. `[tool.setuptools.package-dir]` in [`pyproject.toml`](pyproject.toml) registers a clean alias for every importable bucket (`uv sync` writes a `.pth` shim into the project venv), and [`conftest.py`](conftest.py) re-registers the same aliases at pytest startup so the suite runs without an install. Always import via the alias (`from drivers.sql.session import init_db`), never via the numeric path.
+      <!-- PYTHON_ALIASES_START -->
+      {% for alias in python_aliases %}
+      ### `{{ alias.alias }}` — [`{{ alias.bucket }}/`]({{ alias.bucket }}/)
+      {% if alias.children -%}
+      {% for child in alias.children -%}
+      - `{{ alias.alias }}.{{ child.name }}`{% if child.subitems %} — {% for sub in child.subitems %}`{{ sub }}`{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}
+      {% endfor -%}
+      {% else -%}
+      _Top-level package only._
+      {% endif -%}
+      {% endfor %}
+      <!-- PYTHON_ALIASES_END -->
 
       ## Console Scripts
       <!-- CLI_COMMANDS_START -->
@@ -111,33 +112,50 @@
       {% endif -%}
       <!-- CLI_COMMANDS_END -->
 
+      ## Optional Dependency Groups
+      Install with `uv sync --extra <group>`; combine groups by repeating `--extra`.
+      <!-- OPTIONAL_GROUPS_START -->
+      {% if optional_groups -%}
+      | Group | Packages |
+      |-------|----------|
+      {% for group in optional_groups -%}
+      | `{{ group.name }}` | {% for pkg in group.packages %}`{{ pkg }}`{% if not loop.last %}, {% endif %}{% endfor %} |
+      {% endfor -%}
+      {% else -%}
+      _No optional dependency groups defined._
+      {% endif -%}
+      <!-- OPTIONAL_GROUPS_END -->
+
       ## Getting Started
+      [uv](https://docs.astral.sh/uv/) is the primary Python interface for this repo — don't use bare `pip` / `python` to operate the project. See [AGENTS.md](AGENTS.md) for the full convention.
       ```bash
-      pip install -e .
-      pip install -e ".[dev]"           # adds pytest, ruff, mypy
-      pytest
-      python -m core.interfaces.cli.main --help
+      uv sync --extra dev               # install base + dev extras
+      uv sync --extra llm               # add Claude / OpenAI / LM Studio providers
+      uv run pytest                     # run the test suite
+      uv run localfabric --help         # primary CLI
+      uv run localfabric-md --help      # markdown runtime
+      uv run localfabric-mcp            # expose tools over MCP
+      uv run localfabric-api            # serve the FastAPI surface
       ```
-      Run a local service through the service runtime:
+      Run a YAML workflow directly:
       ```bash
-      python -m service_runtime.cmd up ollama ./14_data/apps/ollama/main
+      uv run python 02_core/runtimes/yaml/interpreter.py \
+          06_workflows/docs.readme.generate.workflow.yaml docs.readme.generate.workflow
       ```
-      Expose available integrations through MCP:
+      Bring up a service from the Docker-Compose catalog:
       ```bash
-      python -m mcp_servers.server
+      docker compose -f 09_services/<category>/<service>/docker-compose.yml up -d
       ```
 
-      ## Notes for contributors
-      - Cross-bucket imports use the clean import name (`from drivers.sql.session import init_db`), never the numeric path.
+      ## Notes For Contributors
+      - **uv is the primary Python interface.** Treat `pip` / bare `python` in older docs as legacy and update them. See [AGENTS.md](AGENTS.md).
+      - Cross-bucket imports use the clean alias (`from drivers.sql.session import init_db`), never the numeric path.
       - [`core.environment.REPO_ROOT`](02_core/environment/paths.py) is the canonical anchor for path resolution — no `os.path.join(__file__, "..", "..")` patterns anywhere else.
-      - The classification-boundary audit runs as the `audit.classifications.scan.workflow` YAML workflow — invoke via `make audit` before opening a PR. Findings land at `14_data/runs/classification_audit/`.
+      - Regenerate this README with `make docs`; the classification-boundary audit runs via `make audit` and writes findings to `14_data/runs/classification_audit/`.
 
       ## Design Principles
-      - **Local-first, hybrid-ready:** Prefer private local execution while allowing cloud provider integrations.
-      - **Provider-agnostic orchestration:** Keep workflows independent from specific model or storage implementations.
-      - **Clear ownership boundaries:** Classify functionality by responsibility and audit drift automatically.
-      - **Portable persistent state:** Make services and artifacts relocatable through filesystem-backed data paths.
-      - **Reproducible operation:** Favor explicit contracts, deterministic configuration, and focused validation.
-
-      ## Project Status
-      LocalFabric is an evolving orchestration workspace for local AI applications, service-backed tools, retrieval, and agent integrations. The classification audit and remediation workflow provide a repeatable way to preserve the architecture as new capabilities are added.
+      - **Local-first, hybrid-ready:** prefer private local execution while allowing cloud provider integrations.
+      - **Provider-agnostic orchestration:** keep workflows independent from any specific model or storage implementation.
+      - **Clear ownership boundaries:** classify functionality by responsibility and audit drift automatically.
+      - **Portable persistent state:** make services and artifacts relocatable through filesystem-backed data paths.
+      - **Reproducible operation:** favor explicit contracts, deterministic configuration, and focused validation.

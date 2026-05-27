@@ -1,149 +1,151 @@
 # LocalFabric
-
 <!-- PROJECT_TAGLINE_START -->
-
 **Local-first AI orchestration for models, tools, workflows, and data services.**
-
 <!-- PROJECT_TAGLINE_END -->
-
-LocalFabric is a modular platform for building private, reproducible AI workflows that run on local infrastructure first and can extend to cloud providers when needed. It brings model routing, reusable tools, workflow execution, service orchestration, storage drivers, prompt assets, and auditability into one responsibility-driven workspace.
+LocalFabric is a modular platform for building private, reproducible AI workflows that run on local infrastructure first and can extend to cloud providers when needed. It binds model routing, reusable tasks, YAML / markdown / LangGraph runtimes, service orchestration, storage drivers, prompt assets, and responsibility auditing into a single workspace.
 
 ## Why LocalFabric
-
-AI applications quickly accumulate provider-specific integrations, disconnected scripts, and operational state that is difficult to reproduce. LocalFabric gives teams a structured foundation to:
-
-- Route work across local and remote model providers behind clear interfaces.
-- Operate services such as Ollama, vector stores, and databases from a portable runtime.
-- Compose image, research, retrieval, and document workflows from reusable capabilities.
-- Store persistent artifacts and service state in discoverable, filesystem-backed locations.
-- Audit and remediate architecture boundary violations as the codebase evolves.
-
-## Platform Capabilities
-
-| Capability              | What It Provides                                                                       |
-| ----------------------- | -------------------------------------------------------------------------------------- |
-| Model execution         | Harness-based access to local and cloud model surfaces.                                |
-| Workflow orchestration  | Multi-step workflows implemented through LangGraph, shell, and YAML patterns.          |
-| Tool integration        | Reusable tools for documents, images, vision, embeddings, research, and related tasks. |
-| Service runtime         | Docker Compose-backed execution of local infrastructure services.                      |
-| Storage and retrieval   | Structured data roots and storage drivers for files, databases, and vector stores.     |
-| Agent exposure          | CLI and MCP surfaces for operators and agent-driven execution.                         |
-| Architecture governance | JSONL audit findings and remediation workflows for responsibility classification.      |
+AI work accumulates provider-specific integrations, scratch scripts, and operational state that nobody can reproduce. LocalFabric gives that work a structure:
+- Route requests across local and cloud model providers behind one set of harnesses.
+- Compose multi-step image, document, retrieval, and research workflows from reusable atomic tasks.
+- Run services (LLM runtimes, vector stores, databases) from a Docker-Compose catalog grouped by category.
+- Persist state in filesystem-backed roots that any environment can mount.
+- Audit responsibility boundaries automatically so the architecture doesn't drift as code lands.
 
 ## Architecture At A Glance
-
 ```mermaid
 flowchart LR
-    Interface["CLI / MCP / API"] --> Router
-    Router --> Workflows
-    Workflows --> Harnesses
-    Harnesses --> Targets["Models / Services / Tools"]
-    Targets --> Drivers
-    Drivers --> Data["Portable Data Layer"]
+    Surfaces["CLI / API / MCP"] --> Commands["core.interfaces.commands"]
+    Commands --> Runtimes["core.runtimes\n(yaml / markdown / langgraph)"]
+    Runtimes --> Tasks["07_tasks\nYAML wrappers"]
+    Tasks --> Lib["lib.*\nhelpers"]
+    Tasks --> Harnesses["harnesses.*\n(claude / ollama / ...)"]
+    Lib --> Drivers["drivers.*\n(sql / vector / file / cache)"]
+    Harnesses --> Registry["13_models, 13_providers\nregistries"]
 ```
-
-## Core Documentation
-
-| Document                                                               | Purpose                                                                                  |
-| ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| [Architecture](ARCHITECTURE.md)                                        | System layers, execution flow, contracts, design principles, and extension model.        |
-| [Data Model](DATA_MODEL.md)                                            | Persistent data layout, addressing model, service mappings, and driver responsibilities. |
-| [Repository Structure](REPO_STRUCTURE.md)                              | Canonical numbered classifications, ownership rules, and migration guidance.             |
-| [Services](SERVICES.md)                                                | Service runtime design, service categories, state model, and operational interface.      |
-| [Collaboration](COLLABORATION.md)                                      | Agent worktrees, branch naming, pull request requirements, and integration rules.        |
-| [Classification Audit](18_docs/classification_audit.md)                | Automated checks for cross-classification responsibility leaks.                          |
-| [Remediation Workflow](18_docs/classification_remediation_workflow.md) | Agent workflow for resolving findings safely and iteratively.                            |
 
 ## Repository Layout
-
 Implementation lives directly under the repo root in numeric-prefixed responsibility buckets. Each bucket owns a single concern.
-
 <!-- BUCKETS_TABLE_START -->
-
-| Bucket                                       | Role                                                            | Import name       |
-| -------------------------------------------- | --------------------------------------------------------------- | ----------------- |
-| [`00_specs/`](00_specs/)                     | Agent-ready specs and task artifacts                            | —                 |
-| [`01_interfaces/`](01_interfaces/)           | Python Protocol mirrors of the JSON schemas                     | `interfaces`      |
-| [`01_schemas/`](01_schemas/)                 | Shared JSON schemas used across components                      | —                 |
-| [`02_core/`](02_core/)                       | Shared primitives: config, logging, paths                       | `core`            |
-| [`03_adapters/`](03_adapters/)               | Interface translation (CLI, REST, OpenAI-compat, MCP)           | `adapters`        |
-| [`04_harnesses/`](04_harnesses/)             | Execution lifecycle per provider                                | `harnesses`       |
-| [`05_router/`](05_router/)                   | Classification → scoring → dispatch                             | `router`          |
-| [`06_workflows/`](06_workflows/)             | LangGraph, LangChain, shell, YAML workflows                     | `workflows`       |
-| [`07_tasks/`](07_tasks/)                     | Atomic task implementations (image, pdf, vision, embeddings, …) | `tasks`           |
-| [`08_drivers/`](08_drivers/)                 | Storage/database connectors                                     | `drivers`         |
-| [`09_services/`](09_services/)               | Docker-Compose service catalog by category                      | —                 |
-| [`10_service_runtime/`](10_service_runtime/) | `cmd <service> <path>` runtime                                  | `service_runtime` |
-| [`11_mcp/`](11_mcp/)                         | MCP servers and exposure shims                                  | `mcp_servers`     |
-| [`12_prompts/`](12_prompts/)                 | Prompt templates                                                | —                 |
-| [`13_models/`](13_models/)                   | Per-model YAML registry (providers + features)                  | —                 |
-| [`13_providers/`](13_providers/)             | Per-provider YAML registry (protocols + endpoints)              | —                 |
-| [`14_data/`](14_data/)                       | Persistent data (filesystem-backed)                             | —                 |
-| [`15_notebooks/`](15_notebooks/)             | Exploration notebooks                                           | —                 |
-| [`16_tests/`](16_tests/)                     | Integration and contract tests                                  | —                 |
-| [`18_docs/`](18_docs/)                       | Supporting docs                                                 | —                 |
-| [`19_archive/`](19_archive/)                 | Deprecated components                                           | —                 |
-
+| Bucket | Role | Import name |
+|--------|------|-------------|
+| [`00_specs/`](00_specs/) | Agent-ready specs and task artifacts | — |
+| [`01_interfaces/`](01_interfaces/) | Python Protocol mirrors of the JSON schemas | `interfaces` |
+| [`01_schemas/`](01_schemas/) | Shared JSON schemas used across components | — |
+| [`02_core/`](02_core/) | Core libraries — environment, router, runtimes (yaml/markdown/langgraph), interfaces (cli/api/mcp) | `core` |
+| [`04_harnesses/`](04_harnesses/) | Provider harnesses — execution lifecycle per model provider | `harnesses` |
+| [`06_workflows/`](06_workflows/) | Composed pipelines of tasks (YAML) | — |
+| [`07_lib/`](07_lib/) | Python helper library invoked by YAML tasks (image, pdf, embeddings, classify, research, …) | `lib` |
+| [`07_tasks/`](07_tasks/) | YAML task wrappers — one .task.yaml file per atomic lib.* function | — |
+| [`08_drivers/`](08_drivers/) | Storage/database connectors | `drivers` |
+| [`09_docker/`](09_docker/) | Docker service definitions (extend docker.base) | — |
+| [`09_launchd/`](09_launchd/) | macOS launchd job definitions (extend launchd.base) | — |
+| [`09_services/`](09_services/) | Docker-Compose service catalog by category | — |
+| [`12_prompts/`](12_prompts/) | Prompt templates (markdown runtime sources) | — |
+| [`13_models/`](13_models/) | Per-model YAML registry (one file per model; declares providers and features) | — |
+| [`13_providers/`](13_providers/) | Per-provider YAML registry (one file per provider; declares protocols and endpoints) | — |
+| [`14_data/`](14_data/) | Persistent data (filesystem-backed) | — |
+| [`14_templates/`](14_templates/) | Document templates rendered by YAML workflows | — |
+| [`15_examples/`](15_examples/) | Example YAML definitions showing runtime composition patterns | — |
+| [`15_notebooks/`](15_notebooks/) | Exploration notebooks | — |
+| [`16_tests/`](16_tests/) | Integration and contract tests | — |
+| [`18_docs/`](18_docs/) | Supporting docs | — |
 <!-- BUCKETS_TABLE_END -->
 
-## Import-name Strategy
+## Python Aliases
+Numeric prefixes are filesystem-only — Python forbids module names that start with a digit. `[tool.setuptools.package-dir]` in [`pyproject.toml`](pyproject.toml) registers a clean alias for every importable bucket (`uv sync` writes a `.pth` shim into the project venv), and [`conftest.py`](conftest.py) re-registers the same aliases at pytest startup so the suite runs without an install. Always import via the alias (`from drivers.sql.session import init_db`), never via the numeric path.
+<!-- PYTHON_ALIASES_START -->
 
-Numeric prefixes are filesystem-only — Python forbids module names that start with a digit. The buckets are registered with clean import names via two synchronized mechanisms:
+### `interfaces` — [`01_interfaces/`](01_interfaces/)
+_Top-level package only._
 
-- **[`pyproject.toml`](pyproject.toml)** — `[tool.setuptools.package-dir]` maps each bucket to its import name. `pip install -e .` writes the aliases into a `.pth` file in site-packages so `from harnesses.base import Harness` resolves naturally.
-- **[`conftest.py`](conftest.py)** — registers the same aliases at pytest startup so the test suite runs without an install step.
+### `core` — [`02_core/`](02_core/)
+- `core.environment`
+- `core.interfaces` — `api`, `cli`, `commands`, `mcp`
+- `core.router`
+- `core.runtimes` — `langgraph`, `markdown`, `yaml`
 
-`11_mcp/` is intentionally exposed as **`mcp_servers`**, not `mcp`: [`11_mcp/server.py`](11_mcp/server.py) imports `from mcp.server.fastmcp import FastMCP` (the PyPI MCP SDK), so we leave that top-level name unshadowed.
+### `harnesses` — [`04_harnesses/`](04_harnesses/)
+- `harnesses.claude`
+- `harnesses.codex`
+- `harnesses.gemini`
+- `harnesses.lmstudio`
+- `harnesses.ollama`
+- `harnesses.openai`
 
-Always import via the clean name (`from drivers.sql.session import init_db`), never via the numeric path.
+### `lib` — [`07_lib/`](07_lib/)
+- `lib.audit`
+- `lib.browser`
+- `lib.classify`
+- `lib.embeddings`
+- `lib.image`
+- `lib.metadata`
+- `lib.pdf`
+- `lib.research`
+- `lib.shell`
+- `lib.text`
+
+### `drivers` — [`08_drivers/`](08_drivers/)
+- `drivers.cache`
+- `drivers.file`
+- `drivers.sql`
+- `drivers.vector`
+
+<!-- PYTHON_ALIASES_END -->
 
 ## Console Scripts
-
 <!-- CLI_COMMANDS_START -->
-
-| Command               | Entry point                                  |
-| --------------------- | -------------------------------------------- |
-| `localfabric`         | `adapters.cli.main:app`                      |
-| `localfabric-md`      | `adapters.cli.markdown_runtime_adapter:main` |
-| `localfabric-runtime` | `service_runtime.cmd:main`                   |
-
+| Command | Entry point |
+|---------|-------------|
+| `localfabric` | `core.interfaces.cli.main:app` |
+| `localfabric-api` | `core.interfaces.api.app:cli_main` |
+| `localfabric-mcp` | `core.interfaces.mcp.server:main` |
+| `localfabric-md` | `core.interfaces.cli.markdown_runtime:main` |
 <!-- CLI_COMMANDS_END -->
 
+## Optional Dependency Groups
+Install with `uv sync --extra <group>`; combine groups by repeating `--extra`.
+<!-- OPTIONAL_GROUPS_START -->
+| Group | Packages |
+|-------|----------|
+| `dev` | `pytest>=8.0`, `ruff>=0.4`, `mypy>=1.10`, `mdformat>=0.7`, `mdformat-gfm>=0.3`, `mdformat-frontmatter>=2.0`, `mdformat-tables>=1.0`, `yamlfix>=1.16`, `yamllint>=1.35`, `pre-commit>=3.7` |
+| `llm` | `anthropic>=0.40`, `openai>=1.0`, `google-generativeai>=0.5` |
+| `notebook` | `openai>=1.0`, `ipykernel>=6.0` |
+| `pdf` | `pymupdf>=1.24`, `pdfminer.six>=20221105`, `pdf2image>=1.16` |
+| `vector` | `lancedb>=0.6` |
+| `vision` | `opencv-python>=4.8`, `pytesseract>=0.3` |
+<!-- OPTIONAL_GROUPS_END -->
+
 ## Getting Started
-
+[uv](https://docs.astral.sh/uv/) is the primary Python interface for this repo — don't use bare `pip` / `python` to operate the project. See [AGENTS.md](AGENTS.md) for the full convention.
 ```bash
-pip install -e .
-pip install -e ".[dev]"           # adds pytest, ruff, mypy
-pytest
-python -m adapters.cli.main --help
+uv sync --extra dev               # install base + dev extras
+uv sync --extra llm               # add Claude / OpenAI / LM Studio providers
+uv run pytest                     # run the test suite
+uv run localfabric --help         # primary CLI
+uv run localfabric-md --help      # markdown runtime
+uv run localfabric-mcp            # expose tools over MCP
+uv run localfabric-api            # serve the FastAPI surface
+```
+Run a YAML workflow directly:
+```bash
+uv run python 02_core/runtimes/yaml/interpreter.py \
+    06_workflows/docs.readme.generate.workflow.yaml docs.readme.generate.workflow
+```
+Bring up a service from the Docker-Compose catalog:
+```bash
+docker compose -f 09_services/<category>/<service>/docker-compose.yml up -d
 ```
 
-Run a local service through the service runtime:
-
-```bash
-python -m service_runtime.cmd up ollama ./14_data/apps/ollama/main
-```
-
-Expose available integrations through MCP:
-
-```bash
-python -m mcp_servers.server
-```
-
-## Notes for contributors
-
-- Cross-bucket imports use the clean import name (`from drivers.sql.session import init_db`), never the numeric path.
-- [`core.paths.REPO_ROOT`](02_core/paths.py) is the canonical anchor for path resolution — no `os.path.join(__file__, "..", "..")` patterns anywhere else.
-- The classification-boundary audit runs as the `audit.classifications.scan.workflow` YAML workflow — invoke via `make audit` before opening a PR. Findings land at `14_data/runs/classification_audit/`.
+## Notes For Contributors
+- **uv is the primary Python interface.** Treat `pip` / bare `python` in older docs as legacy and update them. See [AGENTS.md](AGENTS.md).
+- Cross-bucket imports use the clean alias (`from drivers.sql.session import init_db`), never the numeric path.
+- [`core.environment.REPO_ROOT`](02_core/environment/paths.py) is the canonical anchor for path resolution — no `os.path.join(__file__, "..", "..")` patterns anywhere else.
+- Regenerate this README with `make docs`; the classification-boundary audit runs via `make audit` and writes findings to `14_data/runs/classification_audit/`.
 
 ## Design Principles
-
-- **Local-first, hybrid-ready:** Prefer private local execution while allowing cloud provider integrations.
-- **Provider-agnostic orchestration:** Keep workflows independent from specific model or storage implementations.
-- **Clear ownership boundaries:** Classify functionality by responsibility and audit drift automatically.
-- **Portable persistent state:** Make services and artifacts relocatable through filesystem-backed data paths.
-- **Reproducible operation:** Favor explicit contracts, deterministic configuration, and focused validation.
-
-## Project Status
-
-LocalFabric is an evolving orchestration workspace for local AI applications, service-backed tools, retrieval, and agent integrations. The classification audit and remediation workflow provide a repeatable way to preserve the architecture as new capabilities are added.
+- **Local-first, hybrid-ready:** prefer private local execution while allowing cloud provider integrations.
+- **Provider-agnostic orchestration:** keep workflows independent from any specific model or storage implementation.
+- **Clear ownership boundaries:** classify functionality by responsibility and audit drift automatically.
+- **Portable persistent state:** make services and artifacts relocatable through filesystem-backed data paths.
+- **Reproducible operation:** favor explicit contracts, deterministic configuration, and focused validation.
