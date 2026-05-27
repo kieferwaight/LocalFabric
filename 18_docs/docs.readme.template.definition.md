@@ -6,14 +6,14 @@
 | ID | `docs.readme.template` |
 | Source | `14_templates/docs.readme.template.yaml` |
 | Tags | documentation, template |
-Markdown template for the repo-root README.md. Static prose plus three
+Markdown template for the repo-root README.md. Static prose plus five
 data-driven sections rendered from `pyproject.toml`: the project tagline,
-the bucket table (numeric prefix → role → import alias), and the console
-script table.
-Marker pairs (`<!-- NAME_START -->` / `<!-- NAME_END -->`) are preserved
-around the dynamic regions so readers can still locate the generated
-boundaries — the regeneration source of truth is this YAML, not the
-markers.
+the bucket table, the Python alias map (top-level packages and their
+immediate subpackages), the console-script table, and the optional
+dependency groups.
+Marker pairs (`<!-- NAME_START -->` / `<!-- NAME_END -->`) wrap each
+generated region so readers can locate the boundaries — the
+regeneration source of truth is this YAML, not the markers.
 
 
 ## Relationships
@@ -40,8 +40,16 @@ flowchart LR
 name like `01_interfaces`), `description`, and `import_name` (the
 clean Python alias, or `""` when the bucket isn't importable).
  |
+| `python_aliases` | `array` | yes | `-` | Top-level Python aliases derived from `[tool.setuptools].packages`.
+Each entry has `alias`, `bucket`, and `children` — where each
+child has `name` (immediate subpackage) and `subitems` (its own
+immediate subpackages).
+ |
 | `cli_commands` | `array` | yes | `-` | Console script entries. Each has `name` and `entry_point` mirroring
 `[project.scripts]` in `pyproject.toml`.
+ |
+| `optional_groups` | `array` | yes | `-` | Extras from `[project.optional-dependencies]`. Each entry has
+`name` and `packages` (list of requirement strings).
  |
 
 
@@ -62,7 +70,9 @@ _No locally declared teardown operations._
 | --- | --- | --- | --- | --- |
 | `project_tagline` | `string` | yes | `-` | [Docs - Repo README Template](docs.readme.template.definition.md) |
 | `buckets` | `array` | yes | `-` | [Docs - Repo README Template](docs.readme.template.definition.md) |
+| `python_aliases` | `array` | yes | `-` | [Docs - Repo README Template](docs.readme.template.definition.md) |
 | `cli_commands` | `array` | yes | `-` | [Docs - Repo README Template](docs.readme.template.definition.md) |
+| `optional_groups` | `array` | yes | `-` | [Docs - Repo README Template](docs.readme.template.definition.md) |
 
 
 ### Effective Variables

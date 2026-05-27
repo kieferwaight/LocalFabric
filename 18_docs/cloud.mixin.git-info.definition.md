@@ -43,7 +43,6 @@ _No operation description provided._
 ```bash
 sha=$(git -C "{{ env.cwd }}" rev-parse --short HEAD 2>/dev/null || echo "unknown")
 printf '{"git_short_sha": "%s"}' "$sha" > "$STATE_FILE"
-
 ```
 ### Teardown Operations
 _No locally declared teardown operations._
