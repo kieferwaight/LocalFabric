@@ -48,7 +48,7 @@ dev = [
     "yamllint>=1.35",
     "pre-commit>=3.7",
 ]
-notebook = ["openai>=1.0", "ipykernel>=6.0"]
+notebook = ["ipykernel>=6.0"]
 
 [project.scripts]
 localfabric = "core.interfaces.cli.main:app"
