@@ -636,7 +636,8 @@ class Runtime:
             if "launchd_plist" in block:
                 if set(block) - {"launchd_plist", "for_each"}:
                     raise ValueError(
-                        "A launchd_plist block supports only 'launchd_plist' and optional 'for_each'."
+                        "A launchd_plist block supports only 'launchd_plist' and "
+                        "optional 'for_each'."
                     )
                 self._run_launchd_plist(block, scope)
                 continue

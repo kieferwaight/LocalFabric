@@ -6,13 +6,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any
 
 from core.environment import data
-from drivers.sql.schema import assets
-from drivers.sql.session import get_connection
-from langgraph.graph import END, START, StateGraph
-from sqlalchemy import select
-
-_DB_PATH = data("workspace.db")
-_DEFAULT_CONCURRENCY = 4
 from core.runtimes.langgraph.image_intelligence.nodes import (
     load_asset,
     node_classify,
@@ -25,6 +18,13 @@ from core.runtimes.langgraph.image_intelligence.nodes import (
     save_report,
 )
 from core.runtimes.langgraph.types import ImageIntelligenceState
+from drivers.sql.schema import assets
+from drivers.sql.session import get_connection
+from langgraph.graph import END, START, StateGraph
+from sqlalchemy import select
+
+_DB_PATH = data("workspace.db")
+_DEFAULT_CONCURRENCY = 4
 
 # ── Fan-out / fan-in aggregator ───────────────────────────────────────────────
 
