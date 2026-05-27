@@ -23,11 +23,9 @@ site/
 
 # Claude Code Tracking & Cache
 .claude/
-!./CLAUDE.md
 
 # Gemini CLI Context Tracking
 .gemini/
-!./GEMINI.md
 
 # GitHub Copilot Prompts and Settings
 .github/copilot-instructions.md
@@ -37,7 +35,6 @@ site/
 .codex/
 AGENTS.override.md
 !./AGENTS.md
-!./SKILL.md
 
 .DS_Store
 
