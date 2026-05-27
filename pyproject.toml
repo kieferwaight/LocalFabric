@@ -181,7 +181,10 @@ ignore_missing_imports = true
 explicit_package_bases = true
 
 [tool.yamlfix]
-line_length = 100
+# Set very high so yamlfix never line-wraps strings — `scripts/yaml_block_scalars.py`
+# owns long-string handling via block-scalar promotion. Without this, the two
+# tools oscillated (yamlfix breaks with `\ `, yaml_block_scalars merges back).
+line_length = 1000
 sequence_style = "block_style"
 preserve_quotes = false
 explicit_start = false

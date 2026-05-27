@@ -129,13 +129,13 @@
       ## Getting Started
       [uv](https://docs.astral.sh/uv/) is the primary Python interface for this repo — don't use bare `pip` / `python` to operate the project. See [AGENTS.md](AGENTS.md) for the full convention.
       ```bash
-      uv sync --extra dev               # install base + dev extras
-      uv sync --extra llm               # add Claude / OpenAI / LM Studio providers
-      uv run pytest                     # run the test suite
-      uv run localfabric --help         # primary CLI
-      uv run localfabric-md --help      # markdown runtime
-      uv run localfabric-mcp            # expose tools over MCP
-      uv run localfabric-api            # serve the FastAPI surface
+      uv sync --extra dev  # install base + dev extras
+      uv sync --extra llm  # add Claude / OpenAI / LM Studio providers
+      uv run pytest  # run the test suite
+      uv run localfabric --help  # primary CLI
+      uv run localfabric-md --help  # markdown runtime
+      uv run localfabric-mcp  # expose tools over MCP
+      uv run localfabric-api  # serve the FastAPI surface
       ```
       Run a YAML workflow directly:
       ```bash
