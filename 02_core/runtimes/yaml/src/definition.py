@@ -106,6 +106,30 @@ class TemplateBlock:
 
 
 @dataclass
+class Example:
+    """A named input bundle that replays a known-good invocation of a definition."""
+
+    id: str
+    description: str = ""
+    inputs: dict[str, Any] = field(default_factory=dict)
+
+    @classmethod
+    def from_dict(cls, raw: dict[str, Any]) -> Example:
+        if not isinstance(raw, dict):
+            raise ValueError("Definition 'examples' entries must be mappings.")
+        if "id" not in raw or not str(raw["id"]).strip():
+            raise ValueError("Example entry is missing required non-empty 'id'.")
+        inputs_raw = raw.get("inputs") or {}
+        if not isinstance(inputs_raw, dict):
+            raise ValueError(f"Example {raw['id']!r}: 'inputs' must be a mapping.")
+        return cls(
+            id=str(raw["id"]),
+            description=str(raw.get("description", "")),
+            inputs=dict(inputs_raw),
+        )
+
+
+@dataclass
 class Definition:
     id: str
     title: str = ""
@@ -122,6 +146,7 @@ class Definition:
     template: TemplateBlock | None = None
     schema: dict[str, Any] = field(default_factory=dict)
     launchd: dict[str, Any] = field(default_factory=dict)
+    examples: list[Example] = field(default_factory=list)
 
     @classmethod
     def from_dict(cls, raw: dict[str, Any]) -> Definition:
@@ -147,6 +172,17 @@ class Definition:
         launchd_raw = raw.get("launchd") or {}
         if not isinstance(launchd_raw, dict):
             raise ValueError("Definition 'launchd' must be a mapping of launchd plist fields.")
+        examples_raw = raw.get("examples") or []
+        if not isinstance(examples_raw, list):
+            raise ValueError("Definition 'examples' must be a list of example entries.")
+        examples = [Example.from_dict(entry) for entry in examples_raw]
+        seen_example_ids: set[str] = set()
+        for example in examples:
+            if example.id in seen_example_ids:
+                raise ValueError(
+                    f"Definition {raw['id']!r}: duplicate example id {example.id!r}."
+                )
+            seen_example_ids.add(example.id)
         return cls(
             id=str(raw["id"]),
             title=str(raw.get("title", "")),
@@ -163,4 +199,5 @@ class Definition:
             template=template,
             schema=dict(schema_raw),
             launchd=dict(launchd_raw),
+            examples=examples,
         )

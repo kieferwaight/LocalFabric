@@ -11,6 +11,7 @@ from .definition import (
     BlockDocumentation,
     Definition,
     DefinitionDocumentation,
+    Example,
     InputConstraint,
     TemplateBlock,
 )
@@ -70,6 +71,7 @@ __all__ = [
     "DefinitionDocumentation",
     "TemplateBlock",
     "Definition",
+    "Example",
     "LANGUAGE_BINARIES",
     "DispatchResult",
     "Dispatcher",

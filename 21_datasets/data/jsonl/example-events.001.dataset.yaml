@@ -1,0 +1,44 @@
+- id: data.jsonl.example-events.001.dataset
+  title: Example event log (JSONL)
+  description: |
+    Five-row JSONL event log covering info / warning / error levels with
+    varied per-record keys. Useful for streaming-parser, chunker, and
+    log-summarization regression tests.
+  tags:
+  - dataset
+  - data
+  - jsonl
+  - events
+  - logs
+  - dummy
+  extends: stdlib.base
+
+  class: data
+  subclass: jsonl
+
+  media:
+    path: example-events.001.jsonl
+    sha256: '6f3b23283023fa8c55ef2d0873ac4c7159a87f8f97bb8c5df574780ad4ee9001'
+    bytes: 513
+    mime: application/x-ndjson
+    row_count: 5
+
+  source:
+    origin: generated
+    license: CC0-1.0
+    captured: '2026-05-26'
+    attribution: 'Synthetic dummy fixture generated for the test-data corpus.'
+
+  determinism:
+    pinned: true
+
+  labels:
+    schema:
+      required: [id, ts, level, message]
+      optional: [duration_ms, code]
+    levels: [info, warning, error]
+    has_heterogeneous_records: true
+
+  uses:
+    - task: embeddings.chunker.chunk-file.task
+      asserts: 'chunker emits one chunk per record (or as many as configured)'

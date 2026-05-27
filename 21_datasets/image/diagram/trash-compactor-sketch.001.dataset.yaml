@@ -1,0 +1,52 @@
+- id: image.diagram.trash-compactor-sketch.001.dataset
+  title: Trash compactor engineering sketch
+  description: |
+    Black-and-white pencil-style engineering / draft-board sketch of an
+    industrial trash compactor. Exercises grayscale handling, edge / line
+    extraction, and "sketch vs photo" style classification.
+  tags:
+  - dataset
+  - image
+  - diagram
+  - sketch
+  - grayscale
+  - engineering-drawing
+  extends: stdlib.base
+
+  class: image
+  subclass: diagram
+
+  media:
+    path: trash-compactor-sketch.001.png
+    sha256: '52fcfd5f7823da00071234e0aec29b05a48b77c8315c83054ab4c498a0f8fc45'
+    bytes: 584013
+    mime: image/png
+    width: 672
+    height: 792
+    color_profile: sRGB
+
+  source:
+    origin: inbox-2026-05-26
+    license: LicenseRef-Internal-Testing-Only
+    captured: '2026-05-26'
+    attribution: 'Owned by maintainer; internal test fixture.'
+
+  determinism:
+    pinned: true
+
+  labels:
+    overview:
+      subject: 'Industrial trash compactor'
+      context: 'Black-and-white engineering / draft-board sketch'
+      visible_elements: [pencil-lines, machinery, geometric-shapes]
+    style:
+      medium: pencil
+      palette: grayscale
+
+  uses:
+    - task: image.classify.task
+      asserts: 'classification is "diagram" or "sketch"'
+    - task: image.vision.overview.task
+      asserts: 'subject mentions "compactor" or "machinery"'
+    - task: image.vision.style.task
+      asserts: 'style output mentions "sketch" or "grayscale"'

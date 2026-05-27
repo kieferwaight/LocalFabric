@@ -1,52 +1,45 @@
 /* ----------------------------------------------------------------------------
- * LocalFabric — Markdown Preview documentation theme (dark)
+ * LocalFabric — Markdown Preview documentation theme
  *
- * Inherits container background · dark "terminal" code blocks ·
- * Cascadia Code Nerd Font. Companion to markdown-preview-light.css.
+ * Light page · dark "terminal" code blocks · Cascadia Code Nerd Font.
  * Loaded by VS Code via "markdown.styles" in .vscode/settings.json.
  * --------------------------------------------------------------------------*/
 
 :root {
     /* ── Color tokens ──────────────────────────────────────────────────── */
-    /* --color-bg is intentionally omitted — the body inherits whatever
-       background VS Code's preview container provides.                   */
-    --color-bg-subtle:    rgba(198, 208, 245, 0.06);   /* th, blockquote, kbd, details */
-    --color-bg-alt:       rgba(198, 208, 245, 0.04);   /* mermaid surface (light lift)  */
+    --color-bg:           #ffffff;
+    --color-bg-subtle:    #f6f8fa;   /* th, blockquote, kbd, details      */
+    --color-bg-alt:       #fbfcfd;   /* mermaid surface (light lift)      */
     /* Table cells use stacked low-opacity black overlays so the zebra
-       darkens the inherited page background by two steps regardless of
-       its actual shade. Even rows fall back to --cell-bg; odd rows are
-       shallower so the stripe reads as a lighter band. */
-    --cell-bg:            #00000029;   /* baseline td/th overlay */
-    --cell-bg-stripe:     #0000001d;   /* odd-row override       */
-    --color-fg:           #c6d0f5;
-    --color-fg-muted:     #949cbb;
-    --color-fg-strong:    #eef1f8;   /* headings, kbd, details summary    */
-    --color-accent:       #8caaee;   /* links + outline tint              */
-    /* Solid border so cells read as a grid against the inherited (unknown)
-       page background — Catppuccin Mocha surface1.                       */
-    --color-border:       #45475a;
+       darkens the page background by two steps. Even rows fall back to
+       --cell-bg; odd rows are shallower so the stripe reads as a
+       lighter band — matches the dark theme's concept. */
+    --cell-bg:            #00000029;
+    --cell-bg-stripe:     #0000001d;
+    --color-fg:           #1f2328;
+    --color-fg-muted:     #57606a;
+    --color-fg-strong:    #0a0c10;   /* headings, kbd, details summary    */
+    --color-accent:       #0969da;   /* links + outline tint              */
+    --color-border:       #d8dee4;   /* single border color, every surface*/
 
-    /* Dark code surface — Catppuccin Mocha "base" (one step darker than
-       Frappé so code panels still read as a contained terminal even when
-       the page background is also dark) */
-    --term-bg:            #1e1e2e;
-    --term-fg:            #cdd6f4;
-    --term-muted:         #a6adc8;
-    --term-border:        #313244;
+    /* Dark code surface — Catppuccin Frappé "base" */
+    --term-bg:            #303446;
+    --term-fg:            #c6d0f5;
+    --term-muted:         #949cbb;
+    --term-border:        #414559;
 
-    /* Inline code (semi-transparent overlay so it tints whatever sits
-       beneath the preview) */
-    --code-inline-bg:     rgba(198, 208, 245, 0.10);
+    /* Inline code (light surface) */
+    --code-inline-bg:     #eef1f4;
 
     /* ── Geometry tokens ───────────────────────────────────────────────── */
     --radius:             6px;
     --border-width:       1px;
 
     /* ── Effect tokens ─────────────────────────────────────────────────── */
-    --shadow-color:       rgba(0, 0, 0, 0.35);
+    --shadow-color:       rgba(15, 20, 25, 0.06);
     --shadow-sm:          0 1px 2px var(--shadow-color);
     --shadow-md:          0 1px 3px var(--shadow-color);
-    --outline-color:      rgba(140, 170, 238, 0.18);   /* --color-accent @ 18% */
+    --outline-color:      rgba(9, 105, 218, 0.10);   /* --color-accent @ 10% */
     --outline-offset:     2px;
 
     /* ── Typography stacks ─────────────────────────────────────────────── */
@@ -62,14 +55,13 @@
                           ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
-/* ---- Force the dark documentation theme regardless of VS Code theme ----
-   Note: background-color is deliberately NOT set — the preview inherits
-   whatever the container provides so the page blends with the editor.   */
+/* ---- Force the light documentation theme regardless of VS Code theme ---- */
 body,
 body.vscode-light,
 body.vscode-dark,
 body.vscode-high-contrast,
 body.vscode-high-contrast-light {
+    background-color: var(--color-bg);
     color: var(--color-fg);
     font-family: var(--font-sans);
     font-size: 15px;
@@ -220,58 +212,13 @@ body > table:first-of-type:has(~ h1, ~ h2, ~ h3, ~ h4, ~ h5, ~ h6):focus-within:
     font-family: var(--font-mono);
     font-size: 0.88em;
     background: var(--code-inline-bg);
-    color: var(--color-fg-strong);
+    color: var(--color-fg);
     border: var(--border-width) solid var(--color-border);
     padding: 0.1em 0.4em;
     border-radius: var(--radius);
     font-feature-settings: "calt" 1, "liga" 1, "ss01" 1;
     white-space: break-spaces;
 }
-
-/* ---- Inline code stacked inside a table cell --------------------------
-   The YAML front-matter renderer wraps each nested line in its own
-   <code> chip, so a value like
-       name:
-         type: string
-         default: world
-   would otherwise read as three disconnected pills. Style the chips so
-   they visually merge into a single terminal-style code block, matching
-   the <pre> aesthetic.                                                  */
-table td > code {
-    display: block;
-    background: var(--term-bg);
-    color: var(--term-fg);
-    border: var(--border-width) solid var(--term-border);
-    border-top: none;
-    border-bottom: none;
-    border-radius: 0;
-    padding: 0.05em 0.7em;
-    margin: 0;
-    font-family: var(--font-mono);
-    font-size: 0.88em;
-    line-height: 1.6;
-    white-space: pre;
-    font-feature-settings: "calt" 1, "liga" 1, "ss01" 1;
-    box-shadow: var(--shadow-sm);
-}
-table td > code:first-of-type {
-    border-top: var(--border-width) solid var(--term-border);
-    border-radius: var(--radius) var(--radius) 0 0;
-    padding-top: 0.5em;
-}
-table td > code:last-of-type {
-    border-bottom: var(--border-width) solid var(--term-border);
-    border-radius: 0 0 var(--radius) var(--radius);
-    padding-bottom: 0.5em;
-}
-table td > code:only-of-type {
-    border: var(--border-width) solid var(--term-border);
-    border-radius: var(--radius);
-    padding: 0.5em 0.7em;
-}
-/* Suppress the <br> the renderer drops between stacked code chips so the
-   merged block has no gaps. */
-table td > code + br { display: none; }
 
 /* ---- Code blocks — minimalist modern terminal ------------------------- */
 pre {

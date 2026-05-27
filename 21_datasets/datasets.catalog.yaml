@@ -1,0 +1,36 @@
+- id: datasets.catalog
+  title: Test Dataset Master Catalog
+  description: |
+    Imports every `*.dataset.yaml` and `*.bundle.yaml` under `21_datasets/`.
+    Loading this definition registers every test-data sample and bundle
+    with the YAML runtime so that `lfc dataset list / describe / verify`
+    (planned tooling) can discover them without re-walking the tree.
+
+    Pattern mirrors `15_examples/examples.catalog.modules.yaml`: each new
+    sample appends one line under `modules:` here.
+  tags:
+  - dataset
+  - catalog
+  - modules
+  extends: stdlib.base
+  modules:
+  # Image — screenshots
+  - image/screenshot/code-snippet.001.dataset.yaml
+  - image/screenshot/file-explorer.001.dataset.yaml
+  - image/screenshot/lm-studio-model-explorer.001.dataset.yaml
+  # Image — diagrams (incl. banners, mermaid, engineering sketches, abstract)
+  - image/diagram/github-profile-banner-kieferwaight.001.dataset.yaml
+  - image/diagram/mermaid-docs-index.001.dataset.yaml
+  - image/diagram/trash-compactor-sketch.001.dataset.yaml
+  - image/diagram/abstract-with-text.001.dataset.yaml
+  # Image — placeholder (kept until removed)
+  - image/photo/example-placeholder.001.dataset.yaml
+  # Data
+  - data/json/example-config.001.dataset.yaml
+  - data/jsonl/example-events.001.dataset.yaml
+  - data/csv/example-records.001.dataset.yaml
+  # Document
+  - document/markdown/example-readme.001.dataset.yaml
+  - document/text/example-passage.001.dataset.yaml
+  # Bundles
+  - bundles/vision.smoke.bundle.yaml

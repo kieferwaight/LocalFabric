@@ -1,0 +1,47 @@
+- id: image.screenshot.file-explorer.001.dataset
+  title: File explorer screenshot
+  description: |
+    Screenshot of a file-explorer panel showing folder and file icons.
+    Exercises icon / layout detection and OS-UI element recognition.
+  tags:
+  - dataset
+  - image
+  - screenshot
+  - file-explorer
+  - ui
+  extends: stdlib.base
+
+  class: image
+  subclass: screenshot
+
+  media:
+    path: file-explorer.001.png
+    sha256: '004fdda638603de5a17888cec0664b7e1f32074e15cbe1ccf6555832664a24a0'
+    bytes: 72431
+    mime: image/png
+    width: 612
+    height: 676
+    color_profile: sRGB
+
+  source:
+    origin: inbox-2026-05-26
+    license: LicenseRef-Internal-Testing-Only
+    captured: '2026-05-26'
+    attribution: 'Captured by maintainer; internal test fixture, not for redistribution.'
+
+  determinism:
+    pinned: true
+
+  labels:
+    overview:
+      subject: 'File explorer panel with folder and file icons'
+      context: 'OS-native or IDE file browser UI'
+      visible_elements: [folder-icons, file-icons, filenames]
+    layout:
+      regions: [icon-list, filename-column]
+
+  uses:
+    - task: image.vision.overview.task
+      asserts: 'subject mentions "file" or "explorer"'
+    - task: image.vision.layout.task
+      asserts: 'layout output identifies a list region'

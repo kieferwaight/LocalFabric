@@ -1,0 +1,46 @@
+- id: image.screenshot.code-snippet.001.dataset
+  title: Code snippet screenshot
+  description: |
+    Screenshot of a code snippet captured by the maintainer for vision +
+    OCR regression testing. Exercises tasks that read source code from an
+    image (visible-text extraction, layout detection, syntax recognition).
+  tags:
+  - dataset
+  - image
+  - screenshot
+  - code
+  - ocr
+  extends: stdlib.base
+
+  class: image
+  subclass: screenshot
+
+  media:
+    path: code-snippet.001.png
+    sha256: '1181da453e8ac5552c2909cff2462c8902f20293af9dce0cc0b35fb10aed62c8'
+    bytes: 43185
+    mime: image/png
+    width: 1110
+    height: 188
+    color_profile: sRGB
+
+  source:
+    origin: inbox-2026-05-26
+    license: LicenseRef-Internal-Testing-Only
+    captured: '2026-05-26'
+    attribution: 'Captured by maintainer; internal test fixture, not for redistribution.'
+
+  determinism:
+    pinned: true
+
+  labels:
+    overview:
+      subject: 'Code snippet rendered as an image'
+      context: 'Editor or code-viewer background; source code visible'
+      visible_elements: [code, text]
+
+  uses:
+    - task: image.vision.visible-text.task
+      asserts: 'visible-text output contains source-code tokens'
+    - task: image.vision.overview.task
+      asserts: 'subject mentions "code"'

@@ -1,0 +1,48 @@
+- id: document.markdown.example-readme.001.dataset
+  title: Example README markdown
+  description: |
+    Tiny dummy README that exercises markdown features the runtime cares
+    about: ATX headers, unordered list, fenced code block, blockquote,
+    inline emphasis, inline code. Useful for format-compliance + parsing
+    regression tests.
+  tags:
+  - dataset
+  - document
+  - markdown
+  - readme
+  - dummy
+  extends: stdlib.base
+
+  class: document
+  subclass: markdown
+
+  media:
+    path: example-readme.001.md
+    sha256: 'd657fbbb3ca96f5619881ac675a509b865cc7f89ba85e80fa47334da8029aca5'
+    bytes: 431
+    mime: text/markdown
+    word_count: 63
+    line_count: 20
+
+  source:
+    origin: generated
+    license: CC0-1.0
+    captured: '2026-05-26'
+    attribution: 'Synthetic dummy fixture generated for the test-data corpus.'
+
+  determinism:
+    pinned: true
+
+  labels:
+    structure:
+      headers: [h1, h2, h2]
+      has_list: true
+      has_fenced_code: true
+      has_blockquote: true
+      code_languages: [bash]
+
+  uses:
+    - task: text.markdown.format.task
+      asserts: 'format output is idempotent (running it twice yields no change)'
+    - task: embeddings.chunker.chunk-file.task
+      asserts: 'chunker honors header boundaries'

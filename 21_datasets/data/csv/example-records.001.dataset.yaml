@@ -1,0 +1,47 @@
+- id: data.csv.example-records.001.dataset
+  title: Example records CSV
+  description: |
+    Five-row tabular CSV with header. Mixes string / boolean / ISO-date
+    columns. Useful for CSV parsing, type-inference, and tabular-ingest
+    regression tests.
+  tags:
+  - dataset
+  - data
+  - csv
+  - tabular
+  - dummy
+  extends: stdlib.base
+
+  class: data
+  subclass: csv
+
+  media:
+    path: example-records.001.csv
+    sha256: '58bb19b60afb3cf9998687e86597c9795ba92cab32aca9325845a8ac3eed36bb'
+    bytes: 219
+    mime: text/csv
+    delimiter: ','
+    has_header: true
+    row_count: 5
+
+  source:
+    origin: generated
+    license: CC0-1.0
+    captured: '2026-05-26'
+    attribution: 'Synthetic dummy fixture generated for the test-data corpus.'
+
+  determinism:
+    pinned: true
+
+  labels:
+    columns: [id, name, role, joined, active]
+    column_types:
+      id: integer
+      name: string
+      role: string
+      joined: date
+      active: boolean
+
+  uses:
+    - task: classify.media.file.task
+      asserts: 'class output is "ml_dataset" with subclass "data_file"'

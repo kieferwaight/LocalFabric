@@ -20,3 +20,8 @@
       result = classify_image(Path("{{ path }}"))
       with open(os.environ["STATE_FILE"], "w") as f:
           json.dump(result, f)
+  examples:
+  - id: example.lm-studio-screenshot
+    description: Classify the LM Studio model-explorer screenshot from 21_datasets.
+    inputs:
+      path: 21_datasets/image/screenshot/lm-studio-model-explorer.001.png

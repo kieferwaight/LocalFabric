@@ -1,0 +1,34 @@
+- id: vision.smoke.bundle
+  title: Vision Smoke Bundle
+  description: |
+    Minimum set of images that every vision-class prompt must pass before
+    release. Populate `members` as real samples land. Until the corpus
+    has at least one non-placeholder entry this bundle is informational
+    only — `acceptance.pass_rate_min` is set to `0.0` so runs do not
+    fail on the placeholder entry alone.
+  tags:
+  - dataset
+  - bundle
+  - vision
+  extends: stdlib.base
+
+  scope:
+    tasks:
+      - image.vision.overview.task
+      - image.vision.layout.task
+
+  members:
+    - image.screenshot.code-snippet.001.dataset
+    - image.screenshot.file-explorer.001.dataset
+    - image.screenshot.lm-studio-model-explorer.001.dataset
+    - image.diagram.github-profile-banner-kieferwaight.001.dataset
+    - image.diagram.mermaid-docs-index.001.dataset
+    - image.diagram.trash-compactor-sketch.001.dataset
+    - image.diagram.abstract-with-text.001.dataset
+
+  acceptance:
+    pass_rate_min: 1.0
+    per_member: []
+
+  determinism:
+    require_sha_match: true

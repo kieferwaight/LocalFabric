@@ -52,6 +52,7 @@ notebook = ["ipykernel>=6.0"]
 
 [project.scripts]
 localfabric = "core.interfaces.cli.main:app"
+lfc = "core.interfaces.cli.main:app"
 localfabric-md = "core.interfaces.cli.markdown_runtime:main"
 localfabric-mcp = "core.interfaces.mcp.server:main"
 localfabric-api = "core.interfaces.api.app:cli_main"
@@ -126,6 +127,7 @@ excluded_buckets = [
     "20_notebooks",
     "16_tests",
     "18_docs",
+    "21_datasets",
 ]
 
 [tool.localfabric.mcp_mapping]
@@ -153,6 +155,7 @@ system_sdk_override = "core.interfaces.mcp"
 "18_docs" = "Supporting docs"
 "19_templates" = "Document templates rendered by YAML workflows"
 "20_notebooks" = "Exploration notebooks"
+"21_datasets" = "Deterministic, indexable test datasets for model evaluation (per-file *.dataset.yaml manifests + bundles)"
 
 [tool.pytest.ini_options]
 testpaths = ["16_tests"]

@@ -27,7 +27,7 @@ name matches the id, and every concrete id ends with `.example` (or
 | `git.gitignore.example.yaml`       | `git.gitignore.example`                                                                     |
 | `obsidian.daily-note.example.yaml` | `obsidian.daily-note.example`                                                               |
 | `examples.catalog.modules.yaml`    | `examples.catalog.modules` (manifest, loads the others)                                     |
-| `code.summarize.example.md`        | `code.summarize.example` (provider-style: Claude)                                           |
+| `code.summarize.example.md`        | `code.summarize.example` (fence-style demo: pipes a prompt into the `claude` CLI)           |
 | `polyglot.hello.example.md`        | `polyglot.hello.example` (fence-style demo)                                                 |
 | `python.hello.example.md`          | `python.hello.example` (fence-style demo)                                                   |
 | `shell.hello.example.md`           | `shell.hello.example` (fence-style demo, used by `16_tests/harnesses.markdown.cli.test.py`) |

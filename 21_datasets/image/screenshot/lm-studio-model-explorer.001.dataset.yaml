@@ -1,0 +1,54 @@
+- id: image.screenshot.lm-studio-model-explorer.001.dataset
+  title: LM Studio model-explorer popup screenshot
+  description: |
+    Screenshot of the LM Studio "Staff Picks" model-explorer popup —
+    a third-party UI surface. Exercises OCR + layout extraction on a
+    dense panel with model cards, tags, and download buttons.
+  tags:
+  - dataset
+  - image
+  - screenshot
+  - lm-studio
+  - third-party-ui
+  - ocr
+  extends: stdlib.base
+
+  class: image
+  subclass: screenshot
+
+  media:
+    path: lm-studio-model-explorer.001.png
+    sha256: '7290432b0d84fe4e5dd06d912f43c7b95f32abf58afc1f83e56defd35071db6a'
+    bytes: 441572
+    mime: image/png
+    width: 2046
+    height: 1328
+    color_profile: sRGB
+
+  source:
+    origin: inbox-2026-05-26
+    license: LicenseRef-LMStudio-Screenshot-Fair-Use
+    captured: '2026-05-26'
+    attribution: |
+      LM Studio is a product of Element Labs Inc. This screenshot is
+      retained as an internal test fixture for OCR + layout regression;
+      not for redistribution.
+
+  determinism:
+    pinned: true
+
+  labels:
+    overview:
+      subject: 'LM Studio Staff Picks model browser'
+      context: 'Popup window inside the LM Studio desktop app'
+      visible_elements: [model-cards, tags, buttons, model-names]
+    layout:
+      regions: [header, grid-of-cards, sidebar]
+
+  uses:
+    - task: image.vision.overview.task
+      asserts: 'subject mentions "LM Studio" or "model"'
+    - task: image.vision.visible-text.task
+      asserts: 'visible-text output mentions "Staff Picks"'
+    - task: image.vision.layout.task
+      asserts: 'layout output detects a card-grid region'

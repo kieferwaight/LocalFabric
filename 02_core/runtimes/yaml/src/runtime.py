@@ -13,7 +13,7 @@ from typing import Any
 import yaml
 
 from .compiler import Compiler
-from .definition import Definition, InputConstraint, TemplateBlock
+from .definition import Definition, Example, InputConstraint, TemplateBlock
 from .dispatcher import Dispatcher
 from .file_io import create_artifact_directory, remove_artifact, write_text_artifact
 from .jinja_engine import JinjaEngine
@@ -204,6 +204,7 @@ class Runtime:
         teardown: list[dict[str, Any]] = []
         schema: dict[str, Any] = {}
         launchd: dict[str, Any] = {}
+        examples_by_id: dict[str, Example] = {}
 
         if original.extends:
             parent = self._assemble(original.extends, in_progress)
@@ -213,6 +214,8 @@ class Runtime:
             teardown.extend(parent.teardown)
             schema = _deep_merge_schema(schema, parent.schema)
             launchd = _deep_merge_schema(launchd, parent.launchd)
+            for ex in parent.examples:
+                examples_by_id[ex.id] = ex
 
         for mixin_id in original.mixins:
             mixin = self._assemble(mixin_id, in_progress)
@@ -222,6 +225,8 @@ class Runtime:
             teardown.extend(mixin.teardown)
             schema = _deep_merge_schema(schema, mixin.schema)
             launchd = _deep_merge_schema(launchd, mixin.launchd)
+            for ex in mixin.examples:
+                examples_by_id[ex.id] = ex
 
         # Local overrides everything.
         variables.update(original.variables)
@@ -232,6 +237,17 @@ class Runtime:
             teardown = list(original.teardown)
         schema = _deep_merge_schema(schema, original.schema)
         launchd = _deep_merge_schema(launchd, original.launchd)
+        for ex in original.examples:
+            examples_by_id[ex.id] = ex
+
+        examples = list(examples_by_id.values())
+        for ex in examples:
+            unknown = sorted(set(ex.inputs) - set(inputs))
+            if unknown:
+                raise ValueError(
+                    f"Definition {original.id!r}: example {ex.id!r} "
+                    f"sets unknown inputs: {unknown!r}"
+                )
 
         in_progress.remove(def_id)
         return Definition(
@@ -250,6 +266,7 @@ class Runtime:
             template=original.template,
             schema=schema,
             launchd=launchd,
+            examples=examples,
         )
 
     # --- Documentation catalog -----------------------------------------
@@ -290,6 +307,10 @@ class Runtime:
                     "teardown": self._block_entries(
                         definition.teardown, definition.docs.teardown, def_id
                     ),
+                    "examples": [
+                        {"id": ex.id, "description": ex.description, "inputs": dict(ex.inputs)}
+                        for ex in definition.examples
+                    ],
                 },
                 "children": [],
                 "mixin_consumers": [],
@@ -466,8 +487,9 @@ class Runtime:
         def_id: str,
         arguments: dict[str, Any] | None = None,
         parent_scope: ScopeFrame | None = None,
+        example: str | None = None,
     ) -> dict[str, Any]:
-        scope, _rendered = self._execute(def_id, arguments, parent_scope)
+        scope, _rendered = self._execute(def_id, arguments, parent_scope, example=example)
         return dict(scope.local_store)
 
     def render_definition(self, def_id: str, arguments: dict[str, Any] | None = None) -> str:
@@ -532,9 +554,26 @@ class Runtime:
         def_id: str,
         arguments: dict[str, Any] | None,
         parent_scope: ScopeFrame | None,
+        example: str | None = None,
     ) -> tuple[ScopeFrame, str | None]:
         arguments = dict(arguments or {})
         assembled = self.assemble_definition_frame(def_id)
+
+        if example is not None:
+            example_entry = next(
+                (e for e in assembled.examples if e.id == example), None
+            )
+            if example_entry is None:
+                available = [e.id for e in assembled.examples]
+                listing = ", ".join(repr(eid) for eid in available) or "(none declared)"
+                raise ValueError(
+                    f"Definition {def_id!r} has no example {example!r}. "
+                    f"Available: {listing}"
+                )
+            # Example inputs are baseline; explicit arguments override.
+            merged = dict(example_entry.inputs)
+            merged.update(arguments)
+            arguments = merged
 
         scope = ScopeFrame(parent=parent_scope)
         scope.set("entity_id", def_id)

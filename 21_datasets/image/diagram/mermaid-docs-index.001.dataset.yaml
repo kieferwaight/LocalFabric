@@ -1,0 +1,51 @@
+- id: image.diagram.mermaid-docs-index.001.dataset
+  title: Mermaid diagram from 18_docs/index.md
+  description: |
+    Rendered Mermaid diagram captured from `18_docs/index.md`. Exemplar of
+    a structured technical diagram with nodes, edges, and labels — the
+    canonical "diagram" subclass test sample.
+  tags:
+  - dataset
+  - image
+  - diagram
+  - mermaid
+  - technical
+  extends: stdlib.base
+
+  class: image
+  subclass: diagram
+
+  media:
+    path: mermaid-docs-index.001.png
+    sha256: '5228799598304bde12c5069bbea2f2d94cdb91ea1eb2580b38b39a5f89ee4b5f'
+    bytes: 125118
+    mime: image/png
+    width: 938
+    height: 1790
+    color_profile: sRGB
+
+  source:
+    origin: '18_docs/index.md (rendered Mermaid block)'
+    license: LicenseRef-Internal-Testing-Only
+    captured: '2026-05-26'
+    attribution: 'Generated from this repository; rendering captured by maintainer.'
+    derived_from: '18_docs/index.md'
+
+  determinism:
+    pinned: true
+
+  labels:
+    overview:
+      subject: 'Mermaid diagram'
+      context: 'Technical documentation diagram rendered from 18_docs/index.md'
+      visible_elements: [nodes, edges, labels]
+    layout:
+      regions: [node-graph]
+
+  uses:
+    - task: image.vision.overview.task
+      asserts: 'subject mentions "diagram"'
+    - task: image.vision.layout.task
+      asserts: 'layout output identifies a graph / node region'
+    - task: image.vision.visible-text.task
+      asserts: 'visible-text output contains node labels'

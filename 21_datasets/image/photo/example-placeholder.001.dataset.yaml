@@ -1,0 +1,50 @@
+- id: image.photo.example-placeholder.001.dataset
+  title: Example placeholder — schema template, not real data
+  description: |
+    Reference manifest demonstrating the full `*.dataset.yaml` shape.
+    No binary file ships with this entry — the `media.path` value points
+    at a file that intentionally does not exist. Replace this entry with
+    a real sample (data file + populated hash) when adding the first
+    photo to the corpus, and remove the `placeholder: true` flag.
+  tags:
+  - dataset
+  - image
+  - photo
+  - placeholder
+  extends: stdlib.base
+
+  class: image
+  subclass: photo
+
+  media:
+    path: example-placeholder.001.jpg
+    sha256: '0000000000000000000000000000000000000000000000000000000000000000'
+    bytes: 0
+    mime: image/jpeg
+    width: 0
+    height: 0
+    color_profile: sRGB
+
+  source:
+    origin: placeholder
+    license: CC0-1.0
+    captured: '2026-05-26'
+    attribution: ''
+
+  determinism:
+    pinned: false        # Real samples flip this to `true` once committed
+    placeholder: true    # Remove this key when the entry is real
+
+  labels:
+    overview:
+      subject: '<example subject — replace>'
+      context: '<example context — replace>'
+      visible_elements: []
+    notes: |
+      Labels are free-form per consuming task. Use the same key the task
+      asserts against (e.g. `overview` for image.vision.overview.task,
+      `layout` for image.vision.layout.task).
+
+  uses:
+    - task: image.vision.overview.task
+      asserts: 'subject contains a non-empty string'

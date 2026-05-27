@@ -18,6 +18,7 @@ import typer
 from core.interfaces.cli.db import db_app
 from core.interfaces.cli.image_intelligence import image_intelligence_app
 from core.interfaces.cli.ingest import ingest_app
+from core.interfaces.cli.inventory import mount_inventory
 from core.interfaces.cli.markdown import markdown_app
 
 #: Ordered list of (sub-app, mount-name) pairs for hand-wired sub-apps.
@@ -27,6 +28,10 @@ SUB_APPS: list[tuple[typer.Typer, str]] = [
     (image_intelligence_app, "image-intelligence"),
     (markdown_app, "markdown"),
 ]
+
+#: Groups owned by ``inventory.mount_inventory`` — the catalog auto-binder
+#: skips these so the richer live-inventory commands aren't shadowed.
+_INVENTORY_GROUPS: frozenset[str] = frozenset({"task", "workflow", "prompt", "service"})
 
 # Path helpers — resolved relative to this file so they work regardless of cwd.
 _CLI_DIR = Path(__file__).resolve().parent  # 02_core/interfaces/cli/
@@ -64,11 +69,19 @@ def build_app() -> typer.Typer:
     for sub_app, name in SUB_APPS:
         root.add_typer(sub_app, name=name)
 
-    # Catalog-driven commands.
+    # Live inventory + generic file runner (`task`, `workflow`, `prompt`,
+    # `service`, `run`). Mounted before the auto-binder so the inventory
+    # versions own the names.
+    mount_inventory(root)
+
+    # Catalog-driven commands — skip groups already owned by inventory.
     runtime = _load_runtime()
     registry = CommandRegistry(runtime)
     bound_groups: dict[str, typer.Typer] = {}
     for cmd in registry.iter_commands():
+        group = cmd.argv_spec.get("group") or cmd.id.split(".")[1]
+        if group in _INVENTORY_GROUPS:
+            continue
         bind_typer(root, cmd, runtime, group_cache=bound_groups)
 
     return root

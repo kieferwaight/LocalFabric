@@ -1,0 +1,41 @@
+- id: data.json.example-config.001.dataset
+  title: Example config JSON document
+  description: |
+    Small dummy configuration object covering common JSON shapes — scalars,
+    nested objects, arrays. Useful for JSON parsing / schema-validation
+    regression tests.
+  tags:
+  - dataset
+  - data
+  - json
+  - config
+  - dummy
+  extends: stdlib.base
+
+  class: data
+  subclass: json
+
+  media:
+    path: example-config.001.json
+    sha256: '1cc1324c85af53335776f64c5d184feecdb8aaf9a5de33b2fbb896dcdef3c5c4'
+    bytes: 283
+    mime: application/json
+
+  source:
+    origin: generated
+    license: CC0-1.0
+    captured: '2026-05-26'
+    attribution: 'Synthetic dummy fixture generated for the test-data corpus.'
+
+  determinism:
+    pinned: true
+
+  labels:
+    shape: object
+    keys: [name, version, enabled, max_retries, timeout_seconds, endpoints, tags]
+    has_nested_object: true
+    has_array: true
+
+  uses:
+    - task: classify.media.file.task
+      asserts: 'class output is "ml_dataset" with subclass "data_file"'

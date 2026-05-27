@@ -1,0 +1,47 @@
+- id: image.diagram.github-profile-banner-kieferwaight.001.dataset
+  title: kieferwaight GitHub profile banner
+  description: |
+    Hero banner graphic displayed on https://github.com/kieferwaight/kieferwaight.
+    Wide-format designed graphic with branding and text — useful for testing
+    wide-aspect-ratio handling and text-on-graphic OCR.
+  tags:
+  - dataset
+  - image
+  - diagram
+  - banner
+  - graphic
+  - wide-aspect
+  extends: stdlib.base
+
+  class: image
+  subclass: diagram
+
+  media:
+    path: github-profile-banner-kieferwaight.001.png
+    sha256: '63834074e976050ffbf8824287f1b2ba6d7c30fcad2b022eefe3c299bb5ff86d'
+    bytes: 1120324
+    mime: image/png
+    width: 1808
+    height: 592
+    color_profile: sRGB
+
+  source:
+    origin: 'https://github.com/kieferwaight/kieferwaight'
+    license: LicenseRef-Internal-Testing-Only
+    captured: '2026-05-26'
+    attribution: 'Owned by maintainer (kieferwaight); used here as an internal test fixture.'
+
+  determinism:
+    pinned: true
+
+  labels:
+    overview:
+      subject: 'GitHub profile banner / hero graphic for kieferwaight'
+      context: 'Designed wide-aspect promotional graphic with text overlays'
+      visible_elements: [text, branding, graphics]
+
+  uses:
+    - task: image.vision.overview.task
+      asserts: 'subject mentions "banner" or "graphic"'
+    - task: image.vision.visible-text.task
+      asserts: 'visible-text output is non-empty'

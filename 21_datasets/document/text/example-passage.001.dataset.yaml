@@ -1,0 +1,47 @@
+- id: document.text.example-passage.001.dataset
+  title: Example prose passage (plain text)
+  description: |
+    Short two-paragraph descriptive prose passage. Useful for embedding,
+    chunking, summarization, and language-detection regression tests on
+    naturalistic English with no markup.
+  tags:
+  - dataset
+  - document
+  - text
+  - prose
+  - dummy
+  extends: stdlib.base
+
+  class: document
+  subclass: text
+
+  media:
+    path: example-passage.001.txt
+    sha256: '4bfdad95e00b1c592139b8317decd689a75fcc580fdf03e2c7c8f8bb277358bf'
+    bytes: 546
+    mime: text/plain
+    word_count: 98
+    line_count: 9
+    language: en
+
+  source:
+    origin: generated
+    license: CC0-1.0
+    captured: '2026-05-26'
+    attribution: 'Synthetic dummy fixture generated for the test-data corpus.'
+
+  determinism:
+    pinned: true
+
+  labels:
+    style:
+      register: descriptive
+      paragraphs: 2
+
+  uses:
+    - task: embeddings.embed.text.task
+      asserts: 'embedding vector has expected dimensions for the configured model'
+    - task: embeddings.chunker.chunk-file.task
+      asserts: 'chunker emits at least one chunk'
+    - task: research.local.summarize.task
+      asserts: 'summary mentions "river" or "heron" or "fisherman"'

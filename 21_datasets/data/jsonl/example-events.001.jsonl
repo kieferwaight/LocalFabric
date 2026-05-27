@@ -1,0 +1,5 @@
+{"id": "evt-001", "ts": "2026-05-01T08:00:00Z", "level": "info", "message": "service started"}
+{"id": "evt-002", "ts": "2026-05-01T08:00:05Z", "level": "info", "message": "config loaded"}
+{"id": "evt-003", "ts": "2026-05-01T08:00:12Z", "level": "warning", "message": "slow query detected", "duration_ms": 842}
+{"id": "evt-004", "ts": "2026-05-01T08:00:30Z", "level": "error", "message": "upstream timeout", "code": 504}
+{"id": "evt-005", "ts": "2026-05-01T08:01:00Z", "level": "info", "message": "service ready"}

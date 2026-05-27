@@ -1,0 +1,46 @@
+- id: image.diagram.abstract-with-text.001.dataset
+  title: Abstract image with text
+  description: |
+    Abstract designed image containing visible text. Useful for OCR
+    regression against non-document, non-UI backgrounds — text on
+    decorative / artistic surfaces.
+  tags:
+  - dataset
+  - image
+  - diagram
+  - abstract
+  - ocr
+  extends: stdlib.base
+
+  class: image
+  subclass: diagram
+
+  media:
+    path: abstract-with-text.001.png
+    sha256: '34ce0f6b29cf2242d25b9d02f98ff03fea164255afd32c0db1e590da17ad233a'
+    bytes: 1405863
+    mime: image/png
+    width: 910
+    height: 968
+    color_profile: sRGB
+
+  source:
+    origin: inbox-2026-05-26
+    license: LicenseRef-Internal-Testing-Only
+    captured: '2026-05-26'
+    attribution: 'Owned by maintainer; internal test fixture.'
+
+  determinism:
+    pinned: true
+
+  labels:
+    overview:
+      subject: 'Abstract designed image with embedded text'
+      context: 'Non-document background; text overlaid on graphic elements'
+      visible_elements: [text, abstract-shapes]
+
+  uses:
+    - task: image.vision.visible-text.task
+      asserts: 'visible-text output is non-empty'
+    - task: image.vision.overview.task
+      asserts: 'subject mentions "abstract" or "text"'

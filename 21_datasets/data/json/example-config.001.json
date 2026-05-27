@@ -1,0 +1,12 @@
+{
+  "name": "example-config",
+  "version": "0.1.0",
+  "enabled": true,
+  "max_retries": 3,
+  "timeout_seconds": 30,
+  "endpoints": {
+    "primary": "https://api.example.invalid/v1",
+    "fallback": "https://api.example.invalid/v0"
+  },
+  "tags": ["dummy", "test-fixture", "small"]
+}
