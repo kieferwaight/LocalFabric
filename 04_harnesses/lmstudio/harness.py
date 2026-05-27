@@ -105,8 +105,9 @@ class LMStudioHarness(Harness):
                 timeout=self.startup_wait,
             )
         except subprocess.CalledProcessError as exc:
+            detail = exc.stderr.strip() or exc.stdout.strip()
             raise HarnessError(
-                f"`lms server start` failed (exit {exc.returncode}): {exc.stderr.strip() or exc.stdout.strip()}"
+                f"`lms server start` failed (exit {exc.returncode}): {detail}"
             ) from exc
         except subprocess.TimeoutExpired as exc:
             raise HarnessError(f"`lms server start` timed out after {self.startup_wait}s") from exc
