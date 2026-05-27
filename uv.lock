@@ -1397,7 +1397,6 @@ llm = [
 ]
 notebook = [
     { name = "ipykernel" },
-    { name = "openai" },
 ]
 pdf = [
     { name = "pdf2image" },
@@ -1430,7 +1429,6 @@ requires-dist = [
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.10" },
     { name = "numpy", specifier = ">=1.26" },
     { name = "openai", marker = "extra == 'llm'", specifier = ">=1.0" },
-    { name = "openai", marker = "extra == 'notebook'", specifier = ">=1.0" },
     { name = "opencv-python", marker = "extra == 'vision'", specifier = ">=4.8" },
     { name = "pdf2image", marker = "extra == 'pdf'", specifier = ">=1.16" },
     { name = "pdfminer-six", marker = "extra == 'pdf'", specifier = ">=20221105" },
