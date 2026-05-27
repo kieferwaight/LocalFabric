@@ -15,7 +15,6 @@ from typing import Any
 import pytest
 from harnesses.base import Harness, HarnessError, HarnessStatus
 
-
 # ---------------------------------------------------------------------------
 # Minimal concrete subclass (test double)
 # ---------------------------------------------------------------------------
