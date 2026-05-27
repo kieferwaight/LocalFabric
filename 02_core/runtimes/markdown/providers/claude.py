@@ -114,7 +114,19 @@ class ClaudeProvider(MarkdownProvider):
         stream: bool = False,
         max_tokens: int | None = None,
         temperature: float | None = None,
+        images: list[str] | None = None,
+        stop: list[str] | None = None,
+        options: dict[str, Any] | None = None,
     ) -> ProviderResult | Iterator[str]:
+        if images:
+            raise ProviderError(
+                "claude provider does not yet support frontmatter 'images:'. "
+                "Use a vision-capable provider (ollama, lmstudio)."
+            )
+        if stop or options:
+            # Claude SDK accepts stop_sequences but we'd need to thread it
+            # through ClaudeHarness; out of scope for this change.
+            pass
         effective_model = model or self.default_model
         harness = self._ensure_harness(effective_model)
         request = self._build_request(

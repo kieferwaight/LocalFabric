@@ -1,17 +1,9 @@
 ---
-id: image.vision.layout.task
-provider: ollama
-model: llama3.2-vision
-max_tokens: 180
+id: image.vision.layout.lmstudio-gemma4.task
+provider: lmstudio
+model: google/gemma-4-e4b
+max_tokens: 1200
 temperature: 0.0
-stop:
-- <END>
-- "\n## END"
-options:
-  top_p: 0.8
-  top_k: 20
-  repeat_penalty: 1.35
-  repeat_last_n: 256
 inputs:
   image_path:
     type: string
@@ -29,10 +21,11 @@ Return exactly this markdown shape:
 - Main area: <short description>
 - Lower area: <short description>
 - Footer: <short description>
-  Rules:
+
+Rules:
+
 - Maximum 4 bullets.
 - Do not transcribe any visible text.
 - Do not list navigation items, headings, or button labels one by one.
 - Mention only large visible blocks, media, CTA areas, and spacing.
 - No placeholders except the angle-bracket examples in this template.
-- End with <END>.

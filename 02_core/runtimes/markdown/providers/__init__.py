@@ -10,6 +10,8 @@ from __future__ import annotations
 
 from .base import MarkdownProvider, ProviderError, ProviderResult
 from .claude import ClaudeProvider
+from .lmstudio import LMStudioProvider
+from .ollama import OllamaProvider
 from .registry import PROVIDERS, get_provider, register_provider
 
 __all__ = [
@@ -17,6 +19,8 @@ __all__ = [
     "ProviderError",
     "ProviderResult",
     "ClaudeProvider",
+    "OllamaProvider",
+    "LMStudioProvider",
     "PROVIDERS",
     "get_provider",
     "register_provider",

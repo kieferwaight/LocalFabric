@@ -160,6 +160,26 @@ def _compile_provider_style(fm: _frontmatter.Frontmatter, *, source_path: str) -
             f"{source_path}: frontmatter 'temperature' must be a number when set."
         )
 
+    images = metadata.get("images")
+    if images is not None:
+        if not isinstance(images, list) or not all(isinstance(p, str) and p for p in images):
+            raise MarkdownCompileError(
+                f"{source_path}: frontmatter 'images' must be a list of non-empty strings when set."
+            )
+
+    stop = metadata.get("stop")
+    if stop is not None:
+        if not isinstance(stop, list) or not all(isinstance(s, str) and s for s in stop):
+            raise MarkdownCompileError(
+                f"{source_path}: frontmatter 'stop' must be a list of non-empty strings when set."
+            )
+
+    options = metadata.get("options")
+    if options is not None and not isinstance(options, dict):
+        raise MarkdownCompileError(
+            f"{source_path}: frontmatter 'options' must be a mapping when set."
+        )
+
     # Reject fence-style keys that would silently no-op under provider mode.
     for stray in ("extends", "mixins", "modules", "variables"):
         if stray in metadata:
@@ -180,7 +200,16 @@ def _compile_provider_style(fm: _frontmatter.Frontmatter, *, source_path: str) -
         "prompt_template": fm.body,
         "source_path": source_path,
     }
-    for key in ("model", "system", "stream", "max_tokens", "temperature"):
+    for key in (
+        "model",
+        "system",
+        "stream",
+        "max_tokens",
+        "temperature",
+        "images",
+        "stop",
+        "options",
+    ):
         value = metadata.get(key)
         if value is not None:
             provider_config[key] = value

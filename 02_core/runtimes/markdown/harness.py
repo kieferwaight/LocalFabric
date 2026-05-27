@@ -124,12 +124,12 @@ class MarkdownHarness:
         provider_name = config["provider"]
         provider = get_provider(provider_name, overrides=self._provider_overrides)
 
-        prompt = self._render_prompt(
-            config["prompt_template"],
-            inputs=definition.get("inputs") or {},
-            arguments=arguments,
-            source_path=config["source_path"],
+        inputs = definition.get("inputs") or {}
+        context = self._coerce_inputs(
+            inputs, arguments, source_path=config["source_path"]
         )
+        prompt = self._jinja.render_template(config["prompt_template"], context)
+        images = self._render_image_paths(config.get("images"), context=context)
 
         stream_requested = bool(config.get("stream", False))
         kwargs: dict[str, Any] = {
@@ -141,6 +141,12 @@ class MarkdownHarness:
             kwargs["max_tokens"] = config["max_tokens"]
         if "temperature" in config:
             kwargs["temperature"] = config["temperature"]
+        if "stop" in config:
+            kwargs["stop"] = list(config["stop"])
+        if "options" in config:
+            kwargs["options"] = dict(config["options"])
+        if images:
+            kwargs["images"] = images
 
         try:
             result = provider.run(prompt, **kwargs)
@@ -181,6 +187,32 @@ class MarkdownHarness:
         """Coerce/validate inputs, then render the body via Jinja."""
         context = self._coerce_inputs(inputs, arguments, source_path=source_path)
         return self._jinja.render_template(template, context)
+
+    def _render_image_paths(
+        self,
+        images: list[str] | None,
+        *,
+        context: Mapping[str, Any],
+    ) -> list[str]:
+        """Resolve frontmatter ``images:`` entries to absolute filesystem paths.
+
+        Each entry is Jinja-rendered against the same input context as the
+        prompt body, then expanded (``~`` / ``$VAR``) and resolved to an
+        absolute path. The resulting list is forwarded to the provider's
+        ``images=`` kwarg so vision-capable providers can attach the bytes.
+        """
+        if not images:
+            return []
+        from os import path as _osp
+
+        rendered: list[str] = []
+        for entry in images:
+            text = self._jinja.render_template(entry, context).strip()
+            if not text:
+                continue
+            expanded = _osp.expanduser(_osp.expandvars(text))
+            rendered.append(_osp.abspath(expanded))
+        return rendered
 
     @staticmethod
     def _coerce_inputs(

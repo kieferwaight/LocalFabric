@@ -3,6 +3,11 @@
 from __future__ import annotations
 
 import os
+import shutil
+import subprocess
+import time
+import urllib.error
+import urllib.request
 from collections import deque
 from collections.abc import Iterator, Mapping
 from typing import Any
@@ -14,16 +19,20 @@ class LMStudioHarness(Harness):
     """Talks to an LM Studio local server using the `openai` SDK.
 
     LM Studio exposes an OpenAI-compatible API, by default at
-    ``http://localhost:1234/v1``. The user is responsible for launching the
-    LM Studio app — ``start``/``stop`` here only manage the SDK client.
-    ``status`` and ``health`` perform a reachability check against ``/models``.
+    ``http://localhost:1234/v1``. With ``manage_server=True`` (the default),
+    ``start`` will run ``lms server start`` if the server isn't already up;
+    otherwise ``start`` only initialises the SDK client. ``status`` and
+    ``health`` perform a reachability check against ``/models``.
 
     Config keys:
-        base_url:   Default ``http://localhost:1234/v1``.
-        api_key:    Default ``lm-studio`` (LM Studio ignores it but the SDK
-                    requires *some* value). Falls back to ``LMSTUDIO_API_KEY``.
-        model:      Loaded model id (default ``local-model``).
-        timeout:    Default 120s (local models can be slow on first load).
+        base_url:      Default ``http://localhost:1234/v1``.
+        api_key:       Default ``lm-studio`` (LM Studio ignores it but the SDK
+                       requires *some* value). Falls back to ``LMSTUDIO_API_KEY``.
+        model:         Loaded model id (default ``local-model``).
+        timeout:       Default 120s (local models can be slow on first load).
+        manage_server: If True (default), ``start`` runs ``lms server start``
+                       when the server is unreachable.
+        startup_wait:  Max seconds to wait for the server to come up (default 20).
     """
 
     name = "lmstudio"
@@ -39,6 +48,8 @@ class LMStudioHarness(Harness):
         )
         self.model: str = self.config.get("model", "local-model")
         self.timeout: float = float(self.config.get("timeout", 120))
+        self.manage_server: bool = bool(self.config.get("manage_server", True))
+        self.startup_wait: float = float(self.config.get("startup_wait", 20))
 
     # ----------------------------------------------------------------- internals
     def _ensure_client(self) -> Any:
@@ -47,7 +58,10 @@ class LMStudioHarness(Harness):
         try:
             from openai import OpenAI  # type: ignore
         except ImportError as exc:  # pragma: no cover
-            raise HarnessError("openai SDK is not installed") from exc
+            raise HarnessError(
+                "openai SDK is not installed — run `uv sync --extra llm` "
+                "to enable the LM Studio / OpenAI / Anthropic providers."
+            ) from exc
         self._client = OpenAI(
             api_key=self.api_key,
             base_url=self.base_url,
@@ -68,10 +82,55 @@ class LMStudioHarness(Harness):
                 kwargs[key] = request[key]
         return kwargs
 
+    def _server_reachable(self) -> bool:
+        # Use plain urllib rather than the openai SDK so the probe still works
+        # when the SDK isn't installed (the server's reachability is independent
+        # of the client library).
+        probe_url = self.base_url.rstrip("/") + "/models"
+        try:
+            with urllib.request.urlopen(probe_url, timeout=2) as resp:
+                return 200 <= resp.status < 500
+        except (urllib.error.URLError, OSError):
+            return False
+
+    def _spawn_server(self) -> None:
+        if shutil.which("lms") is None:
+            raise HarnessError("`lms` binary not on PATH; install LM Studio or start it manually")
+        try:
+            subprocess.run(
+                ["lms", "server", "start"],
+                check=True,
+                capture_output=True,
+                text=True,
+                timeout=self.startup_wait,
+            )
+        except subprocess.CalledProcessError as exc:
+            raise HarnessError(
+                f"`lms server start` failed (exit {exc.returncode}): {exc.stderr.strip() or exc.stdout.strip()}"
+            ) from exc
+        except subprocess.TimeoutExpired as exc:
+            raise HarnessError(f"`lms server start` timed out after {self.startup_wait}s") from exc
+        self._record("ran `lms server start`")
+
+        deadline = time.monotonic() + self.startup_wait
+        # Reset the SDK client so the post-spawn probe doesn't reuse a stale
+        # connection from before the server came up.
+        self._client = None
+        while time.monotonic() < deadline:
+            if self._server_reachable():
+                return
+            time.sleep(0.5)
+        raise HarnessError(f"lmstudio did not become reachable within {self.startup_wait}s")
+
     # ----------------------------------------------------------------- lifecycle
     def start(self) -> HarnessStatus:
-        self._ensure_client()
-        return self._set_state("running", f"client -> {self.base_url}")
+        if self._server_reachable():
+            return self._set_state("running", f"already up @ {self.base_url}")
+        if not self.manage_server:
+            self._ensure_client()
+            return self._set_state("error", f"not reachable @ {self.base_url}")
+        self._spawn_server()
+        return self._set_state("running", f"started lms server @ {self.base_url}")
 
     def stop(self) -> HarnessStatus:
         self._client = None

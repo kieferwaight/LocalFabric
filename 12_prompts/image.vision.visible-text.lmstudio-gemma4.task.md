@@ -1,17 +1,9 @@
 ---
-id: image.vision.visible-text.task
-provider: ollama
-model: llama3.2-vision
-max_tokens: 220
+id: image.vision.visible-text.lmstudio-gemma4.task
+provider: lmstudio
+model: google/gemma-4-e4b
+max_tokens: 1800
 temperature: 0.0
-stop:
-- <END>
-- "\n## END"
-options:
-  top_p: 0.8
-  top_k: 20
-  repeat_penalty: 1.35
-  repeat_last_n: 256
 inputs:
   image_path:
     type: string
@@ -28,7 +20,9 @@ Return exactly this markdown shape:
 - \<exact visible text line 1>
 - \<exact visible text line 2>
 - \<exact visible text line 3>
-  Rules:
+
+Rules:
+
 - Maximum 8 bullets.
 - Preserve exact wording and line breaks as much as possible.
 - Do not summarize.
@@ -36,4 +30,3 @@ Return exactly this markdown shape:
 - Do not repeat any extracted line.
 - If nothing is readable, return one bullet: "No readable text."
 - No placeholders except the angle-bracket examples in this template.
-- End with <END>.

@@ -7,7 +7,9 @@ from .harness import MarkdownHarness
 from .providers import (
     PROVIDERS,
     ClaudeProvider,
+    LMStudioProvider,
     MarkdownProvider,
+    OllamaProvider,
     ProviderError,
     ProviderResult,
 )
@@ -21,5 +23,7 @@ __all__ = [
     "ProviderError",
     "ProviderResult",
     "ClaudeProvider",
+    "OllamaProvider",
+    "LMStudioProvider",
     "PROVIDERS",
 ]

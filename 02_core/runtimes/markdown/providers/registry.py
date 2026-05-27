@@ -6,12 +6,16 @@ from collections.abc import Callable, Mapping
 
 from .base import MarkdownProvider
 from .claude import ClaudeProvider
+from .lmstudio import LMStudioProvider
+from .ollama import OllamaProvider
 
 #: Public name → callable returning a configured provider. Callables (rather
 #: than instances) let tests inject pre-built or stub providers without
 #: mutating shared state.
 PROVIDERS: dict[str, Callable[[], MarkdownProvider]] = {
     "claude": ClaudeProvider,
+    "ollama": OllamaProvider,
+    "lmstudio": LMStudioProvider,
 }
 
 

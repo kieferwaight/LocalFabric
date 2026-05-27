@@ -66,11 +66,18 @@ class MarkdownProvider(abc.ABC):
         stream: bool = False,
         max_tokens: int | None = None,
         temperature: float | None = None,
+        images: list[str] | None = None,
+        stop: list[str] | None = None,
+        options: dict[str, Any] | None = None,
     ) -> ProviderResult | Iterator[str]:
         """Execute one prompt against the upstream provider.
 
         ``model``/``system``/``max_tokens``/``temperature`` mirror the
-        frontmatter fields the markdown harness accepts. When ``stream`` is
-        true, return an iterator of text chunks; otherwise return a single
-        ``ProviderResult``.
+        frontmatter fields the markdown harness accepts. ``images`` is the
+        list of filesystem paths resolved from the frontmatter ``images:``
+        field; text-only providers ignore it, vision-capable providers
+        attach the bytes. ``stop`` is a list of stop sequences; ``options``
+        is a provider-specific passthrough mapping (e.g. Ollama's
+        ``num_predict``, ``top_k``). When ``stream`` is true, return an
+        iterator of text chunks; otherwise return a single ``ProviderResult``.
         """
