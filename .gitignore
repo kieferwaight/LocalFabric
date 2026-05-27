@@ -41,3 +41,5 @@ AGENTS.override.md
 
 .DS_Store
 
+# Generated artifacts from example workflow runs
+14_data/outputs/
