@@ -13,7 +13,7 @@
     run:
     - title: Record deployment time
   run:
-  - python: |
+  - python: |-
       import json, os, datetime
       with open(os.environ["STATE_FILE"], "w") as fh:
           json.dump({"deploy_started_at": datetime.datetime.utcnow().isoformat() + "Z"}, fh)
