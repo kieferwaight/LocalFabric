@@ -40,3 +40,6 @@ AGENTS.override.md
 
 # Generated artifacts from example workflow runs
 14_data/outputs/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
