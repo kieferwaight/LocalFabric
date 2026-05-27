@@ -5,8 +5,8 @@ model: llama3.2-vision
 max_tokens: 180
 temperature: 0.0
 stop:
-- <END>
-- "\n## END"
+  - <END>
+  - "\n## END"
 options:
   top_p: 0.8
   top_k: 20
@@ -17,7 +17,7 @@ inputs:
     type: string
     required: true
 images:
-- "{{ image_path }}"
+  - "{{ image_path }}"
 ---
 
 Describe only the overall visible content.
